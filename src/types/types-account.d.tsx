@@ -1,0 +1,32 @@
+import { OpeningHour } from "./types-schedules.d";
+
+export type AccountData = {
+  pageStyle(pageStyle: unknown): unknown;
+  id: number;
+  email: string;
+  password: string;
+  restaurantName: string;
+  name: string;
+  address: string;
+  activeAccount: boolean;
+  delivery: boolean;
+  pickup: boolean;
+  plan: string;
+  cratedAt: Date;
+  cnpj: string;
+  cpf: string;
+  ownersName: string;
+  phoneNumber: string;
+  passwordResetToken: object;
+  storeCustomization: object;
+  openingHours: OpeningHour[];
+  primaryColor: string;
+  backgroundColor: string;
+  textButtonColor: string;
+  logoUrl: string;
+  bannerUrl: string;
+  token: string;
+  isLogged: boolean;
+  message: string;
+  error: unknown;
+};

@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  backend:
+    image: ovittormachado/rangos-server-app
+    environment:
+      PORT: 3000
+      DATABASE_URL: "postgresql://postgres:senha_default@postgres:5432/rangos?schema=public"
+      JWT_SECRET: jwt_secret_default
+      REFRESH_SECRET: jwt_refresh_secret_default
+      EMAIL_USER: jwt_email_user_default
+      EMAIL_PASS: jwt_email_pass_default
+      APP_URL: http://localhost
+      STORAGE_TYPE: local
+      AWS_ACCESS_KEY_ID: jwt_aws_access_key_id_default
+      AWS_SECRET_ACCESS_KEY: jwt_aws_secret_access_key_default
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_BUCKET_NAME: bucket-teste
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: senha_default
+      POSTGRES_USER: postgres
+      POSTGRES_DB: rangos
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_data:

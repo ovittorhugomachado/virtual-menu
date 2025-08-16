@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@tailwind utilities;
+
+@theme {
+    --color-primary: #0636DC;
+    --color-secondary: #7FCB1E;
+    --color-color-text: #000000;
+    --font-display: "geologica", "sans-serif";
+    --breakpoint-xs: 310px;
+}
+
+@font-face {
+  font-family: 'Ones';
+  src: url('/caminho/para/ones.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+    @apply box-border text-sm bg-no-repeat bg-white bg-cover bg-fixed text-color-text;
+}
+
+input {
+    @apply text-left flex items-center
+}
+
+img, button, span {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.primary-component {
+    @apply border border-zinc-400 rounded-xl text-black;
+}
+
+.input {
+    @apply border border-zinc-400 rounded-xl px-3 py-2 w-full focus:outline-none focus:ring-1 bg-white text-black focus:ring-zinc-900;
+}
+
+.input-store {
+    @apply border border-zinc-400 rounded-xl px-3 py-2 w-full focus:outline-none focus:ring-1;
+}
+
+.input-error-store {
+    @apply border border-red-500 rounded-xl px-3 py-2 w-full focus:outline-none focus:ring-0;
+}
+
+.input-error {
+    @apply border border-red-500 rounded-xl px-3 py-2 w-full focus:outline-none focus:ring-0 bg-white text-black;
+}
+
+.label {
+    @apply font-medium flex items-center justify-between ml-2
+}
+
+.span-error {
+    @apply text-red-500 text-sm font-normal text-right mr-3 absolute right-0
+}
+
+.span-success {
+    @apply text-green-500 text-sm font-normal text-right  right-3
+}
+
+.text-error {
+    @apply text-red-500 font-medium text-center
+}
+
+.font-ones {
+  font-family: 'Ones', sans-serif;
+}
+
+.link {
+    @apply cursor-pointer transition-all hover:scale-101;
+}
+
+.primary-button {
+    @apply px-[30px] py-2 text-lg rounded-3xl cursor-pointer font-semibold transition-all bg-primary text-white hover:scale-105;
+}
+
+.cancel-button {
+    @apply px-[60px] py-2 text-sm md:text-lg rounded-3xl cursor-pointer font-semibold transition-all bg-red-600 text-white hover:scale-105;
+}
+
+.confirm-button {
+    @apply px-[60px] py-2 text-sm md:text-lg rounded-3xl cursor-pointer font-semibold transition-all bg-green-600 text-white hover:scale-105;
+}
+
+.order-alert {
+    border: 3px solid #ff0000;
+    animation: piscar 1s infinite;
+}
+
+@keyframes piscar {
+    0% {
+        border-color: #ff0000;
+    }
+
+    50% {
+        border-color: transparent;
+    }
+
+    100% {
+        border-color: #ff0000;
+    }
+}
+
+.text-alert {
+    animation: piscarTexto 1s infinite;
+}
+
+@keyframes piscarTexto {
+    0% {
+        color: #ff0000;
+    }
+
+    50% {
+        color: #ff0000;
+        opacity: 0.2;
+    }
+
+    100% {
+        color: #ff0000;
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-text-fill-color: var(--text-color) !important;
+    -webkit-box-shadow: 0 0 0 1000px var(--bg-color) inset !important;
+}
+
+:root {
+    --text-color: #111827;
+    --bg-color: white;
+}
+
+.dark {
+    --text-color: #f9fafb;
+    --bg-color: #18181b;
+}
+
+@media (prefers-color-scheme: dark) {
+    input[type="time"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }
+}

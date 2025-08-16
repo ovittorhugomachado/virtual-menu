@@ -1,0 +1,1 @@
+export type Money = `${string} ${number}.${number}`;
