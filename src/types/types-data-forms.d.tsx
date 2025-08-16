@@ -4,6 +4,7 @@ export type AccountFormProps = {
   onSubmit: (data: AccountData) => void;
   isLoading: boolean;
   message: string;
+  setError: (error: string) => void;
   error?: string;
   initialValues?: Partial<AccountData>;
 };

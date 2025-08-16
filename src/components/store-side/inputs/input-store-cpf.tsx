@@ -5,6 +5,8 @@ import { InputCPFProps } from "../../../types/types-input.d";
 export const InputCPF = ({
     control,
     initialValues = {},
+    hasTriedToSubmit = false,
+    clearErrors,
 }: InputCPFProps) => {
 
     return (
@@ -17,7 +19,7 @@ export const InputCPF = ({
                 validate: (value) => {
                     const digits = value?.replace(/\D/g, '') || '';
                     if (digits.length > 0 && digits.length < 11) {
-                        return "Digite os 11 dígitos do CPF";
+                        return "Inválido";
                     }
                     return true;
                 },
@@ -29,7 +31,7 @@ export const InputCPF = ({
                         className="w-full font-medium ml-2 mt-2 flex flex-col relative"
                     >
                         CPF *
-                        {fieldState.error && (
+                        {hasTriedToSubmit && fieldState.error && (
                             <span className="span-error">
                                 {fieldState.error.message}
                             </span>
@@ -40,7 +42,12 @@ export const InputCPF = ({
                         mask="000.000.000-00"
                         placeholder="000.000.000-00"
                         className={`input ${fieldState.error ? " input-error" : ""}`}
-                        onAccept={(value) => field.onChange(value)}
+                        onAccept={(value) => {
+                            field.onChange(value);
+                            if (clearErrors) {
+                                clearErrors("cpf");
+                            }
+                        }}
                     />
                 </>
             )}

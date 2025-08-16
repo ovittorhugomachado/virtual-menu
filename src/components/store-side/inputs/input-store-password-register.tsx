@@ -2,7 +2,12 @@ import { useState } from "react";
 import { IoEye, IoEyeOff, IoCheckmarkCircleOutline, IoCheckmarkCircleSharp } from "react-icons/io5";
 import { InputPasswordProps } from "../../../types/types-input.d";
 
-export const InputPasswordRegister = ({ register, errors, watch }: InputPasswordProps) => {
+export const InputPasswordRegister = ({
+    register,
+    errors,
+    watch,
+    clearErrors
+}: InputPasswordProps) => {
     const [showPassword, setShowPassword] = useState(false);
     const password = watch("password") || '';
 
@@ -21,7 +26,7 @@ export const InputPasswordRegister = ({ register, errors, watch }: InputPassword
                 className="w-full font-medium ml-2 mt-2 flex flex-col relative"
             >
                 Senha *
-                {errors?.password && (
+                {errors.password && (
                     <span className="span-error">
                         {errors.password.message?.toString()}
                     </span>
@@ -33,11 +38,12 @@ export const InputPasswordRegister = ({ register, errors, watch }: InputPassword
                     placeholder="crie sua senha"
                     className={`input ${errors.password ? " input-error" : ""}`}
                     {...register("password", {
-                        required: "Campo obrigatório",
+                        required: "Obrigatório",
                         pattern: {
                             value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
-                            message: "Digite uma senha válida",
+                            message: "senha inválida",
                         },
+                        onChange: () => clearErrors && clearErrors("password")
                     })}
                 />
 

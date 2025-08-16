@@ -33,7 +33,7 @@ export const InputPassword = ({
                         placeholder="Digite sua senha"
                         defaultValue={initialValues.password || ""}
                         {...register("password", {
-                            required: "Campo obrigatório",
+                            required: "Obrigatório",
                             onChange: (e) => {
                                 if (e.target.value.length > 2) {
                                     clearErrors("password");

@@ -69,11 +69,15 @@ export type InputCNPJProps = {
 export type InputCPFProps = {
     control: Control<RestaurantData>;
     initialValues: Partial<RestaurantData>;
+    hasTriedToSubmit?: boolean;
+    clearErrors?: UseFormClearErrors<RestaurantData>;
 }
 
 export type InputPhoneNumberProps = {
     control: Control<RestaurantData>;
     initialValues: Partial<RestaurantData>;
+    hasTriedToSubmit?: boolean;
+    clearErrors?: UseFormClearErrors<RestaurantData>;
 }
 
 export type InputCustomerPhoneNumberProps = {
@@ -96,6 +100,7 @@ export type InputPasswordProps = {
     clearErrors: UseFormClearErrors<RestaurantData>;
     watch: UseFormWatch<RestaurantData>;
     initialValues?: Partial<RestaurantData>;
+    hasTriedToSubmit?: boolean;
 }
 
 export type InputDeliveryTypeProps = {

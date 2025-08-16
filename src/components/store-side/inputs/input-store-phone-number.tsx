@@ -1,12 +1,14 @@
 import { Controller } from "react-hook-form";
-import { IMaskInput } from "react-imask"
-import { InputPhoneNumberProps } from "../../../types/types-input.d"
+import { IMaskInput } from "react-imask";
+import { InputPhoneNumberProps } from "../../../types/types-input.d";
 
 export const InputPhoneNumber = ({
     control,
     initialValues = {},
-}: InputPhoneNumberProps ) => {
-    
+    hasTriedToSubmit = false,
+    clearErrors,
+}: InputPhoneNumberProps) => {
+
     return (
         <Controller
             name="phoneNumber"
@@ -16,7 +18,7 @@ export const InputPhoneNumber = ({
                 required: "Obrigatório",
                 pattern: {
                     value: /^\(\d{2}\) \d{5}-\d{4}$/,
-                    message: "Obrigatório",
+                    message: "(99) 99999-9999",
                 },
             }}
             render={({ field, fieldState }) => (
@@ -26,7 +28,7 @@ export const InputPhoneNumber = ({
                         className="w-full font-medium ml-2 mt-2 flex flex-col relative"
                     >
                         Celular *
-                        {fieldState.error && (
+                        {hasTriedToSubmit && fieldState.error && (
                             <span className="span-error">
                                 {fieldState.error.message}
                             </span>
@@ -36,11 +38,16 @@ export const InputPhoneNumber = ({
                         {...field}
                         mask="(00) 00000-0000"
                         placeholder="(99) 99999-9999"
-                        className={`input ${fieldState.error ? " input-error" : ""}`}
-                        onAccept={(value) => field.onChange(value)}
+                        className={`input ${hasTriedToSubmit && fieldState.error ? " input-error" : ""}`}
+                        onAccept={(value) => {
+                            field.onChange(value);
+                            if (clearErrors) {
+                                clearErrors("phoneNumber");
+                            }
+                        }}
                     />
                 </>
             )}
         />
     );
-};
+}

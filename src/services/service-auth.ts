@@ -33,6 +33,34 @@ export const login = async (credentials: AccountData) => {
     }
 };
 
+export const verifyEmail = async (email: string) => {
+    try {
+        const response = await fetch(`${API_URL}/validate-email/${email}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Erro ao verificar email');
+        }
+
+        return data;
+    } catch (error) {
+        if (error instanceof TypeError && error.message === 'Failed to fetch') {
+            throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde.');
+        }
+
+        if (error instanceof Error) {
+            throw error;
+        }
+        throw new Error('Erro desconhecido ao verificar email');
+    }
+};
+
 export const logout = async () => {
     try {
         const response = await fetch(`${API_URL}/logout`, {
