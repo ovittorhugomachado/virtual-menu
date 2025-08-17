@@ -2,10 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { BlackLogo, BlackLogoText } from "../../component-logo";
 import { AccountData } from "../../../types/types-account.d";
 import { AccountFormProps } from "../../../types/types-data-forms.d";
 import { RestaurantData } from "../../../types/types-restaurante-data.d";
-import { BlackLogo, BlackLogoText } from "../../component-logo";
 import { InputRestaurantName } from "../inputs/input-store-restaurant-name";
 import { InputOwnersName } from "../inputs/input-store-owners-name";
 import { InputCPF } from "../inputs/input-store-cpf";
@@ -98,9 +98,9 @@ export const SignupFormContainer = ({
         }
     };
 
-const handleFormSubmit: SubmitHandler<AccountData> = async (data) => {
+const handleFormSubmit: SubmitHandler<AccountData> = (data) => {
 
-    await onSubmit(data);
+    onSubmit(data);
 
     setStep(5);
 
@@ -110,7 +110,7 @@ const handleFormSubmit: SubmitHandler<AccountData> = async (data) => {
             <div className="fixed md:hidden top-[120px] left-0 w-screen h-[calc(100vh-120px)] bg-green-100 z-0"></div>
             <div className="w-[90%] h-[90%] max-w-[1300px] flex flex-col md:flex-row">
                 <div className={`md:hidden flex gap-3 mx-auto mb-6`}>
-                    <span className={`${step === 1 ? 'bg-white text-blue-600' : 'text-white'}  flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-white`}>1</span>
+                    <span className={`${step === 1 ? 'bg-white text-blue-600' : 'text-white'} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-white`}>1</span>
                     <span className={`${step === 2 ? 'bg-white text-blue-600' : 'text-white'} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-white`}>2</span>
                     <span className={`${step === 3 ? 'bg-white text-blue-600' : 'text-white'} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-white`}>3</span>
                     <span className={`${step === 4 ? 'bg-white text-blue-600' : 'text-white'} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-white`}>4</span>
@@ -121,19 +121,20 @@ const handleFormSubmit: SubmitHandler<AccountData> = async (data) => {
                     <BlackLogo className="w-[100px] ml-4" />
                     <div className={`${step !== 5 ? '' : 'hidden'}  flex flex-col gap-3 ml-20`}>
                         <p className="flex items-center gap-3 text-lg">
-                            <span className={`${step === 1 ? 'bg-primary text-white border-primary' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-black`}>1</span>
+                            <span 
+                            className={`${step === 1 ? 'bg-primary text-white border-primary' : ''} ${step < 1 ? 'border-gray-400 text-gray-400' : 'border-black text-black'} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-black`}>1</span>
                             Email
                         </p>
-                        <p className="flex items-center gap-3 text-lg">
-                            <span className={`${step === 2 ? 'bg-primary text-white border-primary' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-black`}>2</span>
+                        <p className={`${step < 2 ? 'text-gray-400' : ''} flex items-center gap-3 text-lg`}>
+                            <span className={`${step === 2 ? 'bg-primary text-white border-primary' : ''} ${step < 2 ? 'border-gray-400 text-gray-400' : 'border-black text-black'} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-black`}>2</span>
                             Restaurante
                         </p>
-                        <p className="flex items-center gap-3 text-lg">
-                            <span className={`${step === 3 ? 'bg-primary text-white border-primary' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-black`}>3</span>
+                        <p className={`${step < 3 ? 'text-gray-400' : ''} flex items-center gap-3 text-lg`}>
+                            <span className={`${step === 3 ? 'bg-primary text-white border-primary' : ''} ${step < 3 ? 'border-gray-400 text-gray-400' : 'border-black text-black'} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-black`}>3</span>
                             Proprietário
                         </p>
-                        <p className="flex items-center gap-3 text-lg">
-                            <span className={`${step === 4 ? 'bg-primary text-white border-primary' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-black`}>4</span>
+                        <p className={`${step < 4 ? 'text-gray-400' : ''} flex items-center gap-3 text-lg`}>
+                            <span className={`${step === 4 ? 'bg-primary text-white border-primary' : ''} ${step < 4 ? 'border-gray-400 text-gray-400' : 'border-black text-black'} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-black`}>4</span>
                             Criar Senha
                         </p>
                     </div>
@@ -305,6 +306,5 @@ const handleFormSubmit: SubmitHandler<AccountData> = async (data) => {
                 </form>
             </div>
         </>
-
     );
 };

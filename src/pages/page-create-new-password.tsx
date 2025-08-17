@@ -1,18 +1,21 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { createNewPassword, validateToken } from "../services/service-create-new-password";
 import { AccountData } from "../types/types-account.d";
 import { CreateNewPasswordFormContainer } from "../components/store-side/forms/form-create-new-password";
-import { WhiteLogo} from "../components/component-logo";
+import { BlackLogo, BlackLogoText, WhiteLogoText } from "../components/component-logo";
 import { FaArrowLeft } from "react-icons/fa";
 import { LoadingComponent } from "../components/component-loading";
+import { CiCircleAlert } from "react-icons/ci";
+import { GoCheck } from "react-icons/go";
 
 export const CreateNewPasswordPage = () => {
 
     const [message, setMessage] = useState('')
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(true); // Força o loading para true
+    const [loadingPage, setLoadingPage] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [isValidToken, setIsValidToken] = useState(false);
 
     const { token } = useParams<{ token: string }>();
@@ -24,7 +27,7 @@ export const CreateNewPasswordPage = () => {
                 setError('Token inválido ou ausente.');
                 return;
             }
-            setLoading(true);
+            setLoadingPage(true);
             try {
                 const isValid = await validateToken(token);
                 setIsValidToken(isValid);
@@ -36,7 +39,7 @@ export const CreateNewPasswordPage = () => {
                 setError(err.message || 'Erro ao validar o link');
                 navigate('/entrar', { state: { error: err.message } });
             } finally {
-                setLoading(false);
+                setLoadingPage(false);
             }
         };
 
@@ -63,36 +66,111 @@ export const CreateNewPasswordPage = () => {
 
     return (
         <>
-            {loading ? (
+            {loadingPage ? (
                 <LoadingComponent />
             ) : message ? (
-                <div className="w-full h-80 text-black mx-3 pt-10 pb-10 p-5 flex flex-col gap-3 justify-center items-center rounded">
-                    <WhiteLogo/>
-                    <p>{message}</p>
-                    <Link to="/entrar" className="primary-button">
-                        Entrar na conta
-                    </Link>
-                </div>
-            ) : isValidToken && !loading ? (
-                <div className="w-full min-w-[300px] py-8 flex justify-center items-center">
+                <main
+                    className="w-full h-screen min-w-[280px] min-h-[590px] flex justify-center items-center"
+                    style={{
+                        background: 'linear-gradient(135deg, #0631dd 0%, #06b6d4 50%, #84cc16 100%)'
+                    }}
+                >
+                    <div className="fixed md:hidden top-[120px] left-0 w-screen h-[calc(100vh-120px)] bg-green-100 z-0"></div>
+                    <div className="w-[90%] h-[90%] max-w-[1300px] flex flex-col md:flex-row">
+                        <div className=" md:hidden flex gap-3 mx-auto mb-6">
+                            <WhiteLogoText
+                                className="w-[200px]"
+                            />
+                        </div>
+                        <div
+                            className="w-[50%] bg-green-100 hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden border border-white/30"
+                        >
+                            <BlackLogo className="w-[100px] ml-4" />
+                            <GoCheck size={130} className="text-[#99b9a8] mx-auto animate-pulse" />
+                            <img src="../form-create-new-password-success.gif" alt="line" width={200} style={{ margin: '0 45px' }} />
+                        </div>
+                        <div className="w-full md:w-[60%] relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white border-[1px] border-gray-300 md:border-none">
+                            <Link to="/entrar" className="flex absolute top-10 justify-center transition-all hover:scale-105 duration-200">
+                                <BlackLogoText className="w-[200px] hidden md:block " />
+                            </Link>
+                            <Link to="/entrar" className="absolute top-2.5 left-4 flex items-center justify-center gap-2">
+                                <span className="translate-y-[1px]"><FaArrowLeft /></span>Voltar
+                            </Link>
+                            <div className="w-full max-w-105 mt-5 mb-5 flex flex-col gap-1">
+                            </div>
+                            <div className="flex flex-col justify-center items-center">
+                                {message && (
+                                    <>
+                                        <h1 className="text-2xl text-center">Tudo certo ✅</h1>
+                                        <p className="sm:text-lg text-center px-6">{message}</p>
+                                    </>
+                                )}
+                                <Link to="/entrar" className="primary-button w-64 text-center mt-8">
+                                    Entrar na conta
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            ) : isValidToken && !loadingPage ? (
+                <main
+                    className="w-full h-screen min-w-[280px] min-h-[590px] flex justify-center items-center"
+                    style={{
+                        background: 'linear-gradient(135deg, #0631dd 0%, #06b6d4 50%, #84cc16 100%)'
+                    }}
+                >
                     <CreateNewPasswordFormContainer
                         onSubmit={handleNewPassword}
                         message={message}
                         isLoading={loading}
                         error={error}
+                        setError={setError}
                     />
-                </div>
+                </main>
             ) : (
-                <div className="w-full min-w-[270px] flex flex-col justify-center items-center text-black">
-                    <Link to="/entrar" className={`absolute top-2.5 left-4 flex gap-2 items-center justify-center text-base`}>
-                        <span className="translate-y-[1px]"><FaArrowLeft /></span>Voltar
-                    </Link>
-                    <WhiteLogo/>
-                    {error ? (<p className="py-6 px-4">{error}</p>) : null}
-                    <Link to="/recuperar-senha" className="primary-button">
-                        Solicitar novo link
-                    </Link>
-                </div>
+                <main
+                    className="w-full h-screen min-w-[280px] min-h-[590px] flex justify-center items-center"
+                    style={{
+                        background: 'linear-gradient(135deg, #0631dd 0%, #06b6d4 50%, #84cc16 100%)'
+                    }}
+                >
+                    <div className="fixed md:hidden top-[120px] left-0 w-screen h-[calc(100vh-120px)] bg-green-100 z-0"></div>
+                    <div className="w-[90%] h-[90%] max-w-[1300px] flex flex-col md:flex-row">
+                        <div className=" md:hidden flex gap-3 mx-auto mb-6">
+                            <WhiteLogoText
+                                className="w-[200px]"
+                            />
+                        </div>
+                        <div
+                            className="w-[50%] bg-green-100 hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden border border-white/30"
+                        >
+                            <BlackLogo className="w-[100px] ml-4" />
+                            <CiCircleAlert size={130} className="text-[#99b9a8] mx-auto animate-pulse" />
+                            <img src="../alert-error-recover-password.gif" alt="line" width={200} style={{ margin: '0 45px' }} />
+                        </div>
+                        <div className="w-full md:w-[60%] min-h-100 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white border-[1px] border-gray-300 md:border-none">
+                            <Link to="/entrar" className="flex absolute top-10 justify-center transition-all hover:scale-105 duration-200">
+                                <BlackLogoText className="w-[200px] hidden md:block " />
+                            </Link>
+                            <Link to="/entrar" className="absolute top-2.5 left-4 flex items-center justify-center gap-2">
+                                <span className="translate-y-[1px]"><FaArrowLeft /></span>Voltar
+                            </Link>
+                            <div className="w-full max-w-105 mt-5 mb-5 flex flex-col gap-1">
+                            </div>
+                            <div className="flex flex-col justify-center items-center">
+                                {error && (
+                                    <>
+                                        <h1 className="text-2xl text-center">Ooops... ❌</h1>
+                                        <p className="sm:text-lg text-center px-6">{error}</p>
+                                    </>
+                                )}
+                                <Link to="/recuperar-senha" className="primary-button w-64 text-center mt-8">
+                                    Solicitar novo link
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </main>
             )}
         </>
     )

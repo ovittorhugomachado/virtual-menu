@@ -35,6 +35,7 @@ export const RecoverPasswordPage = () => {
                 isLoading={loading}
                 message={message}
                 error={error}
+                setError={setError}
             />
         </main>
     )
