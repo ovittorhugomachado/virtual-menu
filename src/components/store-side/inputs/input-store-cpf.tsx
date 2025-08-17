@@ -7,6 +7,7 @@ export const InputCPF = ({
     initialValues = {},
     hasTriedToSubmit = false,
     clearErrors,
+    onKeyDown
 }: InputCPFProps) => {
 
     return (
@@ -41,6 +42,7 @@ export const InputCPF = ({
                         {...field}
                         mask="000.000.000-00"
                         placeholder="000.000.000-00"
+                        onKeyDown={onKeyDown}
                         className={`input ${fieldState.error ? " input-error" : ""}`}
                         onAccept={(value) => {
                             field.onChange(value);

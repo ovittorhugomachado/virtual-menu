@@ -5,6 +5,7 @@ export const InputRestaurantName = ({
     errors,
     clearErrors,
     initialValues = {}, 
+    onKeyDown
 }: InputRestaurantNameProps) => {
 
     return (
@@ -23,6 +24,7 @@ export const InputRestaurantName = ({
             <input
                 id="restaurantName"
                 type="text"
+                onKeyDown={onKeyDown}
                 className={`input ${errors.restaurantName ? " input-error" : ""}`}
                 placeholder="Restaurante"
                 defaultValue={initialValues.restaurantName || ""}

@@ -86,7 +86,7 @@ export const RecoverPasswordFormContainer = ({
                         >
                             {isLoading ? "Carregando..." : "Recuperar senha"}
                         </button>
-                        <div className="mb-5 flex flex-col gap-4">
+                        <div className="mb-5 flex flex-col gap-4 absolute bottom-4">
                             <Link
                                 to="/criar-conta"
                                 className="text-center"

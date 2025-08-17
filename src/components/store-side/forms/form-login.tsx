@@ -49,7 +49,7 @@ export const LoginFormContainer = ({
 
     return (
         <>
-            <div className="fixed md:hidden top-[120px] left-0 w-screen h-[calc(100vh-120px)] bg-gray-300 z-0"></div>
+            <div className="fixed md:hidden top-[120px] left-0 w-screen h-[calc(100vh-120px)] bg-green-100 z-0"></div>
             <div className="w-[90%] h-[90%] max-w-[1300px] flex flex-col md:flex-row">
                 <div className=" md:hidden flex gap-3 mx-auto mb-6">
                     <WhiteLogoText 
@@ -61,15 +61,15 @@ export const LoginFormContainer = ({
                 >
                     <BlackLogo className="w-[100px] ml-4" />
                     <img src="./line.gif" alt="line" width={150} style={{ margin: '0 auto' }} />
-                    <h1 className="w-50 lg:w-60 text-[20px] lg:text-[24px] font-bold font-ones mx-9 mb-8">Tecnologia que leva seu restaurante mais longe</h1>
+                    <img src="./form-register-step-1.gif" alt="line" width={200} style={{ margin: '0 45px' }} />
                 </div>
                 <form
                     onSubmit={handleSubmit(handleAccountData)}
                     noValidate
-                    className="w-full md:w-[60%] relative rounded-xl md:rounded-l-none py-8 px-4 md:px-3 mx-auto flex flex-col justify-center items-center gap-4 bg-white"
+                    className="w-full md:w-[60%] min-h-100 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-center items-center gap-4 bg-white border-[1px] border-gray-300 md:border-none"
                 >
                     <BlackLogoText className="hidden md:block w-[200px] absolute top-10" />
-                    <h1 className="w-full max-w-105 mb-2 ml-6 text-2xl font-bold">Entrar</h1>
+                    <h1 className="w-full max-w-105 ml-6 text-2xl font-bold">Entrar</h1>
                     <InputEmail
                         register={register}
                         errors={errors}
@@ -88,12 +88,12 @@ export const LoginFormContainer = ({
                     )}
                     <button
                         type="submit"
-                        className="w-[220px] primary-button mt-4 self-center"
+                        className="w-[220px] primary-button self-center"
                         disabled={isLoading}
                     >
                         {isLoading ? "Carregando..." : "Entrar"}
                     </button>
-                    <div className="mb-5 flex flex-col gap-4">
+                    <div className="pt-8 flex flex-col gap-2 absolute bottom-4">
                         <Link
                             to="/criar-conta"
                             className="text-center"

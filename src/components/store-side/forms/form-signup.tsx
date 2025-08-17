@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { AccountData } from "../../../types/types-account.d";
@@ -9,9 +10,9 @@ import { InputOwnersName } from "../inputs/input-store-owners-name";
 import { InputCPF } from "../inputs/input-store-cpf";
 import { InputPhoneNumber } from "../inputs/input-store-phone-number";
 import { InputPasswordRegister } from "../inputs/input-store-password-register";
-import { useState } from "react";
 import { InputEmailRegister } from "../inputs/input-store-email-register";
 import { checkEmailExists } from "../../../utils/fuction-check-email-exists";
+import { GoCheck } from "react-icons/go";
 
 export const SignupFormContainer = ({
     onSubmit,
@@ -46,8 +47,6 @@ export const SignupFormContainer = ({
     const [step, setStep] = useState(1);
     const [hasTriedToSubmit, setHasTriedToSubmit] = useState(false);
 
-    console.log(hasTriedToSubmit, errors)
-
     const handleNextStep = async () => {
         if (!hasTriedToSubmit) setHasTriedToSubmit(true);
 
@@ -56,7 +55,7 @@ export const SignupFormContainer = ({
             if (!emailValue) {
                 setError("email", {
                     type: "manual",
-                    message: "Obrigatório.",
+                    message: "Obrigatório",
                 });
                 return;
             }
@@ -85,16 +84,23 @@ export const SignupFormContainer = ({
         }
     };
 
+    const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        handleNextStep();
+    }
+};
+
     const handleFormSubmit: SubmitHandler<AccountData> = (data) => {
-        console.log("submeteu")
+        console.log("submeteu");
         onSubmit(data);
     };
 
     return (
         <>
-            <div className="fixed md:hidden top-[120px] left-0 w-screen h-[calc(100vh-120px)] bg-gray-300 z-0"></div>
+            <div className="fixed md:hidden top-[120px] left-0 w-screen h-[calc(100vh-120px)] bg-green-100 z-0"></div>
             <div className="w-[90%] h-[90%] max-w-[1300px] flex flex-col md:flex-row">
-                <div className=" md:hidden flex gap-3 mx-auto mb-6">
+                <div className={`md:hidden flex gap-3 mx-auto mb-6`}>
                     <span className={`${step === 1 ? 'bg-white text-blue-600' : 'text-white'}  flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-white`}>1</span>
                     <span className={`${step === 2 ? 'bg-white text-blue-600' : 'text-white'} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-white`}>2</span>
                     <span className={`${step === 3 ? 'bg-white text-blue-600' : 'text-white'} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-white`}>3</span>
@@ -104,38 +110,40 @@ export const SignupFormContainer = ({
                     className="w-[50%] bg-green-100 hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden border border-white/30"
                 >
                     <BlackLogo className="w-[100px] ml-4" />
-                    <div className="flex flex-col gap-3 ml-20">
+                    <div className={`${step !== 5 ? '' : 'hidden'}  flex flex-col gap-3 ml-20`}>
                         <p className="flex items-center gap-3 text-lg">
-                            <span className={`${step === 1 ? 'bg-primary text-white' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-black`}>1</span>
+                            <span className={`${step === 1 ? 'bg-primary text-white border-primary' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-black`}>1</span>
                             Email
                         </p>
                         <p className="flex items-center gap-3 text-lg">
-                            <span className={`${step === 2 ? 'bg-primary text-white' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-black`}>2</span>
+                            <span className={`${step === 2 ? 'bg-primary text-white border-primary' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-black`}>2</span>
                             Restaurante
                         </p>
                         <p className="flex items-center gap-3 text-lg">
-                            <span className={`${step === 3 ? 'bg-primary text-white' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-black`}>3</span>
+                            <span className={`${step === 3 ? 'bg-primary text-white border-primary' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-black`}>3</span>
                             Proprietário
                         </p>
                         <p className="flex items-center gap-3 text-lg">
-                            <span className={`${step === 4 ? 'bg-primary text-white' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-black`}>4</span>
+                            <span className={`${step === 4 ? 'bg-primary text-white border-primary' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-black`}>4</span>
                             Criar Senha
                         </p>
                     </div>
-                    <h1
-                        className="w-50 lg:w-60 text-[16px] lg:text-[24px] font-bold font-ones mx-9 mb-8"
-                    >
-                        {step === 1 && "Hora de fazer seu restaurante crescer ainda mais"}
-                        {step === 2 && "Aqui você vai criar os dados do restaurante"}
-                        {step === 3 && "Agora é hora dos dados do proprietário"}
-                        {step === 4 && "Pra finalizar, é só escolher uma boa senha pra que a conta fique segura"}
+                    {step === 5 && (
+                        <>
+                            <GoCheck size={130} className="text-[#99b9a8] mx-auto animate-pulse" />
+                        </>
+                    )}
+                    {step === 1 && <img src="./form-register-step-1.gif" alt="line" width={200} style={{ margin: '0 45px' }} />}
+                    {step === 2 && <img src="./form-register-step-2.gif" alt="line" width={200} style={{ margin: '0 45px' }} />}
+                    {step === 3 && <img src="./form-register-step-3.gif" alt="line" width={200} style={{ margin: '0 45px' }} />}
+                    {step === 4 && <img src="./form-register-step-4.gif" alt="line" width={200} style={{ margin: '0 45px' }} />}
+                    {step === 5 && <img src="./form-register-step-5.gif" alt="line" width={200} style={{ margin: '0 45px' }} />}
 
-                    </h1>
                 </div>
                 <form
                     onSubmit={handleSubmit(handleFormSubmit)}
                     noValidate
-                    className="w-full md:w-[60%] min-h-70 relative rounded-xl md:rounded-l-none py-8 px-4 pb-26 md:px-3 mx-auto flex flex-col justify-center items-center gap-4 bg-white"
+                    className="w-full md:w-[60%] relative rounded-xl md:rounded-l-none py-8 px-4 md:px-3 mx-auto flex flex-col justify-center items-center gap-4 bg-white border-[1px] border-gray-300 md:border-none"
                 >
                     <div className="w-full max-w-105 mt- mb-5 flex flex-col justify-center items-center gap-1">
                         <Link to="/entrar" className="flex absolute top-10 justify-center transition-all hover:scale-105 duration-200">
@@ -156,8 +164,9 @@ export const SignupFormContainer = ({
                                     clearErrors={clearErrors}
                                     initialValues={initialValues}
                                     validate={checkEmailExists}
+                                    onKeyDown={handleEnterKey}
                                 />
-                                <div className={`${step === 1 ? "justify-center" : ""} w-full flex flex-col-reverse sm:flex-row justify-between items-center px-12 pb-8 md:pb-14 absolute bottom-0`}>
+                                <div className={`${step === 1 ? "justify-center" : ""} w-full flex flex-col-reverse sm:flex-row justify-between items-center px-12 py-8`}>
                                     <button
                                         className={`${step === 1 ? "text-white cursor-not-allowed opacity-50 hidden" : ""} mx-16 mt-8 md:mt-0 cursor-pointer hover:scale-103 transition-all duration-105`}
                                         disabled={step === 1}
@@ -181,12 +190,14 @@ export const SignupFormContainer = ({
                                     register={register}
                                     errors={hasTriedToSubmit ? errors : {}}
                                     clearErrors={clearErrors}
+                                    onKeyDown={handleEnterKey}
                                 />
                                 <InputPhoneNumber
                                     control={control}
                                     initialValues={initialValues}
                                     hasTriedToSubmit={hasTriedToSubmit}
                                     clearErrors={clearErrors}
+                                    onKeyDown={handleEnterKey}
                                 />
                             </>
                         )}
@@ -196,12 +207,14 @@ export const SignupFormContainer = ({
                                     register={register}
                                     errors={hasTriedToSubmit ? errors : {}}
                                     clearErrors={clearErrors}
+                                    onKeyDown={handleEnterKey}
                                 />
                                 <InputCPF
                                     control={control}
                                     initialValues={initialValues}
                                     hasTriedToSubmit={hasTriedToSubmit}
                                     clearErrors={clearErrors}
+                                    onKeyDown={handleEnterKey}
                                 />
                             </>
 
@@ -213,13 +226,14 @@ export const SignupFormContainer = ({
                                 hasTriedToSubmit={hasTriedToSubmit}
                                 errors={errors}
                                 clearErrors={clearErrors}
+                                onKeyDown={handleEnterKey}
                             />
                         )}
                     </div>
                     {step < 4 && step > 1 && (
-                        <div className="w-full flex flex-col-reverse sm:flex-row justify-between items-center px-12 pt-24 pb-2 md:pb-14 absolute bottom-0">
+                        <div className="w-full max-w-[420px] flex flex-col-reverse sm:flex-row justify-between items-center mx-auto pb-8">
                             <button
-                                className={`${step === 1 ? "text-white cursor-not-allowed opacity-50" : ""} mx-16 mt-4 mb-2 md:mt-0 cursor-pointer hover:scale-103 transition-all duration-105`}
+                                className={`${step === 1 ? "text-white cursor-not-allowed opacity-50" : ""} mx-16 mt-4 mb-2 sm:mt-0 sm:mb-0 md:mt-0 cursor-pointer hover:scale-103 transition-all duration-105`}
                                 onClick={() => setStep(step - 1)}
                                 disabled={step === 1}
                                 type="button"
@@ -236,9 +250,9 @@ export const SignupFormContainer = ({
                         </div>
                     )}
                     {step === 4 && (
-                        <div className="w-full flex flex-col-reverse sm:flex-row justify-between items-center px-12 pt-20 pb-2 md:pb-14 absolute bottom-0">
+                        <div className="w-full max-w-[420px] flex flex-col-reverse sm:flex-row justify-between items-center mx-auto pb-8">
                             <button
-                                className="mx-16 mt-4 mb-2 md:mt-0 cursor-pointer hover:scale-103 transition-all duration-105"
+                                className="mx-10 mt-4 mb-2 md:mt-0 cursor-pointer hover:scale-103 transition-all duration-105"
                                 onClick={() => setStep(step - 1)}
                                 type="button"
                             >
@@ -248,16 +262,33 @@ export const SignupFormContainer = ({
                                 type="submit"
                                 className="w-[220px] primary-button"
                                 disabled={isLoading}
+                                onClick={handleNextStep}
                             >
                                 {isLoading ? "Carregando..." : "Criar conta"}
                             </button>
                         </div>
+                    )}
+                    {step === 5 && (
+                        <>
+                            <h1 className="text-2xl text-center">Conta Criada com sucesso 🎉</h1>
+                            <p className="sm:text-lg text-center px-6">Agora você já pode entrar na sua conta e começar a configurar seu restaurante!</p>
+                            <Link
+                                to="/entrar"
+                                className="w-[220px] primary-button mt-4 text-center"
+                            >
+                                Entrar
+                            </Link>
+                        </>
                     )}
                     {error && (
                         <p className="text-error">
                             {error}
                         </p>
                     )}
+                    <div className={`${step === 5 ? 'hidden' : ''} flex gap-2 text-center absolute bottom-6 z-20`}>
+                        <h1>Já tem conta?</h1>
+                        <Link to="/entrar" className="flex items-center font-bold">Entrar na conta</Link>
+                    </div>
                 </form>
             </div>
         </>

@@ -7,6 +7,7 @@ export const InputPhoneNumber = ({
     initialValues = {},
     hasTriedToSubmit = false,
     clearErrors,
+    onKeyDown
 }: InputPhoneNumberProps) => {
 
     return (
@@ -38,6 +39,7 @@ export const InputPhoneNumber = ({
                         {...field}
                         mask="(00) 00000-0000"
                         placeholder="(99) 99999-9999"
+                        onKeyDown={onKeyDown}
                         className={`input ${hasTriedToSubmit && fieldState.error ? " input-error" : ""}`}
                         onAccept={(value) => {
                             field.onChange(value);

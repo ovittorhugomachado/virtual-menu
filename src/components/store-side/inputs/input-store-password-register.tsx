@@ -6,7 +6,8 @@ export const InputPasswordRegister = ({
     register,
     errors,
     watch,
-    clearErrors
+    clearErrors,
+    onKeyDown
 }: InputPasswordProps) => {
     const [showPassword, setShowPassword] = useState(false);
     const password = watch("password") || '';
@@ -36,6 +37,7 @@ export const InputPasswordRegister = ({
                 <input
                     type={showPassword ? "text" : "password"}
                     placeholder="crie sua senha"
+                    onKeyDown={onKeyDown}
                     className={`input ${errors.password ? " input-error" : ""}`}
                     {...register("password", {
                         required: "Obrigatório",

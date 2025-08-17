@@ -15,6 +15,7 @@ export type InputOwnersNameProps = {
     errors: FieldErrors<RestaurantData>;
     clearErrors: UseFormClearErrors<RestaurantData>;
     initialValues?: Partial<RestaurantData>;
+    onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
 };
 
 export type InputRestaurantNameProps = {
@@ -22,6 +23,7 @@ export type InputRestaurantNameProps = {
     errors: FieldErrors<RestaurantData>;
     clearErrors: UseFormClearErrors<RestaurantData>;
     initialValues?: Partial<RestaurantData>;
+    onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
 };
 
 export type InputCustomerNameProps = {
@@ -71,6 +73,7 @@ export type InputCPFProps = {
     initialValues: Partial<RestaurantData>;
     hasTriedToSubmit?: boolean;
     clearErrors?: UseFormClearErrors<RestaurantData>;
+    onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
 export type InputPhoneNumberProps = {
@@ -78,6 +81,7 @@ export type InputPhoneNumberProps = {
     initialValues: Partial<RestaurantData>;
     hasTriedToSubmit?: boolean;
     clearErrors?: UseFormClearErrors<RestaurantData>;
+    onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
 export type InputCustomerPhoneNumberProps = {
@@ -92,6 +96,7 @@ export type InputEmailProps = {
     errors: FieldErrors<RestaurantData>;
     clearErrors: UseFormClearErrors<RestaurantData>;
     initialValues?: Partial<RestaurantData>;
+    onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
 export type InputPasswordProps = {
@@ -101,6 +106,7 @@ export type InputPasswordProps = {
     watch: UseFormWatch<RestaurantData>;
     initialValues?: Partial<RestaurantData>;
     hasTriedToSubmit?: boolean;
+    onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
 export type InputDeliveryTypeProps = {

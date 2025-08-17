@@ -5,7 +5,8 @@ export const InputEmailRegister = ({
     errors,
     clearErrors,
     initialValues = {},
-    validate, // nova prop
+    validate, 
+    onKeyDown,
 }: InputEmailProps & { validate?: (email: string) => Promise<string | true> }) => {
 
     return (
@@ -24,6 +25,7 @@ export const InputEmailRegister = ({
             <input
                 id="email"
                 type="email"
+                onKeyDown={onKeyDown}
                 className={`input ${errors.email ? " input-error" : ""}`}
                 placeholder="Digite seu email"
                 defaultValue={initialValues.email || ""}

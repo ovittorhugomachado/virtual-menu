@@ -5,6 +5,7 @@ export const InputOwnersName = ({
     errors,
     clearErrors,
     initialValues = {},
+    onKeyDown
 }: InputOwnersNameProps) => {
     
     return (
@@ -23,6 +24,7 @@ export const InputOwnersName = ({
             <input
                 id="ownersName"
                 type="text"
+                onKeyDown={onKeyDown}
                 className={`input ${errors.ownersName ? " input-error" : ""}`}
                 placeholder="Proprietário"
                 defaultValue={initialValues.ownersName || ""}
