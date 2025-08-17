@@ -52,7 +52,7 @@ export const LoginFormContainer = ({
             <div className="fixed md:hidden top-[120px] left-0 w-screen h-[calc(100vh-120px)] bg-green-100 z-0"></div>
             <div className="w-[90%] h-[90%] max-w-[1300px] flex flex-col md:flex-row">
                 <div className=" md:hidden flex gap-3 mx-auto mb-6">
-                    <WhiteLogoText 
+                    <WhiteLogoText
                         className="w-[200px]"
                     />
                 </div>
@@ -66,7 +66,7 @@ export const LoginFormContainer = ({
                 <form
                     onSubmit={handleSubmit(handleAccountData)}
                     noValidate
-                    className="w-full md:w-[60%] min-h-100 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-center items-center gap-4 bg-white border-[1px] border-gray-300 md:border-none"
+                    className="w-full md:w-[60%] min-h-100 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white border-[1px] border-gray-300 md:border-none"
                 >
                     <BlackLogoText className="hidden md:block w-[200px] absolute top-10" />
                     <h1 className="w-full max-w-105 ml-6 text-2xl font-bold">Entrar</h1>
@@ -81,18 +81,18 @@ export const LoginFormContainer = ({
                         errors={errors}
                         clearErrors={clearErrors}
                     />
-                    {error && (
-                        <p className="text-error">
-                            {error}
-                        </p>
-                    )}
-                    <button
-                        type="submit"
-                        className="w-[220px] primary-button self-center"
-                        disabled={isLoading}
-                    >
-                        {isLoading ? "Carregando..." : "Entrar"}
-                    </button>
+                    <div className="relative flex justify-center">
+                        {error && (
+                            <p className="text-error absolute -top-1">{error}</p>
+                        )}
+                        <button
+                            type="submit"
+                            className="w-[220px] primary-button self-center mt-6"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? "Carregando..." : "Entrar"}
+                        </button>
+                    </div>
                     <div className="pt-8 flex flex-col gap-2 absolute bottom-4">
                         <Link
                             to="/criar-conta"
@@ -111,10 +111,8 @@ export const LoginFormContainer = ({
                         </Link>
                     </div>
                 </form>
-
             </div>
         </>
-
     );
 };
 

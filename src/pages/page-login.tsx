@@ -38,6 +38,7 @@ export const LoginPage = () => {
                 isLoading={loading}
                 message=""
                 error={error}
+                setError={setError}
             />
         </main>
     )

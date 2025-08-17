@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -13,6 +14,7 @@ import { InputPasswordRegister } from "../inputs/input-store-password-register";
 import { InputEmailRegister } from "../inputs/input-store-email-register";
 import { checkEmailExists } from "../../../utils/fuction-check-email-exists";
 import { GoCheck } from "react-icons/go";
+import { FaArrowRight } from "react-icons/fa";
 
 export const SignupFormContainer = ({
     onSubmit,
@@ -77,25 +79,32 @@ export const SignupFormContainer = ({
         if (step === 4) fieldsToValidate = ["password"];
 
         const valid = await trigger(fieldsToValidate);
+
         if (valid) {
             setHasTriedToSubmit(false);
             clearErrors();
-            setStep(step + 1);
+            if (step === 4) {
+                handleSubmit(handleFormSubmit)();
+            } else {
+                setStep(step + 1);
+            }
         }
     };
 
     const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-        e.preventDefault();
-        handleNextStep();
-    }
-};
-
-    const handleFormSubmit: SubmitHandler<AccountData> = (data) => {
-        console.log("submeteu");
-        onSubmit(data);
+        if (e.key === "Enter") {
+            e.preventDefault();
+            handleNextStep();
+        }
     };
 
+const handleFormSubmit: SubmitHandler<AccountData> = async (data) => {
+
+    await onSubmit(data);
+
+    setStep(5);
+
+};
     return (
         <>
             <div className="fixed md:hidden top-[120px] left-0 w-screen h-[calc(100vh-120px)] bg-green-100 z-0"></div>
@@ -145,11 +154,11 @@ export const SignupFormContainer = ({
                     noValidate
                     className="w-full md:w-[60%] relative rounded-xl md:rounded-l-none py-8 px-4 md:px-3 mx-auto flex flex-col justify-center items-center gap-4 bg-white border-[1px] border-gray-300 md:border-none"
                 >
-                    <div className="w-full max-w-105 mt- mb-5 flex flex-col justify-center items-center gap-1">
+                    <div className="w-full max-w-105 mt- mb-5 flex flex-col justify-center items-center gap-3">
                         <Link to="/entrar" className="flex absolute top-10 justify-center transition-all hover:scale-105 duration-200">
                             <BlackLogoText className="w-[200px] hidden md:block " />
                         </Link>
-                        <h1 className="w-full max-w-105 mb-2 ml-6 text-xl sm:text-2xl font-bold"
+                        <h1 className="w-full max-w-105 ml-6 text-2xl font-bold"
                         >
                             {step === 1 ? 'Digite seu email' : ''}
                             {step === 2 ? 'Dados do restaurante' : ''}
@@ -262,7 +271,6 @@ export const SignupFormContainer = ({
                                 type="submit"
                                 className="w-[220px] primary-button"
                                 disabled={isLoading}
-                                onClick={handleNextStep}
                             >
                                 {isLoading ? "Carregando..." : "Criar conta"}
                             </button>
@@ -281,13 +289,18 @@ export const SignupFormContainer = ({
                         </>
                     )}
                     {error && (
-                        <p className="text-error">
-                            {error}
-                        </p>
+                        <p className="text-error absolute top-45">{error}</p>
                     )}
                     <div className={`${step === 5 ? 'hidden' : ''} flex gap-2 text-center absolute bottom-6 z-20`}>
-                        <h1>Já tem conta?</h1>
-                        <Link to="/entrar" className="flex items-center font-bold">Entrar na conta</Link>
+                        <Link
+                            to="/entrar"
+                            className="text-center"
+                        >
+                            Já tem conta?{" "}
+                            <strong className="whitespace-nowrap">
+                                Entrar <FaArrowRight className="inline" />
+                            </strong>
+                        </Link>
                     </div>
                 </form>
             </div>

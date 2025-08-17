@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AccountData } from "../../../types/types-account.d";
 import { RestaurantData } from "../../../types/types-restaurante-data.d";
 import { AccountFormProps } from "../../../types/types-data-forms.d";
-import { BlackLogo, BlackLogoText, WhiteLogo } from "../../component-logo";
+import { BlackLogo, WhiteLogo, WhiteLogoText } from "../../component-logo";
 import { InputEmail } from "../inputs/input-store-email";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
@@ -47,72 +47,80 @@ export const RecoverPasswordFormContainer = ({
     };
 
     return (
-        <div className="w-[90%] h-[90%] flex">
-            {message === "" && (
-                <>
-                    <div
-                        className="w-[50%] bg-green-100 hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden border border-white/30"
-                    >
-                        <BlackLogo className="w-[100px] ml-4" />
-                        <img src="./line.gif" alt="line" width={150} style={{ margin: '0 auto' }} />
-                        <h1 className="w-50 lg:w-60 text-[20px] lg:text-[24px] font-bold font-ones mx-9 mb-8">Esqueceu a senha?<br /> Fica tranquilo,<br/> a gente resolve.</h1>
-                    </div>
-                    <form
-                        onSubmit={handleSubmit(handleRecoverPasswordSubmit)}
-                        noValidate
-                        className="w-full md:w-[60%] relative rounded-xl md:rounded-l-none py-8 px-4 md:px-3 mx-auto flex flex-col justify-center items-center gap-4 bg-white"
-                    >
+        <>
+            <div className="fixed md:hidden top-[120px] left-0 w-screen h-[calc(100vh-120px)] bg-green-100 z-0"></div>
+            <div className="w-[90%] h-[90%] max-w-[1300px] flex flex-col md:flex-row">
+                <div className=" md:hidden flex gap-3 mx-auto mb-6">
+                    <WhiteLogoText
+                        className="w-[200px]"
+                    />
+                </div>
+                {message === "" && (
+                    <>
+                        <div
+                            className="w-[50%] bg-green-100 hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden border border-white/30"
+                        >
+                            <BlackLogo className="w-[100px] ml-4" />
+                            <img src="./line.gif" alt="line" width={150} style={{ margin: '0 auto' }} />
+                            <h1 className="w-50 lg:w-60 text-[20px] lg:text-[24px] font-bold font-ones mx-9 mb-8">Esqueceu a senha?<br /> Fica tranquilo,<br /> a gente resolve.</h1>
+                        </div>
+                        <form
+                            onSubmit={handleSubmit(handleRecoverPasswordSubmit)}
+                            noValidate
+                            className="w-full md:w-[60%] min-h-90 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-14 md:justify-center items-center gap-4 bg-white border-[1px] border-gray-300 md:border-none"
+                        >
+                            <Link
+                                to="/entrar"
+                                className="absolute top-2.5 left-4 flex items-center justify-center gap-2"
+                            >
+                                <span className="translate-y-[1px]"><FaArrowLeft /></span>Voltar
+                            </Link>
+                            <h1 className="w-full max-w-105 ml-6 text-2xl font-bold">Recuperar senha</h1>
+                            <InputEmail
+                                register={register}
+                                errors={errors}
+                                clearErrors={clearErrors}
+                            />
+                            <div className="relative flex justify-center">
+                                {error && (
+                                    <p className="text-error absolute -top-1">{error}</p>
+                                )}
+                                <button
+                                    type="submit"
+                                    className="w-[220px] primary-button self-center mt-6"
+                                    disabled={isLoading}
+                                >
+                                    {isLoading ? "Carregando..." : "Recuperar senha"}
+                                </button>
+                            </div>
+                            <div className="mb-5 flex flex-col gap-4 absolute bottom-4">
+                                <Link
+                                    to="/criar-conta"
+                                    className="text-center"
+                                >
+                                    Ainda não tem conta?{" "}
+                                    <strong className="whitespace-nowrap">
+                                        Criar conta <FaArrowRight className="inline" />
+                                    </strong>
+                                </Link>
+                            </div>
+                        </form>
+                    </>
+                )}
+                {message !== "" && (
+                    <>
+                        <WhiteLogo />
+                        <h1 className="text-black my-4 text-center">{message}</h1>
                         <Link
                             to="/entrar"
-                            className="absolute top-2.5 left-4 flex items-center justify-center gap-2"
+                            className="flex items-center gap-3 primary-button"
                         >
-                            <span className="translate-y-[1px]"><FaArrowLeft /></span>Voltar
+                            <span className="translate-y-[1px]"><FaArrowLeft /></span>
+                            Fazer login
                         </Link>
-                        <BlackLogoText className="w-[200px] absolute top-10" />
-                        <h1 className="text-2xl font-bold">Entrar</h1>
-                        <InputEmail
-                            register={register}
-                            errors={errors}
-                            clearErrors={clearErrors}
-                        />
-                        {error && (
-                            <p className="text-error">{error}</p>
-                        )}
-                        <p className="text-center">{message}</p>
-                        <button
-                            type="submit"
-                            className="w-[270px] primary-button mt-4 self-center"
-                            disabled={isLoading}
-                        >
-                            {isLoading ? "Carregando..." : "Recuperar senha"}
-                        </button>
-                        <div className="mb-5 flex flex-col gap-4 absolute bottom-4">
-                            <Link
-                                to="/criar-conta"
-                                className="text-center"
-                            >
-                                Ainda não tem conta?{" "}
-                                <strong className="whitespace-nowrap">
-                                    Criar conta <FaArrowRight className="inline" />
-                                </strong>
-                            </Link>
-                        </div>
-                    </form>
-                </>
-            )}
-            {message !== "" && (
-                <>
-                    <WhiteLogo />
-                    <h1 className="text-black my-4 text-center">{message}</h1>
-                    <Link
-                        to="/entrar"
-                        className="flex items-center gap-3 primary-button"
-                    >
-                        <span className="translate-y-[1px]"><FaArrowLeft /></span>
-                        Fazer login
-                    </Link>
-                </>
-            )}
-        </div>
+                    </>
+                )}
+            </div>
+        </>
     );
 };
