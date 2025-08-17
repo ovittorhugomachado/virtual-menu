@@ -12,13 +12,6 @@
     --breakpoint-xs: 310px;
 }
 
-@font-face {
-  font-family: 'Ones';
-  src: url('/caminho/para/ones.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
 body {
     @apply box-border text-sm bg-no-repeat bg-white bg-cover bg-fixed text-color-text;
 }

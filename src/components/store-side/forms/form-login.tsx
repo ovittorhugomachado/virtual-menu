@@ -61,7 +61,7 @@ export const LoginFormContainer = ({
                 >
                     <BlackLogo className="w-[100px] ml-4" />
                     <img src="./line.gif" alt="line" width={150} style={{ margin: '0 auto' }} />
-                    <img src="./form-register-step-1.gif" alt="line" width={200} style={{ margin: '0 45px' }} />
+                    <img src="./form-login.gif" alt="line" width={200} style={{ margin: '0 45px' }} />
                 </div>
                 <form
                     onSubmit={handleSubmit(handleAccountData)}
