@@ -69,12 +69,7 @@ export const CreateNewPasswordPage = () => {
             {loadingPage ? (
                 <LoadingComponent />
             ) : message ? (
-                <main
-                    className="w-full h-screen min-w-[280px] min-h-[590px] flex justify-center items-center"
-                    style={{
-                        background: 'linear-gradient(135deg, #0631dd 0%, #06b6d4 50%, #84cc16 100%)'
-                    }}
-                >
+                <main className="w-full h-screen min-w-[280px] min-h-[590px] flex justify-center items-center">
                     <div className="fixed md:hidden top-[120px] left-0 w-screen h-[calc(100vh-120px)] bg-green-100 z-0"></div>
                     <div className="w-[90%] h-[90%] max-w-[1300px] flex flex-col md:flex-row">
                         <div className=" md:hidden flex gap-3 mx-auto mb-6">

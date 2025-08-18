@@ -29,9 +29,6 @@ export const LoginPage = () => {
     return (
         <main
             className="w-full h-screen min-w-[280px] min-h-[590px] flex justify-center items-center"
-            style={{
-                background: 'linear-gradient(135deg, #0631dd 0%, #06b6d4 50%, #84cc16 100%)'
-            }}
         >
             <LoginFormContainer
                 onSubmit={handleLogin}

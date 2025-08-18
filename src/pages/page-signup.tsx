@@ -24,12 +24,7 @@ export const RegisterPage = () => {
     };
 
     return (
-        <main
-            className="w-full h-screen min-w-[280px] min-h-[540px] flex justify-center items-center"
-            style={{
-                background: 'linear-gradient(135deg, #0631dd 0%, #06b6d4 50%, #84cc16 100%)'
-            }}
-        >
+        <main className="w-full h-screen min-w-[280px] min-h-[540px] flex justify-center items-center">
             <SignupFormContainer
                 onSubmit={handleRegister}
                 isLoading={loading}

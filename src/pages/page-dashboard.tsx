@@ -13,8 +13,11 @@ import { Header } from "../components/component-header";
 import { LoadingComponent } from "../components/component-loading";
 import { DashboardCards } from "../components/store-side/dashboard-cards";
 import { CgMenuGridR } from "react-icons/cg";
-import { MdBorderColor, MdRestaurantMenu } from "react-icons/md";
+import { MdBorderColor } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
+import { BsFillBarChartFill } from "react-icons/bs";
+import { IoExit } from "react-icons/io5";
+import { logout } from "../services/service-auth";
 
 export const AdminDashboard = () => {
 
@@ -22,24 +25,6 @@ export const AdminDashboard = () => {
     const [activePanel, setActivePanel] = useState<number[]>([]);
     const [ordersLoading, setOrdersLoading] = useState(true);
     const [orders, setOrders] = useState<Order[]>([]);
-
-    const buttons = [
-        {
-            to: "/",
-            title: "Painel de pedidos",
-            icon: <CgMenuGridR />,
-        },
-        {
-            to: "/personalizar-cardapio",
-            title: "Editar cardápio",
-            icon: <IoMdSettings />,
-        },
-        {
-            to: "/restaurantes",
-            title: "Restaurantes",
-            icon: <MdRestaurantMenu />,
-        },
-    ]
 
     const fetchOrders = async () => {
         setOrdersLoading(true);
@@ -53,7 +38,7 @@ export const AdminDashboard = () => {
             setOrders(filtered);
         } catch (error) {
             console.error("Erro ao buscar pedidos:", error);
-            
+
         } finally {
             setOrdersLoading(false);
         }
@@ -72,7 +57,7 @@ export const AdminDashboard = () => {
             console.error("Erro ao buscar pedidos:", error);
         }
     }
-    
+
     useEffect(() => {
         fetchOrders();
     }, []);
@@ -105,6 +90,36 @@ export const AdminDashboard = () => {
         fetchOrders();
     };
 
+    const logoutFunction = async () => {
+        await logout()
+        localStorage.setItem('isLogged', JSON.stringify(false));
+        localStorage.removeItem('token');
+    }
+
+    const buttons = [
+        {
+            to: "/",
+            title: "Painel de pedidos",
+            icon: <CgMenuGridR />,
+        },
+        {
+            to: "/personalizar-cardapio",
+            title: "Editar cardápio",
+            icon: <IoMdSettings />,
+        },
+        {
+            to: "/Relatórios",
+            title: "Relatórios",
+            icon: <BsFillBarChartFill />,
+        },
+        {
+            to: "/entrar",
+            title: "Sair",
+            icon: <IoExit />,
+            function: logoutFunction
+        },
+    ]
+
     return (
         <>
             {error ? (
@@ -122,7 +137,7 @@ export const AdminDashboard = () => {
                     <Header
                         buttons={buttons}
                     />
-                    <main className="w-screen h-screen pt-6 text-black flex flex-col items-center gap-6">
+                    <main className="w-full h-screen bg-white  pt-6 text-black flex flex-col items-center gap-6 rounded-t-3xl">
                         <div className="flex items-center justify-center">
                             <CgMenuGridR className="text-4xl hidden sm:block" />
                             <h1 className="text-4xl border-b-2 border-primary text-center mx-3">Painel de pedidos</h1>

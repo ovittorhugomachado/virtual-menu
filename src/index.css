@@ -6,7 +6,7 @@
 
 @theme {
     --color-primary: #0636DC;
-    --color-secondary: #7FCB1E;
+    --color-secondary: #022211;
     --color-color-text: #000000;
     --font-display: "geologica", "sans-serif";
     --breakpoint-xs: 310px;
@@ -14,6 +14,7 @@
 
 body {
     @apply box-border text-sm bg-no-repeat bg-white bg-cover bg-fixed text-color-text;
+    background: linear-gradient(105deg, #0631dd 0%, #06b6d4 50%, #84cc16 100%);
 }
 
 input {
@@ -57,7 +58,7 @@ img, button, span {
 }
 
 .span-success {
-    @apply text-green-500 text-sm font-normal text-right  right-3
+    @apply text-green-500 text-sm font-normal text-right right-3
 }
 
 .text-error {
@@ -65,7 +66,7 @@ img, button, span {
 }
 
 .font-ones {
-  font-family: 'Ones', sans-serif;
+    font-family: 'Ones', sans-serif;
 }
 
 .link {

@@ -23,7 +23,6 @@ export const WhiteLogoText = ({ className }: WhiteLogoProps) => {
 };
 
 export const BlackLogo = ({ className }: WhiteLogoProps) => {
-
     return (
         <img
             className={className}
@@ -34,7 +33,6 @@ export const BlackLogo = ({ className }: WhiteLogoProps) => {
 };
 
 export const BlackLogoText = ({ className }: WhiteLogoProps) => {
-
     return (
         <img
             className={className}
