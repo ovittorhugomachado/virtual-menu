@@ -57,7 +57,7 @@ export const UploadBannerImage = async (imageFile: File) => {
 
     } catch (error) {
         if (error instanceof TypeError && error.message === 'Failed to fetch') {
-            throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde.');
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
         }
         throw error instanceof Error ? error : new Error('Erro desconhecido');
     }
@@ -90,7 +90,7 @@ export const uploadMenuItemImage = async (
         return await response.json();
     } catch (error) {
         if (error instanceof TypeError && error.message === 'Failed to fetch') {
-            throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde.');
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
         }
         throw error instanceof Error ? error : new Error('Erro desconhecido');
     }

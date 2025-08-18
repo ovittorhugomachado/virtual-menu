@@ -22,7 +22,7 @@ export const getPageStyle = async (storeId: number): Promise<StyleStorePage> => 
         return data
     } catch (error) {
         if (error instanceof TypeError) {
-            throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde.');
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
         }
 
         throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde');
@@ -50,7 +50,7 @@ export const getMyPageStyle = async (): Promise<StyleStorePage> => {
         return data
     } catch (error) {
         if (error instanceof TypeError) {
-            throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde.');
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
         }
 
         throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde');
@@ -83,7 +83,7 @@ export const updateMyPageStyle = async (style: {
         return data
     } catch (error) {
         if (error instanceof TypeError) {
-            throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde.');
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
         }
 
         throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde');

@@ -1,12 +1,23 @@
 import { AccountData } from "./types-account.d";
 
+export type StandardFormProps = {
+    icon: React.ReactNode;
+    onSubmit: (data: AccountData) => void;
+    isLoading: boolean;
+    message: string;
+    setError: (error: string) => void;
+    error?: string;
+    initialValues?: Partial<AccountData>;
+    children?: React.ReactNode; 
+};
+
 export type AccountFormProps = {
-  onSubmit: (data: AccountData) => void;
-  isLoading: boolean;
-  message: string;
-  setError: (error: string) => void;
-  error?: string;
-  initialValues?: Partial<AccountData>;
+    onSubmit: (data: AccountData) => void;
+    isLoading: boolean;
+    message: string;
+    setError: (error: string) => void;
+    error?: string;
+    initialValues?: Partial<AccountData>;
 };
 
 export type UpdateStoreDataFormProps = {

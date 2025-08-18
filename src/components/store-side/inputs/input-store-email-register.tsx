@@ -5,12 +5,12 @@ export const InputEmailRegister = ({
     errors,
     clearErrors,
     initialValues = {},
-    validate, 
+    validate,
     onKeyDown,
 }: InputEmailProps & { validate?: (email: string) => Promise<string | true> }) => {
-
+    console.log(errors.email)
     return (
-        <div className="w-full max-w-105 flex flex-col gap-1">
+        <div className="relative w-full max-w-105 flex flex-col gap-1">
             <label
                 htmlFor="email"
                 className="w-full font-medium ml-2 mt-2 flex flex-col relative"
@@ -43,6 +43,11 @@ export const InputEmailRegister = ({
                     }
                 })}
             />
+            {errors.email?.message?.length && errors.email?.message?.length > 15 && (
+                <span className="absolute -bottom-6 w-full text-center mx-auto text-red-500">
+                    {errors.email.message}
+                </span>
+            )}
         </div>
     );
 };

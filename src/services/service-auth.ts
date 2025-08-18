@@ -23,7 +23,7 @@ export const login = async (credentials: AccountData) => {
     } catch (error) {
 
         if (error instanceof TypeError && error.message === 'Failed to fetch') {
-            throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde.');
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
         }
 
         if (error instanceof Error) {
@@ -51,7 +51,7 @@ export const verifyEmail = async (email: string) => {
         return data;
     } catch (error) {
         if (error instanceof TypeError && error.message === 'Failed to fetch') {
-            throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde.');
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
         }
 
         if (error instanceof Error) {
@@ -77,7 +77,7 @@ export const logout = async () => {
         return { ...data, isLogged: false };
     } catch (error) {
         if (error instanceof TypeError && error.message === 'Failed to fetch') {
-            throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde.');
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
         }
 
         if (error instanceof Error) {

@@ -36,7 +36,7 @@ export const createNewPassword = async (newPassword: string, token: string) => {
 
     } catch (error) {
         if (error instanceof TypeError && error.message === 'Failed to fetch') {
-            throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde.');
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
         }
         throw error instanceof Error ? error : new Error('Erro desconhecido');
     }

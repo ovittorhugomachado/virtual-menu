@@ -60,7 +60,7 @@ export const createCategoryService = async (category: {
     } catch (error) {
 
         if (error instanceof TypeError) {
-            throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde.');
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
         }
 
         throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde');
@@ -86,7 +86,7 @@ export const RenameCategoryService = async (categoryId: number, newName: string)
         return await response.json();
     } catch (error) {
         if (error instanceof TypeError) {
-            throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde.');
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
         }
         throw error instanceof Error ? error : new Error('Erro desconhecido');
     }
@@ -151,7 +151,7 @@ export const createMenuItemService = async (categoryId: number, item: {
             throw error; 
         }
 
-        throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde.');
+        throw new Error('Ocorreu um erro. Tente novamente mais tarde');
     }
 };
 
@@ -184,7 +184,7 @@ export const updateMenuItemByCategoryService = async (
         if (error instanceof Error && error.message) {
             throw error;
         }
-        throw new Error('Estamos com problemas técnicos. Por favor tente novamente mais tarde.');
+        throw new Error('Ocorreu um erro. Tente novamente mais tarde');
     }
 };
 

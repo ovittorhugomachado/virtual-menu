@@ -108,7 +108,7 @@ const handleFormSubmit: SubmitHandler<AccountData> = (data) => {
     return (
         <>
             <div className="fixed md:hidden top-[120px] left-0 w-screen h-[calc(100vh-120px)] bg-green-100 z-0"></div>
-            <div className="w-[90%] h-[90%] max-w-[1300px] flex flex-col md:flex-row">
+            <div className="w-[90%] h-[90%] max-w-[1300px] max-h-170 flex flex-col md:flex-row">
                 <div className={`md:hidden flex gap-3 mx-auto mb-6`}>
                     <span className={`${step === 1 ? 'bg-white text-blue-600' : 'text-white'} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-white`}>1</span>
                     <span className={`${step === 2 ? 'bg-white text-blue-600' : 'text-white'} flex items-center justify-center w-10 h-10 rounded-full border-[1px] border-white`}>2</span>

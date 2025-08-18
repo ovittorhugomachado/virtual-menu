@@ -51,7 +51,7 @@ export const RecoverPasswordFormContainer = ({
     return (
         <>
             <div className="fixed md:hidden top-[120px] left-0 w-screen h-[calc(100vh-120px)] bg-green-100 z-0"></div>
-            <div className="w-[90%] h-[90%] max-w-[1300px] flex flex-col md:flex-row">
+            <div className="w-[90%] h-[90%] max-w-[1300px] max-h-170 flex flex-col md:flex-row">
                 <div className=" md:hidden flex gap-3 mx-auto mb-6">
                     <WhiteLogoText
                         className="w-[200px]"
@@ -86,13 +86,13 @@ export const RecoverPasswordFormContainer = ({
                                 errors={errors}
                                 clearErrors={clearErrors}
                             />
-                            <div className="relative flex justify-center">
+                            <div className="w-full relative flex justify-center">
                                 {error && (
-                                    <p className="text-error absolute -top-1">{error}</p>
+                                    <p className="text-error absolute -top-2">{error}</p>
                                 )}
                                 <button
                                     type="submit"
-                                    className="w-[220px] primary-button self-center mt-6"
+                                    className="w-[220px] primary-button self-center mt-8"
                                     disabled={isLoading}
                                 >
                                     {isLoading ? "Carregando..." : "Recuperar senha"}
