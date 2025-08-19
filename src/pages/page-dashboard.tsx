@@ -40,7 +40,7 @@ export const AdminDashboard = () => {
             console.error("Erro ao buscar pedidos:", error);
 
         } finally {
-            setOrdersLoading(false);
+            setOrdersLoading(true);
         }
     }
 
@@ -137,7 +137,7 @@ export const AdminDashboard = () => {
                     <Header
                         buttons={buttons}
                     />
-                    <main className="w-full h-screen bg-white  pt-6 text-black flex flex-col items-center gap-6 rounded-t-3xl">
+                    <main className="w-full h-screen bg-white dark:bg-black pt-6 text-black flex flex-col items-center gap-6 rounded-t-3xl">
                         <div className="flex items-center justify-center">
                             <CgMenuGridR className="text-4xl hidden sm:block" />
                             <h1 className="text-4xl border-b-2 border-primary text-center mx-3">Painel de pedidos</h1>
