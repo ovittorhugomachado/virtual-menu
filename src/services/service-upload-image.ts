@@ -1,6 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const UploadWhiteLogo= async (imageFile: File) => {
+export const UploadLogo= async (imageFile: File) => {
     
     try {
 

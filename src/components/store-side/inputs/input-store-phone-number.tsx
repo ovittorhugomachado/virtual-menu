@@ -11,45 +11,47 @@ export const InputPhoneNumber = ({
 }: InputPhoneNumberProps) => {
 
     return (
-        <Controller
-            name="phoneNumber"
-            control={control}
-            defaultValue={initialValues.phoneNumber || ""}
-            rules={{
-                required: "Obrigatório",
-                pattern: {
-                    value: /^\(\d{2}\) \d{5}-\d{4}$/,
-                    message: "(99) 99999-9999",
-                },
-            }}
-            render={({ field, fieldState }) => (
-                <>
-                    <label
-                        htmlFor="phoneNumber"
-                        className="w-full font-medium ml-2 mt-2 flex flex-col relative"
-                    >
-                        Celular *
-                        {hasTriedToSubmit && fieldState.error && (
-                            <span className="span-error">
-                                {fieldState.error.message}
-                            </span>
-                        )}
-                    </label>
-                    <IMaskInput
-                        {...field}
-                        mask="(00) 00000-0000"
-                        placeholder="(99) 99999-9999"
-                        onKeyDown={onKeyDown}
-                        className={`input ${hasTriedToSubmit && fieldState.error ? " input-error" : ""}`}
-                        onAccept={(value) => {
-                            field.onChange(value);
-                            if (clearErrors) {
-                                clearErrors("phoneNumber");
-                            }
-                        }}
-                    />
-                </>
-            )}
-        />
+        <div className="relative w-full max-w-105 flex flex-col gap-1">
+            <Controller
+                name="phoneNumber"
+                control={control}
+                defaultValue={initialValues.phoneNumber || ""}
+                rules={{
+                    required: "Obrigatório",
+                    pattern: {
+                        value: /^\(\d{2}\) \d{5}-\d{4}$/,
+                        message: "(99) 99999-9999",
+                    },
+                }}
+                render={({ field, fieldState }) => (
+                    <>
+                        <label
+                            htmlFor="phoneNumber"
+                            className="w-full font-medium ml-2 mt-2 flex flex-col relative"
+                        >
+                            Celular *
+                            {hasTriedToSubmit && fieldState.error && (
+                                <span className="span-error">
+                                    {fieldState.error.message}
+                                </span>
+                            )}
+                        </label>
+                        <IMaskInput
+                            {...field}
+                            mask="(00) 00000-0000"
+                            placeholder="(99) 99999-9999"
+                            onKeyDown={onKeyDown}
+                            className={`input ${hasTriedToSubmit && fieldState.error ? " input-error" : ""}`}
+                            onAccept={(value) => {
+                                field.onChange(value);
+                                if (clearErrors) {
+                                    clearErrors("phoneNumber");
+                                }
+                            }}
+                        />
+                    </>
+                )}
+            />
+        </div>
     );
 }

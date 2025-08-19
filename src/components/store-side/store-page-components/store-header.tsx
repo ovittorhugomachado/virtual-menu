@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { OpeningHour } from "../../../types/types-schedules.d";
 import { getRestaurantStatus } from "../../../utils/function-restaurant-status";
-import { WhiteLogo} from "./store-logo";
+import { Logo} from "./store-logo";
 import { RiListSettingsFill } from "react-icons/ri";
 import { GoHomeFill } from "react-icons/go";
 import { FaGear } from "react-icons/fa6";

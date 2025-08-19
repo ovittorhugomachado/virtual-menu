@@ -9,7 +9,7 @@ export const InputOwnersName = ({
 }: InputOwnersNameProps) => {
     
     return (
-        <>
+        <div className="relative w-full max-w-105 flex flex-col gap-1">
             <label
                 htmlFor="ownersName"
                 className="w-full font-medium ml-2 mt-2 flex flex-col relative"
@@ -41,6 +41,6 @@ export const InputOwnersName = ({
                     },
                 })}
             />
-        </>
+        </div>
     );
 };

@@ -4,8 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { createNewPassword, validateToken } from "../services/service-create-new-password";
 import { AccountData } from "../types/types-account.d";
 import { CreateNewPasswordFormContainer } from "../components/store-side/forms/form-create-new-password";
-import { BlackLogo, BlackLogoText, WhiteLogoText } from "../components/component-logo";
-import { FaArrowLeft } from "react-icons/fa";
+import { Logo, LogoText } from "../components/component-logo";
 import { LoadingComponent } from "../components/component-loading";
 import { CiCircleAlert } from "react-icons/ci";
 import { GoCheck } from "react-icons/go";
@@ -70,26 +69,23 @@ export const CreateNewPasswordPage = () => {
                 <LoadingComponent />
             ) : message ? (
                 <main className="w-full h-screen min-w-[280px] min-h-[590px] flex justify-center items-center">
-                    <div className="fixed md:hidden top-[120px] left-0 w-screen h-[calc(100vh-120px)] bg-green-100 z-0"></div>
-                    <div className="w-[90%] h-[90%] max-w-[1300px] flex flex-col md:flex-row">
+                    <div className="w-[90%] h-[90%] max-w-[1300px] bg-transparent max-h-170 flex flex-col md:flex-row md:shadow-2xl rounded-xl">
                         <div className=" md:hidden flex gap-3 mx-auto mb-6">
-                            <WhiteLogoText
+                            <LogoText
                                 className="w-[200px]"
                             />
                         </div>
                         <div
-                            className="w-[50%] bg-green-100 hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden border border-white/30"
+                            className="w-[50%] bg-green-100 dark:bg-zinc-900 hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden"
                         >
-                            <BlackLogo className="w-[100px] ml-4" />
-                            <GoCheck size={130} className="text-[#99b9a8] mx-auto animate-pulse" />
-                            <img src="../form-create-new-password-success.gif" alt="line" width={200} style={{ margin: '0 45px' }} />
+                            <Logo className="w-[100px] ml-4" />
+                            <GoCheck size={130} className="text-[#99b9a8] dark:text-zinc-600 mx-auto animate-pulse" />
+                            <img src="../form-create-new-password-success-light.gif" alt="sucesso" width={200} style={{ margin: '0 45px' }} className="dark:hidden" />
+                            <img src="../form-create-new-password-success-dark.gif" alt="sucesso" width={200} style={{ margin: '0 45px' }} className="hidden dark:block" />
                         </div>
-                        <div className="w-full md:w-[60%] relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white border-[1px] border-gray-300 md:border-none">
-                            <Link to="/entrar" className="flex absolute top-10 justify-center transition-all hover:scale-105 duration-200">
-                                <BlackLogoText className="w-[200px] hidden md:block " />
-                            </Link>
-                            <Link to="/entrar" className="absolute top-2.5 left-4 flex items-center justify-center gap-2">
-                                <span className="translate-y-[1px]"><FaArrowLeft /></span>Voltar
+                        <div className="w-full md:w-[60%] min-h-70 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white dark:bg-zinc-800 shadow-2xl md:shadow-none">
+                            <Link to="/entrar" className="hidden md:block w-[200px] absolute top-10 transition-all hover:scale-105 duration-200">
+                                <LogoText className="" />
                             </Link>
                             <div className="w-full max-w-105 mt-5 mb-5 flex flex-col gap-1">
                             </div>
@@ -110,9 +106,6 @@ export const CreateNewPasswordPage = () => {
             ) : isValidToken && !loadingPage ? (
                 <main
                     className="w-full h-screen min-w-[280px] min-h-[590px] flex justify-center items-center"
-                    style={{
-                        background: 'linear-gradient(135deg, #0631dd 0%, #06b6d4 50%, #84cc16 100%)'
-                    }}
                 >
                     <CreateNewPasswordFormContainer
                         onSubmit={handleNewPassword}
@@ -125,30 +118,24 @@ export const CreateNewPasswordPage = () => {
             ) : (
                 <main
                     className="w-full h-screen min-w-[280px] min-h-[590px] flex justify-center items-center"
-                    style={{
-                        background: 'linear-gradient(135deg, #0631dd 0%, #06b6d4 50%, #84cc16 100%)'
-                    }}
                 >
-                    <div className="fixed md:hidden top-[120px] left-0 w-screen h-[calc(100vh-120px)] bg-green-100 z-0"></div>
-                    <div className="w-[90%] h-[90%] max-w-[1300px] flex flex-col md:flex-row">
+                    <div className="w-[90%] h-[90%] max-w-[1300px] bg-transparent max-h-170 flex flex-col md:flex-row md:shadow-2xl rounded-xl">
                         <div className=" md:hidden flex gap-3 mx-auto mb-6">
-                            <WhiteLogoText
+                            <LogoText
                                 className="w-[200px]"
                             />
                         </div>
                         <div
-                            className="w-[50%] bg-green-100 hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden border border-white/30"
+                            className="w-[50%] bg-green-100 dark:bg-zinc-900 hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden"
                         >
-                            <BlackLogo className="w-[100px] ml-4" />
-                            <CiCircleAlert size={130} className="text-[#99b9a8] mx-auto animate-pulse" />
-                            <img src="../alert-error-recover-password.gif" alt="line" width={200} style={{ margin: '0 45px' }} />
+                            <Logo className="w-[100px] ml-4" />
+                            <CiCircleAlert size={130} className="text-[#99b9a8] dark:text-zinc-600 mx-auto animate-pulse" />
+                            <img src="../form-create-new-password-error-lightgif" alt="line" width={200} style={{ margin: '0 45px' }} className="dark:hidden" />
+                            <img src="../form-create-new-password-error-dark.gif" alt="line" width={200} style={{ margin: '0 45px' }} className="hidden dark:block" />
                         </div>
-                        <div className="w-full md:w-[60%] min-h-100 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white border-[1px] border-gray-300 md:border-none">
-                            <Link to="/entrar" className="flex absolute top-10 justify-center transition-all hover:scale-105 duration-200">
-                                <BlackLogoText className="w-[200px] hidden md:block " />
-                            </Link>
-                            <Link to="/entrar" className="absolute top-2.5 left-4 flex items-center justify-center gap-2">
-                                <span className="translate-y-[1px]"><FaArrowLeft /></span>Voltar
+                        <div className="w-full md:w-[60%] min-h-70 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white dark:bg-zinc-800 shadow-2xl md:shadow-none">
+                            <Link to="/entrar" className="hidden md:block w-[200px] absolute top-10 transition-all hover:scale-105 duration-200">
+                                <LogoText className="" />
                             </Link>
                             <div className="w-full max-w-105 mt-5 mb-5 flex flex-col gap-1">
                             </div>

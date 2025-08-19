@@ -1,20 +1,42 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 @tailwind utilities;
 
 @theme {
-    --color-primary: #0636DC;
+    --color-primary: #018601;
     --color-secondary: #022211;
     --color-color-text: #000000;
     --font-display: "geologica", "sans-serif";
     --breakpoint-xs: 310px;
 }
 
-body {
+html {
     @apply box-border text-sm bg-no-repeat bg-white bg-cover bg-fixed text-color-text;
-    background: linear-gradient(105deg, #0631dd 0%, #06b6d4 50%, #84cc16 100%);
+    background: #F9FAFB;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #f9fafb;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        -webkit-text-fill-color: var(--text-color) !important;
+        -webkit-box-shadow: 0 0 0 1000px var(--bg-color) inset !important;
+        box-shadow: 0 0 0 1000px var(--bg-color) inset !important;
+        background-color: var(--bg-color) !important;
+    }
+
+    html {
+        background: #181818;
+        color: #f9fafb;
+    }
+}
+
+body {
+    @apply bg-transparent;
 }
 
 input {
@@ -29,12 +51,21 @@ img, button, span {
     -webkit-tap-highlight-color: transparent;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--text-color) !important;
+    -webkit-box-shadow: 0 0 0px 1000px var(--bg-color) inset !important;
+    box-shadow: 0 0 0px 1000px var(--bg-color) inset !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+}
+
 .primary-component {
     @apply border border-zinc-400 rounded-xl text-black;
 }
 
 .input {
-    @apply border border-zinc-400 rounded-xl px-3 py-2 w-full focus:outline-none focus:ring-1 bg-white text-black focus:ring-zinc-900;
+    @apply border-[1px] border-zinc-400 rounded-xl px-3 py-2 w-full focus:outline-none focus:ring-1 bg-white dark:bg-zinc-900 text-black dark:text-white focus:ring-zinc-900;
 }
 
 .input-store {
@@ -46,7 +77,7 @@ img, button, span {
 }
 
 .input-error {
-    @apply border border-red-500 rounded-xl px-3 py-2 w-full focus:outline-none focus:ring-0 bg-white text-black;
+    @apply border border-red-500 rounded-xl px-3 py-2 w-full focus:outline-none focus:ring-0 bg-white dark:bg-zinc-900 text-black dark:text-white dark:border-2;
 }
 
 .label {
@@ -74,7 +105,7 @@ img, button, span {
 }
 
 .primary-button {
-    @apply px-[30px] py-2 text-lg rounded-3xl cursor-pointer font-semibold transition-all bg-primary text-white hover:scale-105;
+    @apply px-[30px] py-2 text-lg rounded-3xl cursor-pointer font-semibold transition-all bg-primary dark:bg-white text-white dark:text-black hover:scale-105;
 }
 
 .cancel-button {
@@ -90,6 +121,15 @@ img, button, span {
     animation: piscar 1s infinite;
 }
 
+.text-alert {
+    animation: piscarTexto 1s infinite;
+}
+
+.text-black {
+    color: black;
+}
+
+
 @keyframes piscar {
     0% {
         border-color: #ff0000;
@@ -104,9 +144,6 @@ img, button, span {
     }
 }
 
-.text-alert {
-    animation: piscarTexto 1s infinite;
-}
 
 @keyframes piscarTexto {
     0% {
@@ -123,19 +160,32 @@ img, button, span {
     }
 }
 
+@keyframes revealLine {
+  0% {
+    clip-path: inset(0 100% 0 0); 
+  }
+  40% {
+    clip-path: inset(0 0 0 0); 
+  }
+  60% {
+    clip-path: inset(0 0 0 0); 
+  }
+  100% {
+    clip-path: inset(0 100% 0 0); 
+  }
+}
+
 input:-webkit-autofill {
     -webkit-text-fill-color: var(--text-color) !important;
     -webkit-box-shadow: 0 0 0 1000px var(--bg-color) inset !important;
 }
 
 :root {
-    --text-color: #111827;
-    --bg-color: white;
+    color-scheme: light;
 }
 
 .dark {
-    --text-color: #f9fafb;
-    --bg-color: #18181b;
+    color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -35,7 +35,7 @@ export const InputEmailRegister = ({
                         value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
                         message: "Digite um e-mail válido",
                     },
-                    validate, // aqui faz a busca na API
+                    validate,
                     onChange: (e) => {
                         if (e.target.value.length > 2) {
                             clearErrors("email");
@@ -43,7 +43,7 @@ export const InputEmailRegister = ({
                     }
                 })}
             />
-            {errors.email?.message?.length && errors.email?.message?.length > 15 && (
+            {errors.email?.message?.length && errors.email?.message?.length > 25 && (
                 <span className="absolute -bottom-6 w-full text-center mx-auto text-red-500">
                     {errors.email.message}
                 </span>

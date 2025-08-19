@@ -8,7 +8,7 @@ export const InputEmail = ({
 }: InputEmailProps) => {
 
     return (
-        <div className="w-full max-w-105 flex flex-col gap-1">
+        <div className="relative w-full max-w-105 flex flex-col gap-1">
             <label
                 htmlFor="email"
                 className="w-full font-medium ml-2 mt-2 flex flex-col relative"
@@ -27,7 +27,7 @@ export const InputEmail = ({
                 placeholder="Digite seu email"
                 defaultValue={initialValues.email || ""}
                 {...register("email", {
-                    required: "Campo obrigatório",
+                    required: "Obrigatório",
                     pattern: {
                         value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
                         message: "Digite um e-mail válido",

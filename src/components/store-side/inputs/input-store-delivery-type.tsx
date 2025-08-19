@@ -5,7 +5,7 @@ export const CheckboxDeliveryTypesInput = ({
 }: InputDeliveryTypeProps) => {
 
     return (
-        <div className="gap-4 mt-2 flex items-center mx-auto">
+        <div className="relative w-full max-w-105 flex flex-col gap-1">
             <span className="font-bold">Tipos de entrega:</span>
             <label htmlFor="delivery">Delivery</label>
             <input

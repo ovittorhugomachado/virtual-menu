@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
-import { WhiteLogoText } from "./component-logo";
+import { LogoText } from "./component-logo";
 import { useAuth } from "../hooks/use-auth";
 import { getExtension } from "../utils/function-get-extension";
 
@@ -31,7 +31,7 @@ export const Header = ({
         <nav
             className="w-screen lg:h-42 xl:h-26 px-6 py-4 lg:py-0 xl:py-12 md:pt-8 md:gap-36 text-white flex flex-col md:flex-row items-center justify-center"
         >
-            <WhiteLogoText className="w-[200px] xl:w-[250px] absolute left-12 top-8 xl:top-8 hidden md:block" />
+            <LogoText className="w-[200px] xl:w-[250px] absolute left-12 top-8 xl:top-8 hidden md:block" />
             <div className="w-full md:hidden flex items-center justify-between relative text-white">
                 <button
                     className="w-18 h-10 flex flex-col justify-center items-center z-30"

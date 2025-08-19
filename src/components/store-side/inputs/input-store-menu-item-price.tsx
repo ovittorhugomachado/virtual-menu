@@ -5,9 +5,9 @@ export const InputPrice = ({
     errors,
     clearErrors,
 }: InputMenuItemPriceProps) => {
-    
+
     return (
-        <>
+        <div className="relative w-full max-w-105 flex flex-col gap-1">
             <label
                 htmlFor="price"
                 className="w-full font-medium ml-2 mt-2 flex flex-col relative"
@@ -46,6 +46,6 @@ export const InputPrice = ({
                     })}
                 />
             </div>
-        </>
+        </div>
     );
 };

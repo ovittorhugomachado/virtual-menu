@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IoEye, IoEyeOff, IoCheckmarkCircleOutline, IoCheckmarkCircleSharp } from "react-icons/io5";
+import { IoEye, IoEyeOff, IoCheckmarkCircleSharp } from "react-icons/io5";
 import { InputPasswordProps } from "../../../types/types-input.d";
 
 export const InputPasswordRegister = ({
@@ -21,7 +21,7 @@ export const InputPasswordRegister = ({
     ];
 
     return (
-        <div className="w-full flex flex-col gap-1">
+        <div className="relative w-full max-w-105 flex flex-col gap-1">
             <label
                 htmlFor="password"
                 className="w-full font-medium ml-2 mt-2 flex flex-col relative"
@@ -59,11 +59,11 @@ export const InputPasswordRegister = ({
                 </button>
             </div>
 
-            <div className="mt-4 text-zinc-500">
+            <div className="mt-4 text-zinc-500 dark:text-white">
                 {requirements.map((req) => (
                     <div key={req.id} className="flex items-center">
                         {req.regex.test(password) ? (
-                            <IoCheckmarkCircleOutline className="w-4 h-4 mr-1 text-green-700" />
+                            <IoCheckmarkCircleSharp className="w-4 h-4 mr-1 text-green-700" />
                         ) : (
                             <IoCheckmarkCircleSharp className="w-4 h-4 mr-1 text-zinc-600" />
                         )}
