@@ -8,7 +8,6 @@ import { StyleStorePage } from "../types/types-style-store-page.d";
 import { Category } from "../types/types-menu.d";
 import { LoadingComponent } from "../components/component-loading";
 import { ErrorComponent } from "../components/component-error";
-import { StoreFooterComponent } from "../components/store-side/store-page-components/store-footer";
 import { StoreBanner } from "../components/customer-side/store-page-components/store-banner-customer";
 import { Header } from "../components/customer-side/store-page-components/store-header-by-customer";
 import { CategoryButtons } from "../components/customer-side/store-page-components/store-categories-buttons-by-customer";
@@ -113,7 +112,6 @@ export const StorePage = () => {
                                 buttonColor={storeStyle?.primaryColor ?? ''}
                             />
                         </main>
-                        <StoreFooterComponent backgroundColor={storeStyle?.backgroundColor ?? ''} />
                     </div>
                 </CartProvider>
             )}

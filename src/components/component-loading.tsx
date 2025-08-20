@@ -6,7 +6,7 @@ export const LoadingComponent = () => {
                 <div className="w-9 h-1 bg-primary dark:bg-white rounded-full animate-wave2" />
                 <div className="w-9 h-1 bg-primary dark:bg-white rounded-full animate-wave3" />
             </div>
-            <span className="dark:text-white text-black text-3xl">Carregando</span>
+            <span className="dark:text-white text-black text-2xl">Carregando</span>
         </div>
     );
 };

@@ -28,7 +28,7 @@ export const Header: React.FC<HeaderProps> = ({
 
     return (
         <header
-            className={`w-screen max-h-[387px] px-[5%] lg:px-[15%] py-2 xl:py-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between border-b-[1px] fixed top-0 z-10 ${backgroundColor === 'white' ? 'text-black bg-white' : 'text-white bg-black'}`}
+            className={`w-screen h-[124px] max-h-[387px] px-[5%] lg:px-[15%] py-2 xl:py-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between border-b-[1px] sticky top-0 z-20 ${backgroundColor === 'white' ? 'text-black bg-white' : 'text-white bg-black'}`}
         >
             <div className="flex items-center gap-3.5">
                 <Logo
@@ -85,7 +85,7 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
             <Link
                 to="/"
-                className="p-2 mt-3 sm:mt-0 rounded-full bg-primary text-black flex items-center gap-2 z-50 hover:scale-105 transition-all duration-200"
+                className="p-2 mt-3 sm:mt-0 rounded-full bg-primary text-white flex items-center gap-2 z-50 hover:scale-105 transition-all duration-200"
             >
                 <GoHomeFill />
                 voltar para o painel

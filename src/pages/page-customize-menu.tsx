@@ -1,16 +1,17 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { getMyUserData } from "../services/service-user-data";
 import { getMyPageStyle } from "../services/service-page-style";
 import { getCategoriesMyStore } from "../services/service-manage-menu-store";
 import { getMyStoreData } from "../services/service-store-data";
 import { RestaurantData } from "../types/types-restaurante-data.d";
 import { StyleStorePage } from "../types/types-style-store-page.d";
 import { Category } from "../types/types-menu.d";
+import { AccountData } from "../types/types-account.d";
 import { getExtension } from "../utils/function-get-extension";
 import { BottomNav } from "../components/store-side/store-page-components/store-style-toolbar";
 import { LoadingComponent } from "../components/component-loading";
 import { StoreBanner } from "../components/store-side/store-page-components/store-banner";
-import { StoreFooterComponent } from "../components/store-side/store-page-components/store-footer";
 import { ErrorComponent } from "../components/component-error";
 import { CategoryButtons } from "../components/store-side/store-page-components/store-categories-buttons";
 import { Header } from "../components/store-side/store-page-components/store-header";
@@ -26,6 +27,7 @@ export const CustomizeMenuPage = () => {
 
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
+    const [userData, setUserData] = useState<AccountData | null>(null);
     const [storeData, setStoreData] = useState<RestaurantData | null>(null);
     const [storeStyle, setStoreStyle] = useState<StyleStorePage | null>(null);
     const [categories, setCategories] = useState<Category[]>([]);
@@ -42,6 +44,7 @@ export const CustomizeMenuPage = () => {
     const fetchStoreData = useCallback(async () => {
         setLoading(true);
         try {
+            const userData = await getMyUserData();
             const storeData = await getMyStoreData();
             const styleData = await getMyPageStyle();
             const categoriesStore = await getCategoriesMyStore();
@@ -50,6 +53,7 @@ export const CustomizeMenuPage = () => {
                 throw new Error('Dados da loja não encontrados');
             }
 
+            setUserData(userData);
             setStoreData(storeData);
             setBannerUrl(storeData.bannerUrl ?? '');
             setStoreStyle(styleData);
@@ -97,7 +101,7 @@ export const CustomizeMenuPage = () => {
             ) : (
                 <div
                     style={{ backgroundColor: backgroundColor }}
-                    className="w-screen h-full px-[5%] lg:px-[15%] flex flex-col items-center bg-black text-black lg:text-base"
+                    className="w-screen h-full min-h-screen px-[5%] lg:px-[15%] flex flex-col items-center text-black lg:text-base"
                 >
                     <BottomNav
                         backgroundColorStore={backgroundColor === "black" || backgroundColor === "white" ? backgroundColor : "white"}
@@ -119,7 +123,7 @@ export const CustomizeMenuPage = () => {
                                     ? `${VITE_API_URL}/uploads/store${storeData.id}-logo${getExtension(storeData?.logoUrl)}`
                                     : "/store-logo-default.png"
                         }
-                        restaurantName={storeData?.restaurantName ?? ''}
+                        restaurantName={userData?.restaurantName ?? ''}
                         openingHours={
                             Array.isArray(storeData?.openingHours)
                                 ? storeData.openingHours.map((oh) => ({
@@ -146,7 +150,7 @@ export const CustomizeMenuPage = () => {
                             onClose={handleSchedulesUpdated}
                         />
                     )}
-                    <main className="w-full max-w-[1140px] pb-24 mt-[110px] xs:mt-[125px] sm:mt-[115px] xl:mt-[132px] flex flex-col items-center justify-center">
+                    <main className="w-full max-w-[1140px] flex flex-col items-center justify-center">
                         <StoreBanner
                             banner={
                                 bannerUrl && bannerUrl.startsWith('https://s3.us-east-2.amazonaws.com/')
@@ -174,7 +178,21 @@ export const CustomizeMenuPage = () => {
                             buttonColor={buttonColor ?? ''}
                         />
                     </main>
-                    <StoreFooterComponent backgroundColor={backgroundColor ?? ''} />
+                    <footer className={`${backgroundColor === 'black' ? 'bg-black text-white' : 'bg-white text-black'} h-40 flex items-center`}>
+                        {backgroundColor === 'black' ? (
+                            <img
+                                src="../logo-text-dark.png"
+                                alt="Footer Dark Mode"
+                                width={200}
+                            />
+                        ) : (
+                            <img
+                                src="../logo-text-light.png"
+                                alt="Footer Light Mode"
+                                width={200}
+                            />
+                        )}
+                    </footer>
                 </div>
             )}
         </>

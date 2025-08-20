@@ -31,16 +31,18 @@ export const Header = ({
         <nav
             className="w-screen lg:h-42 xl:h-26 px-6 py-4 lg:py-0 xl:py-12 md:pt-8 md:gap-36 text-white flex flex-col md:flex-row items-center justify-center"
         >
-            <LogoText className="w-[200px] xl:w-[250px] absolute left-12 top-8 xl:top-8 hidden md:block" />
+            <div className="w-[200px] xl:w-[250px] absolute left-12 top-8 xl:top-8 hidden md:block">
+                <LogoText />
+            </div>
             <div className="w-full md:hidden flex items-center justify-between relative text-white">
                 <button
                     className="w-18 h-10 flex flex-col justify-center items-center z-30"
                     onClick={() => setMenuOpen((prev) => !prev)}
                     aria-label="Abrir menu"
                 >
-                    <span className={`w-8 h-1 my-0 rounded bg-white transition-all duration-300${menuOpen ? " rotate-45 translate-y-2" : ""}`}></span>
-                    <span className={`w-8 h-1 my-1 rounded bg-white transition-all duration-300${menuOpen ? " opacity-0" : ""}`}></span>
-                    <span className={`w-8 h-1 my-0 rounded bg-white transition-all duration-300${menuOpen ? " -rotate-45 -translate-y-2" : ""}`}></span>
+                    <span className={`w-8 h-1 my-0 rounded bg-primary dark:bg-white transition-all duration-300${menuOpen ? " rotate-45 translate-y-2" : ""}`}></span>
+                    <span className={`w-8 h-1 my-1 rounded bg-primary dark:bg-white transition-all duration-300${menuOpen ? " opacity-0" : ""}`}></span>
+                    <span className={`w-8 h-1 my-0 rounded bg-primary dark:bg-white transition-all duration-300${menuOpen ? " -rotate-45 -translate-y-2" : ""}`}></span>
                 </button>
                 <img
                     src={
@@ -64,7 +66,8 @@ export const Header = ({
                             title={btn.title}
                             target={btn.target}
                             onClick={btn.function}
-                            className={`px-4 py-1 gap-1 rounded-full flex justify-center items-center ${location.pathname === btn.to ? "bg-white text-secondary cursor-auto" : "border-2 border-white text-white cursor-pointer transition-all duration-200 hover:scale-103"}`}
+                            style={{fontSize: '19px'}}
+                            className={`px-4 py-1 gap-1 text-4xl rounded-full flex justify-center items-center ${location.pathname === btn.to ? "bg-primary dark:bg-white dark:text-black cursor-auto" : "text-black dark:text-white cursor-pointer transition-all duration-200 hover:bg-primary hover:dark:bg-white hover:dark:text-black hover:text-white"}`}
                         >
                             {btn.icon}
                             {btn.title}

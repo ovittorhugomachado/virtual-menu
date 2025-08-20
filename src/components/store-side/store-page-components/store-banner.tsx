@@ -30,11 +30,11 @@ export const StoreBanner = ({ banner, onBannerChange }: { banner: string, onBann
     };
 
     return (
-        <div className="w-full h-86 relative hidden xs:block">
+        <div className="w-full relative hidden xs:block">
             <img
                 src={banner ? `${banner}?v=${bannerVersion}` : "/store-banner-default.png"}
                 alt="imagem-capa"
-                className="w-screen h-full object-cover"
+                className="w-screen h-80 object-center object-contain"
             />
             <div className="flex items-center gap-2 absolute bottom-2 left-2">
                 <button

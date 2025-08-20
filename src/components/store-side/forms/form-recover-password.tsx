@@ -50,7 +50,7 @@ export const RecoverPasswordFormContainer = ({
 
     return (
         <>
-            <div className="w-[90%] h-[90%] max-w-[1300px] bg-transparent rounded-xl max-h-170 flex flex-col md:flex-row md:shadow-2xl">
+            <div className="w-[90%] h-[90vh] min-h-[500px] max-h-[700px] bg-transparent flex flex-col md:flex-row md:shadow-2xl rounded-xl">
                 <div className=" md:hidden flex gap-3 mx-auto mb-6">
                     <LogoText
                         className="w-[200px]"
@@ -59,7 +59,7 @@ export const RecoverPasswordFormContainer = ({
                 {message === "" && (
                     <>
                         <div
-                            className="w-[50%] bg-green-100 dark:bg-zinc-900 hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden"
+                            className="w-[50%] bg-green-100 dark:bg-[#161a21] hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden"
                         >
                             <Logo className="w-[100px] ml-4" />
                             <MdPassword size={130} className="text-[#99b9a8] dark:text-zinc-600 mx-auto animate-pulse" />
@@ -69,7 +69,7 @@ export const RecoverPasswordFormContainer = ({
                         <form
                             onSubmit={handleSubmit(handleRecoverPasswordSubmit)}
                             noValidate
-                            className="w-full md:w-[60%] min-h-90 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white dark:bg-zinc-800 shadow-2xl md:shadow-none"
+                            className="w-full md:w-[60%] min-h-90 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none"
                         >
                             <Link to="/entrar" className="hidden md:block w-[200px] absolute top-10 transition-all hover:scale-105 duration-200">
                                 <LogoText className="w-[200px]" />
@@ -109,14 +109,14 @@ export const RecoverPasswordFormContainer = ({
                 {message !== "" && (
                     <>
                         <div
-                            className="w-[50%] bg-green-100 dark:bg-zinc-900 hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden"
+                            className="w-[50%] bg-green-100 dark:bg-[#161a21] hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden"
                         >
                             <Logo className="w-[100px] ml-4" />
                             <GoCheck size={130} className="text-[#99b9a8] dark:text-zinc-600 mx-auto animate-pulse" />
                             <img src="./form-recover-password-success-light.gif" alt="sucesso" width={200} style={{ margin: '0 45px' }} className="dark:hidden" />
                             <img src="./form-recover-password-success-dark.gif" alt="sucesso" width={200} style={{ margin: '0 45px' }} className="hidden dark:block" />
                         </div>
-                        <div className="w-full md:w-[60%] min-h-60 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white dark:bg-zinc-800 shadow-2xl md:shadow-none">
+                        <div className="w-full md:w-[60%] min-h-60 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none">
                             <Link to="/entrar" className="hidden md:block w-[200px] absolute top-10 transition-all hover:scale-105 duration-200">
                                 <LogoText className="" />
                             </Link>

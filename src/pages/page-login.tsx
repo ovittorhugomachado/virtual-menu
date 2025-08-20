@@ -28,7 +28,7 @@ export const LoginPage = () => {
 
     return (
         <main
-            className="w-full h-screen min-w-[280px] min-h-[590px] flex justify-center items-center"
+            className="w-full h-screen min-w-[280px] min-h-screen flex justify-center items-center"
         >
             <LoginFormContainer
                 onSubmit={handleLogin}

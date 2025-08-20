@@ -24,7 +24,7 @@ export const RegisterPage = () => {
     };
 
     return (
-        <main className="w-full h-screen min-w-[280px] min-h-[540px] flex justify-center items-center">
+        <main className="w-full h-full min-h-screen min-w-[280px] flex justify-center items-center">
             <SignupFormContainer
                 onSubmit={handleRegister}
                 isLoading={loading}

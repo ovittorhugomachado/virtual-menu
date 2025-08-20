@@ -49,14 +49,14 @@ export const LoginFormContainer = ({
 
     return (
         <>
-            <div className="w-[90%] h-[90%] max-w-[1300px] bg-transparent max-h-170 flex flex-col md:flex-row md:shadow-2xl rounded-xl">
+            <div className="w-[90%] h-[90vh] min-h-[500px] max-h-[700px] bg-transparent flex flex-col md:flex-row md:shadow-2xl rounded-xl">
                 <div className="md:hidden flex gap-3 mx-auto mb-6">
                     <LogoText
                         className="w-[200px]"
                     />
                 </div>
                 <div
-                    className="w-[50%] bg-green-100 dark:bg-zinc-900 hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden"
+                    className="w-[50%] bg-green-100 dark:bg-[#161a21] hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden"
                 >
                     <Logo className="w-[100px] ml-4" />
                     <img
@@ -85,7 +85,7 @@ export const LoginFormContainer = ({
                 <form
                     onSubmit={handleSubmit(handleAccountData)}
                     noValidate
-                    className="w-full md:w-[60%] min-h-120 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white dark:bg-zinc-800 shadow-2xl md:shadow-none"
+                    className="w-full md:w-[60%] min-h-120 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none"
                 >
                     <div className="hidden md:block w-[200px] absolute top-10">
                         <LogoText className="" />

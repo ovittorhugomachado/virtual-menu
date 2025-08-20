@@ -13,7 +13,6 @@ import { Header } from "../components/component-header";
 import { LoadingComponent } from "../components/component-loading";
 import { DashboardCards } from "../components/store-side/dashboard-cards";
 import { CgMenuGridR } from "react-icons/cg";
-import { MdBorderColor } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
 import { BsFillBarChartFill } from "react-icons/bs";
 import { IoExit } from "react-icons/io5";
@@ -40,7 +39,7 @@ export const AdminDashboard = () => {
             console.error("Erro ao buscar pedidos:", error);
 
         } finally {
-            setOrdersLoading(true);
+            setOrdersLoading(false);
         }
     }
 
@@ -130,29 +129,18 @@ export const AdminDashboard = () => {
                         Ir para login
                     </Link>
                 </div>
-            ) : (loading || !user) ? (
+            ) : (loading || ordersLoading || !user) ? (
                 <LoadingComponent />
             ) : (
-                <>
+                <div className="flex flex-col min-h-screen h-full">
                     <Header
                         buttons={buttons}
                     />
-                    <main className="w-full h-screen bg-white dark:bg-black pt-6 text-black flex flex-col items-center gap-6 rounded-t-3xl">
-                        <div className="flex items-center justify-center">
+                    <main className="flex-1 bg-zinc-200 dark:bg-[#161a21] pt-12">
+                        <div className="flex items-center justify-center pb-8">
                             <CgMenuGridR className="text-4xl hidden sm:block" />
-                            <h1 className="text-4xl border-b-2 border-primary text-center mx-3">Painel de pedidos</h1>
+                            <h1 className="text-4xl border-b-2 border-primary dark:border-white text-center mx-3">Painel de pedidos</h1>
                         </div>
-                        <Link
-                            to={`restaurante/${user.id}`}
-                            title="Fazer pedido"
-                            className="w-46 mx-auto px-4 py-1 text-black bg-primary rounded-full flex justify-center items-center gap-1 transition-all duration-200 hover:scale-103"
-                        >
-                            <MdBorderColor />
-                            Fazer pedido
-                        </Link>
-                        {ordersLoading ? (
-                            <LoadingComponent />
-                        ) : (
                             <DashboardCards
                                 orders={orders}
                                 activePanel={activePanel}
@@ -162,9 +150,8 @@ export const AdminDashboard = () => {
                                 onOrderReady={handleReadyOrder}
                                 onOrderDelivered={handleDeliveredOrder}
                             />
-                        )}
                     </main>
-                </>
+                </div>
             )}
         </>
     );

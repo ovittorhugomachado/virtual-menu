@@ -133,7 +133,7 @@ export const BottomNav = ({
             </div>
             {hasChanges && (
                 <button
-                    className="w-full mt-3 absolute bottom-[-30px] rounded-3xl bg-primary text-black opacity-100 cursor-pointer hover:scale-[104%] transition"
+                    className="w-full mt-3 absolute bottom-[-30px] rounded-3xl bg-primary text-white opacity-100 cursor-pointer hover:scale-[104%] transition"
                     onClick={saveChanges}
                 >
                     Salvar mudanças
