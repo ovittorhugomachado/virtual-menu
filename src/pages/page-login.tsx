@@ -27,9 +27,8 @@ export const LoginPage = () => {
     };
 
     return (
-        <main
-            className="w-full h-screen min-w-[280px] min-h-screen flex justify-center items-center"
-        >
+        <main className="w-full relative h-screen min-w-[280px] min-h-screen flex justify-start md:justify-center items-center" >
+            <div className="w-full h-36 md:hidden absolute top-0 bg-primary dark:bg-[#161a21] z-0"></div>
             <LoginFormContainer
                 onSubmit={handleLogin}
                 isLoading={loading}

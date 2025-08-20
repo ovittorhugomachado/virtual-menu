@@ -2,33 +2,41 @@ type LogoProps = {
     className?: string;
 };
 
-export const Logo = ({ className }: LogoProps) => (
+export const LogoWhite= ({ className }: LogoProps) => (
     <>
-        {/* Logo preta no modo claro */}
         <img
-            className={`block dark:hidden ${className ?? ""}`}
-            src="../logo-light.png"
-            alt="logo"
-        />
-        {/* Logo branca no modo dark */}
-        <img
-            className={`hidden dark:block ${className ?? ""}`}
+            className={`${className ?? ""}`}
             src="../logo-dark.png"
             alt="logo"
         />
     </>
 );
 
-export const LogoText = ({ className }: LogoProps) => (
+export const LogoBlack= ({ className }: LogoProps) => (
     <>
         <img
-            className={`block dark:hidden ${className ?? ""}`}
-            src="../logo-text-light.png"
+            className={`${className ?? ""}`}
+            src="../logo-light.png"
             alt="logo"
         />
+    </>
+);
+
+export const LogoTextWhite = ({ className }: LogoProps) => (
+    <>
         <img
-            className={`hidden dark:block ${className ?? ""}`}
+            className={`${className ?? ""}`}
             src="../logo-text-dark.png"
+            alt="logo"
+        />
+    </>
+);
+
+export const LogoTextGreen = ({ className }: LogoProps) => (
+    <>
+        <img
+            className={`${className ?? ""}`}
+            src="../logo-text-light.png"
             alt="logo"
         />
     </>

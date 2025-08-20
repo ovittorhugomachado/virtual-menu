@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { Logo, LogoText } from "../../component-logo";
+import { LogoTextGreen, LogoTextWhite, LogoWhite } from "../../component-logo";
 import { AccountData } from "../../../types/types-account.d";
 import { AccountFormProps } from "../../../types/types-data-forms.d";
 import { RestaurantData } from "../../../types/types-restaurante-data.d";
@@ -105,74 +105,65 @@ export const SignupFormContainer = ({
         setStep(5);
 
     };
+
+    console.log(step)
     return (
         <>
-            <div className="w-[90%] h-[90vh] min-h-[500px] max-h-[700px] bg-transparent flex flex-col md:flex-row md:shadow-2xl rounded-xl">
+            <div className="w-[90%] h-[90vh] min-h-[500px] max-h-[700px] mt-10 md:mt-4 md:my-4 bg-transparent flex flex-col md:flex-row md:shadow-2xl rounded-xl z-30">
                 <div className={`md:hidden flex gap-3 mx-auto mb-6`}>
-                    <span className={`${step === 1 ? 'bg-secondary dark:bg-white text-white dark:text-black' : ''} ${step < 1 ? 'border-gray-400 dark:border-zinc-700 text-gray-400 dark:text-zinc-700' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>1</span>
-                    <span className={`${step === 2 ? 'bg-secondary dark:bg-white text-white dark:text-black' : ''} ${step < 2 ? 'border-gray-400 dark:border-zinc-700 text-gray-400 dark:text-zinc-700' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>2</span>
-                    <span className={`${step === 3 ? 'bg-secondary dark:bg-white text-white dark:text-black' : ''} ${step < 3 ? 'border-gray-400 dark:border-zinc-700 text-gray-400 dark:text-zinc-700' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>3</span>
-                    <span className={`${step === 4 ? 'bg-secondary dark:bg-white text-white dark:text-black' : ''} ${step < 4 ? 'border-gray-400 dark:border-zinc-700 text-gray-400 dark:text-zinc-700' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>4</span>
+                    {step < 5 ? (
+                        <>
+                            <span className={`${step === 1 ? 'bg-white dark:bg-white text-primary dark:text-black' : ''} ${step <= 1 ? 'border-[#83eae1] dark:border-zinc-700 text-[#83eae1] dark:text-zinc-700' : 'border-white text-white'} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>1</span>
+                            <span className={`${step === 2 ? 'bg-white dark:bg-white text-primary dark:text-black' : ''} ${step <= 2 ? 'border-[#83eae1] dark:border-zinc-700 text-[#83eae1] dark:text-zinc-700' : 'border-white text-white'} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>2</span>
+                            <span className={`${step === 3 ? 'bg-white dark:bg-white text-primary dark:text-black' : ''} ${step <= 3 ? 'border-[#83eae1] dark:border-zinc-700 text-[#83eae1] dark:text-zinc-700' : 'border-white text-white'} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>3</span>
+                            <span className={`${step === 4 ? 'bg-white dark:bg-white text-primary dark:text-black' : ''} ${step <= 4 ? 'border-[#83eae1] dark:border-zinc-700 text-[#83eae1] dark:text-zinc-700' : 'border-white text-white'} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>4</span>
+                        </>
+                    ) : (
+                        <LogoTextWhite className="w-[200px]" />
+                    )}
                 </div>
                 <div
-                    className="w-[50%] bg-green-100 hidden dark:bg-[#161a21] md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden"
+                    className="w-[50%] bg-primary hidden dark:bg-[#161a21] md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden"
                 >
-                    <Logo className="w-[100px] ml-4" />
+                    <LogoWhite className="w-[100px] ml-4" />
                     <div className={`${step !== 5 ? '' : 'hidden'}  flex flex-col gap-3 ml-20`}>
-                        <p className="flex items-center gap-3 text-lg">
-                            <span className={`${step === 1 ? 'bg-secondary dark:bg-white text-white dark:text-black' : ''} ${step < 1 ? 'border-gray-400 dark:border-zinc-700 text-gray-400 dark:text-zinc-700' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>1</span>
+                        <p className="flex items-center gap-3 text-lg text-white">
+                            <span className={`${step === 1 ? 'bg-white dark:bg-white text-primary dark:text-black' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>1</span>
                             Email
                         </p>
-                        <p className={`${step < 2 ? 'text-gray-400' : ''} flex items-center gap-3 text-lg`}>
-                            <span className={`${step === 2 ? 'bg-secondary dark:bg-white text-white dark:text-black' : ''} ${step < 2 ? 'border-gray-400 dark:border-zinc-700 text-gray-400 dark:text-zinc-700' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>2</span>
+                        <p className={`${step < 2 ? 'text-[#006058] dark:text-gray-400' : 'text-white'} flex items-center gap-3 text-lg`}>
+                            <span className={`${step === 2 ? 'bg-white dark:bg-white text-primary dark:text-black' : ''} ${step < 2 ? 'border-[#006058] dark:border-zinc-700 text-[#006058] dark:text-zinc-700' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>2</span>
                             Restaurante
                         </p>
-                        <p className={`${step < 3 ? 'text-gray-400' : ''} flex items-center gap-3 text-lg`}>
-                            <span className={`${step === 3 ? 'bg-secondary dark:bg-white text-white dark:text-black' : ''} ${step < 3 ? 'border-gray-400 dark:border-zinc-700 text-gray-400 dark:text-zinc-700' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>3</span>
+                        <p className={`${step < 3 ? 'text-[#006058] dark:text-gray-400' : 'text-white'} flex items-center gap-3 text-lg`}>
+                            <span className={`${step === 3 ? 'bg-white dark:bg-white text-primary dark:text-black' : ''} ${step < 3 ? 'border-[#006058] dark:border-zinc-700 text-[#006058] dark:text-zinc-700' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>3</span>
                             Proprietário
                         </p>
-                        <p className={`${step < 4 ? 'text-gray-400' : ''} flex items-center gap-3 text-lg`}>
-                            <span className={`${step === 4 ? 'bg-secondary dark:bg-white text-white dark:text-black' : ''} ${step < 4 ? 'border-gray-400 dark:border-zinc-700 text-gray-400 dark:text-zinc-700' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>4</span>
+                        <p className={`${step < 4 ? 'text-[#006058] dark:text-gray-400' : 'text-white'} flex items-center gap-3 text-lg`}>
+                            <span className={`${step === 4 ? 'bg-white dark:bg-white text-primary dark:text-black' : ''} ${step < 4 ? 'border-[#006058] dark:border-zinc-700 text-[#006058] dark:text-zinc-700' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>4</span>
                             Criar Senha
                         </p>
                     </div>
-                    {step === 5 && (
-                        <>
-                            <GoCheck size={130} className="text-[#99b9a8] dark:text-zinc-600 mx-auto animate-pulse" />
-                        </>
-                    )}
                     {step === 1 && (
                         <>
-                            <img src="./form-register-step-1-light.gif" alt="cadastro-email" width={200} style={{ margin: '0 45px' }} className="dark:hidden" />
-                            <img src="./form-register-step-1-dark.gif" alt="cadastro-email" width={200} style={{ margin: '0 45px' }} className="hidden dark:block" />
+                            <img src="./form-register-step-1.gif" alt="cadastro-email" width={230} style={{ margin: '0 45px' }} />
                         </>
                     )}
                     {step === 2 && (
-                        <>
-                            <img src="./form-register-step-2-light.gif" alt="cadastro-restaurante" width={200} style={{ margin: '0 45px' }} className="dark:hidden" />
-                            <img src="./form-register-step-2-dark.gif" alt="cadastro-restaurante" width={200} style={{ margin: '0 45px' }} className="hidden dark:block" />
-
-                        </>
+                        <img src="./form-register-step-2.gif" alt="cadastro-restaurante" width={230} style={{ margin: '0 45px' }} />
                     )}
                     {step === 3 && (
-                        <>
-                            <img src="./form-register-step-3-light.gif" alt="cadastro-proprietario" width={200} style={{ margin: '0 45px' }} className="dark:hidden" />
-                            <img src="./form-register-step-3-dark.gif" alt="cadastro-proprietario" width={200} style={{ margin: '0 45px' }} className="hidden dark:block" />
-                        </>
+                        <img src="./form-register-step-3.gif" alt="cadastro-proprietario" width={230} style={{ margin: '0 45px' }} />
                     )}
                     {step === 4 && (
-                        <>
-                            <img src="./form-register-step-4-light.gif" alt="cadastro-senha" width={200} style={{ margin: '0 45px' }} className="dark:hidden" />
-                            <img src="./form-register-step-4-dark.gif" alt="cadastro-senha" width={200} style={{ margin: '0 45px' }} className="hidden dark:block" />
-                        </>
+                        <img src="./form-register-step-4.gif" alt="cadastro-senha" width={230} style={{ margin: '0 45px' }} />
                     )}
                     {step === 5 && (
                         <>
-                            <img src="./form-register-step-5-light.gif" alt="sucesso" width={200} style={{ margin: '0 45px' }} className="dark:hidden" />
-                            <img src="./form-register-step-5-dark.gif" alt="sucesso" width={200} style={{ margin: '0 45px' }} className="hidden dark:block" />
+                            <GoCheck size={130} className="text-white dark:text-zinc-600 mx-auto animate-pulse" />
+                            <img src="./form-register-step-5.gif" alt="sucesso" width={230} style={{ margin: '0 45px' }} />
                         </>
                     )}
-
                 </div>
                 <form
                     onSubmit={handleSubmit(handleFormSubmit)}
@@ -181,7 +172,8 @@ export const SignupFormContainer = ({
                 >
                     <div className="w-full max-w-105 mt- mb-5 flex flex-col justify-center items-center gap-3">
                         <Link to="/entrar" className="hidden md:block w-[200px] absolute top-10 transition-all hover:scale-105 duration-200">
-                            <LogoText className="w-[200px]" />
+                            <LogoTextGreen className="w-[200px] dark:hidden" />
+                            <LogoTextWhite className="w-[200px] hidden dark:block" />
                         </Link>
                         <h1 className="w-full max-w-105 ml-6 mb-4 text-2xl font-bold"
                         >

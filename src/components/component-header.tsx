@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
-import { LogoText } from "./component-logo";
+import { LogoTextWhite } from "./component-logo";
 import { useAuth } from "../hooks/use-auth";
 import { getExtension } from "../utils/function-get-extension";
 
@@ -32,7 +32,7 @@ export const Header = ({
             className="w-screen lg:h-42 xl:h-26 px-6 py-4 lg:py-0 xl:py-12 md:pt-8 md:gap-36 text-white flex flex-col md:flex-row items-center justify-center"
         >
             <div className="w-[200px] xl:w-[250px] absolute left-12 top-8 xl:top-8 hidden md:block">
-                <LogoText />
+                <LogoTextWhite />
             </div>
             <div className="w-full md:hidden flex items-center justify-between relative text-white">
                 <button
