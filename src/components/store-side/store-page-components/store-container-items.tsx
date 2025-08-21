@@ -58,7 +58,7 @@ export const MenuItems = ({
                     {categories.map(category => (
                         <div
                             key={category.id}
-                            className={`w-full mt-8 ${backgroundColor === 'white' ? 'text-black' : 'text-white'}`}
+                            className={`w-full mt-4 ${backgroundColor === 'white' ? 'text-black' : 'text-white'}`}
                         >
                             <h1
                                 style={{ borderColor: buttonColor }}
@@ -66,7 +66,7 @@ export const MenuItems = ({
                             >
                                 {category.name}
                             </h1>
-                            <ul className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 gap-4 py-1 mx-auto">
+                            <ul className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 gap-4 py-1 ">
                                 {Array.isArray(menuItemsByCategory[category.id]) && menuItemsByCategory[category.id].length > 0 ? (
                                     menuItemsByCategory[category.id].map(item => (
                                         <li

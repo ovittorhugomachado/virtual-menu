@@ -41,9 +41,9 @@ export const Header = ({
                     onClick={() => setMenuOpen((prev) => !prev)}
                     aria-label="Abrir menu"
                 >
-                    <span className={`w-8 h-1 my-0 rounded bg-primary dark:bg-white transition-all duration-300${menuOpen ? " rotate-45 translate-y-2" : ""}`}></span>
-                    <span className={`w-8 h-1 my-1 rounded bg-primary dark:bg-white transition-all duration-300${menuOpen ? " opacity-0" : ""}`}></span>
-                    <span className={`w-8 h-1 my-0 rounded bg-primary dark:bg-white transition-all duration-300${menuOpen ? " -rotate-45 -translate-y-2" : ""}`}></span>
+                    <span className={`w-8 h-1 my-0 rounded bg-primary transition-all duration-300${menuOpen ? " rotate-45 translate-y-2" : ""}`}></span>
+                    <span className={`w-8 h-1 my-1 rounded bg-primary transition-all duration-300${menuOpen ? " opacity-0" : ""}`}></span>
+                    <span className={`w-8 h-1 my-0 rounded bg-primary transition-all duration-300${menuOpen ? " -rotate-45 -translate-y-2" : ""}`}></span>
                 </button>
                 <img
                     src={
@@ -68,7 +68,7 @@ export const Header = ({
                             target={btn.target}
                             onClick={btn.function}
                             style={{ fontSize: '19px' }}
-                            className={`px-4 py-1 gap-1 text-4xl rounded-full flex justify-center items-center ${location.pathname === btn.to ? "bg-primary dark:bg-white dark:text-black cursor-auto" : "text-black dark:text-white cursor-pointer transition-all duration-200 hover:bg-primary hover:dark:bg-white hover:dark:text-black hover:text-white"}`}
+                            className={`px-4 py-1 gap-1 text-4xl rounded-full flex justify-center items-center ${location.pathname === btn.to ? "bg-primary  dark:text-black cursor-auto" : "text-black dark:text-white cursor-pointer transition-all duration-200 hover:bg-primary hover:dark:bg-white hover:dark:text-black hover:text-white"}`}
                         >
                             {btn.icon}
                             {btn.title}

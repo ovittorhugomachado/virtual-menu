@@ -11,6 +11,8 @@ import { InputRestaurantName } from "../inputs/input-store-restaurant-name";
 import { InputPhoneNumber } from "../inputs/input-store-phone-number";
 import { InputAddress } from "../inputs/input-store-address";
 import { IoCloseOutline } from "react-icons/io5";
+import { LogoBlue, LogoTextBlue, LogoTextWhite, LogoWhite } from "../../component-logo";
+import { MdPassword } from "react-icons/md";
 
 export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
     onClose,
@@ -110,20 +112,7 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
 
     return (
         <>
-            {error ? (
-                <div className="fixed w-screen h-screen flex items-center justify-center bg-white/10 backdrop-blur-sm z-30">
-                    <div className="absolute w-120 h-90 mx-3 p-5 pt-25 pb-20 border border-zinc-400 bg-white rounded-xl flex flex-col items-center justify-center z-50">
-                        <button
-                            type="button"
-                            className="absolute top-2 right-2 p-2 rounded-full bg-red-600 text-white cursor-pointer transition-all duration-200"
-                            onClick={onClose}
-                        >
-                            <IoCloseOutline className="text-lg" />
-                        </button>
-                        <ErrorComponent message={error} />
-                    </div>
-                </div>
-            ) : loading ? (
+            {loading ? (
                 <div className="fixed w-screen h-screen flex items-center justify-center bg-white/10 backdrop-blur-sm z-30">
                     <div className="absolute w-120 h-90 mx-3 p-5 pt-25 pb-20 border border-zinc-400 bg-white rounded-xl flex flex-col items-center justify-center z-50">
                         <button
@@ -137,52 +126,77 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
                     </div>
                 </div>
             ) : (
-                <div className="fixed inset-0 flex items-center justify-center z-30">
-                    <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
-                    <form
-                        onSubmit={handleSubmit(handleFormSubmit)}
-                        noValidate
-                        className="relative w-120 max-w-115 primary-component mx-3 mt-0 mb-5 p-5 py-4 flex flex-col items-center justify-center gap-4 bg-white z-50"
-                    >
-                        <button
-                            type="button"
-                            className="absolute top-2 right-2 p-2 rounded-full bg-red-600 text-white cursor-pointer transition-all duration-200"
-                            onClick={onClose}
-                        >
-                            <IoCloseOutline className="text-lg" />
-                        </button>
-                        <div className="w-full max-w-105 mt-5 mb-5 flex flex-col gap-1">
-                            <InputRestaurantName
-                                register={register}
-                                errors={errors}
-                                clearErrors={clearErrors}
-                                initialValues={initialValues}
-                            />
-                            <InputAddress
-                                register={register}
-                                errors={errors}
-                                clearErrors={clearErrors}
-                                initialValues={initialValues}
-                            />
-                            <InputPhoneNumber
-                                control={control}
-                                initialValues={initialValues}
-                            />
-                            <CheckboxDeliveryTypesInput register={register} />
+                <div className="fixed inset-0 z-30 overflow-auto flex items-start justify-center items-center-on-height">
+                    <div className="fixed inset-0 bg-white/10 backdrop-blur-sm z-20"></div>
+                    <div className="w-[90%] h-[90%] min-h-[500px] mt-10 md:mt-4 md:my-4 bg-transparent flex flex-col md:flex-row md:shadow-2xl rounded-xl z-30">
+                        <div className="md:hidden flex gap-3 mx-auto mb-6">
+                            <LogoTextWhite className="w-[200px]" />
                         </div>
-                        {error && (
-                            <p className="font-bold text-error">{error}</p>
-                        )}
-                        {messageSuccess && (
-                            <p className="font-bold text-green-600">{messageSuccess}</p>
-                        )}
-                        <button
-                            type="submit"
-                            className=" primary-button"
+                        <div
+                            className="w-[50%] bg-primary dark:bg-[#161a21] hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden"
                         >
-                            Atualizar Dados
-                        </button>
-                    </form>
+                            <LogoBlue className="w-[100px] ml-4 hidden dark:block" />
+                            <LogoWhite className="w-[100px] ml-4 dark:hidden" />
+                            <img
+                                src="./line-dark.png"
+                                alt="line"
+                                width={150}
+                                style={{
+                                    animation: "revealLine 4s ease-in-out infinite alternate",
+                                    margin: "0 auto",
+                                }}
+                            />
+                            <img src="./form-login-dark.gif" alt="alta-tecnologia" width={230} style={{ margin: '0 45px' }} />
+                        </div>
+                        <form
+                            onSubmit={handleSubmit(handleFormSubmit)}
+                            noValidate
+                            className="w-full md:w-[60%] min-h-120 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white"
+                        >
+                            <div className="hidden md:block w-[200px]">
+                                <LogoTextBlue className="dark:hidden" />
+                                <LogoTextWhite className="hidden dark:block" />
+                            </div>
+                            <button
+                                type="button"
+                                className="absolute top-2 right-2 p-2 rounded-full bg-red-600 text-white cursor-pointer transition-all duration-200"
+                                onClick={onClose}
+                            >
+                                <IoCloseOutline className="text-lg" />
+                            </button>
+                            <div className={`w-full max-w-105 mt-5 mb-5 flex flex-col gap-1`}>
+                                <InputRestaurantName
+                                    register={register}
+                                    errors={errors}
+                                    clearErrors={clearErrors}
+                                    initialValues={initialValues}
+                                />
+                                <InputAddress
+                                    register={register}
+                                    errors={errors}
+                                    clearErrors={clearErrors}
+                                    initialValues={initialValues}
+                                />
+                                <InputPhoneNumber
+                                    control={control}
+                                    initialValues={initialValues}
+                                />
+                                <CheckboxDeliveryTypesInput register={register} />
+                            </div>
+                            {error && (
+                                <p className="font-bold text-error">{error}</p>
+                            )}
+                            {messageSuccess && (
+                                <p className="font-bold text-green-600">{messageSuccess}</p>
+                            )}
+                            <button
+                                type="submit"
+                                className=" primary-button"
+                            >
+                                Atualizar Dados
+                            </button>
+                        </form>
+                    </div>
                 </div>
             )}
         </>

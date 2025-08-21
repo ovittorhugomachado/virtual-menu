@@ -31,7 +31,7 @@ export const Logo = ({ image, onImageChange }: { image: string; onImageChange: (
     };
 
     return (
-        <div className="w-24 h-24 hidden ms:block sm:w-23 sm:h-23 rounded-full relative">
+        <div className="w-24 h-24 sm:w-23 sm:h-23 rounded-full relative">
             <img
                 src={image ? `${image}?v=${logoVersion}` : "/logo-default.png"}
                 alt="logo"

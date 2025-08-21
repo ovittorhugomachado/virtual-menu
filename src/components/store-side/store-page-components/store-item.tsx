@@ -69,16 +69,16 @@ export const Item = ({
                 <button
                     type="button"
                     title="Configurar Banner da loja"
-                    className="w-6 h-6 sm:w-8 sm:h-8 border-2 rounded-full bg-white bg-opacity-70 text-black absolute bottom-0 m-2 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200"
+                    className="w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-primary text-black absolute bottom-0 m-2 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200"
                     onClick={handleButtonClick}
                 >
-                    <FaCamera className="text-black" />
+                    <FaCamera className="text-black scale-120" />
                 </button>
             </div>
             <div className="py-4 px-4 flex flex-col justify-between">
-                <h1 className="font-bold">{name}</h1>
+                <h4 className="font-bold">{name}</h4>
                 <p className="font-light">{description}</p>
-                <h3>R$ {Number(price.toString().replace(',', '.')).toFixed(2).replace('.', ',')}</h3>
+                <h5>R$ {Number(price.toString().replace(',', '.')).toFixed(2).replace('.', ',')}</h5>
             </div>
             {showFormUpdateMenuItem === id && (
                 <UpdateMenuItemForm

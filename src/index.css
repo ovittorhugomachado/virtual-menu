@@ -58,6 +58,7 @@ img, button, span {
 
 h1 {
     font-size: 23px;
+
     @media (min-width: 768px) {
         font-size: 29px;
     }
@@ -72,11 +73,18 @@ h3 {
 }
 
 h4 {
-    font-size: 20px;
+    font-size: 17px;
+
+    @media (min-width: 768px) {
+        font-size: 20px;
+    }
 }
 
 h5 {
-    font-size: 18px;
+    font-size: 15px;
+    @media (min-width: 768px) {
+        font-size: 16px;
+    }
 }
 
 p {
@@ -85,6 +93,7 @@ p {
 
 a {
     font-size: 13px;
+
     @media (min-width: 768px) {
         font-size: 16px;
     }
@@ -92,6 +101,7 @@ a {
 
 button {
     font-size: 15px;
+
     @media (min-width: 768px) {
         font-size: 16px;
     }
@@ -260,4 +270,10 @@ input:-webkit-autofill {
     input[type="time"]::-webkit-calendar-picker-indicator {
         filter: invert(1);
     }
+}
+
+@media (min-height: 500px) {
+  .items-center-on-height {
+    align-items: center !important;
+  }
 }

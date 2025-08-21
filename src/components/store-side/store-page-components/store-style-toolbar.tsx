@@ -96,20 +96,20 @@ export const BottomNav = ({
                 className={`flex flex-col items-center content-between relative transition-all duration-500 ease-in-out ${toolbarOpen ? 'opacity-100 max-h-[500px]' : 'opacity-0 max-h-0 overflow-hidden'}`}
             >
                 <div className="flex flex-col items-center justify-between h-full">
-                    <span className="mb-2 font-bold">Cor de fundo</span>
+                    <h5 className="mb-2 font-bold">Cor de fundo</h5>
                     <div className="gap-1 mx-2.5 text-md font-extralight flex items-center">
-                        <span>Branco</span>
+                        <h5 className={`${backgroundColorStore === 'white' ? 'font-bold' : ''}`}>Branco</h5>
                         <button
                             onClick={BackgroundStoreChange}
-                            className={`w-[50px] h-[25px] ml-1 px-1 py-1 flex items-center gap-3 rounded-full cursor-pointer transition-all duration-300 ${backgroundColorStore === 'white' ? 'bg-zinc-800 hover:shadow-[0_0_16px_2px_rgba(155,155,155,0.7)]' : 'bg-zinc-400 hover:shadow-[0_0_16px_2px_rgba(0,0,0,0.4)]'}`}
+                            className={`w-[50px] h-[25px] mx-2 p-1 flex items-center gap-3 rounded-full cursor-pointer transition-all duration-300 ${backgroundColorStore === 'white' ? 'bg-zinc-800 hover:shadow-[0_0_16px_2px_rgba(155,155,155,0.7)]' : 'bg-zinc-400 hover:shadow-[0_0_16px_2px_rgba(0,0,0,0.4)]'}`}
                         >
-                            <span className={`w-4.5 h-4.5 rounded-full transition-transform duration-300 ${backgroundColorStore === 'white' ? 'bg-white' : 'translate-x-6 bg-black'}`}></span>
+                            <span className={`w-4.5 h-4.5 rounded-full transition-transform duration-300 ${backgroundColorStore === 'white' ? 'bg-white' : 'translate-x-7.5 bg-black'}`}></span>
                         </button>
-                        <span>Preto</span>
+                        <h5 className={`${backgroundColorStore === 'black' ? 'font-bold' : ''}`}>Preto</h5>
                     </div>
                 </div>
                 <div className="w-[130px] mx-3.5 my-3 py-2.5 border-y-2 border-primary flex flex-col items-center text-center">
-                    <label htmlFor="buttonColor" className="mb-2 font-bold">Cor dos botões</label>
+                    <h5 className="mb-2 font-bold">Cor dos botões</h5>
                     <input
                         type="color"
                         name="buttonColor"
@@ -119,21 +119,21 @@ export const BottomNav = ({
                         onChange={handleButtonColorChange}
                     />
                 </div>
-                <span className="mb-2 font-bold text-center">Cor do texto dos botões</span>
+                <h5 className="mb-2 font-bold text-center">Cor do texto dos botões</h5>
                 <div className="gap-1 mx-2.5 text-md font-extralight flex items-center">
-                    <span>Branco</span>
+                    <h5 className={`${textColorButtons === 'white' ? 'font-bold' : ''}`}>Branco</h5>
                     <button
                         onClick={toggleTextColorButtons}
-                        className={`w-[50px] h-[25px] ml-1 px-1 py-1 flex items-center gap-3 rounded-full cursor-pointer transition-all duration-300 ${backgroundColorStore === 'white' ? 'bg-zinc-800 hover:shadow-[0_0_16px_2px_rgba(155,155,155,0.7)]' : 'bg-zinc-400 hover:shadow-[0_0_16px_2px_rgba(0,0,0,0.4)]'}`}
+                        className={`w-[50px] h-[25px] mx-2 p-1 flex items-center gap-3 rounded-full cursor-pointer transition-all duration-300 ${backgroundColorStore === 'white' ? 'bg-zinc-800 hover:shadow-[0_0_16px_2px_rgba(155,155,155,0.7)]' : 'bg-zinc-400 hover:shadow-[0_0_16px_2px_rgba(0,0,0,0.4)]'}`}
                     >
-                        <span className={`w-4.5 h-4.5 rounded-full transition-transform duration-300 ${backgroundColorStore === 'white' ? 'bg-white' : 'bg-black'} ${textColorButtons === 'black' ? 'translate-x-6' : ''}`} />
+                        <span className={`w-4.5 h-4.5 rounded-full transition-transform duration-300 ${backgroundColorStore === 'white' ? 'bg-white' : 'bg-black'} ${textColorButtons === 'black' ? 'translate-x-7.5' : ''}`} />
                     </button>
-                    <span>Preto</span>
+                    <h5 className={`${textColorButtons === 'black' ? 'font-bold' : ''}`}>Preto</h5>
                 </div>
             </div>
             {hasChanges && (
                 <button
-                    className="w-full mt-3 absolute bottom-[-30px] rounded-3xl bg-primary text-white opacity-100 cursor-pointer hover:scale-[104%] transition"
+                    className="w-full mt-3 absolute bottom-[-30px] rounded-3xl bg-primary text-black opacity-100 cursor-pointer hover:scale-[104%] transition"
                     onClick={saveChanges}
                 >
                     Salvar mudanças

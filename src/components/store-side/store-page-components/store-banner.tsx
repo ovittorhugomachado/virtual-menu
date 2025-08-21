@@ -38,10 +38,10 @@ export const StoreBanner = ({ banner, onBannerChange }: { banner: string, onBann
                 <button
                     type="button"
                     title="Configurar Banner da loja"
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-black left-0 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200"
+                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary text-black left-0 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200"
                     onClick={handleButtonClick}
                 >
-                    <FaCamera className="text-black scale-140" />
+                    <FaCamera className="text-black scale-120" />
                 </button>
                 <span className="h-5 text-[13px] bg-primary rounded-full text-black px-8 py-1 shadow hidden sm:flex items-center">
                     *Recomenda-se 1600x400px
