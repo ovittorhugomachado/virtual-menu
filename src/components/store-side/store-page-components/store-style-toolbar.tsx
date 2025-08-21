@@ -88,7 +88,7 @@ export const BottomNav = ({
             <span className="text-3xl left-[-20px] top-1 my-auto text-zinc-600 absolute">⋮⋮</span>
             <button className="gap-1 flex items-center transition-all duration-300 ease-in-out cursor-pointer" onClick={handleToggleToolbar}>
                 <MdOutlineColorLens className="text-3xl" />
-                <span>Editar cores</span>
+                <p>Editar cores</p>
                 <IoIosArrowDown className={toolbarOpen ? 'rotate-180 transition-transform duration-300' : 'transition-transform duration-300'} />
             </button>
             <div

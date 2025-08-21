@@ -12,8 +12,6 @@ export const StoreBanner = ({ banner, onBannerChange }: { banner: string, onBann
         inputRef.current?.click();
     };
 
-    console.log(banner)
-
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
@@ -34,19 +32,19 @@ export const StoreBanner = ({ banner, onBannerChange }: { banner: string, onBann
             <img
                 src={banner ? `${banner}?v=${bannerVersion}` : "/store-banner-default.png"}
                 alt="imagem-capa"
-                className="w-screen h-80 object-center object-contain"
+                className="w-screen max-h-80 object-center object-contain"
             />
             <div className="flex items-center gap-2 absolute bottom-2 left-2">
                 <button
                     type="button"
                     title="Configurar Banner da loja"
-                    className="w-6 h-6 sm:w-8 sm:h-8 border-2 border-black rounded-full bg-white bg-opacity-70 text-black flex items-center justify-center absolute sm:static cursor-pointer hover:scale-105 transition-all duration-200"
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-black left-0 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200"
                     onClick={handleButtonClick}
                 >
-                    <FaCamera className="text-black" />
+                    <FaCamera className="text-black scale-140" />
                 </button>
-                <span className="h-5 text-[10px] bg-white rounded-full text-zinc-700 px-2 py-1 shadow hidden sm:flex items-center">
-                    *Recomenda-se 2000x527px
+                <span className="h-5 text-[13px] bg-primary rounded-full text-black px-8 py-1 shadow hidden sm:flex items-center">
+                    *Recomenda-se 1600x400px
                 </span>
             </div>
             <input

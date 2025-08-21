@@ -79,7 +79,7 @@ export const MenuItems = ({
                                                         ? item.photoUrl
                                                         : item.photoUrl
                                                             ? `${VITE_API_URL}/uploads/store${storeId}-category${category.id}-product${item.id}${getExtension(item.photoUrl)}`
-                                                            : '/prato-default.png'
+                                                            : '/food-default.png'
                                                 }
                                                 name={item.name}
                                                 description={item.description}

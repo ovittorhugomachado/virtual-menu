@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
-import { LogoTextWhite } from "./component-logo";
+import { LogoTextBlue, LogoTextWhite } from "./component-logo";
 import { useAuth } from "../hooks/use-auth";
 import { getExtension } from "../utils/function-get-extension";
 
@@ -32,7 +32,8 @@ export const Header = ({
             className="w-screen lg:h-42 xl:h-26 px-6 py-4 lg:py-0 xl:py-12 md:pt-8 md:gap-36 text-white flex flex-col md:flex-row items-center justify-center"
         >
             <div className="w-[200px] xl:w-[250px] absolute left-12 top-8 xl:top-8 hidden md:block">
-                <LogoTextWhite />
+                <LogoTextBlue className="w-[200px] dark:hidden" />
+                <LogoTextWhite className="w-[200px] hidden dark:block" />
             </div>
             <div className="w-full md:hidden flex items-center justify-between relative text-white">
                 <button
@@ -66,7 +67,7 @@ export const Header = ({
                             title={btn.title}
                             target={btn.target}
                             onClick={btn.function}
-                            style={{fontSize: '19px'}}
+                            style={{ fontSize: '19px' }}
                             className={`px-4 py-1 gap-1 text-4xl rounded-full flex justify-center items-center ${location.pathname === btn.to ? "bg-primary dark:bg-white dark:text-black cursor-auto" : "text-black dark:text-white cursor-pointer transition-all duration-200 hover:bg-primary hover:dark:bg-white hover:dark:text-black hover:text-white"}`}
                         >
                             {btn.icon}

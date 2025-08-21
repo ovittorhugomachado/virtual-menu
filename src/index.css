@@ -8,6 +8,7 @@
     --color-color-text: #000000;
     --font-display: "geologica", "sans-serif";
     --breakpoint-xs: 310px;
+    --breakpoint-ms: 468px;
 }
 
 html {
@@ -84,14 +85,16 @@ p {
 
 a {
     font-size: 13px;
-
     @media (min-width: 768px) {
         font-size: 16px;
     }
 }
 
 button {
-    font-size: 19px;
+    font-size: 15px;
+    @media (min-width: 768px) {
+        font-size: 16px;
+    }
 }
 
 input:-webkit-autofill,

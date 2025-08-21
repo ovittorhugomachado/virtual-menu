@@ -62,7 +62,7 @@ export const Item = ({
         <>
             <div className="w-[150px] h-[150px] relative">
                 <img
-                    src={image ? `${image}?v=${imageVersion}` : "../prato-default.png"}
+                    src={image ? `${image}?v=${imageVersion}` : "../food-default.png"}
                     alt=""
                     className="w-[150px] h-[150px] object-cover"
                 />
