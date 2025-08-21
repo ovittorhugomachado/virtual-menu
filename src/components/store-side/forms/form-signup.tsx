@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { LogoTextGreen, LogoTextWhite, LogoWhite } from "../../component-logo";
+import { LogoBlue, LogoTextBlue, LogoTextWhite, LogoWhite } from "../../component-logo";
 import { AccountData } from "../../../types/types-account.d";
 import { AccountFormProps } from "../../../types/types-data-forms.d";
 import { RestaurantData } from "../../../types/types-restaurante-data.d";
@@ -106,7 +106,6 @@ export const SignupFormContainer = ({
 
     };
 
-    console.log(step)
     return (
         <>
             <div className="w-[90%] h-[90vh] min-h-[500px] max-h-[700px] mt-10 md:mt-4 md:my-4 bg-transparent flex flex-col md:flex-row md:shadow-2xl rounded-xl z-30">
@@ -125,7 +124,8 @@ export const SignupFormContainer = ({
                 <div
                     className="w-[50%] bg-primary hidden dark:bg-[#161a21] md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden"
                 >
-                    <LogoWhite className="w-[100px] ml-4" />
+                    <LogoBlue className="w-[100px] ml-4 hidden dark:block" />
+                    <LogoWhite className="w-[100px] ml-4 dark:hidden" />
                     <div className={`${step !== 5 ? '' : 'hidden'}  flex flex-col gap-3 ml-20`}>
                         <p className="flex items-center gap-3 text-lg text-white">
                             <span className={`${step === 1 ? 'bg-white dark:bg-white text-primary dark:text-black' : ''} flex items-center justify-center w-10 h-10 rounded-full border-[1px]`}>1</span>
@@ -172,7 +172,7 @@ export const SignupFormContainer = ({
                 >
                     <div className="w-full max-w-105 mt- mb-5 flex flex-col justify-center items-center gap-3">
                         <Link to="/entrar" className="hidden md:block w-[200px] absolute top-10 transition-all hover:scale-105 duration-200">
-                            <LogoTextGreen className="w-[200px] dark:hidden" />
+                            <LogoTextBlue className="w-[200px] dark:hidden" />
                             <LogoTextWhite className="w-[200px] hidden dark:block" />
                         </Link>
                         <h1 className="w-full max-w-105 ml-6 mb-4 text-2xl font-bold"

@@ -12,7 +12,7 @@ export const LogoWhite= ({ className }: LogoProps) => (
     </>
 );
 
-export const LogoBlack= ({ className }: LogoProps) => (
+export const LogoBlue= ({ className }: LogoProps) => (
     <>
         <img
             className={`${className ?? ""}`}
@@ -32,7 +32,7 @@ export const LogoTextWhite = ({ className }: LogoProps) => (
     </>
 );
 
-export const LogoTextGreen = ({ className }: LogoProps) => (
+export const LogoTextBlue = ({ className }: LogoProps) => (
     <>
         <img
             className={`${className ?? ""}`}

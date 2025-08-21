@@ -148,7 +148,7 @@ input:-webkit-autofill:focus {
 }
 
 .primary-button {
-    @apply px-[30px] py-2 text-lg rounded-3xl cursor-pointer font-semibold transition-all bg-primary dark:bg-white text-white dark:text-black hover:scale-105;
+    @apply px-[30px] py-2 text-lg rounded-3xl cursor-pointer font-semibold transition-all bg-primary text-white dark:text-black hover:scale-105;
 }
 
 .cancel-button {

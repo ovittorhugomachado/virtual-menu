@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AccountData } from "../../../types/types-account.d";
 import { RestaurantData } from "../../../types/types-restaurante-data.d";
 import { AccountFormProps } from "../../../types/types-data-forms.d";
-import { LogoTextGreen, LogoTextWhite, LogoWhite } from "../../component-logo";
+import { LogoBlue, LogoTextBlue, LogoTextWhite, LogoWhite } from "../../component-logo";
 import { InputEmail } from "../inputs/input-store-email";
 import { FaArrowRight } from "react-icons/fa";
 import { MdPassword } from "react-icons/md";
@@ -59,7 +59,8 @@ export const RecoverPasswordFormContainer = ({
                         <div
                             className="w-[50%] bg-primary dark:bg-[#161a21] hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden"
                         >
-                            <LogoWhite className="w-[100px] ml-4" />
+                            <LogoBlue className="w-[100px] ml-4 hidden dark:block" />
+                            <LogoWhite className="w-[100px] ml-4 dark:hidden" />
                             <MdPassword size={130} className="text-white dark:text-zinc-600 mx-auto animate-pulse" />
                             <img src="./form-recover-password.gif" alt="esqueceu-a-senha?" width={230} style={{ margin: '0 45px' }} />
                         </div>
@@ -69,7 +70,7 @@ export const RecoverPasswordFormContainer = ({
                             className="w-full md:w-[60%] min-h-90 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none"
                         >
                             <Link to="/entrar" className="hidden md:block w-[200px] absolute top-10 transition-all hover:scale-105 duration-200">
-                                <LogoTextGreen className="w-[200px] dark:hidden" />
+                                <LogoTextBlue className="w-[200px] dark:hidden" />
                                 <LogoTextWhite className="w-[200px] hidden dark:block" />
                             </Link>
                             <h1 className="w-full max-w-105 ml-6 mb-4 text-2xl font-bold">Recuperar senha</h1>
@@ -109,13 +110,14 @@ export const RecoverPasswordFormContainer = ({
                         <div
                             className="w-[50%] bg-primary dark:bg-[#161a21] hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden"
                         >
-                            <LogoWhite className="w-[100px] ml-4" />
+                            <LogoBlue className="w-[100px] ml-4 hidden dark:block" />
+                            <LogoWhite className="w-[100px] ml-4 dark:hidden" />
                             <GoCheck size={130} className="text-white dark:text-zinc-600 mx-auto animate-pulse" />
                             <img src="./form-recover-password-success.gif" alt="sucesso" width={230} style={{ margin: '0 45px' }} />
                         </div>
                         <div className="w-full md:w-[60%] min-h-60 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none">
                             <Link to="/entrar" className="hidden md:block w-[200px] absolute top-10 transition-all hover:scale-105 duration-200">
-                                <LogoTextGreen className="w-[200px] dark:hidden" />
+                                <LogoTextBlue className="w-[200px] dark:hidden" />
                                 <LogoTextWhite className="w-[200px] hidden dark:block" />
                             </Link>
                             <h1 className="text-2xl text-center">Email enviado ✅</h1>

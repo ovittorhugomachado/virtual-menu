@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AccountFormProps } from "../../../types/types-data-forms.d";
 import { AccountData } from "../../../types/types-account.d";
 import { RestaurantData } from "../../../types/types-restaurante-data.d";
-import { LogoTextGreen, LogoTextWhite, LogoWhite } from "../../component-logo";
+import { LogoBlue, LogoTextBlue, LogoTextWhite, LogoWhite } from "../../component-logo";
 import { InputPasswordRegister } from "../inputs/input-store-password-register";
 import { MdPassword } from "react-icons/md";
 
@@ -45,7 +45,8 @@ export const CreateNewPasswordFormContainer = ({
                         <div
                             className="w-[50%] bg-primary dark:bg-[#161a21] hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden"
                         >
-                            <LogoWhite className="w-[100px] ml-4" />
+                            <LogoBlue className="w-[100px] ml-4 hidden dark:block" />
+                            <LogoWhite className="w-[100px] ml-4 dark:hidden" />
                             <MdPassword size={130} className="text-white dark:text-zinc-600 mx-auto animate-pulse" />
                             <img src="../form-create-new-password.gif" alt="criar-nova-senha" width={230} style={{ margin: '0 45px' }} />
                         </div>
@@ -54,10 +55,10 @@ export const CreateNewPasswordFormContainer = ({
                             noValidate
                             className="w-full md:w-[60%] min-h-100 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none"
                         >
-                        <Link to="/entrar" className="hidden md:block w-[200px] absolute top-10 transition-all hover:scale-105 duration-200">
-                            <LogoTextGreen className="w-[200px] dark:hidden" />
-                            <LogoTextWhite className="w-[200px] hidden dark:block" />
-                        </Link>
+                            <Link to="/entrar" className="hidden md:block w-[200px] absolute top-10 transition-all hover:scale-105 duration-200">
+                                <LogoTextBlue className="w-[200px] dark:hidden" />
+                                <LogoTextWhite className="w-[200px] hidden dark:block" />
+                            </Link>
                             <div className="w-full max-w-105 mt-5 mb-5 flex flex-col gap-1">
                                 <InputPasswordRegister
                                     register={register}
