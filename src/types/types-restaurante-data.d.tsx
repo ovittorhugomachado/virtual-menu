@@ -5,7 +5,7 @@ export type RestaurantData = {
   restaurantName: string;
   ownersName: string;
   email: string;
-  address: string;
+  address: Address;
   logoUrl: string;
   bannerUrl: string;
   backgroundColor: string;
@@ -32,6 +32,13 @@ export type RestaurantData = {
   token: string;
 }
 
+export type Address = {
+  street: string;
+  number: string;
+  neighborhood: string;
+  city: string;
+}
+
 export type RestaurantContainerProps = {
   onSubmit: (data: RestaurantData) => void;
   isLoading: boolean;
@@ -42,3 +49,21 @@ export type RestaurantContainerProps = {
 export type RestaurantsGrid = {
   restaurants: RestaurantData[];
 }
+
+export type UpdateMyStorePayload = {
+  store: {
+    address: {
+      street: string;
+      number: string;
+      neighborhood: string;
+      city: string;
+    };
+    logoUrl: string;
+    delivery: boolean;
+    pickup: boolean;
+  };
+  ownerUser: {
+    restaurantName: string;
+    phoneNumber: string;
+  };
+};

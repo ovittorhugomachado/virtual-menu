@@ -3,7 +3,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { getMyStoreData, updateMyStoreData } from "../../../services/service-store-data";
 import { UpdateStoreDataFormProps } from "../../../types/types-data-forms.d";
 import { RestaurantData } from "../../../types/types-restaurante-data.d";
-import { AccountData } from "../../../types/types-account.d";
 import { LoadingComponent } from "../../component-loading";
 import { CheckboxDeliveryTypesInput } from "../inputs/input-store-delivery-type";
 import { InputRestaurantName } from "../inputs/input-store-restaurant-name";
@@ -26,7 +25,12 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
     } = useForm<RestaurantData>({
         defaultValues: {
             restaurantName: "",
-            address: "",
+            address: {
+                street: "",
+                number: "",
+                neighborhood: "",
+                city: "",
+            },
             phoneNumber: "",
             delivery: false,
             pickup: false,
@@ -34,29 +38,32 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
         },
     });
 
+
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [messageSuccess, setMessageSuccess] = useState("");
-    const [lastData, setLastData] = useState<Partial<RestaurantData> | null>(null);
 
     useEffect(() => {
         const fetchStoreData = async () => {
             setLoading(true);
             try {
                 const response = await getMyStoreData();
-
-                setValue("restaurantName", response.restaurantName);
-                setValue("address", response.address);
-                setValue("phoneNumber", response.phoneNumber);
+                console.log(response)
+                setValue("restaurantName", response.user.restaurantName);
+                setValue(
+                    "address",
+                    typeof response.address === "string"
+                        ? {
+                            street: response.address,
+                            number: "",
+                            neighborhood: "",
+                            city: "",
+                        }
+                        : response.address
+                );
+                setValue("phoneNumber", response.user.phoneNumber);
                 setValue("delivery", response.delivery);
                 setValue("pickup", response.pickup);
-                setLastData({
-                    restaurantName: response.restaurantName,
-                    address: response.address,
-                    phoneNumber: response.phoneNumber,
-                    delivery: response.delivery,
-                    pickup: response.pickup,
-                });
             } catch (error: unknown) {
                 console.error(error);
                 setError(error instanceof Error ? error.message : "Erro ao carregar os dados da loja");
@@ -78,30 +85,29 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
         }
     }, [messageSuccess]);
 
-    const handleFormSubmit: SubmitHandler<AccountData> = async (data) => {
-        if (
-            lastData &&
-            data.restaurantName === lastData.restaurantName &&
-            data.address === lastData.address &&
-            data.phoneNumber === lastData.phoneNumber &&
-            data.delivery === lastData.delivery &&
-            data.pickup === lastData.pickup
-        ) {
-            setMessageSuccess("");
-            return;
-        }
-
-        try {
-            await updateMyStoreData(data);
-            setMessageSuccess("Dados atualizados com sucesso!");
-            setError("");
-            setLastData({
-                restaurantName: data.restaurantName,
-                phoneNumber: data.phoneNumber,
-                address: data.address,
+    const handleFormSubmit: SubmitHandler<RestaurantData> = async (data) => {
+        const payload = {
+            store: {
+                address: {
+                    street: data.address?.street ?? "",
+                    number: data.address?.number ?? "",
+                    neighborhood: data.address?.neighborhood ?? "",
+                    city: data.address?.city ?? "",
+                },
+                logoUrl: data.logoUrl ?? "",
                 delivery: data.delivery,
                 pickup: data.pickup,
-            });
+            },
+            ownerUser: {
+                restaurantName: data.restaurantName,
+                phoneNumber: data.phoneNumber,
+            }
+        };
+
+        try {
+            await updateMyStoreData(payload);
+            setMessageSuccess("Dados atualizados com sucesso!");
+            setError("");
         } catch (error: unknown) {
             setError(error instanceof Error ? error.message : "Erro ao carregar os dados da loja");
             setMessageSuccess("");
@@ -124,11 +130,11 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
                     </div>
                 </div>
             ) : (
-                <div className="fixed inset-0 z-30 overflow-auto flex items-start justify-center items-center-on-height">
-                    <div className="fixed inset-0 bg-white/10 backdrop-blur-sm z-20"></div>
-                    <div className="w-full min-h-full px-4 py-10 md:px-16 md:py-16 lg:px-36 2xl:px-80 bg-transparent flex flex-col md:justify-center items-center md:flex-row rounded-xl z-30">
+                <div className="min-h-[600px] fixed inset-0 z-30 overflow-auto flex items-start justify-center items-center-on-height">
+                    <div className="min-h-[600px] fixed inset-0 bg-white/10 backdrop-blur-sm z-20"></div>
+                    <div className="fixed w-full min-h-screen mt-6 px-4 py-4 md:px-16 md:py-16 lg:px-36 2xl:px-80 bg-transparent flex flex-col md:justify-center items-center md:flex-row rounded-xl z-30 overflow-auto ">
                         <div
-                            className="w-[50%] max-h-[480px] min-h-[525px] bg-primary dark:bg-[#161a21] hidden md:flex flex-col justify-between rounded-l-xl pb-4 pt-6 relative overflow-hidden"
+                            className="w-[50%] max-h-[480px] md:min-h-[609px] lg:min-h-[621px] bg-primary dark:bg-[#161a21] hidden md:flex flex-col justify-between rounded-l-xl pb-4 pt-6 relative overflow-hidden"
                         >
                             <LogoBlue className="w-[100px] ml-4 hidden dark:block" />
                             <LogoWhite className="w-[100px] ml-4 dark:hidden" />
@@ -138,7 +144,7 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
                         <form
                             onSubmit={handleSubmit(handleFormSubmit)}
                             noValidate
-                            className="w-full max-h-[480px] md:w-[60%] min-h-130 md:min-h-150 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-6 md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white"
+                            className="w-[90%] relative md:w-[60%] max-h-screen min-h-130 md:min-h-150 mx-4 md:mx-0 rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 flex flex-col justify-start pt-8 md:pt-6 md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white"
                         >
                             <div className="w-[200px]">
                                 <LogoTextBlue className="dark:hidden" />
@@ -151,7 +157,7 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
                             >
                                 <IoCloseOutline className="text-lg" />
                             </button>
-                            <div className={`w-full max-w-105 mt-5 mb-5 flex flex-col gap-1`}>
+                            <div className={`w-full max-w-105 mt-5 mb-5 flex flex-col gap-4`}>
                                 <InputRestaurantName
                                     register={register}
                                     errors={errors}

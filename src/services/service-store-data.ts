@@ -1,4 +1,4 @@
-import { AccountData } from "../types/types-account.d";
+import { UpdateMyStorePayload } from "../types/types-restaurante-data.d";
 
 //Services para gerenciar dados do restaurante estando logado
 
@@ -21,7 +21,7 @@ export const getMyStoreData = async () => {
     return await response.json();   
 };
 
-export const updateMyStoreData = async (data: AccountData) => {
+export const updateMyStoreData = async (data: UpdateMyStorePayload) => {
     const response = await fetch(`${API_URL}/my-store`, {
         method: 'PATCH',
         headers: {

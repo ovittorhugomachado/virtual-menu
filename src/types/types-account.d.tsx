@@ -7,7 +7,12 @@ export type AccountData = {
   password: string;
   restaurantName: string;
   name: string;
-  address: string;
+  address: {
+    street: string;
+    number: string;
+    neighborhood: string;
+    city: string;
+  };
   activeAccount: boolean;
   delivery: boolean;
   pickup: boolean;

@@ -1,6 +1,6 @@
 import { UseFormRegister, UseFormWatch, UseFormClearErrors, FieldErrors, Control } from "react-hook-form";
 import { AccountData } from "./types-account.d";
-import { RestaurantData } from "./types-restaurante-data.d";
+import { Address, RestaurantData } from "./types-restaurante-data.d";
 import { MenuItemFormData, OrderFormData } from "./types-data-forms.d";
 
 export type InputNameProps = {
@@ -49,10 +49,10 @@ export type InputMenuItemPriceProps = {
 };
 
 export type InputAddressProps = {
-    register: UseFormRegister<RestaurantData>;
-    errors: FieldErrors<RestaurantData>;
-    clearErrors: UseFormClearErrors<RestaurantData>;
-    initialValues?: Partial<RestaurantData>;
+  register: UseFormRegister<RestaurantData>;
+  errors: FieldErrors<{ address: RestaurantData["address"] }>;
+  clearErrors: UseFormClearErrors<RestaurantData>;
+  initialValues?: { address?: Address };
 }
 
 export type InputCustomerAddressProps = {
