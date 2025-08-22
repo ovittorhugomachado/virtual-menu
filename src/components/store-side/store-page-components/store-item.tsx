@@ -60,24 +60,31 @@ export const Item = ({
 
     return (
         <>
-            <div className="w-[150px] h-[150px] relative">
+            <div className="w-[130px] h-[165px] ms:w-[150px] ms:h-[150px] relative shrink-0">
                 <img
                     src={image ? `${image}?v=${imageVersion}` : "../food-default.png"}
                     alt=""
-                    className="w-[150px] h-[150px] object-cover"
+                    className="w-[130px] h-[165px] ms:w-[150px] ms:h-[150px] object-cover"
                 />
                 <button
                     type="button"
                     title="Configurar Banner da loja"
-                    className="w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-primary text-black absolute bottom-0 m-2 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200"
+                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary text-black absolute bottom-0 m-2 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200"
                     onClick={handleButtonClick}
                 >
                     <FaCamera className="text-black scale-120" />
                 </button>
             </div>
-            <div className="py-4 px-4 flex flex-col justify-between">
-                <h4 className="font-bold">{name}</h4>
-                <p className="font-light">{description}</p>
+            <div className="py-4 px-4 mr-1 flex flex-col justify-between overflow-x-hidden">
+                <h5 className="font-bold line-clamp-2">{name}</h5>
+                <p
+                    style={{
+                        fontSize: '13px',
+                    }}
+                    className="font-light line-clamp-2"
+                >
+                    {description}
+                </p>
                 <h5>R$ {Number(price.toString().replace(',', '.')).toFixed(2).replace('.', ',')}</h5>
             </div>
             {showFormUpdateMenuItem === id && (

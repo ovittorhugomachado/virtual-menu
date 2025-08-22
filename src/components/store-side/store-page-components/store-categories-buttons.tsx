@@ -53,12 +53,12 @@ export const CategoryButtons = ({ categories, setCategories, buttonColor, textCo
             {categories.map((category) => (
                 <div
                     key={category.id}
-                    className={`min-w-28 h-8 lg:h-10 px-3 rounded-3xl text-${textColor} relative flex-grow flex items-center justify-center cursor-pointer transition-transform duration-200`}
+                    className={`min-w-28 h-8 lg:h-10 mx-auto px-3 rounded-3xl text-${textColor} relative flex-grow flex items-center justify-center cursor-pointer transition-transform duration-200`}
                     style={{ backgroundColor: buttonColor ?? '' }}
                 >
                     <button
                         type="button"
-                        className="w-full h-full flex items-center justify-center"
+                        className="max-w-56 whitespace-nowrap truncate text-start"
                     >
                         {category.name}
                     </button>

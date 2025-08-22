@@ -62,11 +62,11 @@ export const MenuItems = ({
                         >
                             <h1
                                 style={{ borderColor: buttonColor }}
-                                className="text-2xl font-semibold border-b-4 pr-6 mb-2 inline-block"
+                                className="max-w-full truncate text-2xl font-semibold border-b-4 pr-6 mb-2 inline-block"
                             >
                                 {category.name}
                             </h1>
-                            <ul className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 gap-4 py-1 ">
+                            <ul className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 py-1 ">
                                 {Array.isArray(menuItemsByCategory[category.id]) && menuItemsByCategory[category.id].length > 0 ? (
                                     menuItemsByCategory[category.id].map(item => (
                                         <li

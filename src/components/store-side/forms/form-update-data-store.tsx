@@ -4,15 +4,13 @@ import { getMyStoreData, updateMyStoreData } from "../../../services/service-sto
 import { UpdateStoreDataFormProps } from "../../../types/types-data-forms.d";
 import { RestaurantData } from "../../../types/types-restaurante-data.d";
 import { AccountData } from "../../../types/types-account.d";
-import { ErrorComponent } from "../../component-error";
 import { LoadingComponent } from "../../component-loading";
 import { CheckboxDeliveryTypesInput } from "../inputs/input-store-delivery-type";
 import { InputRestaurantName } from "../inputs/input-store-restaurant-name";
 import { InputPhoneNumber } from "../inputs/input-store-phone-number";
 import { InputAddress } from "../inputs/input-store-address";
-import { IoCloseOutline } from "react-icons/io5";
+import { IoCloseOutline, IoStorefrontOutline } from "react-icons/io5";
 import { LogoBlue, LogoTextBlue, LogoTextWhite, LogoWhite } from "../../component-logo";
-import { MdPassword } from "react-icons/md";
 
 export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
     onClose,
@@ -114,7 +112,7 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
         <>
             {loading ? (
                 <div className="fixed w-screen h-screen flex items-center justify-center bg-white/10 backdrop-blur-sm z-30">
-                    <div className="absolute w-120 h-90 mx-3 p-5 pt-25 pb-20 border border-zinc-400 bg-white rounded-xl flex flex-col items-center justify-center z-50">
+                    <div className="absolute w-120 h-90 mx-3 p-5 pt-25 pb-20 border border-zinc-400 bg-white dark:dark:bg-[#161a21] rounded-xl flex flex-col items-center justify-center z-50">
                         <button
                             type="button"
                             className="absolute top-2 right-2 p-2 rounded-full bg-red-600 text-white cursor-pointer transition-all duration-200"
@@ -128,32 +126,21 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
             ) : (
                 <div className="fixed inset-0 z-30 overflow-auto flex items-start justify-center items-center-on-height">
                     <div className="fixed inset-0 bg-white/10 backdrop-blur-sm z-20"></div>
-                    <div className="w-[90%] h-[90%] min-h-[500px] mt-10 md:mt-4 md:my-4 bg-transparent flex flex-col md:flex-row md:shadow-2xl rounded-xl z-30">
-                        <div className="md:hidden flex gap-3 mx-auto mb-6">
-                            <LogoTextWhite className="w-[200px]" />
-                        </div>
+                    <div className="w-full min-h-full px-4 py-10 md:px-16 md:py-16 lg:px-36 2xl:px-80 bg-transparent flex flex-col md:justify-center items-center md:flex-row rounded-xl z-30">
                         <div
-                            className="w-[50%] bg-primary dark:bg-[#161a21] hidden md:flex flex-col justify-between rounded-l-xl pb-8 relative overflow-hidden"
+                            className="w-[50%] max-h-[480px] min-h-[525px] bg-primary dark:bg-[#161a21] hidden md:flex flex-col justify-between rounded-l-xl pb-4 pt-6 relative overflow-hidden"
                         >
                             <LogoBlue className="w-[100px] ml-4 hidden dark:block" />
                             <LogoWhite className="w-[100px] ml-4 dark:hidden" />
-                            <img
-                                src="./line-dark.png"
-                                alt="line"
-                                width={150}
-                                style={{
-                                    animation: "revealLine 4s ease-in-out infinite alternate",
-                                    margin: "0 auto",
-                                }}
-                            />
-                            <img src="./form-login-dark.gif" alt="alta-tecnologia" width={230} style={{ margin: '0 45px' }} />
+                            <IoStorefrontOutline size={130} className="text-white dark:text-zinc-600 mx-auto animate-pulse" />
+                            <img src="./form-update-data-store.gif" alt="alta-tecnologia" width={230} style={{ margin: '0 45px' }} />
                         </div>
                         <form
                             onSubmit={handleSubmit(handleFormSubmit)}
                             noValidate
-                            className="w-full md:w-[60%] min-h-120 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white"
+                            className="w-full max-h-[480px] md:w-[60%] min-h-130 md:min-h-150 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-6 md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white"
                         >
-                            <div className="hidden md:block w-[200px]">
+                            <div className="w-[200px]">
                                 <LogoTextBlue className="dark:hidden" />
                                 <LogoTextWhite className="hidden dark:block" />
                             </div>
