@@ -94,7 +94,6 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
                     neighborhood: data.address?.neighborhood ?? "",
                     city: data.address?.city ?? "",
                 },
-                logoUrl: data.logoUrl ?? "",
                 delivery: data.delivery,
                 pickup: data.pickup,
             },
@@ -130,67 +129,70 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
                     </div>
                 </div>
             ) : (
-                <div className="min-h-[600px] fixed inset-0 z-30 overflow-auto flex items-start justify-center items-center-on-height">
-                    <div className="min-h-[600px] fixed inset-0 bg-white/10 backdrop-blur-sm z-20"></div>
-                    <div className="fixed w-full min-h-screen mt-6 px-4 py-4 md:px-16 md:py-16 lg:px-36 2xl:px-80 bg-transparent flex flex-col md:justify-center items-center md:flex-row rounded-xl z-30 overflow-auto ">
-                        <div
-                            className="w-[50%] max-h-[480px] md:min-h-[609px] lg:min-h-[621px] bg-primary dark:bg-[#161a21] hidden md:flex flex-col justify-between rounded-l-xl pb-4 pt-6 relative overflow-hidden"
-                        >
-                            <LogoBlue className="w-[100px] ml-4 hidden dark:block" />
-                            <LogoWhite className="w-[100px] ml-4 dark:hidden" />
-                            <IoStorefrontOutline size={130} className="text-white dark:text-zinc-600 mx-auto animate-pulse" />
-                            <img src="./form-update-data-store.gif" alt="alta-tecnologia" width={230} style={{ margin: '0 45px' }} />
-                        </div>
-                        <form
-                            onSubmit={handleSubmit(handleFormSubmit)}
-                            noValidate
-                            className="w-[90%] relative md:w-[60%] max-h-screen min-h-130 md:min-h-150 mx-4 md:mx-0 rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 flex flex-col justify-start pt-8 md:pt-6 md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white"
-                        >
-                            <div className="w-[200px]">
-                                <LogoTextBlue className="dark:hidden" />
-                                <LogoTextWhite className="hidden dark:block" />
-                            </div>
-                            <button
-                                type="button"
-                                className="absolute top-2 right-2 p-2 rounded-full bg-red-600 text-white cursor-pointer transition-all duration-200"
-                                onClick={onClose}
-                            >
-                                <IoCloseOutline className="text-lg" />
-                            </button>
-                            <div className={`w-full max-w-105 mt-5 mb-5 flex flex-col gap-4`}>
-                                <InputRestaurantName
-                                    register={register}
-                                    errors={errors}
-                                    clearErrors={clearErrors}
-                                    initialValues={initialValues}
-                                />
-                                <InputAddress
-                                    register={register}
-                                    errors={errors}
-                                    clearErrors={clearErrors}
-                                    initialValues={initialValues}
-                                />
-                                <InputPhoneNumber
-                                    control={control}
-                                    initialValues={initialValues}
-                                />
-                                <CheckboxDeliveryTypesInput register={register} />
-                            </div>
-                            {error && (
-                                <p className="font-bold text-error">{error}</p>
-                            )}
-                            {messageSuccess && (
-                                <p className="font-bold text-green-600">{messageSuccess}</p>
-                            )}
-                            <button
-                                type="submit"
-                                className=" primary-button"
-                            >
-                                Atualizar Dados
-                            </button>
-                        </form>
-                    </div>
-                </div>
+                <div className="fixed inset-0 p-2 bg-white/10 backdrop-blur-sm overflow-hidden z-50">
+                    <div className="h-full w-full overflow-y-auto">
+                        <div className="min-h-full min-w-full flex justify-center items-center">
+                            <div className="w-[90%] max-w-[950px] flex my-4">
+                                <div
+                                    className="w-[50%] max-h-[480px] md:min-h-[609px] lg:min-h-[621px] bg-primary dark:bg-[#161a21] hidden md:flex flex-col justify-between rounded-l-xl pb-4 pt-6 relative overflow-hidden"
+                                >
+                                    <LogoBlue className="w-[100px] ml-4 hidden dark:block" />
+                                    <LogoWhite className="w-[100px] ml-4 dark:hidden" />
+                                    <IoStorefrontOutline size={130} className="text-white dark:text-zinc-600 mx-auto animate-pulse" />
+                                    <img src="./form-update-data-store.gif" alt="alta-tecnologia" width={230} style={{ margin: '0 45px' }} />
+                                </div>
+                                <form
+                                    onSubmit={handleSubmit(handleFormSubmit)}
+                                    noValidate
+                                    className="w-full md:w-[60%] min-h-130 md:min-h-150 relative rounded-xl md:rounded-l-none py-8 px-4 flex flex-col justify-start md:pt-6 md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white"
+                                >
+                                    <div className="w-[200px]">
+                                        <LogoTextBlue className="dark:hidden" />
+                                        <LogoTextWhite className="hidden dark:block" />
+                                    </div>
+                                    <button
+                                        type="button"
+                                        className="absolute top-2 right-2 p-2 rounded-full bg-red-600 text-white cursor-pointer transition-all duration-200"
+                                        onClick={onClose}
+                                    >
+                                        <IoCloseOutline className="text-lg" />
+                                    </button>
+                                    <div className={`w-full max-w-105 mt-5 mb-5 flex flex-col gap-4 relative`}>
+                                        <InputRestaurantName
+                                            register={register}
+                                            errors={errors}
+                                            clearErrors={clearErrors}
+                                            initialValues={initialValues}
+                                        />
+                                        <InputAddress
+                                            register={register}
+                                            errors={errors}
+                                            clearErrors={clearErrors}
+                                            initialValues={initialValues}
+                                        />
+                                        <InputPhoneNumber
+                                            control={control}
+                                            initialValues={initialValues}
+                                        />
+                                        <CheckboxDeliveryTypesInput register={register} />
+                                    </div>
+                                    {error && (
+                                        <p className="absolute bottom-20 font-bold text-error" style={{fontSize: '13px'}}>{error}</p>
+                                    )}
+                                    {messageSuccess && (
+                                        <p className="absolute bottom-20 font-bold text-green-600" style={{fontSize: '13px'}}>{messageSuccess}</p>
+                                    )}
+                                    <button
+                                        type="submit"
+                                        className=" primary-button"
+                                    >
+                                        Atualizar Dados
+                                    </button>
+                                </form>
+                            </div >
+                        </div >
+                    </div >
+                </div >
             )}
         </>
     );

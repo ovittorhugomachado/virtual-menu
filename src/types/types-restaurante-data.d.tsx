@@ -6,7 +6,7 @@ export type RestaurantData = {
   ownersName: string;
   email: string;
   address: Address;
-  logoUrl: string;
+  logoUrl?: string;
   bannerUrl: string;
   backgroundColor: string;
   cnpj: string,
@@ -58,7 +58,6 @@ export type UpdateMyStorePayload = {
       neighborhood: string;
       city: string;
     };
-    logoUrl: string;
     delivery: boolean;
     pickup: boolean;
   };
