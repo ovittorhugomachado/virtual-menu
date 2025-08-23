@@ -6,7 +6,7 @@ export type RestaurantData = {
   ownersName: string;
   email: string;
   address: Address;
-  logoUrl?: string;
+  logoUrl: string;
   bannerUrl: string;
   backgroundColor: string;
   cnpj: string,

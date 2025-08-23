@@ -34,7 +34,7 @@ export const CreateNewPasswordFormContainer = ({
 
     return (
         <>
-            <div className="w-[90%] h-[90vh] min-h-[400px] max-h-[700px] mt-10 md:mt-4 md:my-4 bg-transparent flex flex-col md:flex-row md:shadow-2xl rounded-xl z-30">
+            <div className="w-[90%] max-w-[1200px] h-[90vh] min-h-[400px] max-h-[700px] mt-10 md:mt-4 md:my-4 bg-transparent flex flex-col md:flex-row md:shadow-2xl rounded-xl z-30">
                 <div className="md:hidden flex gap-3 mx-auto mb-6">
                     <LogoTextWhite
                         className="w-[200px]"

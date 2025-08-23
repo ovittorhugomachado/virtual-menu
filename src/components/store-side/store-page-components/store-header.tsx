@@ -52,40 +52,40 @@ export const Header: React.FC<HeaderProps> = ({
                         </button>
                     </div>
                     {isOpen ? (
-                        <div className="flex items-center justify-center ms:justify-start flex-shrink-0 relative">
+                        <div className="flex items-center justify-center ms:justify-start flex-shrink-0">
                             <p
                                 aria-live="polite"
-                                className="min-w-28 text-xs sm:text-base font-extralight mb-1 flex flex-col"
+                                className="min-w-28 text-xs sm:text-base font-extralight mb-1 flex flex-col relative"
                             >
                                 <span className="bg-green-600 text-white p-0.5 rounded-md">aberto</span>
                                 {message}
+                                <button
+                                    style={{ fontSize: '18px', padding: '5px' }}
+                                    onClick={openFormUpdateSchedules}
+                                    title="Configurar dados da loja"
+                                    className="w-8 h-8 absolute -right-10 rounded-full bg-primary text-black flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200 flex-shrink-0"
+                                >
+                                    <RiListSettingsFill />
+                                </button>
                             </p>
-                            <button
-                                style={{ fontSize: '18px', padding: '5px' }}
-                                onClick={openFormUpdateSchedules}
-                                title="Configurar dados da loja"
-                                className="w-8 h-8 absolute ml-40 mb-9 ms:ml-30 sm:w-8 sm:h-8 rounded-full bg-primary bg-opacity-70 text-black m-2 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200 flex-shrink-0"
-                            >
-                                <RiListSettingsFill />
-                            </button>
                         </div>
                     ) : (
-                        <div className="flex items-center justify-center ms:justify-start  relative">
+                        <div className="flex items-center justify-center ms:justify-start">
                             <p
                                 aria-live="polite"
-                                className="min-w-28 text-xs sm:text-base font-extralight mb-1 flex flex-col"
+                                className="min-w-28 text-xs sm:text-base font-extralight mb-1 flex flex-col relative"
                             >
                                 <span className="bg-red-600 text-white p-0.5 rounded-md">fechado</span>
                                 {message}
+                                <button
+                                    style={{ fontSize: '18px', padding: '5px' }}
+                                    onClick={openFormUpdateSchedules}
+                                    title="Configurar horários da loja"
+                                    className="w-8 h-8 absolute -right-10 rounded-full bg-primary text-black flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200 flex-shrink-0"
+                                >
+                                    <RiListSettingsFill />
+                                </button>
                             </p>
-                            <button
-                                style={{ fontSize: '18px', padding: '5px' }}
-                                onClick={openFormUpdateSchedules}
-                                title="Configurar horários da loja"
-                                className="w-8 h-8 absolute ml-40 mb-9 ms:ml-30 sm:w-8 sm:h-8 rounded-full bg-primary bg-opacity-70 text-black m-2 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200 flex-shrink-0"
-                            >
-                                <RiListSettingsFill />
-                            </button>
                         </div>
                     )}
                 </div>

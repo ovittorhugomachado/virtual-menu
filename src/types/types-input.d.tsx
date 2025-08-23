@@ -49,10 +49,10 @@ export type InputMenuItemPriceProps = {
 };
 
 export type InputAddressProps = {
-  register: UseFormRegister<RestaurantData>;
-  errors: FieldErrors<{ address: RestaurantData["address"] }>;
-  clearErrors: UseFormClearErrors<RestaurantData>;
-  initialValues?: { address?: Address };
+    register: UseFormRegister<RestaurantData>;
+    errors: FieldErrors<{ address: RestaurantData["address"] }>;
+    clearErrors: UseFormClearErrors<RestaurantData>;
+    initialValues?: { address?: Address };
 }
 
 export type InputCustomerAddressProps = {
@@ -112,6 +112,8 @@ export type InputPasswordProps = {
 export type InputDeliveryTypeProps = {
     register: UseFormRegister<RestaurantData>;
     initialValues?: Partial<RestaurantData>;
+    errors: FieldErrors<RestaurantData>;
+    clearErrors?: UseFormClearErrors<RestaurantData>;
 }
 
 export type InputDeliveryTypeOfOrderProps = {

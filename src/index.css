@@ -133,7 +133,7 @@ input:-webkit-autofill:focus {
 }
 
 .input-error {
-    @apply border border-red-500 rounded-xl px-3 py-2 w-full focus:outline-none focus:ring-0 bg-white dark:bg-[#161a21] text-black dark:text-white dark:border-2;
+    @apply border-1 border-red-500 rounded-xl px-3 py-2 w-full focus:outline-none focus:ring-0 bg-white dark:bg-[#161a21] text-black dark:text-white dark:border-1;
 }
 
 .label {

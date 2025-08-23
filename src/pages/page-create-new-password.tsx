@@ -70,7 +70,7 @@ export const CreateNewPasswordPage = () => {
             ) : message ? (
                 <main className="w-full relative h-screen min-w-[280px] min-h-screen flex justify-start md:justify-center items-center" >
                     <div className="w-full h-36 md:hidden absolute top-0 bg-primary dark:bg-[#161a21] z-0"></div>
-                    <div className="w-[90%] h-[90vh] min-h-[500px] max-h-[700px] bg-transparent flex flex-col md:flex-row md:shadow-2xl rounded-xl">
+                    <div className="w-[90%] h-[90vh] max-w-[1200px] min-h-[500px] max-h-[700px] bg-transparent flex flex-col md:flex-row md:shadow-2xl rounded-xl">
                         <div className=" md:hidden flex gap-3 mx-auto mb-6">
                             <LogoTextWhite
                                 className="w-[200px]"
@@ -124,7 +124,7 @@ export const CreateNewPasswordPage = () => {
             ) : (
                 <main className="w-full relative h-screen min-w-[280px] min-h-screen flex justify-start md:justify-center items-center" >
                     <div className="w-full h-36 md:hidden absolute top-0 bg-primary dark:bg-[#161a21] z-0"></div>
-                    <div className="w-[90%] h-[90vh] min-h-[400px] max-h-[700px] bg-transparent flex flex-col md:flex-row md:shadow-2xl rounded-xl">
+                    <div className="w-[90%] h-[90vh] max-w-[1200px] min-h-[400px] max-h-[700px] bg-transparent flex flex-col md:flex-row md:shadow-2xl rounded-xl">
                         <div className=" md:hidden flex gap-3 mx-auto mb-6">
                             <LogoTextWhite
                                 className="w-[200px]"

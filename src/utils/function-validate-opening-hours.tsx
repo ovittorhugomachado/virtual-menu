@@ -13,10 +13,10 @@ export const validateOpeningHours = (hours: { day: string; timeRanges: { start: 
                 !isValidHour(timeRange.start) ||
                 !isValidHour(timeRange.end)
             ) {
-                return `Horário inválido no índice ${index}. Verifique os campos 'start' e 'end'.`;
+                return `Horário inválido no ${index + 1}º dia. Verifique os campos 'abertura' e 'fechamento'.`;
             }
             if (timeRange.start >= timeRange.end) {
-                return `Erro no índice ${index}: O horário de término (${timeRange.end}) deve ser maior que o de início (${timeRange.start}).`;
+                return `Erro no ${index + 1}º dia: O horário de fechamento deve ser maior que o de abertura.`;
             }
         }
     }
@@ -41,7 +41,7 @@ export function checkOverlappingRanges(schedule: { day: string; timeRanges: { st
             const prev = ranges[i - 1];
             const curr = ranges[i];
             if (curr.start < prev.end) {
-                return `Horários sobrepostos no dia: ${day}`;
+                return `Os horários de ${day} estão sobrepostos.`;
             }
         }
     }

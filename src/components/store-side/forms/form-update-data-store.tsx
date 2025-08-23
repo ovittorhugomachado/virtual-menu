@@ -84,7 +84,7 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
             return () => clearTimeout(timer);
         }
     }, [messageSuccess]);
-
+    console.log(errors.delivery);
     const handleFormSubmit: SubmitHandler<RestaurantData> = async (data) => {
         const payload = {
             store: {
@@ -129,10 +129,10 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
                     </div>
                 </div>
             ) : (
-                <div className="fixed inset-0 p-2 bg-white/10 backdrop-blur-sm overflow-hidden z-50">
+                <div className="fixed inset-0 bg-white/10 backdrop-blur-sm overflow-hidden z-50">
                     <div className="h-full w-full overflow-y-auto">
                         <div className="min-h-full min-w-full flex justify-center items-center">
-                            <div className="w-[90%] max-w-[950px] flex my-4">
+                            <div className="w-[90%] max-w-[950px] flex my-4 md:shadow-2xl">
                                 <div
                                     className="w-[50%] max-h-[480px] md:min-h-[609px] lg:min-h-[621px] bg-primary dark:bg-[#161a21] hidden md:flex flex-col justify-between rounded-l-xl pb-4 pt-6 relative overflow-hidden"
                                 >
@@ -174,13 +174,19 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
                                             control={control}
                                             initialValues={initialValues}
                                         />
-                                        <CheckboxDeliveryTypesInput register={register} />
+                                        <div className={`${errors.delivery || errors.pickup ? "border-l-2 border-red-600" : "border-gray-300"} flex flex-col gap-1 pl-2`}>
+                                            <CheckboxDeliveryTypesInput
+                                                register={register}
+                                                errors={errors}
+                                            />
+                                        </div>
                                     </div>
+
                                     {error && (
-                                        <p className="absolute bottom-20 font-bold text-error" style={{fontSize: '13px'}}>{error}</p>
+                                        <p className="absolute bottom-20 font-bold text-error" style={{ fontSize: '13px' }}>{error}</p>
                                     )}
                                     {messageSuccess && (
-                                        <p className="absolute bottom-20 font-bold text-green-600" style={{fontSize: '13px'}}>{messageSuccess}</p>
+                                        <p className="absolute bottom-20 font-bold text-green-600" style={{ fontSize: '13px' }}>{messageSuccess}</p>
                                     )}
                                     <button
                                         type="submit"
