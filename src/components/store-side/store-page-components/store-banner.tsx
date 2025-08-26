@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { DeleteBannerImage, UploadBannerImage } from "../../../services/service-upload-image";
 import { FaCamera } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
+import { LoadingComponent } from "../../component-loading";
 
 export const StoreBanner = ({ banner, onBannerChange }: { banner: string, onBannerChange: () => void }) => {
     const [bannerVersion, setBannerVersion] = useState(Date.now());
@@ -51,17 +52,21 @@ export const StoreBanner = ({ banner, onBannerChange }: { banner: string, onBann
 
     return (
         <div className="w-full relative hidden xs:block">
-            <img
-                src={
-                    isLoading
-                        ? "/store-banner-loading.png"
-                        : banner
+            {isLoading ? (
+                <div className="w-full min-h-30 max-h-80 object-center object-contain">
+                    <LoadingComponent />
+                </div>
+            ) : (
+                <img
+                    src={
+                        banner
                             ? `${banner}?v=${bannerVersion}`
                             : "/store-banner-default.png"
-                }
-                alt="imagem-capa"
-                className={`${isLoading ? "animate-pulse duration-700" : "opacity-100"} w-screen min-h-30 max-h-80 object-center object-contain transition-opacity duration-300`}
-            />
+                    }
+                    alt="banner"
+                    className="w-full min-h-30 max-h-80 object-center object-contain"
+                />
+            )}
             <div className="flex items-center gap-2 absolute bottom-2 left-2">
                 <button
                     type="button"
