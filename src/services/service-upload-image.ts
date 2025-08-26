@@ -35,15 +35,11 @@ export const UploadLogo= async (imageFile: File) => {
 export const UploadBannerImage = async (imageFile: File) => {
     try {
 
-        const token = localStorage.getItem('token')
         const formData = new FormData();
         formData.append('banner', imageFile);
 
         const response = await fetch(`${API_URL}/banner`, {
             method: 'PATCH',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
             credentials: 'include',
             body: formData,
         });
@@ -51,6 +47,28 @@ export const UploadBannerImage = async (imageFile: File) => {
         if (!response.ok) {
             const error = await response.json();
             throw new Error(error.message || error.erro || 'Erro ao enviar imagem');
+        }
+
+        return await response.json();
+
+    } catch (error) {
+        if (error instanceof TypeError && error.message === 'Failed to fetch') {
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
+        }
+        throw error instanceof Error ? error : new Error('Erro desconhecido');
+    }
+};
+
+export const DeleteBannerImage = async () => {
+    try {
+        const response = await fetch(`${API_URL}/banner`, {
+            method: 'DELETE',
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || error.erro || 'Erro ao deletar imagem');
         }
 
         return await response.json();

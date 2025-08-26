@@ -42,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({
                             style={{ fontSize: '14px'}}
                             onClick={openFormUpdateDataStore}
                             title="Configurar dados da loja"
-                            className="rounded-full bg-gray-400 text-black flex items-center justify-center px-3 gap-2 cursor-pointer hover:scale-105 transition-all duration-200"
+                            className="rounded-full bg-gray-400 text-black border-1 flex items-center justify-center px-3 gap-2 cursor-pointer hover:scale-105 transition-all duration-200"
                         >
                             <FaGear />
                             <span>Configurar Loja</span>
@@ -51,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({
                             style={{ fontSize: '14px'}}
                             onClick={openFormUpdateSchedules}
                             title="Configurar dados da loja"
-                            className="rounded-full bg-gray-400 text-black flex items-center justify-center px-3 gap-2 cursor-pointer hover:scale-105 transition-all duration-200"
+                            className="rounded-full bg-gray-400 text-black border-1 flex items-center justify-center px-3 gap-2 cursor-pointer hover:scale-105 transition-all duration-200"
                         >
                             <TbClockHour2Filled />
                             <span>Editar Horários</span>
