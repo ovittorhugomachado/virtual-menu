@@ -40,6 +40,7 @@ export const CustomizeMenuPage = () => {
     const [showStoreDataUpdateForm, setStoreDataUpdateForm] = useState(false)
     const [showStoreSchedulesUpdateForm, setShowStoreSchedulesUpdateForm] = useState(false)
     const [bannerUrl, setBannerUrl] = useState<string>('');
+    const [logoUrl, setLogoUrl] = useState<string>("");
 
     const fetchStoreData = useCallback(async () => {
         setLoading(true);
@@ -65,6 +66,14 @@ export const CustomizeMenuPage = () => {
             if (styleData.backgroundColor) setBackgroundColor(styleData.backgroundColor);
             if (styleData.primaryColor) setButtonColor(styleData.primaryColor);
             if (styleData.textButtonColor) setTextColorButtons(styleData.textButtonColor);
+
+            setLogoUrl(
+                storeData?.logoUrl && storeData.logoUrl.startsWith('https://s3.us-east-2.amazonaws.com/bucket.rangos/')
+                    ? storeData.logoUrl
+                    : storeData?.logoUrl
+                        ? `${VITE_API_URL}/uploads/store${storeData.id}-logo${getExtension(storeData?.logoUrl)}`
+                        : "/store-logo-default.png"
+            );
         } catch (error) {
             setError(error instanceof Error ? error.message : 'Erro ao carregar os dados da loja');
             setStoreStyle(null);
@@ -88,6 +97,17 @@ export const CustomizeMenuPage = () => {
         const updatedStoreData = await getMyStoreData();
         setStoreData(updatedStoreData);
         setShowStoreSchedulesUpdateForm(false);
+    };
+
+    const handleLogoChange = async () => {
+        const updatedStoreData = await getMyStoreData();
+        setLogoUrl(
+            updatedStoreData?.logoUrl && updatedStoreData.logoUrl.startsWith('https://s3.us-east-2.amazonaws.com/bucket.rangos/')
+                ? updatedStoreData.logoUrl
+                : updatedStoreData?.logoUrl
+                    ? `${VITE_API_URL}/uploads/store${updatedStoreData.id}-logo${getExtension(updatedStoreData?.logoUrl)}`
+                    : "/store-logo-default.png"
+        );
     };
 
     return (
@@ -116,13 +136,7 @@ export const CustomizeMenuPage = () => {
                     />
                     <Header
                         backgroundColor={backgroundColor ?? ''}
-                        restaurantImage={
-                            storeData?.logoUrl && storeData.logoUrl.startsWith('https://s3.us-east-2.amazonaws.com/bucket.rangos/')
-                                ? storeData.logoUrl
-                                : storeData?.logoUrl
-                                    ? `${VITE_API_URL}/uploads/store${storeData.id}-logo${getExtension(storeData?.logoUrl)}`
-                                    : "/store-logo-default.png"
-                        }
+                        restaurantImage={logoUrl}
                         restaurantName={userData?.restaurantName ?? ''}
                         openingHours={
                             Array.isArray(storeData?.openingHours)
@@ -139,6 +153,7 @@ export const CustomizeMenuPage = () => {
                         }
                         openFormUpdateDataStore={() => setStoreDataUpdateForm(true)}
                         openFormUpdateSchedules={() => setShowStoreSchedulesUpdateForm(true)}
+                        onLogoChange={handleLogoChange}
                     />
                     {showStoreDataUpdateForm && (
                         <UpdateStoreDataForm

@@ -1,10 +1,12 @@
 import React, { useRef, useState } from "react";
 import { UploadLogo } from "../../../services/service-upload-image";
 import { FaCamera } from "react-icons/fa";
+import { LoadingComponentLines } from "../../component-loading";
 
-export const Logo = ({ image, onImageChange }: { image: string; onImageChange: () => void; }) => {
+export const Logo = ({ logo, onLogoChange }: { logo: string, onLogoChange: (newLogoUrl: string) => void }) => {
     const [logoVersion, setLogoVersion] = useState(Date.now());
     const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -15,28 +17,38 @@ export const Logo = ({ image, onImageChange }: { image: string; onImageChange: (
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
+            setIsLoading(true);
             try {
                 await UploadLogo(file);
                 setLogoVersion(Date.now());
                 setError(null);
-                onImageChange();
+                onLogoChange(logo);
             } catch (error) {
-                if (error instanceof Error) {
-                    setError(error.message);
-                } else {
-                    setError("Erro ao enviar imagem. Por favor, tente novamente mais tarde.");
-                }
+                console.error("Erro ao enviar imagem:", error);
+                setError("Erro ao enviar imagem. Por favor, tente novamente mais tarde.");
+            } finally {
+                setIsLoading(false);
             }
         }
     };
 
     return (
         <div className="w-24 h-24 sm:w-23 sm:h-23 rounded-full relative">
-            <img
-                src={image ? `${image}?v=${logoVersion}` : "/logo-default.png"}
-                alt="logo"
-                className="w-full h-full object-cover rounded-full"
-            />
+            {isLoading ? (
+                <div className="absolute inset-0 p-4 flex items-center justify-center bg-transparent rounded-full z-0">
+                    <LoadingComponentLines />
+                </div>
+            ) : (
+                <img
+                    src={
+                        logo
+                            ? `${logo}?v=${logoVersion}`
+                            : "/store-logo-default.png"
+                    }
+                    alt="logo"
+                    className="w-full h-full object-cover rounded-full"
+                />
+            )}
             <button
                 style={{ fontSize: '18px', padding: '5px' }}
                 type="button"
