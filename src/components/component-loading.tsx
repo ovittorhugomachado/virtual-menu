@@ -10,3 +10,15 @@ export const LoadingComponent = () => {
         </div>
     );
 };
+
+export const LoadingComponentLines = () => {
+    return (
+        <div className="w-full m-auto flex items-center justify-center gap-3">
+            <div className="flex flex-col gap-1.5">
+                <div className="w-7 h-1 bg-primary rounded-full animate-wave1" />
+                <div className="w-7 h-1 bg-primary rounded-full animate-wave2" />
+                <div className="w-7 h-1 bg-primary rounded-full animate-wave3" />
+            </div>
+        </div>
+    );
+};
