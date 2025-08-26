@@ -14,7 +14,7 @@ export const InputAddress = ({
             </label>
             <div className="flex flex-col gap-2 pl-6">
                 <div className="flex gap-2 items-center">
-                    <label htmlFor="street" className="text-gray-300 w-[60px]">Rua</label>
+                    <label htmlFor="street" className="dark:text-gray-300 w-[60px]">Rua</label>
                     <input
                         id="street"
                         type="text"
@@ -31,7 +31,7 @@ export const InputAddress = ({
                     />
                 </div>
                 <div className="flex gap-2 items-center">
-                    <label htmlFor="number" className="text-gray-300 w-[60px]">Número</label>
+                    <label htmlFor="number" className="dark:text-gray-300 w-[60px]">Número</label>
                     <input
                         id="number"
                         type="text"
@@ -48,7 +48,7 @@ export const InputAddress = ({
                     />
                 </div>
                 <div className="flex gap-2 items-center">
-                    <label htmlFor="neighborhood" className="text-gray-300 w-[60px]">Bairro</label>
+                    <label htmlFor="neighborhood" className="dark:text-gray-300 w-[60px]">Bairro</label>
                     <input
                         id="neighborhood"
                         type="text"
@@ -65,7 +65,7 @@ export const InputAddress = ({
                     />
                 </div>
                 <div className="flex gap-2 items-center">
-                    <label htmlFor="city" className="text-gray-300 w-[60px]">Cidade</label>
+                    <label htmlFor="city" className="dark:text-gray-300 w-[60px]">Cidade</label>
                     <input
                         id="city"
                         type="text"

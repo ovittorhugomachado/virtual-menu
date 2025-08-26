@@ -3,6 +3,7 @@ import { OpeningHour } from "../../../types/types-schedules.d";
 import { Logo } from "./store-logo";
 import { GoHomeFill } from "react-icons/go";
 import { FaGear } from "react-icons/fa6";
+import { TbClockHour2Filled } from "react-icons/tb";
 
 interface HeaderProps {
     backgroundColor?: string;
@@ -52,15 +53,15 @@ export const Header: React.FC<HeaderProps> = ({
                             title="Configurar dados da loja"
                             className="rounded-full bg-gray-400 text-black flex items-center justify-center px-3 gap-2 cursor-pointer hover:scale-105 transition-all duration-200"
                         >
-                            <FaGear />
-                            <span>Configurar Horários</span>
+                            <TbClockHour2Filled />
+                            <span>Editar Horários</span>
                         </button>
                     </div>
                 </div>
             </div>
             <Link
                 to="/"
-                className="p-2 mt-3 sm:mt-0 rounded-full bg-gray-400 text-black flex items-center gap-2 z-50 hover:scale-105 transition-all duration-200"
+                className="p-2 mt-3 sm:mt-0 rounded-full bg-primary text-black flex items-center gap-2 z-50 hover:scale-105 transition-all duration-200"
             >
                 <GoHomeFill />
                 voltar
