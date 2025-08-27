@@ -171,13 +171,13 @@ export const getMenuItemService = async (storeId: number, categoryId: number) =>
     return await response.json();
 };
 
-export const createMenuItemService = async (categoryId: number, item: {
+export const createMenuItemService = async (item: {
     name: string;
     description: string;
     price: number;
 }) => {
     try {
-        const response = await fetch(`${API_URL}/menu-items/${categoryId}`, {
+        const response = await fetch(`${API_URL}/menu-items`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
