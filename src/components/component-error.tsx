@@ -5,9 +5,14 @@ export const ErrorComponent = ({ message }: { message: string }) => {
             <img
                 src="../error.png"
                 alt="Erro"
-                className="w-54 h-54"
+                className="w-58 h-58 dark:hidden"
             />
-            <p className="text-lg font-extralight text-primary text-center">
+            <img
+                src="../error-dark.png"
+                alt="Erro"
+                className="w-58 h-58 hidden dark:block"
+            />
+            <p className="text-lg font-extralight dark:text-white text-black text-center">
                 {message}
             </p>
         </div>
