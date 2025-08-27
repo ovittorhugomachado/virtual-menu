@@ -241,6 +241,48 @@ input:-webkit-autofill:focus {
     }
 }
 
+@keyframes move-up {
+  0% { 
+    transform: translateY(0); 
+    z-index: 10;
+  }
+  /* 50% { 
+    transform: translateY(-25px); 
+    z-index: 20;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  } */
+  100% { 
+    transform: translateY(-60px); 
+    z-index: 1;
+  }
+}
+
+@keyframes move-down {
+  0% { 
+    transform: translateY(0); 
+    z-index: 10;
+  }
+  /* 50% { 
+    transform: translateY(25px); 
+    z-index: 20;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  } */
+  100% { 
+    transform: translateY(60px); 
+    z-index: 1;
+  }
+}
+
+.animate-move-up {
+  animation: move-up 0.7s ease-in-out;
+  position: relative;
+}
+
+.animate-move-down {
+  animation: move-down 0.7s ease-in-out;
+  position: relative;
+}
+
 .animate-wave1 {
     animation: wave 1.2s ease-in-out infinite;
 }
