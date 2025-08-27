@@ -40,45 +40,46 @@ export const UpdateDataForm = ({
                                 <IoCloseOutline className="text-lg" />
                             </button>
                         </div>
-                        {error && !fieldErrors && (
-                            <div className="w-full relative rounded-xl rounded-t-none pb-8 px-4 flex flex-col justify-start md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white">
-                                <ErrorComponent message={error} />
-                            </div>
-                        )}
-                        {loading && (
+                        {loading ? (
                             <div className="w-full relative rounded-xl rounded-t-none pb-8 px-4 flex flex-col justify-start md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white">
                                 <LoadingComponent />
                             </div>
-                        )}
-                        {(successMessage ?? "").length > 0 ? (
+                        ) : (successMessage ?? "").length > 0 ? (
 
                             <div className="w-full relative rounded-xl rounded-t-none py-8 px-4 flex flex-col justify-start md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white">
                                 <FaCheckCircle className="text-[100px] text-green-800" />
                                 <h4 className="text-black dark:text-white text-center">{successMessage}</h4>
                             </div>
                         ) : (
-                            <form
-                                onSubmit={submitFunction}
-                                noValidate
-                                className="w-full min-h-75 relative rounded-xl rounded-t-none pb-8 px-4 flex flex-col justify-start md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white"
-                            >
-                                <div className="w-full max-w-105 mt-4 flex flex-1 flex-col justify-center gap-2">
-                                    {children}
-                                </div>
-                                {error && (
-                                    <p className="text-red-600 text-sm text-center mt-2">{error}</p>
-                                )}
-                                {textButtonSubmit && (
-                                    <div className="w-full flex justify-center z-50">
-                                        <button
-                                            type="submit"
-                                            className="w-[230px] max-w-[90vw] primary-button"
-                                        >
-                                            {textButtonSubmit}
-                                        </button>
+                            <>
+                                {error && !fieldErrors && (
+                                    <div className="w-full relative rounded-xl rounded-t-none pb-8 px-4 flex flex-col justify-start md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white">
+                                        <ErrorComponent message={error} />
                                     </div>
                                 )}
-                            </form>
+                                <form
+                                    onSubmit={submitFunction}
+                                    noValidate
+                                    className="w-full min-h-75 relative rounded-xl rounded-t-none pb-8 px-4 flex flex-col justify-start md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white"
+                                >
+                                    <div className="w-full max-w-105 mt-4 flex flex-1 flex-col justify-center gap-2">
+                                        {children}
+                                    </div>
+                                    {error && (
+                                        <p className="text-red-600 text-sm text-center mt-2">{error}</p>
+                                    )}
+                                    {textButtonSubmit && (
+                                        <div className="w-full flex justify-center z-50">
+                                            <button
+                                                type="submit"
+                                                className="w-[230px] max-w-[90vw] primary-button"
+                                            >
+                                                {textButtonSubmit}
+                                            </button>
+                                        </div>
+                                    )}
+                                </form>
+                            </>
                         )}
                     </div>
                 </div>

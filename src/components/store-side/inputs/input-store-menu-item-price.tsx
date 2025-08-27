@@ -32,10 +32,10 @@ export const InputPrice = ({
                     className={`input ${errors.price ? " input-error" : ""}`}
                     placeholder="Preço"
                     {...register("price", {
-                        required: "Preço obrigatório",
+                        required: "Obrigatório",
                         minLength: {
                             value: 1,
-                            message: "Preço obrigatório",
+                            message: "Obrigatório",
                         },
                         onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                             e.target.value = e.target.value.replace(/[^0-9,]/g, "");

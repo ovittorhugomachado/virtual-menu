@@ -8,7 +8,7 @@ export type StandardFormProps = {
     setError: (error: string) => void;
     error?: string;
     initialValues?: Partial<AccountData>;
-    children?: React.ReactNode; 
+    children?: React.ReactNode;
 };
 
 export type AccountFormProps = {
@@ -45,12 +45,14 @@ export type CreateMenuItemFormProps = {
     error?: string;
     message?: string;
     categoryId?: number;
+    categories?: Array<{ id: number; name: string }>;
 };
 
 export type MenuItemFormData = {
     name: string;
     description: string;
     price: string;
+    categories?: number[];
     itemId?: number;
     message: string;
     error: unknown;

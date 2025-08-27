@@ -67,7 +67,7 @@ export const MenuItems = ({
                             <div className="relative">
                                 <button
                                     title="Ativar ou desativar categoria"
-                                    className="w-7 h-7 lg:w-8 lg:h-8 absolute top-1 rounded-full bg-gray-400 text-black border-1 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200 z-90"
+                                    className="w-7 h-7 lg:w-8 lg:h-8 absolute top-1 rounded-full bg-gray-400 text-black border-1 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200 z-30"
                                     onClick={() => onToggleStatusCategory(category.id)}
                                 >
                                     {category.isAvailable ? (
@@ -78,7 +78,7 @@ export const MenuItems = ({
                                 </button>
                                 <h1
                                     style={{ borderColor: category.isAvailable ? buttonColor : 'gray' }}
-                                    className={`${category.isAvailable ? '' : 'opacity-30'} max-w-full flex flex-col truncate text-2xl font-semibold border-b-4 pr-6 mb-2 pl-10 inline-block`}
+                                    className={`${category.isAvailable ? '' : 'opacity-30'} max-w-full truncate text-2xl font-semibold border-b-4 pr-6 mb-2 pl-10 inline-block`}
                                 >
                                     {category.name}{category.isAvailable ? '' : ' (Pausado)'}
                                 </h1>
@@ -129,6 +129,7 @@ export const MenuItems = ({
                                     onClose={() => setShowFormCreateMenuItem(null)}
                                     categoryId={category.id}
                                     onCreated={fetchMenuItems}
+                                    categories={categories}
                                 />
                             )}
                         </div>

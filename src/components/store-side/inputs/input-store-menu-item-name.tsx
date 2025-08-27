@@ -27,10 +27,10 @@ export const InputName = ({
                 placeholder="Nome"
                 defaultValue={initialValues.name || ""}
                 {...register("name", {
-                    required: "Nome obrigatório",
+                    required: "Obrigatório",
                     minLength: {
                         value: 2,
-                        message: "Nome obrigatório",
+                        message: "Obrigatório",
                     },
                     onChange: (e) => {
                         if (e.target.value.length > 4) {
