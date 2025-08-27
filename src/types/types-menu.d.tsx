@@ -1,6 +1,8 @@
 export type Category = {
   id: number;
   name: string;
+  isAvailable: boolean;
+  order: number;
 };
 
 export type CategoryButtonsProps = {
@@ -8,6 +10,8 @@ export type CategoryButtonsProps = {
   setCategories?: React.Dispatch<React.SetStateAction<Category[]>>;
   buttonColor?: string;
   textColor?: string;
+  moveCategoryUp?: () => void;
+  moveCategoryDown?: () => void;
 }
 
 export type MenuItem = {

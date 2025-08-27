@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
+import { LoadingComponent } from "../../component-loading";
 import { DeleteBannerImage, UploadBannerImage } from "../../../services/service-upload-image";
 import { FaCamera } from "react-icons/fa";
-import { IoClose } from "react-icons/io5";
-import { LoadingComponent } from "../../component-loading";
+import { BsFillTrash3Fill } from "react-icons/bs";
 
 export const StoreBanner = ({ banner, onBannerChange }: { banner: string, onBannerChange: () => void }) => {
     const [bannerVersion, setBannerVersion] = useState(Date.now());
@@ -68,14 +68,16 @@ export const StoreBanner = ({ banner, onBannerChange }: { banner: string, onBann
                 />
             )}
             <div className="flex items-center gap-2 absolute bottom-2 left-2">
-                <button
-                    type="button"
-                    title="Excluir banner"
-                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-red-700 text-black left-0 flex items-center justify-center border-1 cursor-pointer hover:scale-105 transition-all duration-200"
-                    onClick={deleteBanner}
-                >
-                    <IoClose className="text-white scale-160" />
-                </button>
+                {banner !== "/store-banner-default.png" && (
+                    <button
+                        type="button"
+                        title="Excluir banner"
+                        className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-400 text-black left-0 flex items-center justify-center border-1 cursor-pointer hover:scale-105 transition-all duration-200"
+                        onClick={deleteBanner}
+                    >
+                        <BsFillTrash3Fill className="text-black scale-120" />
+                    </button>
+                )}
                 <button
                     type="button"
                     title="Configurar Banner da loja"

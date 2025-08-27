@@ -7,6 +7,7 @@ import { AdminDashboard } from "../pages/page-dashboard";
 import { CustomizeMenuPage } from "../pages/page-customize-menu";
 import { PageListOfStores } from "../pages/page-list-of-stores";
 import { StorePage } from "../pages/page-store";
+// import { Testpage } from "../pages/page-tests";
 
 export const AppRoutes = () => {
     return (
@@ -20,6 +21,7 @@ export const AppRoutes = () => {
                 <Route path="/create-new-password/:token" element={<CreateNewPasswordPage />} />
                 <Route path="/restaurantes" element={<PageListOfStores />} />
                 <Route path="/restaurante/:id" element={<StorePage />} />
+                {/* <Route path="/testes" element={<Testpage />} /> */}
             </Routes>
         </BrowserRouter>
     )

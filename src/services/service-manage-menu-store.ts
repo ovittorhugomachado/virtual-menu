@@ -35,6 +35,28 @@ export const getCategoriesMyStore = async () => {
     return await response.json();
 };
 
+export const reorderCategoriesService = async (categories: { id: number; order: number }[]) => {
+    try {
+        const response = await fetch(`${API_URL}/categories/reorder`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({ categories }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao reordenar categorias');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Erro no serviço de reordenação:', error);
+        throw error;
+    }
+};
+
 export const createCategoryService = async (category: {
     name: string;
 }): Promise<void> => {
@@ -81,6 +103,30 @@ export const RenameCategoryService = async (categoryId: number, newName: string)
         if (!response.ok) {
             const error = await response.json();
             throw new Error(error.message || 'Erro ao renomear categoria do menu');
+        };
+
+        return await response.json();
+    } catch (error) {
+        if (error instanceof TypeError) {
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
+        }
+        throw error instanceof Error ? error : new Error('Erro desconhecido');
+    }
+};
+
+export const toggleStatusCategoryService = async (categoryId: number) => {
+    try {
+        const response = await fetch(`${API_URL}/categories/${categoryId}/toggle-status`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Erro ao alterar status da categoria');
         };
 
         return await response.json();
@@ -148,7 +194,7 @@ export const createMenuItemService = async (categoryId: number, item: {
         return await response.json();
     } catch (error) {
         if (error instanceof Error && error.message) {
-            throw error; 
+            throw error;
         }
 
         throw new Error('Ocorreu um erro. Tente novamente mais tarde');

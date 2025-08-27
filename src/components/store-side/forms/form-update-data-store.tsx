@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { UpdateDataForm } from "./form-update-data-default";
+import { UpdateDataForm } from "./deafult/form-update-data";
 import { getMyStoreData, updateMyStoreData } from "../../../services/service-store-data";
 import { UpdateStoreDataFormProps } from "../../../types/types-data-forms.d";
 import { RestaurantData } from "../../../types/types-restaurante-data.d";
@@ -36,7 +36,6 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
             ...initialValues,
         },
     });
-
 
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -118,10 +117,8 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
                 error={error}
                 loading={loading}
                 formIcon={<FaGear />}
-                mobileTitle={"text-settings.png"}
-                desktopTitle={"text-settings.png"}
-                titleWidthMobile={195}
-                titleWidthDesktop={195}
+                title="Dados da Loja"
+                textButtonSubmit="Salvar"
                 submitFunction={handleSubmit(handleFormSubmit)}
                 successMessage={successMessage}
             >

@@ -1,7 +1,7 @@
 import React from "react";
-import { LoadingComponent } from "../../component-loading";
-import { ErrorComponent } from "../../component-error";
-import { UpdateStoreFormProps } from "../../../types/types-form.d";
+import { LoadingComponent } from "../../../component-loading";
+import { ErrorComponent } from "../../../component-error";
+import { UpdateStoreFormProps } from "../../../../types/types-form-default.d";
 import { IoCloseOutline } from "react-icons/io5";
 import { FaCheckCircle } from "react-icons/fa";
 
@@ -11,15 +11,13 @@ export const UpdateDataForm = ({
     fieldErrors,
     loading,
     formIcon,
-    mobileTitle,
-    desktopTitle,
-    titleWidthMobile,
-    titleWidthDesktop,
+    title,
     submitFunction,
+    textButtonSubmit,
     successMessage,
     children
 }: UpdateStoreFormProps) => {
-    
+
     return (
         <div className="fixed inset-0 bg-white/10 backdrop-blur-sm overflow-hidden z-50">
             <div className="h-full w-full overflow-y-auto">
@@ -32,19 +30,7 @@ export const UpdateDataForm = ({
                                         ? React.cloneElement(formIcon, { size: 40 })
                                         : formIcon}
                                 </div>
-                                <picture className="flex">
-                                    <source
-                                        srcSet={mobileTitle}
-                                        media="(max-width: 767px)"
-                                        width={titleWidthMobile}
-                                        className="" />
-                                    <img
-                                        src={desktopTitle}
-                                        alt="Horários"
-                                        width={titleWidthDesktop}
-                                        className="max-h-[80px] h-auto object-contain"
-                                    />
-                                </picture>
+                                <h1 className="text-center dark:text-white">{title}</h1>
                             </div>
                             <button
                                 type="button"
@@ -74,20 +60,24 @@ export const UpdateDataForm = ({
                             <form
                                 onSubmit={submitFunction}
                                 noValidate
-                                className="w-full min-h-130 md:min-h-150 relative rounded-xl rounded-t-none pb-8 px-4 flex flex-col justify-start md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white"
+                                className="w-full min-h-75 relative rounded-xl rounded-t-none pb-8 px-4 flex flex-col justify-start md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white"
                             >
-                                {children}
+                                <div className="w-full max-w-105 mt-4 flex flex-1 flex-col justify-center gap-2">
+                                    {children}
+                                </div>
                                 {error && (
                                     <p className="text-red-600 text-sm text-center mt-2">{error}</p>
                                 )}
-                                <div className="w-full flex justify-center z-50">
-                                    <button
-                                        type="submit"
-                                        className="w-[320px] max-w-[90vw] primary-button"
-                                    >
-                                        Salvar horários
-                                    </button>
-                                </div>
+                                {textButtonSubmit && (
+                                    <div className="w-full flex justify-center z-50">
+                                        <button
+                                            type="submit"
+                                            className="w-[230px] max-w-[90vw] primary-button"
+                                        >
+                                            {textButtonSubmit}
+                                        </button>
+                                    </div>
+                                )}
                             </form>
                         )}
                     </div>

@@ -31,6 +31,11 @@ export type UpdateStoreDataFormProps = {
 export type categoryFormProps = {
     onClose: () => void;
     onSubmit: (name: string) => void;
+    isLoading?: boolean;
+    error?: string;
+    initialValues?: Partial<AccountData>;
+    message?: string;
+    categoryId?: number;
 };
 
 export type CreateMenuItemFormProps = {

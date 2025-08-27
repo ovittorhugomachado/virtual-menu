@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { UpdateDataForm } from "./form-update-data-default";
+import { UpdateDataForm } from "./deafult/form-update-data";
 import { getMyStoreData } from "../../../services/service-store-data";
 import { updateSchedules } from "../../../services/service-update-schedules";
 import { checkOverlappingRanges, validateOpeningHours } from "../../../utils/function-validate-opening-hours";
@@ -117,10 +117,8 @@ export const UpdateSchedulesForm: React.FC<UpdateSchedulesStoreFormProps> = ({
             fieldErrors={fieldErrors}
             loading={loading}
             formIcon={<LuClock4 />}
-            mobileTitle={"./text-clocks-mobile.png"}
-            desktopTitle={"./text-clocks-desktop.png"}
-            titleWidthMobile={180}
-            titleWidthDesktop={300}
+            title="Horários de Funcionamento"
+            textButtonSubmit="Salvar horários"
             submitFunction={handleFormSubmit}
             successMessage={successMessage}
         >
