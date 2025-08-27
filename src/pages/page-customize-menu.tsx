@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMyUserData } from "../services/service-user-data";
 import { getMyPageStyle } from "../services/service-page-style";
-import { getCategoriesMyStore } from "../services/service-manage-menu-store";
+import { getCategoriesMyStore, toggleStatusCategoryService } from "../services/service-manage-menu-store";
 import { getMyStoreData } from "../services/service-store-data";
 import { RestaurantData } from "../types/types-restaurante-data.d";
 import { StyleStorePage } from "../types/types-style-store-page.d";
@@ -109,6 +109,21 @@ export const CustomizeMenuPage = () => {
                     : "/store-logo-default.png"
         );
     };
+    
+    const handleToggleStatusCategory = async (categoryId: number) => {
+    try {
+        const updatedCategory = await toggleStatusCategoryService(categoryId);
+        setCategories(prev =>
+            prev.map(cat =>
+                cat.id === categoryId
+                    ? { ...cat, isAvailable: updatedCategory.isAvailable }
+                    : cat
+            )
+        );
+    } catch (error) {
+        console.error(error);
+    }
+};
 
     return (
         <>
@@ -191,6 +206,7 @@ export const CustomizeMenuPage = () => {
                             categories={categories}
                             backgroundColor={backgroundColor ?? ''}
                             buttonColor={buttonColor ?? ''}
+                            onToggleStatusCategory={handleToggleStatusCategory}
                         />
                     </main>
                     <footer className={`${backgroundColor === 'black' ? 'bg-black text-white' : 'bg-white text-black'} h-40 flex items-center`}>

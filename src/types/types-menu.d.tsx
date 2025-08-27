@@ -29,5 +29,5 @@ export type MenuItemsContainerProps = {
   categories: Category[];
   backgroundColor: string;
   buttonColor: string;
+  onToggleStatusCategory: (categoryId: number) => Promise<void>;
 }
-

@@ -84,7 +84,7 @@ export const CategoryButtons = ({ categories, setCategories, buttonColor, textCo
                                 <FaGear className="text-lg" />
                             </button>
                             <button
-                                title="Renomear categoria"
+                                title="Ativar ou desativar categoria"
                                 className="w-7 h-7 lg:w-8 lg:h-8 absolute left-9.5 lg:left-10 rounded-full bg-gray-400 text-black border-1 flex items-center justify-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200"
                                 onClick={() => toggleStatusCategory(category.id)}
                             >

@@ -7,6 +7,7 @@ import { MenuItemCreationForm } from "../forms/form-create-update-menu-item";
 import { IoMdAddCircle } from "react-icons/io";
 import { MenuItem, MenuItemsContainerProps } from "../../../types/types-menu.d";
 import { getExtension } from "../../../utils/function-get-extension";
+import { FaPause, FaPlay } from "react-icons/fa";
 
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 
@@ -15,6 +16,7 @@ export const MenuItems = ({
     categories,
     backgroundColor,
     buttonColor,
+    onToggleStatusCategory
 }: MenuItemsContainerProps) => {
 
     const [loading, setLoading] = useState(true);
@@ -45,6 +47,8 @@ export const MenuItems = ({
         }
     }, [categories, fetchMenuItems]);
 
+
+
     return (
         <>
             {error ? (
@@ -60,12 +64,28 @@ export const MenuItems = ({
                             key={category.id}
                             className={`w-full mt-4 ${backgroundColor === 'white' ? 'text-black' : 'text-white'}`}
                         >
-                            <h1
-                                style={{ borderColor: buttonColor }}
-                                className="max-w-full truncate text-2xl font-semibold border-b-4 pr-6 mb-2 inline-block"
-                            >
-                                {category.name}
-                            </h1>
+                            <div className="relative">
+                                <button
+                                    title="Ativar ou desativar categoria"
+                                    className="w-7 h-7 lg:w-8 lg:h-8 absolute top-1 rounded-full bg-gray-400 text-black border-1 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200 z-90"
+                                    onClick={() => onToggleStatusCategory(category.id)}
+                                >
+                                    {category.isAvailable ? (
+                                        <FaPause className="text-lg" />
+                                    ) : (
+                                        <FaPlay className="text-lg" />
+                                    )}
+                                </button>
+                                <h1
+                                    style={{ borderColor: category.isAvailable ? buttonColor : 'gray' }}
+                                    className={`${category.isAvailable ? '' : 'opacity-30'} max-w-full flex flex-col truncate text-2xl font-semibold border-b-4 pr-6 mb-2 pl-10 inline-block`}
+                                >
+                                    {category.name}{category.isAvailable ? '' : ' (Pausado)'}
+                                </h1>
+                            </div>
+                            {!category.isAvailable && (
+                                <span className="text-md text-gray-500">Todos os itens dessa categoria não aparecem para o cliente, para voltar a oferecer esses itens ative a categoria no botão acima</span>
+                            )}
                             <ul className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 py-1 ">
                                 {Array.isArray(menuItemsByCategory[category.id]) && menuItemsByCategory[category.id].length > 0 ? (
                                     menuItemsByCategory[category.id].map(item => (
