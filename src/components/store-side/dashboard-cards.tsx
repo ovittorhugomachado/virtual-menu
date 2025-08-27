@@ -94,7 +94,7 @@ export const DashboardCards = ({
         <div className="w-full h-full flex flex-col items-center">
             <audio ref={alertAudioRef} src="./alert.mp3" preload="auto" />
             <ul className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-6 pb-20 mx-auto items-start">
-                <li className={`w-full col-span-full text-black dark:text-white rounded-xl relative border-1 dark:bg-[#0D1117] border-black dark:border-white transition-all hover:scale-103 cursor-pointer`}>
+                <li className={`w-full col-span-full mb-5 text-black dark:text-white rounded-xl relative border-1 dark:bg-[#0D1117] border-black dark:border-white transition-all hover:scale-103 cursor-pointer`}>
                     <a
                         className="flex w-full h-full max-h-[36px] items-center justify-between gap-2 p-2"
                         href={`restaurante/${user?.id}`}
