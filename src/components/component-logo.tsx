@@ -5,7 +5,7 @@ type LogoProps = {
 export const LogoWhite= ({ className }: LogoProps) => (
     <>
         <img
-            className={`${className ?? ""}`}
+            className={`${className ?? ""} p-6`}
             src="../logo-dark.png"
             alt="logo"
         />
@@ -15,7 +15,7 @@ export const LogoWhite= ({ className }: LogoProps) => (
 export const LogoBlue= ({ className }: LogoProps) => (
     <>
         <img
-            className={`${className ?? ""}`}
+            className={`${className ?? ""} p-6`}
             src="../logo-light.png"
             alt="logo"
         />
