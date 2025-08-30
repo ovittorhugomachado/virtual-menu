@@ -56,16 +56,20 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
             setPositionCarousel(latest);
         });
         return () => unsubscribe();
-    }, [x]);
+    }, [categories, x]);
 
     useEffect(() => {
         const updateSize = () => {
             if (carousel.current) {
-                const maxScroll = carousel.current.scrollWidth - carousel.current.offsetWidth;
-                setMaxScroll(maxScroll);
+                setTimeout(() => {
+                    const newMaxScroll = carousel.current!.scrollWidth - carousel.current!.offsetWidth;
 
-                x.stop();
-                x.set(0);
+                    setMaxScroll(newMaxScroll);
+
+                    x.stop();
+                    x.set(0);
+                    setPositionCarousel(0);
+                }, 50);
             }
         };
 
@@ -75,7 +79,7 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
         return () => {
             window.removeEventListener("resize", updateSize);
         };
-    }, [x]);
+    }, [categories, x]);
 
     useEffect(() => {
         x.set(0);
@@ -117,9 +121,9 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
     };
 
     return (
-        <div 
-        className={`${backgroundColor === 'black' ? 'bg-black' : 'bg-white'} w-full mx-2 pb-6 sticky -top-1 ms:top-42 sm:top-29 flex justify-center`}
-        style={{zIndex: 4}}
+        <div
+            className={`${backgroundColor === 'black' ? 'bg-black' : 'bg-white'} w-full mx-2 pb-6 sticky -top-1 ms:top-42 sm:top-29 flex justify-center`}
+            style={{ zIndex: 4 }}
         >
             <button
                 className={`${positionCarousel === 0 ? '' : 'cursor-pointer'} absolute -left-6 top-6 lg:top-7 z-30`}
@@ -136,7 +140,7 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
                     className="w-full flex gap-4 p-2.5 my-3.5 flex-shrink-0"
                     drag="x"
                     dragConstraints={{ right: 0, left: -maxScroll }}
-                    style={{ x }} // ✅ usa só o motionValue
+                    style={{ x }} 
                 >
                     {categories
                         .sort((a, b) => a.order - b.order)
