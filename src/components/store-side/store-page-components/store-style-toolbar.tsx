@@ -81,9 +81,9 @@ export const BottomNav = ({
                 left: position.x || 'auto',
                 right: position.x === 0 ? 0 : 'auto',
                 cursor: dragging ? 'grabbing' : 'grab',
-                zIndex: 30,
+                zIndex: 6,
             }}
-            className={`w-[187px] py-2 mx-2.5 my-1.5 rounded-2xl border-[0.1px] select-none flex flex-col items-center content-between fixed z-30 ${backgroundColorStore === 'white' ? 'bg-black border-white text-white' : 'bg-white'}`}
+            className={`w-[187px] py-2 mx-2.5 my-1.5 rounded-2xl border-[0.1px] select-none flex flex-col items-center content-between fixed ${backgroundColorStore === 'white' ? 'bg-black border-white text-white' : 'bg-white'}`}
         >
             <span className="text-3xl left-[-20px] top-1 my-auto text-zinc-600 absolute">⋮⋮</span>
             <button className="gap-1 flex items-center transition-all duration-300 ease-in-out cursor-pointer" onClick={handleToggleToolbar}>

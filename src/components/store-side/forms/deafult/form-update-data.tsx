@@ -4,6 +4,7 @@ import { ErrorComponent } from "../../../component-error";
 import { UpdateStoreFormProps } from "../../../../types/types-form-default.d";
 import { IoCloseOutline } from "react-icons/io5";
 import { FaCheckCircle } from "react-icons/fa";
+import { createPortal } from "react-dom";
 
 export const UpdateDataForm = ({
     onClose,
@@ -18,8 +19,10 @@ export const UpdateDataForm = ({
     children
 }: UpdateStoreFormProps) => {
 
-    return (
-        <div className="fixed inset-0 bg-white/10 backdrop-blur-sm overflow-hidden z-50">
+    return createPortal(
+        <div
+            className="fixed inset-0 z-[9999] bg-white/10 backdrop-blur-sm overflow-hidden"
+        >
             <div className="h-full w-full overflow-y-auto">
                 <div className="min-h-full min-w-full flex justify-center items-center">
                     <div className="w-[90%] max-w-[950px] flex flex-col my-4 md:shadow-2xl">
@@ -45,7 +48,6 @@ export const UpdateDataForm = ({
                                 <LoadingComponent />
                             </div>
                         ) : (successMessage ?? "").length > 0 ? (
-
                             <div className="w-full relative rounded-xl rounded-t-none py-8 px-4 flex flex-col justify-start md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white">
                                 <FaCheckCircle className="text-[100px] text-green-800" />
                                 <h4 className="text-black dark:text-white text-center">{successMessage}</h4>
@@ -84,6 +86,7 @@ export const UpdateDataForm = ({
                     </div>
                 </div>
             </div>
-        </div>
-    )
+        </div>,
+        document.body
+    );
 };

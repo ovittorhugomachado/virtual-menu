@@ -26,7 +26,8 @@ export const Header: React.FC<HeaderProps> = ({
 
     return (
         <header
-            className={`w-screen max-h-[387px] px-[5%] lg:px-[15%] py-4 xl:py-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between shadow-md ms:sticky top-0 z-20 ${backgroundColor === 'white' ? 'text-black bg-white' : 'text-white bg-black border-[1px] border-zinc-800'}`}
+            className={`w-screen max-h-[387px] px-[5%] lg:px-[15%] py-4 xl:py-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between shadow-md ms:sticky top-0 ${backgroundColor === 'white' ? 'text-black bg-white' : 'text-white bg-black border-[1px] border-zinc-800'}`}
+            style={{zIndex: 5}}
         >
             <div className="flex flex-col ms:flex-row items-center gap-3.5">
                 <Logo

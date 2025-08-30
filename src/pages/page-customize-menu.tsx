@@ -180,7 +180,7 @@ export const CustomizeMenuPage = () => {
                             onClose={handleSchedulesUpdated}
                         />
                     )}
-                    <main className="w-full max-w-[1140px] flex flex-col items-center justify-center">
+                    <main className="w-full max-w-[1140px] flex flex-col items-center justify-center realtive">
                         <StoreBanner
                             banner={
                                 bannerUrl && bannerUrl.startsWith('https://s3.us-east-2.amazonaws.com/')

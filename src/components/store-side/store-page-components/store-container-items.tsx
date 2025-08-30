@@ -58,7 +58,7 @@ export const MenuItems = ({
             ) : loading ? (
                 <LoadingComponent />
             ) : (
-                <section className="w-full">
+                <section className="w-full px-2">
                     {categories.map(category => (
                         <div
                             key={category.id}
@@ -67,7 +67,7 @@ export const MenuItems = ({
                             <div className="relative">
                                 <button
                                     title="Ativar ou desativar categoria"
-                                    className="w-7 h-7 lg:w-8 lg:h-8 absolute top-1 rounded-full bg-gray-400 text-black border-1 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200 z-30"
+                                    className="w-7 h-7 lg:w-8 lg:h-8 absolute top-1 rounded-full bg-gray-400 text-black border-1 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200"
                                     onClick={() => onToggleStatusCategory(category.id)}
                                 >
                                     {category.isAvailable ? (
