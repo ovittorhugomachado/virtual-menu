@@ -75,10 +75,7 @@ export const reorderCategoriesService = async (categories: { id: number; order: 
     }
 };
 
-export const createCategoryService = async (category: {
-    name: string,
-    itemIds?: number[]
-}): Promise<void> => {
+export const createCategoryService = async (name: string, menuItemIds: number[]) => {
     try {
         const response = await fetch(`${API_URL}/categories`,
             {
@@ -87,7 +84,7 @@ export const createCategoryService = async (category: {
                     'Content-Type': 'application/json',
                 },
                 credentials: 'include',
-                body: JSON.stringify(category)
+                body: JSON.stringify({ name: name, menuItemIds: menuItemIds })
             }
         )
 
@@ -108,7 +105,7 @@ export const createCategoryService = async (category: {
     }
 };
 
-export const RenameCategoryService = async (categoryId: number, newName: string) => {
+export const updateCategoryService = async (categoryId: number, newName: string, menuItemIds: number[]) => {
     try {
         const response = await fetch(`${API_URL}/categories/${categoryId}`, {
             method: 'PUT',
@@ -116,7 +113,7 @@ export const RenameCategoryService = async (categoryId: number, newName: string)
                 'Content-Type': 'application/json',
             },
             credentials: 'include',
-            body: JSON.stringify({ newName: newName })
+            body: JSON.stringify({ newName: newName, menuItemIds: menuItemIds })
         });
 
         if (!response.ok) {

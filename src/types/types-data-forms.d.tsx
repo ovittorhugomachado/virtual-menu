@@ -32,9 +32,10 @@ export type categoryFormProps = {
     onClose: () => void;
     onSubmit: (name: string, itemIds?: number[]) => void;
     isLoading?: boolean;
+    message?: string;
+    setError?: (error: string) => void;
     error?: string;
     initialValues?: Partial<AccountData>;
-    message?: string;
     categoryId?: number;
 };
 

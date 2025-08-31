@@ -1,13 +1,14 @@
-export type Category = {
+export type CategoryData = {
   id: number;
   name: string;
   isAvailable?: boolean;
   order?: number;
+  menuItems?: number[]
 };
 
 export type CategoryButtonsProps = {
-  categories: Category[];
-  setCategories?: React.Dispatch<React.SetStateAction<Category[]>>;
+  categories: CategoryData[];
+  setCategories?: React.Dispatch<React.SetStateAction<CategoryData[]>>;
   buttonColor?: string;
   textColor?: string;
   moveCategoryUp?: () => void;
@@ -22,12 +23,14 @@ export type MenuItem = {
   price: number;
   photoUrl: string;
   categoryId: number;
+  categories?: CategoryData[];
 };
 
 export type MenuItemsContainerProps = {
   storeId: number;
-  categories: Category[];
+  categories: CategoryData[];
   backgroundColor: string;
   buttonColor: string;
   onToggleStatusCategory: (categoryId: number) => Promise<void>;
+  onCategoryCreated?: (newCategory: CategoryData) => void;
 }

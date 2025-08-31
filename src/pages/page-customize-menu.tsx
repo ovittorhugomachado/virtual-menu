@@ -6,7 +6,7 @@ import { getCategoriesMyStore, toggleStatusCategoryService } from "../services/s
 import { getMyStoreData } from "../services/service-store-data";
 import { RestaurantData } from "../types/types-restaurante-data.d";
 import { StyleStorePage } from "../types/types-style-store-page.d";
-import { Category } from "../types/types-menu.d";
+import { CategoryData } from "../types/types-menu.d";
 import { AccountData } from "../types/types-account.d";
 import { getExtension } from "../utils/function-get-extension";
 import { BottomNav } from "../components/store-side/store-page-components/store-style-toolbar";
@@ -30,7 +30,7 @@ export const CustomizeMenuPage = () => {
     const [userData, setUserData] = useState<AccountData | null>(null);
     const [storeData, setStoreData] = useState<RestaurantData | null>(null);
     const [storeStyle, setStoreStyle] = useState<StyleStorePage | null>(null);
-    const [categories, setCategories] = useState<Category[]>([]);
+    const [categories, setCategories] = useState<CategoryData[]>([]);
     const [initialBackgroundColor, setInitialBackgroundColor] = useState('');
     const [initialButtonColor, setInitialButtonColor] = useState('');
     const [initialTextColorButtons, setInitialTextColorButtons] = useState('');
@@ -109,23 +109,21 @@ export const CustomizeMenuPage = () => {
                     : "/store-logo-default.png"
         );
     };
-    
-    const handleToggleStatusCategory = async (categoryId: number) => {
-    try {
-        const updatedCategory = await toggleStatusCategoryService(categoryId);
-        setCategories(prev =>
-            prev.map(cat =>
-                cat.id === categoryId
-                    ? { ...cat, isAvailable: updatedCategory.isAvailable }
-                    : cat
-            )
-        );
-    } catch (error) {
-        console.error(error);
-    }
-};
 
-console.log()
+    const handleToggleStatusCategory = async (categoryId: number) => {
+        try {
+            const updatedCategory = await toggleStatusCategoryService(categoryId);
+            setCategories(prev =>
+                prev.map(cat =>
+                    cat.id === categoryId
+                        ? { ...cat, isAvailable: updatedCategory.isAvailable }
+                        : cat
+                )
+            );
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
         <>
@@ -196,22 +194,27 @@ console.log()
                                 setBannerUrl(updatedStoreData.bannerUrl ?? '');
                             }}
                         />
-                        <CategoryButtons
-                            backgroundColor={backgroundColor ?? ''}
-                            categories={categories}
-                            setCategories={setCategories}
-                            textColor={textColorButtons}
-                            buttonColor={buttonColor}
-                        />
+                        {categories.length > 0 && (
+                            <CategoryButtons
+                                backgroundColor={backgroundColor ?? ''}
+                                categories={categories}
+                                setCategories={setCategories}
+                                textColor={textColorButtons}
+                                buttonColor={buttonColor}
+                            />
+                        )}
                         <MenuItems
                             storeId={storeData?.id ?? 0}
                             categories={categories}
                             backgroundColor={backgroundColor ?? ''}
                             buttonColor={buttonColor ?? ''}
                             onToggleStatusCategory={handleToggleStatusCategory}
+                            onCategoryCreated={async (newCategory) => {
+                                setCategories(prev => [...prev, newCategory]);
+                            }}
                         />
                     </main>
-                    <footer className={`${backgroundColor === 'black' ? 'bg-black text-white' : 'bg-white text-black'} h-40 flex items-center`}>
+                    <footer className={`${backgroundColor === 'black' ? 'bg-black text-white' : 'bg-white text-black'} ${categories.length === 0 ? 'hidden' : ''} h-40 flex items-center`}>
                         {backgroundColor === 'black' ? (
                             <img
                                 src="../logo-text-dark.png"

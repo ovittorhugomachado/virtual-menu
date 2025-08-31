@@ -11,6 +11,7 @@ export const UpdateDataForm = ({
     error,
     fieldErrors,
     loading,
+    isLoadingSubmit = false,
     formIcon,
     title,
     submitFunction,
@@ -74,9 +75,10 @@ export const UpdateDataForm = ({
                                         <div className="w-full flex justify-center z-50">
                                             <button
                                                 type="submit"
-                                                className="w-[230px] max-w-[90vw] primary-button"
+                                                className="w-[220px] primary-button"
+                                                disabled={isLoadingSubmit}
                                             >
-                                                {textButtonSubmit}
+                                                {isLoadingSubmit ? "Carregando..." : `${textButtonSubmit}`}
                                             </button>
                                         </div>
                                     )}

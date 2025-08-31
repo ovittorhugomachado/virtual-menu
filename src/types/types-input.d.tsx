@@ -1,6 +1,6 @@
 import { UseFormRegister, UseFormWatch, UseFormClearErrors, FieldErrors, Control } from "react-hook-form";
 import { AccountData } from "./types-account.d";
-import { Category } from "./types-menu.d";
+import { CategoryData } from "./types-menu.d";
 import { Address, RestaurantData } from "./types-restaurante-data.d";
 import { MenuItemFormData, OrderFormData } from "./types-data-forms.d";
 
@@ -36,11 +36,13 @@ export type InputCustomerNameProps = {
 };
 
 export type Categories = {
-    categories: Category[];
+    categories: CategoryData[];
     register: UseFormRegister<MenuItemFormData>;
     errors: FieldErrors<MenuItemFormData>;
     clearErrors: UseFormClearErrors<MenuItemFormData>;
     initialValues?: Partial<MenuItemFormData>;
+    selectedCategories?: number[];
+    onChangeFunction?: (categoryId: number, isChecked: boolean) => void;
 }
 
 export type InputMenuItemNameProps = {

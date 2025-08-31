@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { reorderCategoriesService } from "../../../services/service-manage-menu-store";
-import { Category } from "../../../types/types-menu.d";
+import { CategoryData } from "../../../types/types-menu.d";
 import { FaList, FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { UpdateDataForm } from "./deafult/form-update-data";
 
 interface CategoryOrderManagerProps {
     onClose: () => void;
-    categories: Category[];
-    setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
+    categories: CategoryData[];
+    setCategories: React.Dispatch<React.SetStateAction<CategoryData[]>>;
     buttonColor?: string;
     textColor?: string;
 }
@@ -21,7 +21,7 @@ export const CategoryOrderManager: React.FC<CategoryOrderManagerProps> = ({
     const [isReordering, setIsReordering] = useState(false);
     const [animatedIndexes, setAnimatedIndexes] = useState<number[]>([]);
     const [animationDirection, setAnimationDirection] = useState<"up" | "down" | null>(null);
-    const [localCategories, setLocalCategories] = useState<Category[]>([]);
+    const [localCategories, setLocalCategories] = useState<CategoryData[]>([]);
     const [successMessage, setSuccessMessage] = useState("");
 
     useEffect(() => {

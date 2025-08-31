@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { animate, motion, useMotionValue } from "motion/react"
-import { createCategoryService, toggleStatusCategoryService, RenameCategoryService } from "../../../services/service-manage-menu-store";
-import { Category } from "../../../types/types-menu.d";
+import { createCategoryService, toggleStatusCategoryService, updateCategoryService } from "../../../services/service-manage-menu-store";
+import { CategoryData } from "../../../types/types-menu.d";
 import { CreateCategoryForm, UpdateCategoryForm } from "../forms/form-create-update-categories";
 import { FaGear, FaListUl, FaPause, FaPlay } from "react-icons/fa6";
 import { CategoryOrderManager } from "../forms/order-of-categories";
@@ -10,8 +10,8 @@ import { IoIosArrowBack } from "react-icons/io";
 
 interface CategoryButtonsProps {
     backgroundColor?: string;
-    categories: Category[];
-    setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
+    categories: CategoryData[];
+    setCategories: React.Dispatch<React.SetStateAction<CategoryData[]>>;
     buttonColor?: string;
     textColor?: string;
 }
@@ -85,12 +85,9 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
         x.set(0);
     }, [categories, x]);
 
-    const createCategory = async (name: string, itemIds: number[] = []) => {
+    const createCategory = async (name: string, menuItemIds: number[] = []) => {
         try {
-            const createdCategory = await createCategoryService({
-                name,
-                itemIds
-            });
+            const createdCategory = await createCategoryService(name, menuItemIds);
             if (createdCategory !== null && createdCategory !== undefined) {
                 setCategories(prev => [...prev, createdCategory]);
             }
@@ -99,9 +96,9 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
         }
     };
 
-    const RenameCategory = async (categoryId: number, newName: string) => {
+    const updateCategory = async (categoryId: number, newName: string, menuItemIds: number[]) => {
         try {
-            const updatedCategory = await RenameCategoryService(categoryId, newName);
+            const updatedCategory = await updateCategoryService(categoryId, newName, menuItemIds);
             setCategories(prev => prev.map(cat => cat.id === categoryId ? updatedCategory : cat));
         } catch (error) {
             console.error(error);
@@ -125,7 +122,7 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
 
     return (
         <div
-            className={`${backgroundColor === 'black' ? 'bg-black' : 'bg-white'} w-full mx-2 pb-6 sticky -top-1 ms:top-42 sm:top-29 flex justify-center`}
+            className={`${backgroundColor === 'black' ? 'bg-black' : 'bg-white'} w-full mx-2 pb-6 sticky -top-1 ms:top-42 sm:top-29 flex justify-center overflow-hidden`}
             style={{ zIndex: 4 }}
         >
             <button
@@ -193,7 +190,7 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
                             </motion.div>
                         ))}
                 </motion.div>
-                <div className="flex gap-4 justify-center">
+                <div className="flex gap-4 justify-center overflow-hidden">
                     <button
                         title="Criar nova categoria"
                         className="flex items-center justify-center gap-2 px-4 py-2 rounded-3xl text-black bg-gray-400 cursor-pointer hover:scale-103 transition-transform duration-200"
@@ -223,7 +220,7 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
             {showFormSettings && (
                 <CreateCategoryForm
                     onClose={() => setShowFormSettings(false)}
-                    onSubmit={async (name, itemIds) => { // Agora recebe dois parâmetros
+                    onSubmit={async (name, itemIds) => {
                         await createCategory(name, itemIds);
                     }}
                 />
@@ -241,11 +238,13 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
                         setEditCategoryId(null);
                         setEditCategoryName(null);
                     }}
-                    onSubmit={async (newName) => {
-                        await RenameCategory(editCategoryId, newName);
+                    onSubmit={async (newName, menuItemIds) => {
+                        await updateCategory(editCategoryId, newName, menuItemIds ?? []);
                         setCategories(prev =>
                             prev.map(cat =>
-                                cat.id === editCategoryId ? { ...cat, name: newName } : cat
+                                cat.id === editCategoryId
+                                    ? { ...cat, name: newName, menuItemIds: menuItemIds }
+                                    : cat
                             )
                         );
                     }}

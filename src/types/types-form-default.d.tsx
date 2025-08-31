@@ -3,7 +3,7 @@ import { RestaurantData } from "./types-restaurante-data.d";
 
 export type UpdateStoreFormProps = {
     onClose: () => void;
-    isLoading?: boolean;
+    isLoadingSubmit?: boolean;
     loading?: boolean;
     error?: string;
     message?: string;

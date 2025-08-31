@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
-import { getMenuItemService } from "../../../services/service-manage-menu-store"
+import { createCategoryService, getMenuItemService } from "../../../services/service-manage-menu-store"
 import { Item } from "./store-item";
 import { ErrorComponent } from "../../component-error"
 import { LoadingComponent } from "../../component-loading"
@@ -8,6 +8,8 @@ import { IoMdAddCircle } from "react-icons/io";
 import { MenuItem, MenuItemsContainerProps } from "../../../types/types-menu.d";
 import { getExtension } from "../../../utils/function-get-extension";
 import { FaPause, FaPlay } from "react-icons/fa";
+import { IoAddCircle } from "react-icons/io5";
+import { CreateCategoryForm } from "../forms/form-create-update-categories";
 
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 
@@ -16,11 +18,13 @@ export const MenuItems = ({
     categories,
     backgroundColor,
     buttonColor,
-    onToggleStatusCategory
+    onToggleStatusCategory,
+    onCategoryCreated
 }: MenuItemsContainerProps) => {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [showFormCreateCategory, setShowFormCreateCategory] = useState(false);
     const [menuItemsByCategory, setMenuItemsByCategory] = useState<{ [categoryId: number]: MenuItem[] }>({});
     const [showFormCreateMenuItem, setShowFormCreateMenuItem] = useState<number | null>(null);
 
@@ -44,10 +48,22 @@ export const MenuItems = ({
     useEffect(() => {
         if (categories.length > 0) {
             fetchMenuItems();
+        } else {
+            setLoading(false);
         }
     }, [categories, fetchMenuItems]);
 
-
+    const createCategory = async (name: string, menuItemIds: number[] = []) => {
+        try {
+            const createdCategory = await createCategoryService(name, menuItemIds);
+            if (createdCategory) {
+                onCategoryCreated?.(createdCategory); // atualiza o estado no pai
+            }
+            await fetchMenuItems();
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
         <>
@@ -59,6 +75,28 @@ export const MenuItems = ({
                 <LoadingComponent />
             ) : (
                 <section className="w-full px-2">
+                    {categories.length === 0 && (
+                        <div className="w-full flex flex-col items-center gap-4">
+                        <h4 className="w-full mt-16 text-center">Você não tem nenhuma categoria, bora criar uma?</h4>
+                            <button
+                                title="Criar nova categoria"
+                                className="flex items-center justify-center gap-2 px-4 py-2 rounded-3xl text-black bg-primary cursor-pointer hover:scale-103 transition-transform duration-200"
+                                onClick={() => setShowFormCreateCategory(true)}
+                            >
+                                <IoAddCircle className="text-2xl hidden sm:block" /> Criar nova categoria
+                            </button>
+                            {showFormCreateCategory && (
+                                <CreateCategoryForm
+                                    onClose={() => setShowFormCreateCategory(false)}
+                                    onSubmit={async (name, itemIds) => {
+                                        await createCategory(name, itemIds);
+                                    }}
+                                />
+                            )}
+                        </div>
+
+
+                    )}
                     {categories.map(category => (
                         <div
                             key={category.id}
@@ -67,7 +105,7 @@ export const MenuItems = ({
                             <div className="relative">
                                 <button
                                     title="Ativar ou desativar categoria"
-                                    className="w-7 h-7 lg:w-8 lg:h-8 absolute top-1 rounded-full bg-gray-400 text-black border-1 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200"
+                                    className="w-7 h-7 lg:w-8 lg:h-8 absolute top-1 rounded-full bg-gray-400 text-black border-1 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200 z-1"
                                     onClick={() => onToggleStatusCategory(category.id)}
                                 >
                                     {category.isAvailable ? (
