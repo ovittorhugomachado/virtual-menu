@@ -85,9 +85,12 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
         x.set(0);
     }, [categories, x]);
 
-    const createCategory = async (name: string) => {
+    const createCategory = async (name: string, itemIds: number[] = []) => {
         try {
-            const createdCategory = await createCategoryService({ name });
+            const createdCategory = await createCategoryService({
+                name,
+                itemIds
+            });
             if (createdCategory !== null && createdCategory !== undefined) {
                 setCategories(prev => [...prev, createdCategory]);
             }
@@ -140,10 +143,10 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
                     className="w-full flex gap-4 p-2.5 my-3.5 flex-shrink-0"
                     drag="x"
                     dragConstraints={{ right: 0, left: -maxScroll }}
-                    style={{ x }} 
+                    style={{ x }}
                 >
                     {categories
-                        .sort((a, b) => a.order - b.order)
+                        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
                         .map((category) => (
                             <motion.div
                                 key={category.id}
@@ -220,8 +223,8 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
             {showFormSettings && (
                 <CreateCategoryForm
                     onClose={() => setShowFormSettings(false)}
-                    onSubmit={async (name) => {
-                        await createCategory(name);
+                    onSubmit={async (name, itemIds) => { // Agora recebe dois parâmetros
+                        await createCategory(name, itemIds);
                     }}
                 />
             )}

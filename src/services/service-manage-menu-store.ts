@@ -35,6 +35,24 @@ export const getCategoriesMyStore = async () => {
     return await response.json();
 };
 
+export const getMenuItemsMyStore = async () => {
+
+    const response = await fetch(`${API_URL}/menu-items`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include'
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Erro ao buscar categorias do menu');
+    };
+
+    return await response.json();
+};
+
 export const reorderCategoriesService = async (categories: { id: number; order: number }[]) => {
     try {
         const response = await fetch(`${API_URL}/categories/reorder`, {
@@ -58,7 +76,8 @@ export const reorderCategoriesService = async (categories: { id: number; order: 
 };
 
 export const createCategoryService = async (category: {
-    name: string;
+    name: string,
+    itemIds?: number[]
 }): Promise<void> => {
     try {
         const response = await fetch(`${API_URL}/categories`,

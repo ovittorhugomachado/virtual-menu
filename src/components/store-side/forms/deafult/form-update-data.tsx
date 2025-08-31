@@ -25,7 +25,7 @@ export const UpdateDataForm = ({
         >
             <div className="h-full w-full overflow-y-auto">
                 <div className="min-h-full min-w-full flex justify-center items-center">
-                    <div className="w-[90%] max-w-[950px] flex flex-col my-4 md:shadow-2xl">
+                    <div className="w-[90%] max-w-[950px] flex flex-col my-4 md:shadow-2xl transition-all duration-300 ease-in-out">
                         <div className="h-30 bg-primary dark:bg-[#161a21] flex justify-center items-center rounded-t-xl relative overflow-hidden">
                             <div className="flex">
                                 <div className="text-white dark:text-primary mx-2 hidden md:block">

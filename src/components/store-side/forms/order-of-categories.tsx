@@ -25,7 +25,7 @@ export const CategoryOrderManager: React.FC<CategoryOrderManagerProps> = ({
     const [successMessage, setSuccessMessage] = useState("");
 
     useEffect(() => {
-        setLocalCategories([...categories].sort((a, b) => a.order - b.order));
+        setLocalCategories([...categories].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
     }, [categories]);
 
     const moveCategoryUp = (index: number) => {
@@ -74,7 +74,7 @@ export const CategoryOrderManager: React.FC<CategoryOrderManagerProps> = ({
         try {
             const orderData = localCategories.map(cat => ({
                 id: cat.id,
-                order: cat.order
+                order: cat.order ?? 0
             }));
             await reorderCategoriesService(orderData);
             setCategories(localCategories);
@@ -113,7 +113,7 @@ export const CategoryOrderManager: React.FC<CategoryOrderManagerProps> = ({
                     </div>
                 )}
                 {localCategories
-                    .sort((a, b) => a.order - b.order)
+                    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
                     .map((category, index) => (
                         <div
                             key={category.id}

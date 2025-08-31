@@ -30,7 +30,7 @@ export type UpdateStoreDataFormProps = {
 
 export type categoryFormProps = {
     onClose: () => void;
-    onSubmit: (name: string) => void;
+    onSubmit: (name: string, itemIds?: number[]) => void;
     isLoading?: boolean;
     error?: string;
     initialValues?: Partial<AccountData>;
