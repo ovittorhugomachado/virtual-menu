@@ -6,6 +6,7 @@ import { ErrorComponent } from "../../component-error";
 import { LoadingComponent } from "../../component-loading";
 import { InputName } from "../inputs/input-store-menu-item-name";
 import { InputPrice } from "../inputs/input-store-menu-item-price";
+import { InputCategories } from "../inputs/input-store-categories";
 import { IoCloseOutline } from "react-icons/io5";
 import { IoIosAddCircle } from "react-icons/io";
 import { FaCheckCircle } from "react-icons/fa";
@@ -31,7 +32,6 @@ export const MenuItemCreationForm: React.FC<CreateMenuItemFormProps> = ({
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
 
-    // Observe as categorias selecionadas
     const selectedCategories = watch("categories") || [];
 
     useEffect(() => {
@@ -43,28 +43,23 @@ export const MenuItemCreationForm: React.FC<CreateMenuItemFormProps> = ({
         }
     }, [successMessage]);
 
-    // Defina a categoria padrão quando categoryId mudar
     useEffect(() => {
         if (categoryId !== undefined) {
             setValue("categories", [Number(categoryId)]);
         }
     }, [categoryId, setValue]);
 
-    // Função para manipular checkboxes manualmente
     const handleCategoryChange = (categoryId: number, isChecked: boolean) => {
         const currentCategories = selectedCategories || [];
-        
+
         if (isChecked) {
-            // Adiciona a categoria se não estiver presente
             setValue("categories", [...currentCategories, categoryId]);
         } else {
-            // Remove a categoria (só permite remover se tiver mais de uma)
             if (currentCategories.length > 1) {
                 setValue("categories", currentCategories.filter(id => id !== categoryId));
             }
         }
-        
-        // Limpa erros de validação
+
         clearErrors("categories");
     };
 
@@ -86,7 +81,6 @@ export const MenuItemCreationForm: React.FC<CreateMenuItemFormProps> = ({
             return;
         }
 
-        // Validação manual das categorias
         if (!selectedCategories || selectedCategories.length === 0) {
             setError("categories", { message: "Selecione pelo menos uma categoria" });
             setLoading(false);
@@ -100,7 +94,7 @@ export const MenuItemCreationForm: React.FC<CreateMenuItemFormProps> = ({
                 price: parsedPrice,
                 categoryId: selectedCategories.map(Number)
             });
-            
+
             if (onCreated) onCreated();
             setSuccessMessage("Item criado com sucesso!");
             onClose();
@@ -149,7 +143,7 @@ export const MenuItemCreationForm: React.FC<CreateMenuItemFormProps> = ({
                                         <ErrorComponent message={errorMessage} />
                                     ) : (
                                         <>
-                                            <div className="w-full max-w-105 mt-4 flex flex-1 flex-col justify-center gap-2">
+                                            <div className="w-full max-w-105 mt-4 flex flex-1 flex-col justify-center gap-2 dark:text-white">
                                                 <InputName
                                                     register={register}
                                                     errors={errors}
@@ -170,18 +164,15 @@ export const MenuItemCreationForm: React.FC<CreateMenuItemFormProps> = ({
                                                     initialValues={{}}
                                                 />
                                                 <label className="mb-1 mt-4 ml-2">Categorias *</label>
-                                                <div className="flex flex-wrap gap-2 mb-2">
-                                                    {categories?.map(cat => (
-                                                        <label key={cat.id} className="flex font-medium items-center gap-1">
-                                                            <input
-                                                                type="checkbox"
-                                                                value={cat.id}
-                                                                checked={selectedCategories.includes(cat.id)}
-                                                                onChange={(e) => handleCategoryChange(cat.id, e.target.checked)}
-                                                            />
-                                                            {cat.name}
-                                                        </label>
-                                                    ))}
+                                                <div className="flex flex-wrap gap-4 mb-2">
+                                                    <InputCategories
+                                                        categories={categories ?? []}
+                                                        register={register}
+                                                        errors={errors}
+                                                        clearErrors={clearErrors}
+                                                        selectedCategories={selectedCategories}
+                                                        onChangeFunction={handleCategoryChange}
+                                                    />
                                                 </div>
                                             </div>
                                             {errors.categories && (

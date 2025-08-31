@@ -1,8 +1,8 @@
 export type Category = {
   id: number;
   name: string;
-  isAvailable: boolean;
-  order: number;
+  isAvailable?: boolean;
+  order?: number;
 };
 
 export type CategoryButtonsProps = {

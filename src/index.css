@@ -82,6 +82,7 @@ h4 {
 
 h5 {
     font-size: 15px;
+
     @media (min-width: 768px) {
         font-size: 16px;
     }
@@ -122,6 +123,18 @@ input:-webkit-autofill:focus {
 
 .input {
     @apply border-[1px] border-zinc-400 rounded-xl px-3 py-2 w-full focus:outline-none focus:ring-1 bg-white dark:bg-[#161a21] text-black dark:text-white focus:ring-zinc-900;
+}
+
+.checkbox-primary:checked {
+    accent-color: #00C2B3;
+    /* ou sua cor primary */
+    background-color: #00C2B3;
+    border-color: #00C2B3;
+}
+
+/* Para navegadores Webkit (Chrome, Safari) */
+.checkbox-primary:checked::before {
+    background-color: #00C2B3;
 }
 
 .input-store {
@@ -242,45 +255,47 @@ input:-webkit-autofill:focus {
 }
 
 @keyframes move-up {
-  0% { 
-    transform: translateY(0); 
-    z-index: 10;
-  }
-  /* 50% { 
+    0% {
+        transform: translateY(0);
+        z-index: 10;
+    }
+
+    /* 50% { 
     transform: translateY(-25px); 
     z-index: 20;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   } */
-  100% { 
-    transform: translateY(-60px); 
-    z-index: 1;
-  }
+    100% {
+        transform: translateY(-60px);
+        z-index: 1;
+    }
 }
 
 @keyframes move-down {
-  0% { 
-    transform: translateY(0); 
-    z-index: 10;
-  }
-  /* 50% { 
+    0% {
+        transform: translateY(0);
+        z-index: 10;
+    }
+
+    /* 50% { 
     transform: translateY(25px); 
     z-index: 20;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   } */
-  100% { 
-    transform: translateY(60px); 
-    z-index: 1;
-  }
+    100% {
+        transform: translateY(60px);
+        z-index: 1;
+    }
 }
 
 .animate-move-up {
-  animation: move-up 0.7s ease-in-out;
-  position: relative;
+    animation: move-up 0.7s ease-in-out;
+    position: relative;
 }
 
 .animate-move-down {
-  animation: move-down 0.7s ease-in-out;
-  position: relative;
+    animation: move-down 0.7s ease-in-out;
+    position: relative;
 }
 
 .animate-wave1 {
@@ -315,7 +330,7 @@ input:-webkit-autofill {
 }
 
 @media (min-height: 500px) {
-  .items-center-on-height {
-    align-items: center !important;
-  }
+    .items-center-on-height {
+        align-items: center !important;
+    }
 }

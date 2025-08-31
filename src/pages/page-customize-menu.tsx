@@ -125,6 +125,8 @@ export const CustomizeMenuPage = () => {
     }
 };
 
+console.log()
+
     return (
         <>
             {error ? (
