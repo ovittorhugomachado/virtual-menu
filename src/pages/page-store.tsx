@@ -5,14 +5,14 @@ import { getPageStyle } from "../services/service-page-style";
 import { getCategories } from "../services/service-manage-menu-store";
 import { RestaurantData } from "../types/types-restaurante-data.d";
 import { StyleStorePage } from "../types/types-style-store-page.d";
-import { Category } from "../types/types-menu.d";
+import { CategoryData } from "../types/types-menu.d";
 import { LoadingComponent } from "../components/component-loading";
 import { ErrorComponent } from "../components/component-error";
 import { StoreBanner } from "../components/customer-side/store-page-components/store-banner-customer";
 import { Header } from "../components/customer-side/store-page-components/store-header-by-customer";
 import { CategoryButtons } from "../components/customer-side/store-page-components/store-categories-buttons-by-customer";
 import { MenuItems } from "../components/customer-side/store-page-components/store-container-items-by-customer";
-import { CartProvider } from "../context/cart-context/cart-provider";
+import { CartProvider } from "../context/cart/cart-provider";
 import { getExtension } from "../utils/function-get-extension";
 
 const VITE_API_URL = import.meta.env.VITE_API_URL;
@@ -25,7 +25,7 @@ export const StorePage = () => {
     const [error, setError] = useState('');
     const [storeData, setStoreData] = useState<RestaurantData | null>(null);
     const [storeStyle, setStoreStyle] = useState<StyleStorePage | null>(null);
-    const [categories, setCategories] = useState<Category[]>([]);
+    const [categories, setCategories] = useState<CategoryData[]>([]);
 
     const fetchStoreData = useCallback(async () => {
         setLoading(true);

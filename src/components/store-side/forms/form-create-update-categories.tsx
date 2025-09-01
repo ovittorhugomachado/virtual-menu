@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
-import { categoryFormProps } from "../../../types/types-data-forms.d";
 import { UpdateDataForm } from "./deafult/form-update-data";
 import { IoIosAddCircle, IoIosArrowDown } from "react-icons/io";
 import { BsFillTrash3Fill } from "react-icons/bs";
-import { ConfirmDeletion } from "./deafult/confirm-deletion"
-import { deleteCategoryService, getMenuItemsMyStore } from "../../../services/service-manage-menu-store";
+import { ConfirmDeletion } from "./deafult/confirm-deletion";
 import { CategoryData, MenuItem } from "../../../types/types-menu.d";
 import { useForm } from "react-hook-form";
+import { FaGear } from "react-icons/fa6";
+import { useManageMenu } from "../../../context/manage-menu/manage-menu-context"
+import { getMenuItemsMyStore } from "../../../services/service-manage-menu-store";
 
-export const CreateCategoryForm = ({
-    onClose,
-    onSubmit,
-    error
-}: categoryFormProps) => {
+export const CreateCategoryForm = ({ onClose, error }: { onClose: () => void; error?: string }) => {
+    const { createCategory } = useManageMenu();
 
     const {
         register,
@@ -31,7 +29,7 @@ export const CreateCategoryForm = ({
 
     const handleFormSubmit = async (data: CategoryData) => {
         try {
-            await onSubmit(data.name.trim(), data.menuItems || []);
+            await createCategory(data.name.trim(), data.menuItems || []);
             reset();
             setSuccessMessage("Categoria criada com sucesso!");
         } catch (error) {
@@ -41,13 +39,11 @@ export const CreateCategoryForm = ({
 
     const handleCheckboxChange = (itemId: number, isChecked: boolean) => {
         const currentItems = selectedItems || [];
-
         if (isChecked) {
             setValue("menuItems", [...currentItems, itemId]);
         } else {
             setValue("menuItems", currentItems.filter(id => id !== itemId));
         }
-
     };
 
     useEffect(() => {
@@ -105,27 +101,25 @@ export const CreateCategoryForm = ({
                         style={{ fontSize: '18px' }}
                     >
                         <IoIosArrowDown className={`${openArrayItems ? 'rotate-180' : ''} transition-all duration-300`} />
-                        Itens
+                        Itens ({(selectedItems ?? []).length}/{menuItems.length})
                     </button>
 
-                    {(selectedItems ?? []).length > 0 && <p>({(selectedItems ?? []).length} itens selecionados)</p>}
-
-                    <div className={`${openArrayItems ? 'opacity-100 mt-3' : 'opacity-0 max-h-0'} transition-all duration-300 ease-in-out`}>
+                    <div className={`${openArrayItems ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
                         <p className="text-center text-zinc-600 dark:text-zinc-400 font-extralight text-sm mb-2">
                             Você pode usar os items abaixo na nova categoria
                         </p>
-                        <ul className="space-y-2 mt-3">
+                        <ul className="flex flex-col gap-2">
                             {menuItems.map((item: MenuItem) => (
-                                <li key={item.id} className="flex items-center">
-                                    <input
-                                        type="checkbox"
-                                        id={`item-${item.id}`}
-                                        checked={selectedItems?.includes(item.id)}
-                                        onChange={(e) => handleCheckboxChange(item.id, e.target.checked)}
-                                        className="checkbox-primary mr-2"
-                                    />
-                                    <label htmlFor={`item-${item.id}`} className="text-md text-gray-700 dark:text-gray-200">
-                                        {item.name}
+                                <li key={item.id} className="">
+                                    <label htmlFor={`item-${item.id}`} className="w-full flex items-center px-6 py-3 bg-zinc-200 dark:bg-[#161a21] rounded-full hover:scale-103 transition-all duration-200 cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            id={`item-${item.id}`}
+                                            checked={selectedItems?.includes(item.id)}
+                                            onChange={(e) => handleCheckboxChange(item.id, e.target.checked)}
+                                            className="flex items-center justify-center peer appearance-none w-5 h-5 rounded-full border border-black dark:border-white checked:bg-primary checked:border-blue-600 mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
+                                        />
+                                        <p className="flex items-center justify-center gap-3">{item.name}<span className="text-sm font-extralight text-zinc-600 dark:text-zinc-400">R${item.price}</span></p>
                                     </label>
                                 </li>
                             ))}
@@ -142,16 +136,18 @@ export const CreateCategoryForm = ({
 
 export const UpdateCategoryForm = ({
     onClose,
-    onSubmit,
     initialName = "",
     categoryId,
     initialMenuItems = [],
     error
-}: categoryFormProps & {
+}: {
+    onClose: () => void;
     initialName?: string;
     categoryId: number;
     initialMenuItems?: number[];
+    error?: string;
 }) => {
+    const { updateCategory, deleteCategory } = useManageMenu();
 
     const {
         register,
@@ -173,9 +169,13 @@ export const UpdateCategoryForm = ({
 
     const selectedItems = watch("menuItems", []);
 
+    
+    console.log("menuItems:", menuItems)
+    console.log("selectedItems:", selectedItems)
+
     const handleFormSubmit = async (data: CategoryData) => {
         try {
-            await onSubmit(data.name.trim(), data.menuItems || []);
+            await updateCategory(categoryId, data.name.trim(), data.menuItems || []);
             setSuccessMessage("Categoria atualizada com sucesso!");
         } catch (error) {
             console.error("Erro ao atualizar categoria:", error);
@@ -184,7 +184,6 @@ export const UpdateCategoryForm = ({
 
     const handleCheckboxChange = (itemId: number, isChecked: boolean) => {
         const currentItems = selectedItems || [];
-
         if (isChecked) {
             setValue("menuItems", [...currentItems, itemId]);
         } else {
@@ -192,47 +191,41 @@ export const UpdateCategoryForm = ({
         }
     };
 
-    const deleteCategory = async (categoryId: number) => {
+    const handleDeleteCategory = async () => {
         try {
-            await deleteCategoryService(categoryId);
+            await deleteCategory(categoryId);
             setSuccessMessage("Categoria excluída com sucesso!");
-            setTimeout(() => {
-                window.location.reload();
-            }, 1500);
         } catch (error) {
             console.error(error);
         }
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const items = await getMenuItemsMyStore();
-                setMenuItems(items.data);
+    const fetchData = async () => {
+        try {
+            const items = await getMenuItemsMyStore();
+            setMenuItems(items.data);
 
-                // Marcar os itens que já pertencem à categoria
-                if (categoryId !== undefined) {
-                    const selectedIds = items.data
-                        .filter((item: MenuItem) =>
-                            Array.isArray(item.categories) &&
-                            item.categories.some(category => category.id === categoryId)
-                        )
-                        .map((item: MenuItem) => item.id);
+            const selectedIds = items.data
+                .filter((item: MenuItem) =>
+                    Array.isArray(item.categories) &&
+                    item.categories.some(category => category.id === categoryId)
+                )
+                .map((item: MenuItem) => item.id);
 
-                    setValue("menuItems", selectedIds);
-                }
-            } catch (error) {
-                console.error("Erro ao buscar itens:", error);
-            }
-        };
-        fetchData();
-    }, [categoryId, setValue]);
+            setValue("menuItems", selectedIds);
+        } catch (error) {
+            console.error("Erro ao buscar itens:", error);
+        }
+    };
+    fetchData();
+}, [categoryId, setValue]);
 
 
     return (
         <UpdateDataForm
             onClose={onClose}
-            formIcon={<IoIosAddCircle />}
+            formIcon={<FaGear />}
             title="Editar categoria"
             successMessage={successMessage}
             textButtonSubmit="Atualizar categoria"
@@ -262,9 +255,7 @@ export const UpdateCategoryForm = ({
                     })}
                 />
             </div>
-
             <input type="hidden" {...register("menuItems")} />
-
             {menuItems.length > 0 &&
                 <div className="w-full flex flex-col items-center mt-4">
                     <button
@@ -274,27 +265,24 @@ export const UpdateCategoryForm = ({
                         style={{ fontSize: '18px' }}
                     >
                         <IoIosArrowDown className={`${openArrayItems ? 'rotate-180' : ''} transition-all duration-300`} />
-                        Itens
+                        Itens ({(selectedItems ?? []).length}/{menuItems.length})
                     </button>
-
-                    {(selectedItems ?? []).length > 0 && <p>({(selectedItems ?? []).length} itens selecionados)</p>}
-
-                    <div className={`${openArrayItems ? 'opacity-100 mt-3' : 'opacity-0 max-h-0'} transition-all duration-300 ease-in-out`}>
+                    <div className={`${openArrayItems ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
                         <p className="text-zinc-600 dark:text-zinc-400 font-extralight text-sm mb-2">
                             Você pode usar os items abaixo na nova categoria
                         </p>
-                        <ul className="space-y-2 mt-3">
+                        <ul className="flex flex-col gap-2">
                             {menuItems.map((item: MenuItem) => (
-                                <li key={item.id} className="flex items-center">
-                                    <input
-                                        type="checkbox"
-                                        id={`item-${item.id}`}
-                                        checked={selectedItems?.includes(item.id)}
-                                        onChange={(e) => handleCheckboxChange(item.id, e.target.checked)}
-                                        className="checkbox-primary mr-2"
-                                    />
-                                    <label htmlFor={`item-${item.id}`} className="text-md text-gray-700 dark:text-gray-200">
-                                        {item.name}
+                                <li key={item.id} className="">
+                                    <label htmlFor={`item-${item.id}`} className="w-full flex items-center px-6 py-3 bg-zinc-200 dark:bg-[#161a21] rounded-full hover:scale-103 transition-all duration-200 cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            id={`item-${item.id}`}
+                                            checked={selectedItems?.includes(item.id)}
+                                            onChange={(e) => handleCheckboxChange(item.id, e.target.checked)}
+                                            className="flex items-center justify-center peer appearance-none w-5 h-5 rounded-full border border-black dark:border-white checked:bg-primary checked:border-blue-600 mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
+                                        />
+                                        <p className="flex items-center justify-center gap-3">{item.name}<span className="text-sm font-extralight text-zinc-600 dark:text-zinc-400">R${item.price}</span></p>
                                     </label>
                                 </li>
                             ))}
@@ -302,25 +290,22 @@ export const UpdateCategoryForm = ({
                     </div>
                 </div>
             }
-
             <button
                 type="button"
-                className="w-50 mt-4 mx-auto bg-red-600 px-3 py-2 flex justify-center items-center rounded-full cursor-pointer hover:scale-105 transition-all duration-300 text-white"
+                className="w-50 mt-4 mx-auto text-red-500 px-3 py-2 flex justify-center items-center rounded-full cursor-pointer hover:scale-105 transition-all duration-300 Z-30"
                 onClick={() => setShowConfirm(true)}
             >
                 <BsFillTrash3Fill className="mr-2" />
                 Excluir categoria
             </button>
-
             {showConfirm && (
                 <ConfirmDeletion
                     question="Tem certeza de que deseja excluir esta categoria?"
-                    description="Os items que só existem aqui também serão excluidos permanentemente."
+                    description="A categoria será excluída permanentemente. Esta ação não pode ser desfeita."
                     close={() => setShowConfirm(false)}
-                    onDelete={() => deleteCategory(categoryId)}
+                    onDelete={handleDeleteCategory}
                 />
             )}
-
             {error && (
                 <p className="text-error">{error}</p>
             )}

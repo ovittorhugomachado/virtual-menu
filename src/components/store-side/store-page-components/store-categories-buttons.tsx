@@ -1,22 +1,20 @@
-import React, { useState, useRef, useEffect } from "react";
-import { animate, motion, useMotionValue } from "motion/react"
-import { createCategoryService, toggleStatusCategoryService, updateCategoryService } from "../../../services/service-manage-menu-store";
-import { CategoryData } from "../../../types/types-menu.d";
+import { useState, useRef, useEffect } from "react";
+import { animate, motion, useMotionValue } from "motion/react";
 import { CreateCategoryForm, UpdateCategoryForm } from "../forms/form-create-update-categories";
 import { FaGear, FaListUl, FaPause, FaPlay } from "react-icons/fa6";
 import { CategoryOrderManager } from "../forms/order-of-categories";
 import { IoAddCircle } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
+import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
 
 interface CategoryButtonsProps {
     backgroundColor?: string;
-    categories: CategoryData[];
-    setCategories: React.Dispatch<React.SetStateAction<CategoryData[]>>;
     buttonColor?: string;
     textColor?: string;
 }
 
-export const CategoryButtons = ({ backgroundColor, categories, setCategories, buttonColor, textColor }: CategoryButtonsProps) => {
+export const CategoryButtons = ({ backgroundColor, buttonColor, textColor }: CategoryButtonsProps) => {
+    const { categories, setCategories, toggleStatusCategory } = useManageMenu();
 
     const x = useMotionValue(0);
     const carousel = useRef<HTMLDivElement>(null);
@@ -85,44 +83,9 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
         x.set(0);
     }, [categories, x]);
 
-    const createCategory = async (name: string, menuItemIds: number[] = []) => {
-        try {
-            const createdCategory = await createCategoryService(name, menuItemIds);
-            if (createdCategory !== null && createdCategory !== undefined) {
-                setCategories(prev => [...prev, createdCategory]);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const updateCategory = async (categoryId: number, newName: string, menuItemIds: number[]) => {
-        try {
-            const updatedCategory = await updateCategoryService(categoryId, newName, menuItemIds);
-            setCategories(prev => prev.map(cat => cat.id === categoryId ? updatedCategory : cat));
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const toggleStatusCategory = async (categoryId: number) => {
-        try {
-            const updatedCategory = await toggleStatusCategoryService(categoryId);
-            setCategories(prev =>
-                prev.map(cat =>
-                    cat.id === categoryId
-                        ? { ...cat, isAvailable: updatedCategory.isAvailable }
-                        : cat
-                )
-            );
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
     return (
         <div
-            className={`${backgroundColor === 'black' ? 'bg-black' : 'bg-white'} w-full mx-2 pb-6 sticky -top-1 ms:top-42 sm:top-29 flex justify-center overflow-hidden`}
+            className={`${backgroundColor === 'black' ? 'bg-black' : 'bg-white'} w-full mx-2 pb-6 sticky -top-1 ms:top-42 sm:top-29 flex justify-center`}
             style={{ zIndex: 4 }}
         >
             <button
@@ -132,7 +95,7 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
             >
                 <IoIosArrowBack
                     className={`${backgroundColor === 'black' ? 'text-white' : 'text-black'} text-3xl font-extrabold`}
-                    style={{ opacity: positionCarousel === 0 ? '10%' : '' }}
+                    style={{ opacity: positionCarousel === 0 ? 0.1 : 1 }}
                 />
             </button>
             <motion.div className="w-full overflow-x-hidden relative" ref={carousel} whileTap={{ cursor: "grabbing" }}>
@@ -208,21 +171,18 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
                 </div>
             </motion.div>
             <button
-                className={`${Math.abs(positionCarousel) === maxScroll ? '' : 'cursor-pointer'} absolute -right-6 top-6 lg:top-7 z-30 rotate-180`}
+                className={`${Math.abs(positionCarousel) === maxScroll ? '' : 'cursor-pointer'} absolute -right-6 top-6 lg:top-7 z-90 rotate-180`}
                 onClick={scrollRight}
                 disabled={positionCarousel === maxScroll}
             >
                 <IoIosArrowBack
-                    className={`${backgroundColor === 'black' ? 'text-white' : 'text-black'} text-3xl font-extrabold`}
-                    style={{ opacity: Math.abs(positionCarousel) === maxScroll ? '10%' : '' }}
+                    className={`${backgroundColor === 'black' ? 'text-white' : 'text-black'} text-3xl font-extrabold `}
+                    style={{ opacity: Math.abs(positionCarousel) === maxScroll ? 0.1 : 1 }}
                 />
             </button>
             {showFormSettings && (
                 <CreateCategoryForm
                     onClose={() => setShowFormSettings(false)}
-                    onSubmit={async (name, itemIds) => {
-                        await createCategory(name, itemIds);
-                    }}
                 />
             )}
             {showFormOrdered && (
@@ -237,16 +197,6 @@ export const CategoryButtons = ({ backgroundColor, categories, setCategories, bu
                     onClose={() => {
                         setEditCategoryId(null);
                         setEditCategoryName(null);
-                    }}
-                    onSubmit={async (newName, menuItemIds) => {
-                        await updateCategory(editCategoryId, newName, menuItemIds ?? []);
-                        setCategories(prev =>
-                            prev.map(cat =>
-                                cat.id === editCategoryId
-                                    ? { ...cat, name: newName, menuItemIds: menuItemIds }
-                                    : cat
-                            )
-                        );
                     }}
                     initialName={editCategoryName}
                     categoryId={editCategoryId}

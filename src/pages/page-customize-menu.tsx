@@ -1,8 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { ManageMenuProvider } from "../context/manage-menu/manage-menu-context.tsx";
 import { getMyUserData } from "../services/service-user-data";
 import { getMyPageStyle } from "../services/service-page-style";
-import { getCategoriesMyStore, toggleStatusCategoryService } from "../services/service-manage-menu-store";
+import { getCategoriesMyStore } from "../services/service-manage-menu-store";
 import { getMyStoreData } from "../services/service-store-data";
 import { RestaurantData } from "../types/types-restaurante-data.d";
 import { StyleStorePage } from "../types/types-style-store-page.d";
@@ -110,21 +111,6 @@ export const CustomizeMenuPage = () => {
         );
     };
 
-    const handleToggleStatusCategory = async (categoryId: number) => {
-        try {
-            const updatedCategory = await toggleStatusCategoryService(categoryId);
-            setCategories(prev =>
-                prev.map(cat =>
-                    cat.id === categoryId
-                        ? { ...cat, isAvailable: updatedCategory.isAvailable }
-                        : cat
-                )
-            );
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
     return (
         <>
             {error ? (
@@ -134,102 +120,97 @@ export const CustomizeMenuPage = () => {
             ) : (loading || !storeStyle) ? (
                 <LoadingComponent />
             ) : (
-                <div
-                    style={{ backgroundColor: backgroundColor }}
-                    className="w-screen h-full min-h-screen px-[5%] lg:px-[15%] flex flex-col items-center text-black lg:text-base"
-                >
-                    <BottomNav
-                        backgroundColorStore={backgroundColor === "black" || backgroundColor === "white" ? backgroundColor : "white"}
-                        setBackgroundColor={setBackgroundColor}
-                        initialButtonColor={initialButtonColor}
-                        initialBackgroundColor={initialBackgroundColor === "black" || initialBackgroundColor === "white" ? initialBackgroundColor : "white"}
-                        initialTextColorButtons={initialTextColorButtons === "black" || initialTextColorButtons === "white" ? initialTextColorButtons : "black"}
-                        buttonColor={buttonColor ?? ''}
-                        setButtonColor={setButtonColor}
-                        textColorButtons={textColorButtons === "black" || textColorButtons === "white" ? textColorButtons : "white"}
-                        setTextColorButtons={setTextColorButtons}
-                    />
-                    <Header
-                        backgroundColor={backgroundColor ?? ''}
-                        restaurantImage={logoUrl}
-                        restaurantName={userData?.restaurantName ?? ''}
-                        openingHours={
-                            Array.isArray(storeData?.openingHours)
-                                ? storeData.openingHours.map((oh) => ({
-                                    day: oh.day as import("../types/types-schedules.d").DayOfWeek,
-                                    isOpen: !!oh.isOpen,
-                                    isClosed: !!oh.isOpen,
-                                    status: oh.status ?? "",
-                                    timeRanges: Array.isArray(oh.timeRanges) && oh.timeRanges.length > 0
-                                        ? oh.timeRanges
-                                        : [{ start: "", end: "" }],
-                                }))
-                                : []
-                        }
-                        openFormUpdateDataStore={() => setStoreDataUpdateForm(true)}
-                        openFormUpdateSchedules={() => setShowStoreSchedulesUpdateForm(true)}
-                        onLogoChange={handleLogoChange}
-                    />
-                    {showStoreDataUpdateForm && (
-                        <UpdateStoreDataForm
-                            onClose={handleStoreDataUpdated}
-                        />
-                    )}
-                    {showStoreSchedulesUpdateForm && (
-                        <UpdateSchedulesForm
-                            onClose={handleSchedulesUpdated}
-                        />
-                    )}
-                    <main className="w-full max-w-[1140px] flex flex-col items-center justify-center realtive">
-                        <StoreBanner
-                            banner={
-                                bannerUrl && bannerUrl.startsWith('https://s3.us-east-2.amazonaws.com/')
-                                    ? bannerUrl
-                                    : bannerUrl
-                                        ? `${VITE_API_URL}/uploads/store${storeData?.id}-banner${getExtension(storeData?.bannerUrl)}`
-                                        : "/store-banner-default.png"
-                            }
-                            onBannerChange={async () => {
-                                const updatedStoreData = await getMyStoreData();
-                                setBannerUrl(updatedStoreData.bannerUrl ?? '');
-                            }}
-                        />
-                        {categories.length > 0 && (
-                            <CategoryButtons
-                                backgroundColor={backgroundColor ?? ''}
-                                categories={categories}
-                                setCategories={setCategories}
-                                textColor={textColorButtons}
-                                buttonColor={buttonColor}
-                            />
-                        )}
-                        <MenuItems
-                            storeId={storeData?.id ?? 0}
-                            categories={categories}
-                            backgroundColor={backgroundColor ?? ''}
+                <ManageMenuProvider>
+                    <div
+                        style={{ backgroundColor: backgroundColor }}
+                        className="w-screen h-full min-h-screen px-[5%] lg:px-[15%] flex flex-col items-center text-black lg:text-base"
+                    >
+                        <BottomNav
+                            backgroundColorStore={backgroundColor === "black" || backgroundColor === "white" ? backgroundColor : "white"}
+                            setBackgroundColor={setBackgroundColor}
+                            initialButtonColor={initialButtonColor}
+                            initialBackgroundColor={initialBackgroundColor === "black" || initialBackgroundColor === "white" ? initialBackgroundColor : "white"}
+                            initialTextColorButtons={initialTextColorButtons === "black" || initialTextColorButtons === "white" ? initialTextColorButtons : "black"}
                             buttonColor={buttonColor ?? ''}
-                            onToggleStatusCategory={handleToggleStatusCategory}
-                            onCategoryCreated={async (newCategory) => {
-                                setCategories(prev => [...prev, newCategory]);
-                            }}
+                            setButtonColor={setButtonColor}
+                            textColorButtons={textColorButtons === "black" || textColorButtons === "white" ? textColorButtons : "white"}
+                            setTextColorButtons={setTextColorButtons}
                         />
-                    </main>
-                    <footer className={`${backgroundColor === 'black' ? 'bg-black text-white' : 'bg-white text-black'} ${categories.length === 0 ? 'hidden' : ''} h-40 flex items-center`}>
-                        {backgroundColor === 'black' ? (
-                            <img
-                                src="../logo-text-dark.png"
-                                alt="Footer Dark Mode"
-                                width={200}
-                            />
-                        ) : (
-                            <img
-                                src="../logo-text-light.png"
-                                alt="Footer Light Mode"
-                                width={200}
+                        <Header
+                            backgroundColor={backgroundColor ?? ''}
+                            restaurantImage={logoUrl}
+                            restaurantName={userData?.restaurantName ?? ''}
+                            openingHours={
+                                Array.isArray(storeData?.openingHours)
+                                    ? storeData.openingHours.map((oh) => ({
+                                        day: oh.day as import("../types/types-schedules.d").DayOfWeek,
+                                        isOpen: !!oh.isOpen,
+                                        isClosed: !!oh.isOpen,
+                                        status: oh.status ?? "",
+                                        timeRanges: Array.isArray(oh.timeRanges) && oh.timeRanges.length > 0
+                                            ? oh.timeRanges
+                                            : [{ start: "", end: "" }],
+                                    }))
+                                    : []
+                            }
+                            openFormUpdateDataStore={() => setStoreDataUpdateForm(true)}
+                            openFormUpdateSchedules={() => setShowStoreSchedulesUpdateForm(true)}
+                            onLogoChange={handleLogoChange}
+                        />
+                        {showStoreDataUpdateForm && (
+                            <UpdateStoreDataForm
+                                onClose={handleStoreDataUpdated}
                             />
                         )}
-                    </footer>
-                </div>
+                        {showStoreSchedulesUpdateForm && (
+                            <UpdateSchedulesForm
+                                onClose={handleSchedulesUpdated}
+                            />
+                        )}
+                        <main className="w-full max-w-[1140px] flex flex-col items-center justify-center realtive">
+                            <StoreBanner
+                                banner={
+                                    bannerUrl && bannerUrl.startsWith('https://s3.us-east-2.amazonaws.com/')
+                                        ? bannerUrl
+                                        : bannerUrl
+                                            ? `${VITE_API_URL}/uploads/store${storeData?.id}-banner${getExtension(storeData?.bannerUrl)}`
+                                            : "/store-banner-default.png"
+                                }
+                                onBannerChange={async () => {
+                                    const updatedStoreData = await getMyStoreData();
+                                    setBannerUrl(updatedStoreData.bannerUrl ?? '');
+                                }}
+                            />
+                            {categories.length > 0 && (
+                                <CategoryButtons
+                                    backgroundColor={backgroundColor ?? ''}
+                                    buttonColor={buttonColor}
+                                    textColor={textColorButtons}
+                                />
+                            )}
+                            <MenuItems
+                                storeId={storeData?.id ?? 0}
+                                backgroundColor={backgroundColor ?? ''}
+                                buttonColor={buttonColor ?? ''}
+                            />
+                        </main>
+                        <footer className={`${backgroundColor === 'black' ? 'bg-black text-white' : 'bg-white text-black'} ${categories.length === 0 ? 'hidden' : ''} h-40 flex items-center`}>
+                            {backgroundColor === 'black' ? (
+                                <img
+                                    src="../logo-text-dark.png"
+                                    alt="Footer Dark Mode"
+                                    width={200}
+                                />
+                            ) : (
+                                <img
+                                    src="../logo-text-light.png"
+                                    alt="Footer Light Mode"
+                                    width={200}
+                                />
+                            )}
+                        </footer>
+                    </div>
+                </ManageMenuProvider>
             )}
         </>
     )

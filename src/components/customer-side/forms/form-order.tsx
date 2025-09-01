@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { useCart } from "../../../context/cart-context/cart-context";
+import { useCart } from "../../../context/cart/cart-context";
 import { createOrder } from "../../../services/service-manage-orders";
 import { toMoney } from "../../../utils/function-transform-to-money";
 import { OrderFormData } from "../../../types/types-data-forms.d";

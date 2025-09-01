@@ -1,0 +1,13 @@
+import { createContext, useContext } from "react";
+import { manageMenuContextType } from "../../types/types-menu.d";
+
+
+export const ManageMenuContext = createContext<manageMenuContextType | undefined>(undefined);
+
+export function useManageMenu() {
+  const context = useContext(ManageMenuContext);
+  if (!context) {
+    throw new Error("useManageMenu deve ser usado dentro do ManageMenuProvider");
+  }
+  return context;
+}

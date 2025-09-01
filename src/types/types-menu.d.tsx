@@ -31,6 +31,14 @@ export type MenuItemsContainerProps = {
   categories: CategoryData[];
   backgroundColor: string;
   buttonColor: string;
-  onToggleStatusCategory: (categoryId: number) => Promise<void>;
   onCategoryCreated?: (newCategory: CategoryData) => void;
 }
+
+export type manageMenuContextType = {
+  categories: CategoryData[];
+  setCategories: React.Dispatch<React.SetStateAction<CategoryData[]>>;
+  createCategory: (name: string, menuItemIds: number[]) => Promise<void>;
+  updateCategory: (categoryId: number, name: string, menuItemIds: number[]) => Promise<void>;
+  deleteCategory: (categoryId: number) => Promise<void>;
+  toggleStatusCategory: (categoryId: number) => Promise<void>;
+};

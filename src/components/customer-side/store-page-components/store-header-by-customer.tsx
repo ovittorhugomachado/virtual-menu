@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { LogoStore } from "./store-logo-by-customer";
-import { useCart } from "../../../context/cart-context/cart-context";
+import { useCart } from "../../../context/cart/cart-context";
 import { getRestaurantStatus } from "../../../utils/function-restaurant-status";
 import { toMoney } from "../../../utils/function-transform-to-money";
 import { OpeningHour } from "../../../types/types-schedules.d";

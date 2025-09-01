@@ -1,26 +1,29 @@
 import { useCallback, useEffect, useState } from "react"
-import { createCategoryService, getMenuItemService } from "../../../services/service-manage-menu-store"
+import { getMenuItemService } from "../../../services/service-manage-menu-store"
 import { Item } from "./store-item";
 import { ErrorComponent } from "../../component-error"
 import { LoadingComponent } from "../../component-loading"
 import { MenuItemCreationForm } from "../forms/form-create-update-menu-item";
 import { IoMdAddCircle } from "react-icons/io";
-import { MenuItem, MenuItemsContainerProps } from "../../../types/types-menu.d";
+import { MenuItem } from "../../../types/types-menu.d";
 import { getExtension } from "../../../utils/function-get-extension";
 import { FaPause, FaPlay } from "react-icons/fa";
 import { IoAddCircle } from "react-icons/io5";
 import { CreateCategoryForm } from "../forms/form-create-update-categories";
+import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
 
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 export const MenuItems = ({
     storeId,
-    categories,
     backgroundColor,
     buttonColor,
-    onToggleStatusCategory,
-    onCategoryCreated
-}: MenuItemsContainerProps) => {
+}: {
+    storeId: number;
+    backgroundColor?: string;
+    buttonColor?: string;
+}) => {
+    const { categories, toggleStatusCategory } = useManageMenu();
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -53,18 +56,7 @@ export const MenuItems = ({
         }
     }, [categories, fetchMenuItems]);
 
-    const createCategory = async (name: string, menuItemIds: number[] = []) => {
-        try {
-            const createdCategory = await createCategoryService(name, menuItemIds);
-            if (createdCategory) {
-                onCategoryCreated?.(createdCategory); // atualiza o estado no pai
-            }
-            await fetchMenuItems();
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
+    console.log(categories)
     return (
         <>
             {error ? (
@@ -88,14 +80,9 @@ export const MenuItems = ({
                             {showFormCreateCategory && (
                                 <CreateCategoryForm
                                     onClose={() => setShowFormCreateCategory(false)}
-                                    onSubmit={async (name, itemIds) => {
-                                        await createCategory(name, itemIds);
-                                    }}
                                 />
                             )}
                         </div>
-
-
                     )}
                     {categories.map(category => (
                         <div
@@ -106,7 +93,7 @@ export const MenuItems = ({
                                 <button
                                     title="Ativar ou desativar categoria"
                                     className="w-7 h-7 lg:w-8 lg:h-8 absolute top-1 rounded-full bg-gray-400 text-black border-1 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200 z-1"
-                                    onClick={() => onToggleStatusCategory(category.id)}
+                                    onClick={() => toggleStatusCategory(category.id)}
                                 >
                                     {category.isAvailable ? (
                                         <FaPause className="text-lg" />
