@@ -1,6 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const getCategories = async (storeId: number) => {
+export const getCategoriesService = async (storeId: number) => {
 
     const response = await fetch(`${API_URL}/categories/${storeId}`, {
         method: 'GET',
@@ -17,7 +17,7 @@ export const getCategories = async (storeId: number) => {
     return await response.json();
 };
 
-export const getCategoriesMyStore = async () => {
+export const getCategoriesMyStoreService = async () => {
 
     const response = await fetch(`${API_URL}/my-categories`, {
         method: 'GET',
@@ -33,46 +33,6 @@ export const getCategoriesMyStore = async () => {
     };
 
     return await response.json();
-};
-
-export const getMenuItemsMyStore = async () => {
-
-    const response = await fetch(`${API_URL}/menu-items`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include'
-    });
-
-    if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Erro ao buscar categorias do menu');
-    };
-
-    return await response.json();
-};
-
-export const reorderCategoriesService = async (categories: { id: number; order: number }[]) => {
-    try {
-        const response = await fetch(`${API_URL}/categories/reorder`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include',
-            body: JSON.stringify({ categories }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Erro ao reordenar categorias');
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error('Erro no serviço de reordenação:', error);
-        throw error;
-    }
 };
 
 export const createCategoryService = async (name: string, menuItemIds: number[]) => {
@@ -154,6 +114,28 @@ export const toggleStatusCategoryService = async (categoryId: number) => {
     }
 };
 
+export const reorderCategoriesService = async (categories: { id: number; order: number }[]) => {
+    try {
+        const response = await fetch(`${API_URL}/categories/reorder`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({ categories }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao reordenar categorias');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Erro no serviço de reordenação:', error);
+        throw error;
+    }
+};
+
 export const deleteCategoryService = async (categoryId: number) => {
     const response = await fetch(`${API_URL}/categories/${categoryId}`, {
         method: 'DELETE',
@@ -182,6 +164,24 @@ export const getMenuItemService = async (storeId: number, categoryId: number) =>
     if (!response.ok) {
         const error = await response.json();
         throw new Error(error.message || 'Erro ao buscar item do menu');
+    };
+
+    return await response.json();
+};
+
+export const getMenuItemsMyStoreService = async () => {
+
+    const response = await fetch(`${API_URL}/menu-items`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include'
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Erro ao buscar categorias do menu');
     };
 
     return await response.json();
@@ -218,7 +218,7 @@ export const createMenuItemService = async (item: {
     }
 };
 
-export const updateMenuItemByCategoryService = async (
+export const updateMenuItemService = async (
     categoryId: number,
     itemId: number,
     item: {
@@ -251,6 +251,30 @@ export const updateMenuItemByCategoryService = async (
     }
 };
 
+export const toggleStatusMenuItemService = async (categoryId: number, itemId: number) => {
+    try {
+        const response = await fetch(`${API_URL}/menu-items/${categoryId}/${itemId}/toggle-status`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Erro ao alterar status da categoria');
+        };
+
+        return await response.json();
+    } catch (error) {
+        if (error instanceof TypeError) {
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
+        }
+        throw error instanceof Error ? error : new Error('Erro desconhecido');
+    }
+}
+
 export const deleteMenuItemService = async (itemId: number) => {
     const response = await fetch(`${API_URL}/menu-items/${itemId}`, {
         method: 'DELETE',
@@ -267,5 +291,24 @@ export const deleteMenuItemService = async (itemId: number) => {
 
     return await response.json();
 };
+
+export const getMenuItemsOptionsService = async () => {
+    
+    const response = await fetch(`${API_URL}/menu-item-option-group`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include'
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Erro ao buscar categorias do menu');
+    };
+
+    return await response.json();
+}
+
 
 
