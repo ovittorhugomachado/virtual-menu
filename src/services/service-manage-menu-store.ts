@@ -389,4 +389,38 @@ export const createMenuItemOptionGroupService = async (optionGroup: {
     }
 };
 
+export const updateMenuItemOptionGroupService = async (
+    optionGroupId: number,
+    optionGroup: {
+        name: string;
+        menuItemIds: number[];
+        maxSelectableOptions?: number;
+        isRequired: boolean;
+
+    }
+) => {
+    try {
+        const response = await fetch(`${API_URL}/menu-item-option-group/${optionGroupId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify(optionGroup),
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Erro ao atualizar item do menu');
+        }
+
+        return await response.json();
+    } catch (error) {
+        if (error instanceof Error && error.message) {
+            throw error;
+        }
+        throw new Error('Ocorreu um erro. Tente novamente mais tarde');
+    }
+}
+
 
