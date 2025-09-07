@@ -333,7 +333,7 @@ export const deleteMenuItemService = async (itemId: number) => {
     }
 };
 
-//MENU ITEM OPTIONS -------------------
+//MENU ITEM OPTIONS GROUPS -------------------
 export const getMenuItemsOptionsService = async () => {
     try {
         const response = await fetch(`${API_URL}/menu-item-option-group`, {
@@ -420,6 +420,30 @@ export const updateMenuItemOptionGroupService = async (
             throw error;
         }
         throw new Error('Ocorreu um erro. Tente novamente mais tarde');
+    }
+};
+
+export const deleteMenuItemOptionGroupService = async (optionGroupId: number) => {
+    try {
+        const response = await fetch(`${API_URL}/menu-item-option-group/${optionGroupId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Erro ao deletar item do menu');
+        };
+
+        return;
+    } catch (error) {
+        if (error instanceof TypeError) {
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
+        }
+        throw error instanceof Error ? error : new Error('Erro desconhecido');
     }
 }
 
