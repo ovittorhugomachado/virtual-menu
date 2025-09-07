@@ -334,7 +334,7 @@ export const deleteMenuItemService = async (itemId: number) => {
 };
 
 //MENU ITEM OPTIONS GROUPS -------------------
-export const getMenuItemsOptionsService = async () => {
+export const getMenuItemsOptioGroupsService = async () => {
     try {
         const response = await fetch(`${API_URL}/menu-item-option-group`, {
             method: 'GET',
@@ -396,7 +396,6 @@ export const updateMenuItemOptionGroupService = async (
         menuItemIds: number[];
         maxSelectableOptions?: number;
         isRequired: boolean;
-
     }
 ) => {
     try {
@@ -445,6 +444,116 @@ export const deleteMenuItemOptionGroupService = async (optionGroupId: number) =>
         }
         throw error instanceof Error ? error : new Error('Erro desconhecido');
     }
-}
+};
 
+//MENU ITEM OPTIONS -------------------------
+export const getMenuItemOptionsService = async () => {
+    try {
+        const response = await fetch(`${API_URL}/menu-item-option`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Erro ao buscar categorias do menu');
+        };
+
+        return await response.json();
+    } catch (error) {
+        if (error instanceof TypeError) {
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
+        }
+        throw error instanceof Error ? error : new Error('Erro desconhecido');
+    }
+};
+
+export const createMenuItemOptionService = async (option: {
+    name: string;
+    additionalPrice: number;
+    menuItemOptionGroup: number[];
+}) => {
+    try {
+        const response = await fetch(`${API_URL}/menu-item-option`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify(option)
+        })
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Erro ao criar grupo de opções')
+        }
+
+        return await response.json()
+    } catch (error) {
+        if (error instanceof Error && error.message) {
+            throw error;
+        }
+
+        throw new Error('Ocorreu um erro. Tente novamente mais tarde');
+    }
+};
+
+export const updateMenuItemOptionService = async (
+    optionId: number,
+    option: {
+    name: string;
+    additionalPrice: number;
+    menuItemOptionGroup: number[];
+    }
+) => {
+    try {
+        const response = await fetch(`${API_URL}/menu-item-option/${optionId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify(option),
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Erro ao atualizar item do menu');
+        }
+
+        return await response.json();
+    } catch (error) {
+        if (error instanceof Error && error.message) {
+            throw error;
+        }
+        throw new Error('Ocorreu um erro. Tente novamente mais tarde');
+    }
+};
+
+export const deleteMenuItemOptionService = async (optionId: number) => {
+    try {
+        const response = await fetch(`${API_URL}/menu-item-option/${optionId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Erro ao deletar item do menu');
+        };
+
+        return;
+    } catch (error) {
+        if (error instanceof TypeError) {
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
+        }
+        throw error instanceof Error ? error : new Error('Erro desconhecido');
+    }
+};
 
