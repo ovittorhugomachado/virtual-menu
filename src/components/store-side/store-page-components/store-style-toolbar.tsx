@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useManageMenu } from '../../../context/manage-menu/manage-menu-context';
 import { useDraggable } from '../../../hooks/use-draggable';
 import { updateMyPageStyle } from '../../../services/service-page-style';
 import { toggleHiddenFlex } from '../../../utils/function-toggleHiddenFlex';
-import { BottomNavProps } from '../../../types/types-style-store-page.d';
 import { MdOutlineColorLens } from "react-icons/md";
 import { IoIosArrowDown } from "react-icons/io";
 
-export const BottomNav = ({
-    initialBackgroundColor,
-    initialButtonColor,
-    initialTextColorButtons,
-    backgroundColorStore,
-    setBackgroundColor,
-    buttonColor,
-    setButtonColor,
-    textColorButtons,
-    setTextColorButtons
-}: BottomNavProps) => {
+export const StyleToolbar = () => {
+    const {
+        styleStore,
+        tempBackgroundColor,
+        setTempBackgroundColor,
+        tempButtonColor,
+        setTempButtonColor,
+        tempTextColorButtons,
+        setTempTextColorButtons,
+        updateStyleStore,
+    } = useManageMenu();
 
     const [toolbarOpen, setToolbarOpen] = useState(false);
-    const [hasChanges, setHasChanges] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
+
     const {
         ref: navRef,
         position,
@@ -28,6 +29,21 @@ export const BottomNav = ({
         handleTouchStart,
     } = useDraggable();
 
+    useEffect(() => {
+        if (styleStore) {
+            setTempBackgroundColor(styleStore.backgroundColor || 'white');
+            setTempButtonColor(styleStore.primaryColor || '#000000');
+            setTempTextColorButtons(styleStore.textButtonColor || 'black');
+        }
+    }, [styleStore, setTempBackgroundColor, setTempButtonColor, setTempTextColorButtons]);
+
+    const hasChanges = useMemo(() => {
+        if (!styleStore) return false;
+        return tempBackgroundColor !== styleStore.backgroundColor ||
+            tempButtonColor !== styleStore.primaryColor ||
+            tempTextColorButtons !== styleStore.textButtonColor;
+    }, [styleStore, tempBackgroundColor, tempButtonColor, tempTextColorButtons]);
+
     const handleToggleToolbar = () => {
         const toolbar = document.getElementById('toolbar');
         if (toolbar) toggleHiddenFlex(toolbar);
@@ -35,40 +51,57 @@ export const BottomNav = ({
     };
 
     const BackgroundStoreChange = () => {
-        setBackgroundColor(backgroundColorStore === 'white' ? 'black' : 'white');
+        const newColor = tempBackgroundColor === 'white' ? 'black' : 'white';
+        setTempBackgroundColor(newColor);
     };
 
     const toggleTextColorButtons = () => {
-        setTextColorButtons(textColorButtons === "white" ? "black" : "white");
+        const newColor = tempTextColorButtons === "white" ? "black" : "white";
+        setTempTextColorButtons(newColor);
     };
 
     const handleButtonColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setButtonColor(event.target.value);
+        const newColor = event.target.value;
+        setTempButtonColor(newColor);
     };
-
-    useEffect(() => {
-        setHasChanges(
-            buttonColor !== initialButtonColor ||
-            backgroundColorStore !== initialBackgroundColor ||
-            textColorButtons !== initialTextColorButtons
-        );
-    }, [buttonColor, initialButtonColor, backgroundColorStore, initialBackgroundColor, textColorButtons, initialTextColorButtons]);
 
     const saveChanges = async () => {
+        setIsSaving(true);
         try {
             await updateMyPageStyle({
-                primaryColor: buttonColor,
-                backgroundColor: backgroundColorStore,
-                textButtonColor: textColorButtons,
+                primaryColor: tempButtonColor,
+                backgroundColor: tempBackgroundColor,
+                textButtonColor: tempTextColorButtons,
             });
 
-            setHasChanges(false);
-
+            if (styleStore) {
+                updateStyleStore({
+                    ...styleStore,
+                    primaryColor: tempButtonColor,
+                    backgroundColor: tempBackgroundColor,
+                    textButtonColor: tempTextColorButtons,
+                });
+            }
+            
         } catch (error) {
             alert("Erro ao salvar as mudanças!");
-            console.error(error)
+            console.error(error);
+
+            if (styleStore) {
+                setTempBackgroundColor(styleStore.backgroundColor || 'white');
+                setTempButtonColor(styleStore.primaryColor || '#000000');
+                setTempTextColorButtons(styleStore.textButtonColor || 'black');
+
+                updateStyleStore(styleStore);
+            }
+        } finally {
+            setIsSaving(false);
         }
     };
+
+    if (!styleStore) {
+        return null;
+    }
 
     return (
         <nav
@@ -83,7 +116,7 @@ export const BottomNav = ({
                 cursor: dragging ? 'grabbing' : 'grab',
                 zIndex: 6,
             }}
-            className={`w-[187px] py-2 mx-2.5 my-1.5 rounded-2xl border-[0.1px] select-none flex flex-col items-center content-between fixed ${backgroundColorStore === 'white' ? 'bg-black border-white text-white' : 'bg-white'}`}
+            className={`w-[187px] py-2 mx-2.5 my-1.5 rounded-2xl border-[0.1px] select-none flex flex-col items-center content-between fixed ${tempBackgroundColor === 'white' ? 'bg-black border-white text-white' : 'bg-white'}`}
         >
             <span className="text-3xl left-[-20px] top-1 my-auto text-zinc-600 absolute">⋮⋮</span>
             <button className="gap-1 flex items-center transition-all duration-300 ease-in-out cursor-pointer" onClick={handleToggleToolbar}>
@@ -98,16 +131,17 @@ export const BottomNav = ({
                 <div className="flex flex-col items-center justify-between h-full">
                     <h5 className="mb-2 font-bold">Cor de fundo</h5>
                     <div className="gap-1 mx-2.5 text-md font-extralight flex items-center">
-                        <h5 className={`${backgroundColorStore === 'white' ? 'font-bold' : ''}`}>Branco</h5>
+                        <h5 className={`${tempBackgroundColor === 'white' ? 'font-bold' : ''}`}>Branco</h5>
                         <button
                             onClick={BackgroundStoreChange}
-                            className={`w-[50px] h-[25px] mx-2 p-1 flex items-center gap-3 rounded-full cursor-pointer transition-all duration-300 ${backgroundColorStore === 'white' ? 'bg-zinc-800 hover:shadow-[0_0_16px_2px_rgba(155,155,155,0.7)]' : 'bg-zinc-400 hover:shadow-[0_0_16px_2px_rgba(0,0,0,0.4)]'}`}
+                            className={`w-[50px] h-[25px] mx-2 p-1 flex items-center gap-3 rounded-full cursor-pointer transition-all duration-300 ${tempBackgroundColor === 'white' ? 'bg-zinc-800 hover:shadow-[0_0_16px_2px_rgba(155,155,155,0.7)]' : 'bg-zinc-400 hover:shadow-[0_0_16px_2px_rgba(0,0,0,0.4)]'}`}
                         >
-                            <span className={`w-4.5 h-4.5 rounded-full transition-transform duration-300 ${backgroundColorStore === 'white' ? 'bg-white' : 'translate-x-7.5 bg-black'}`}></span>
+                            <span className={`w-4.5 h-4.5 rounded-full transition-transform duration-300 ${tempBackgroundColor === 'white' ? 'bg-white' : 'translate-x-7.5 bg-black'}`}></span>
                         </button>
-                        <h5 className={`${backgroundColorStore === 'black' ? 'font-bold' : ''}`}>Preto</h5>
+                        <h5 className={`${tempBackgroundColor === 'black' ? 'font-bold' : ''}`}>Preto</h5>
                     </div>
                 </div>
+
                 <div className="w-[130px] mx-3.5 my-3 py-2.5 border-y-2 border-primary flex flex-col items-center text-center">
                     <h5 className="mb-2 font-bold">Cor dos botões</h5>
                     <input
@@ -115,20 +149,21 @@ export const BottomNav = ({
                         name="buttonColor"
                         id="buttonColor"
                         className="w-[25px] h-[25px] px-0.5 rounded-full border-1 appearance-none cursor-pointer [&::-webkit-color-swatch]:border-none [&::-webkit-color-swatch]:rounded-full"
-                        value={buttonColor}
+                        value={tempButtonColor}
                         onChange={handleButtonColorChange}
                     />
                 </div>
+
                 <h5 className="mb-2 font-bold text-center">Cor do texto dos botões</h5>
                 <div className="gap-1 mx-2.5 text-md font-extralight flex items-center">
-                    <h5 className={`${textColorButtons === 'white' ? 'font-bold' : ''}`}>Branco</h5>
+                    <h5 className={`${tempTextColorButtons === 'white' ? 'font-bold' : ''}`}>Branco</h5>
                     <button
                         onClick={toggleTextColorButtons}
-                        className={`w-[50px] h-[25px] mx-2 p-1 flex items-center gap-3 rounded-full cursor-pointer transition-all duration-300 ${backgroundColorStore === 'white' ? 'bg-zinc-800 hover:shadow-[0_0_16px_2px_rgba(155,155,155,0.7)]' : 'bg-zinc-400 hover:shadow-[0_0_16px_2px_rgba(0,0,0,0.4)]'}`}
+                        className={`w-[50px] h-[25px] mx-2 p-1 flex items-center gap-3 rounded-full cursor-pointer transition-all duration-300 ${tempBackgroundColor === 'white' ? 'bg-zinc-800 hover:shadow-[0_0_16px_2px_rgba(155,155,155,0.7)]' : 'bg-zinc-400 hover:shadow-[0_0_16px_2px_rgba(0,0,0,0.4)]'}`}
                     >
-                        <span className={`w-4.5 h-4.5 rounded-full transition-transform duration-300 ${backgroundColorStore === 'white' ? 'bg-white' : 'bg-black'} ${textColorButtons === 'black' ? 'translate-x-7.5' : ''}`} />
+                        <span className={`w-4.5 h-4.5 rounded-full transition-transform duration-300 ${tempBackgroundColor === 'white' ? 'bg-white' : 'bg-black'} ${tempTextColorButtons === 'black' ? 'translate-x-7.5' : ''}`} />
                     </button>
-                    <h5 className={`${textColorButtons === 'black' ? 'font-bold' : ''}`}>Preto</h5>
+                    <h5 className={`${tempTextColorButtons === 'black' ? 'font-bold' : ''}`}>Preto</h5>
                 </div>
             </div>
             {hasChanges && (
@@ -136,7 +171,7 @@ export const BottomNav = ({
                     className="w-full mt-3 absolute bottom-[-30px] rounded-3xl bg-primary text-black opacity-100 cursor-pointer hover:scale-[104%] transition"
                     onClick={saveChanges}
                 >
-                    Salvar mudanças
+                    {isSaving ? "salvando" : "Salvar mudanças"}
                 </button>
             )}
         </nav>
