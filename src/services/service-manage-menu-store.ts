@@ -1,5 +1,30 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
+//MENU COMPLETO ------------------------
+export const getFullMenuService = async () => {
+    try {
+        const response = await fetch(`${API_URL}/my-menu`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Erro ao buscar categorias do menu');
+        };
+
+        return await response.json();
+    } catch (error) {
+        if (error instanceof TypeError) {
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
+        }
+        throw error instanceof Error ? error : new Error('Erro desconhecido');
+    }
+};
+
 //CATEGORIES ---------------------------
 export const getCategoriesService = async (storeId: number) => {
     try {
@@ -334,7 +359,7 @@ export const deleteMenuItemService = async (itemId: number) => {
 };
 
 //MENU ITEM OPTIONS GROUPS -------------------
-export const getMenuItemsOptioGroupsService = async () => {
+export const getMenuItemsOptioGroupsMyStoreService = async () => {
     try {
         const response = await fetch(`${API_URL}/menu-item-option-group`, {
             method: 'GET',
@@ -447,7 +472,7 @@ export const deleteMenuItemOptionGroupService = async (optionGroupId: number) =>
 };
 
 //MENU ITEM OPTIONS -------------------------
-export const getMenuItemOptionsService = async () => {
+export const getMenuItemOptionsMyStoreService = async () => {
     try {
         const response = await fetch(`${API_URL}/menu-item-option`, {
             method: 'GET',
@@ -504,9 +529,9 @@ export const createMenuItemOptionService = async (option: {
 export const updateMenuItemOptionService = async (
     optionId: number,
     option: {
-    name: string;
-    additionalPrice: number;
-    menuItemOptionGroup: number[];
+        name: string;
+        additionalPrice: number;
+        menuItemOptionGroup: number[];
     }
 ) => {
     try {

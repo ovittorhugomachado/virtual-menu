@@ -2,9 +2,9 @@ import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { getStoreData } from "../services/service-store-data";
 import { getPageStyle } from "../services/service-page-style";
-import { getCategories } from "../services/service-manage-menu-store";
+import { getCategoriesService } from "../services/service-manage-menu-store";
 import { RestaurantData } from "../types/types-restaurante-data.d";
-import { StyleStorePage } from "../types/types-style-store-page.d";
+import { StyleStorePage } from "../types/types-menu.d";
 import { CategoryData } from "../types/types-menu.d";
 import { LoadingComponent } from "../components/component-loading";
 import { ErrorComponent } from "../components/component-error";
@@ -39,7 +39,7 @@ export const StorePage = () => {
             }
             const storeData = await getStoreData(numericId);
             const styleData = await getPageStyle(numericId);
-            const categoriesStore = await getCategories(numericId)
+            const categoriesStore = await getCategoriesService(numericId)
 
             if (!storeData || !styleData || !categoriesStore) {
                 throw new Error('Dados da loja não encontrados');

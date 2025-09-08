@@ -1,4 +1,4 @@
-import { StyleStorePage } from "../types/types-style-store-page.d";
+import { StyleStorePage } from "../types/types-menu.d";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

@@ -69,9 +69,7 @@ export type Option = {
 };
 
 //TIPOS DO MENU CONTEXT-----------------------------
-export type manageMenuContextType = {
-  fullMenu: unknown | null;
-
+export type ManageMenuContextType = {
   //PROPRIEDADES DO ESTILO DA LOJA --------------------------
   styleStore?: StyleStorePage;
   tempBackgroundColor: string;

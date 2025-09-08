@@ -7,6 +7,8 @@ import { AdminDashboard } from "../pages/page-dashboard";
 import { CustomizeMenuPage } from "../pages/page-customize-menu";
 import { PageListOfStores } from "../pages/page-list-of-stores";
 import { StorePage } from "../pages/page-store";
+import { ManageMenuProvider } from "../context/manage-menu/manage-menu-context.tsx";
+import { RestaurantDataProvider } from "../context/restaurant-data/restaurant-data-context.tsx"
 // import { Testpage } from "../pages/page-tests";
 
 export const AppRoutes = () => {
@@ -16,7 +18,16 @@ export const AppRoutes = () => {
                 <Route path="/" element={<AdminDashboard />} />
                 <Route path="/entrar" element={<LoginPage />} />
                 <Route path="/criar-conta" element={<RegisterPage />} />
-                <Route path="/personalizar-cardapio" element={<CustomizeMenuPage />} />
+                <Route
+                    path="/personalizar-cardapio"
+                    element={
+                        <ManageMenuProvider>
+                            <RestaurantDataProvider>
+                                <CustomizeMenuPage />
+                            </RestaurantDataProvider>
+                        </ManageMenuProvider>
+                    }
+                />
                 <Route path="/recuperar-senha" element={<RecoverPasswordPage />} />
                 <Route path="/create-new-password/:token" element={<CreateNewPasswordPage />} />
                 <Route path="/restaurantes" element={<PageListOfStores />} />
