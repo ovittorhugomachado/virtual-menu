@@ -53,7 +53,7 @@ export const useDraggable = () => {
 
     const handleTouchMove = useCallback((e: TouchEvent) => {
         if (dragging) {
-            e.preventDefault();
+            if (e.cancelable) e.preventDefault();
             const touch = e.touches[0];
             setPosition({
                 x: touch.clientX - offset.x,

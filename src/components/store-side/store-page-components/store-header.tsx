@@ -1,49 +1,34 @@
 import { Link } from "react-router-dom";
-import { OpeningHour } from "../../../types/types-schedules.d";
+//import { OpeningHour } from "../../../types/types-schedules.d";
 import { Logo } from "./store-logo";
 import { GoHomeFill } from "react-icons/go";
 import { FaGear } from "react-icons/fa6";
 import { TbClockHour2Filled } from "react-icons/tb";
+import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
+import { useRestaurantData } from "../../../context/restaurant-data/restaurant-data-context";
 
-interface HeaderProps {
-    backgroundColor?: string;
-    restaurantImage?: string;
-    restaurantName?: string;
-    openingHours?: OpeningHour[];
-    openFormUpdateDataStore: () => void;
-    openFormUpdateSchedules: () => void;
-    onLogoChange: () => void;
-}
+export const Header = () => {
 
-export const Header: React.FC<HeaderProps> = ({
-    backgroundColor = 'white',
-    restaurantImage,
-    restaurantName,
-    openFormUpdateDataStore,
-    openFormUpdateSchedules,
-    onLogoChange, 
-}) => {
+    const { restaurantData } = useRestaurantData();
+    const { tempBackgroundColor } = useManageMenu();
 
     return (
         <header
-            className={`w-screen max-h-[387px] px-[5%] lg:px-[15%] py-4 xl:py-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between shadow-md ms:sticky top-0 ${backgroundColor === 'white' ? 'text-black bg-white' : 'text-white bg-black border-[1px] border-zinc-800'}`}
-            style={{zIndex: 5}}
+            className={`w-screen max-h-[387px] px-[5%] lg:px-[15%] py-4 xl:py-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between shadow-md ms:sticky top-0 ${tempBackgroundColor === 'white' ? 'text-black bg-white' : 'text-white bg-black border-[1px] border-zinc-800'}`}
+            style={{ zIndex: 5 }}
         >
             <div className="flex flex-col ms:flex-row items-center gap-3.5">
-                <Logo
-                    logo={restaurantImage || '/store-logo-default.png'}
-                    onLogoChange={onLogoChange}
-                />
+                <Logo />
                 <div className="mx-1.5 text-center sm:text-start">
                     <h5 className="text-md font-bold mb-1">
-                        {restaurantName && restaurantName.length > 25
-                            ? restaurantName.slice(0, 25) + '...'
-                            : restaurantName}
+                        {restaurantData?.user.restaurantName && restaurantData.user.restaurantName.length > 25
+                            ? restaurantData?.user.restaurantName.slice(0, 25) + '...'
+                            : restaurantData?.user.restaurantName}
                     </h5>
                     <div className="flex flex-col items-center sm:items-start justify-center gap-1 ms:justify-start flex-shrink-0">
                         <button
                             style={{ fontSize: '14px' }}
-                            onClick={openFormUpdateDataStore}
+                            // onClick={openFormUpdateDataStore}
                             title="Configurar dados da loja"
                             className="rounded-full bg-gray-400 text-black border-1 flex items-center justify-center px-3 gap-2 cursor-pointer hover:scale-105 transition-all duration-200"
                         >
@@ -52,7 +37,7 @@ export const Header: React.FC<HeaderProps> = ({
                         </button>
                         <button
                             style={{ fontSize: '14px' }}
-                            onClick={openFormUpdateSchedules}
+                            //onClick={openFormUpdateSchedules}
                             title="Configurar dados da loja"
                             className="rounded-full bg-gray-400 text-black border-1 flex items-center justify-center px-3 gap-2 cursor-pointer hover:scale-105 transition-all duration-200"
                         >
