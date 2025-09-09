@@ -2,8 +2,11 @@ import React, { useRef, useState } from "react";
 import { UploadLogo } from "../../../services/service-upload-image";
 import { FaCamera } from "react-icons/fa";
 import { LoadingComponentLines } from "../../component-loading";
+import { useRestaurantData } from "../../../context/restaurant-data/restaurant-data-context";
 
-export const Logo = ({ logo, onLogoChange }: { logo: string, onLogoChange: (newLogoUrl: string) => void }) => {
+export const Logo = () => {
+
+    const { logoUrl, setLogoUrl, restaurantData } = useRestaurantData();
     const [logoVersion, setLogoVersion] = useState(Date.now());
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -16,16 +19,23 @@ export const Logo = ({ logo, onLogoChange }: { logo: string, onLogoChange: (newL
 
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
-        if (file) {
+        const newExtension = file?.name.split('.').pop()?.toLowerCase() ?? 'jpg';
+        const newLogoUrl = `https://s3.us-east-2.amazonaws.com/bucket.rangos/store${restaurantData?.user.id}/logo.${newExtension}`
+           
+        if (file && restaurantData) {
             setIsLoading(true);
             try {
                 await UploadLogo(file);
                 setLogoVersion(Date.now());
+                setLogoUrl(newLogoUrl);
                 setError(null);
-                onLogoChange(logo);
-            } catch (error) {
-                console.error("Erro ao enviar imagem:", error);
-                setError("Erro ao enviar imagem. Por favor, tente novamente mais tarde.");
+
+            } catch (error: unknown) {
+                if (error instanceof Error) {
+                    setError(error.message);
+                } else {
+                    setError("Erro desconhecido ao enviar logo.");
+                }
             } finally {
                 setIsLoading(false);
             }
@@ -40,13 +50,10 @@ export const Logo = ({ logo, onLogoChange }: { logo: string, onLogoChange: (newL
                 </div>
             ) : (
                 <img
-                    src={
-                        logo
-                            ? `${logo}?v=${logoVersion}`
-                            : "/store-logo-default.png"
-                    }
+                    src={`${logoUrl}?v=${logoVersion}`}
                     alt="logo"
                     className="w-full h-full object-cover rounded-full"
+                    onError={e => (e.currentTarget.src = "/store-logo-default.png")}
                 />
             )}
             <button
