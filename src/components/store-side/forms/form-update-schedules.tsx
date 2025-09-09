@@ -126,7 +126,7 @@ export const UpdateSchedulesForm: React.FC<UpdateSchedulesStoreFormProps> = ({
             {orderedOpeningHours.map((oh, idx) => (
                 <div
                     key={oh.day}
-                    className={`w-full max-w-96 p-3 mb-2 flex flex-col items-center justify-center ${idx !== 0 ? "border-t-1 border-zinc-300 dark:border-zinc-700" : ""}`}
+                    className={`w-full max-w-96 p-3 mb-2 mx-auto flex flex-col items-center justify-center ${idx !== 0 ? "border-t-1 border-zinc-300 dark:border-zinc-700" : ""}`}
                 >
                     <div className="mb-2 flex items-center gap-2">
                         <div className="w-full flex flex-col items-center justify-center">

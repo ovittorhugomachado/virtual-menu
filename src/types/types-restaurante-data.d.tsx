@@ -76,4 +76,6 @@ export type RestaurantDataContextType = {
   updateRestaurantSchedules: (body: { schedule: OpeningHour[] }) => Promise<void>;
   logoUrl: string | undefined;
   setLogoUrl: (url: string) => void;
+  bannerUrl: string | undefined;
+  setBannerUrl: (url: string) => void;
 }

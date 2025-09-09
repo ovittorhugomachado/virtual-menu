@@ -13,6 +13,7 @@ export const RestaurantDataProvider = ({ children }: { children: ReactNode }) =>
     const [error, setError] = useState<string | null>(null);
     const [restaurantData, setRestaurantData] = useState<RestaurantData | null>(null);
     const [logoUrl, setLogoUrl] = useState<string>();
+    const [bannerUrl, setBannerUrl] = useState<string>();
 
     const fetchMenuData = async () => {
         try {
@@ -21,6 +22,7 @@ export const RestaurantDataProvider = ({ children }: { children: ReactNode }) =>
             const allRestaurantData = await getFullMenuService();
             setRestaurantData(allRestaurantData.data);
             setLogoUrl(allRestaurantData.data.logoUrl ?? '');
+            setBannerUrl(allRestaurantData.data.bannerUrl ?? '/store-banner-default.png');
         } catch (err) {
             setError('Falha ao carregar dados do menu');
             console.error('Error fetching menu data:', err);
@@ -76,6 +78,8 @@ export const RestaurantDataProvider = ({ children }: { children: ReactNode }) =>
                 updateRestaurantSchedules,
                 logoUrl,
                 setLogoUrl,
+                bannerUrl,
+                setBannerUrl
             }}
         >
             {children}

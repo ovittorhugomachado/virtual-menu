@@ -1,10 +1,13 @@
 import React, { useRef, useState } from "react";
+import { useRestaurantData } from "../../../context/restaurant-data/restaurant-data-context";
 import { LoadingComponent } from "../../component-loading";
 import { DeleteBannerImage, UploadBannerImage } from "../../../services/service-upload-image";
 import { FaCamera } from "react-icons/fa";
 import { BsFillTrash3Fill } from "react-icons/bs";
 
-export const StoreBanner = ({ banner, onBannerChange }: { banner: string, onBannerChange: () => void }) => {
+export const StoreBanner = () => {
+
+    const { bannerUrl, setBannerUrl, restaurantData } = useRestaurantData();
     const [bannerVersion, setBannerVersion] = useState(Date.now());
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -17,16 +20,22 @@ export const StoreBanner = ({ banner, onBannerChange }: { banner: string, onBann
 
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
-        if (file) {
+        const newExtension = file?.name.split('.').pop()?.toLowerCase() ?? 'jpg';
+        const newBannerUrl = `https://s3.us-east-2.amazonaws.com/bucket.rangos/store${restaurantData?.user.id}/banner.${newExtension}`
+        
+        if (file && restaurantData) {
             setIsLoading(true);
             try {
                 await UploadBannerImage(file);
                 setBannerVersion(Date.now());
+                setBannerUrl(newBannerUrl);
                 setError(null);
-                onBannerChange();
-            } catch (error) {
-                console.error("Erro ao enviar imagem:", error);
-                setError("Erro ao enviar imagem. Por favor, tente novamente mais tarde.");
+            } catch (error: unknown) {
+                if (error instanceof Error) {
+                    setError(error.message);
+                } else {
+                    setError("Erro desconhecido ao enviar banner.");
+                }
             } finally {
                 setIsLoading(false);
             }
@@ -37,8 +46,8 @@ export const StoreBanner = ({ banner, onBannerChange }: { banner: string, onBann
         setIsLoading(true);
         try {
             await DeleteBannerImage();
+            setBannerUrl("/store-banner-default.png")
             setError(null);
-            onBannerChange()
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setError(error.message);
@@ -59,8 +68,8 @@ export const StoreBanner = ({ banner, onBannerChange }: { banner: string, onBann
             ) : (
                 <img
                     src={
-                        banner
-                            ? `${banner}?v=${bannerVersion}`
+                        bannerUrl
+                            ? `${bannerUrl}?v=${bannerVersion}`
                             : "/store-banner-default.png"
                     }
                     alt="banner"
@@ -68,7 +77,7 @@ export const StoreBanner = ({ banner, onBannerChange }: { banner: string, onBann
                 />
             )}
             <div className="flex items-center gap-2 absolute bottom-2 left-2">
-                {banner !== "/store-banner-default.png" && (
+                {bannerUrl !== "/store-banner-default.png" && (
                     <button
                         type="button"
                         title="Excluir banner"

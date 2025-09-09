@@ -23,13 +23,13 @@ export const UpdateDataForm = ({
     return createPortal(
         <div
             className="fixed inset-0 z-[9999] bg-white/10 backdrop-blur-sm overflow-hidden"
-            onClick={onClose} // Fecha ao clicar fora
+            onClick={onClose}
         >
             <div className="h-full w-full overflow-y-auto">
                 <div className="min-h-full min-w-full flex justify-center items-center">
                     <div
                         className="w-[90%] max-w-[950px] flex flex-col my-4 md:shadow-2xl transition-all duration-300 ease-in-out"
-                        onClick={e => e.stopPropagation()} // Impede fechar ao clicar dentro
+                        onClick={e => e.stopPropagation()}
                     >
                         <div className="h-30 bg-primary dark:bg-[#161a21] flex justify-center items-center rounded-t-xl relative overflow-hidden">
                             <div className="flex">
