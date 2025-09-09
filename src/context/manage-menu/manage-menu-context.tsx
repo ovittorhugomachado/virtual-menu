@@ -20,8 +20,6 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [tempTextColorButtons, setTempTextColorButtons] = useState('black');
-    //MENU COMPLETO
-    const [fullMenu, setFullMenu] = useState<unknown>(null);
     //ESTILO
     const [styleStore, setStyleStore] = useState<StyleStorePage>();
     const [tempBackgroundColor, setTempBackgroundColor] = useState('white');
@@ -37,7 +35,6 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
             setIsLoading(true);
             setError(null);
             const allMenuData = await getFullMenuService();
-            setFullMenu(allMenuData.data);
             setStyleStore(allMenuData.data.style);
             setCategories(allMenuData.data.MenuCategory || []);
             setMenuItems(allMenuData.data.MenuItem || []);
@@ -119,8 +116,6 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
     return (
         <ManageMenuContext.Provider
             value={{
-                fullMenu,
-
                 styleStore,
                 tempBackgroundColor,
                 setTempBackgroundColor,
@@ -129,7 +124,6 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
                 tempTextColorButtons,
                 setTempTextColorButtons,
                 updateStyleStore,
-                
                 categories,
                 setCategories,
                 createCategory,

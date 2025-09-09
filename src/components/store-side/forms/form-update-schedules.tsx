@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
+import { useRestaurantData } from "../../../context/restaurant-data/restaurant-data-context";
 import { UpdateDataForm } from "./deafult/form-update-data";
-import { getMyStoreData } from "../../../services/service-store-data";
-import { updateSchedules } from "../../../services/service-update-schedules";
 import { checkOverlappingRanges, validateOpeningHours } from "../../../utils/function-validate-opening-hours";
 import { OpeningHour } from "../../../types/types-schedules.d";
 import { UpdateSchedulesStoreFormProps } from "../../../types/types-data-forms.d";
@@ -11,6 +10,9 @@ import { LuClock4 } from "react-icons/lu";
 export const UpdateSchedulesForm: React.FC<UpdateSchedulesStoreFormProps> = ({
     onClose,
 }) => {
+
+    const { restaurantData, updateRestaurantSchedules } = useRestaurantData();
+
     const [error, setError] = useState("");
     const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
     const [loading, setLoading] = useState(false);
@@ -21,8 +23,7 @@ export const UpdateSchedulesForm: React.FC<UpdateSchedulesStoreFormProps> = ({
         const fetchStoreSchedules = async () => {
             setLoading(true);
             try {
-                const response = await getMyStoreData();
-                setOpeningHours(response.openingHours);
+                setOpeningHours(restaurantData?.openingHours ?? []);
             } catch (error: unknown) {
                 setError(error instanceof Error ? error.message : "Erro ao carregar os dados da loja");
             } finally {
@@ -30,7 +31,7 @@ export const UpdateSchedulesForm: React.FC<UpdateSchedulesStoreFormProps> = ({
             }
         };
         fetchStoreSchedules();
-    }, []);
+    }, [restaurantData?.openingHours]);
 
     useEffect(() => {
         if (successMessage) {
@@ -91,7 +92,7 @@ export const UpdateSchedulesForm: React.FC<UpdateSchedulesStoreFormProps> = ({
 
         setLoading(true);
         try {
-            await updateSchedules({ schedule });
+            await updateRestaurantSchedules({ schedule });
             setSuccessMessage("Horários atualizados com sucesso!");
         } catch (error: unknown) {
             setError(error instanceof Error ? error.message : "Erro ao atualizar os horários da loja");
