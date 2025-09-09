@@ -73,6 +73,7 @@ export type UpdateMyStorePayload = {
 export type RestaurantDataContextType = {
   restaurantData: RestaurantData | null;
   updateRestaurantData: (payload: UpdateMyStorePayload) => Promise<void>;
+  updateRestaurantSchedules: (body: { schedule: OpeningHour[] }) => Promise<void>;
   logoUrl: string | undefined;
   setLogoUrl: (url: string) => void;
 }

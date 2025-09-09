@@ -4,6 +4,8 @@ import { getFullMenuService } from "../../services/service-manage-menu-store";
 import { LoadingComponent } from "../../components/component-loading";
 import { RestaurantData, UpdateMyStorePayload } from "../../types/types-restaurante-data.d";
 import { updateMyStoreData } from "../../services/service-store-data";
+import { OpeningHour } from "../../types/types-schedules.d";
+import { updateSchedules } from "../../services/service-update-schedules";
 
 export const RestaurantDataProvider = ({ children }: { children: ReactNode }) => {
 
@@ -29,6 +31,14 @@ export const RestaurantDataProvider = ({ children }: { children: ReactNode }) =>
 
     const updateRestaurantData = async (payload: UpdateMyStorePayload) => {
         await updateMyStoreData(payload);
+        setTimeout(() => {
+            fetchMenuData();
+        }, 1000)
+        return;
+    };
+
+    const updateRestaurantSchedules = async (body: { schedule: OpeningHour[] }) => {
+        await updateSchedules(body);
         setTimeout(() => {
             fetchMenuData();
         }, 1000)
@@ -63,6 +73,7 @@ export const RestaurantDataProvider = ({ children }: { children: ReactNode }) =>
             value={{
                 restaurantData,
                 updateRestaurantData,
+                updateRestaurantSchedules,
                 logoUrl,
                 setLogoUrl,
             }}
