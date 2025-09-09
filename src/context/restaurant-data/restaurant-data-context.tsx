@@ -2,7 +2,8 @@ import { ReactNode, useEffect, useState } from "react";
 import { RestaurantDataContext } from "./restaurant-data-context";
 import { getFullMenuService } from "../../services/service-manage-menu-store";
 import { LoadingComponent } from "../../components/component-loading";
-import { RestaurantData } from "../../types/types-restaurante-data.d";
+import { RestaurantData, UpdateMyStorePayload } from "../../types/types-restaurante-data.d";
+import { updateMyStoreData } from "../../services/service-store-data";
 
 export const RestaurantDataProvider = ({ children }: { children: ReactNode }) => {
 
@@ -24,6 +25,14 @@ export const RestaurantDataProvider = ({ children }: { children: ReactNode }) =>
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const updateRestaurantData = async (payload: UpdateMyStorePayload) => {
+        await updateMyStoreData(payload);
+        setTimeout(() => {
+            fetchMenuData();
+        }, 1000)
+        return;
     };
 
     useEffect(() => {
@@ -49,12 +58,11 @@ export const RestaurantDataProvider = ({ children }: { children: ReactNode }) =>
         );
     }
 
-    console.log(restaurantData)
-
     return (
         <RestaurantDataContext.Provider
             value={{
                 restaurantData,
+                updateRestaurantData,
                 logoUrl,
                 setLogoUrl,
             }}
