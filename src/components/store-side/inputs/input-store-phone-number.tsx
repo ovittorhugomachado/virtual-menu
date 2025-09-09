@@ -13,9 +13,9 @@ export const InputPhoneNumber = ({
     return (
         <div className="relative w-full max-w-105 flex flex-col gap-1">
             <Controller
-                name="phoneNumber"
+                name="user.phoneNumber"
                 control={control}
-                defaultValue={initialValues.phoneNumber || ""}
+                defaultValue={initialValues.user?.phoneNumber || ""}
                 rules={{
                     required: "Obrigatório",
                     pattern: {
@@ -45,7 +45,7 @@ export const InputPhoneNumber = ({
                             onAccept={(value) => {
                                 field.onChange(value);
                                 if (clearErrors) {
-                                    clearErrors("phoneNumber");
+                                    clearErrors("user.phoneNumber");
                                 }
                             }}
                         />

@@ -15,9 +15,9 @@ export const InputRestaurantName = ({
                 className="w-full font-medium ml-2 mt-2 flex flex-col relative"
             >
                 Nome do Restaurante *
-                {errors.restaurantName && (
+                {errors.user?.restaurantName && (
                     <span className="span-error">
-                        {errors.restaurantName.message?.toString()}
+                        {errors.user?.restaurantName.message?.toString()}
                     </span>
                 )}
             </label>
@@ -25,10 +25,10 @@ export const InputRestaurantName = ({
                 id="restaurantName"
                 type="text"
                 onKeyDown={onKeyDown}
-                className={`input ${errors.restaurantName ? " input-error" : ""}`}
+                className={`input ${errors.user?.restaurantName ? " input-error" : ""}`}
                 placeholder="Restaurante"
-                defaultValue={initialValues.restaurantName || ""}
-                {...register("restaurantName", {
+                defaultValue={initialValues.user?.restaurantName || ""}
+                {...register("user.restaurantName", {
                     required: "Obrigatório",
                     minLength: {
                         value: 2,
@@ -36,7 +36,7 @@ export const InputRestaurantName = ({
                     },
                     onChange: (e) => {
                         if (e.target.value.length > 4) {
-                            clearErrors("restaurantName");
+                            clearErrors("user.restaurantName");
                         }
                     }
                 })}

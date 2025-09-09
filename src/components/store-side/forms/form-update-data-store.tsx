@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useRestaurantData } from "../../../context/restaurant-data/restaurant-data-context";
 import { UpdateDataForm } from "./deafult/form-update-data";
-import { getMyStoreData, updateMyStoreData } from "../../../services/service-store-data";
 import { UpdateStoreDataFormProps } from "../../../types/types-data-forms.d";
 import { RestaurantData } from "../../../types/types-restaurante-data.d";
 import { CheckboxDeliveryTypesInput } from "../inputs/input-store-delivery-type";
@@ -23,19 +23,25 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
         formState: { errors },
     } = useForm<RestaurantData>({
         defaultValues: {
-            restaurantName: "",
+            user: {
+                restaurantName: "",
+                phoneNumber: "",
+                ...(initialValues.user || {}),
+            },
             address: {
                 street: "",
                 number: "",
                 neighborhood: "",
                 city: "",
+                ...(initialValues.address || {}),
             },
-            phoneNumber: "",
             delivery: false,
             pickup: false,
             ...initialValues,
         },
     });
+
+    const { restaurantData, updateRestaurantData } = useRestaurantData();
 
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -45,23 +51,23 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
         const fetchStoreData = async () => {
             setLoading(true);
             try {
-                const response = await getMyStoreData();
-                console.log(response)
-                setValue("restaurantName", response.user.restaurantName);
-                setValue(
-                    "address",
-                    typeof response.address === "string"
-                        ? {
-                            street: response.address,
-                            number: "",
-                            neighborhood: "",
-                            city: "",
-                        }
-                        : response.address
-                );
-                setValue("phoneNumber", response.user.phoneNumber);
-                setValue("delivery", response.delivery);
-                setValue("pickup", response.pickup);
+                if (restaurantData) {
+                    setValue("user.restaurantName", restaurantData.user.restaurantName);
+                    setValue(
+                        "address",
+                        typeof restaurantData.address === "string"
+                            ? {
+                                street: restaurantData.address,
+                                number: "",
+                                neighborhood: "",
+                                city: "",
+                            }
+                            : restaurantData.address
+                    );
+                    setValue("user.phoneNumber", restaurantData.user.phoneNumber);
+                    setValue("delivery", restaurantData.delivery);
+                    setValue("pickup", restaurantData.pickup);
+                }
             } catch (error: unknown) {
                 console.error(error);
                 setError(error instanceof Error ? error.message : "Erro ao carregar os dados da loja");
@@ -71,7 +77,7 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
         };
 
         fetchStoreData();
-    }, [setValue]);
+    }, [restaurantData, setValue]);
 
     useEffect(() => {
         if (successMessage) {
@@ -82,7 +88,7 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
             return () => clearTimeout(timer);
         }
     }, [successMessage]);
-    console.log(errors.delivery);
+
     const handleFormSubmit: SubmitHandler<RestaurantData> = async (data) => {
         const payload = {
             store: {
@@ -96,13 +102,13 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
                 pickup: data.pickup,
             },
             ownerUser: {
-                restaurantName: data.restaurantName,
-                phoneNumber: data.phoneNumber,
+                restaurantName: data.user.restaurantName,
+                phoneNumber: data.user.phoneNumber,
             }
         };
 
         try {
-            await updateMyStoreData(payload);
+            await updateRestaurantData(payload);
             setSuccessMessage("Dados atualizados com sucesso!");
             setError("");
         } catch (error: unknown) {
@@ -112,38 +118,38 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
     };
 
     return (
-            <UpdateDataForm
-                onClose={onClose}
-                error={error}
-                loading={loading}
-                formIcon={<FaGear />}
-                title="Dados da Loja"
-                textButtonSubmit="Salvar"
-                submitFunction={handleSubmit(handleFormSubmit)}
-                successMessage={successMessage}
-            >
-                    <InputRestaurantName
-                        register={register}
-                        errors={errors}
-                        clearErrors={clearErrors}
-                        initialValues={initialValues}
-                    />
-                    <InputAddress
-                        register={register}
-                        errors={errors}
-                        clearErrors={clearErrors}
-                        initialValues={initialValues}
-                    />
-                    <InputPhoneNumber
-                        control={control}
-                        initialValues={initialValues}
-                    />
-                    <div className={`${errors.delivery || errors.pickup ? "border-l-2 border-red-600" : "border-gray-300"} flex flex-col gap-1 pl-2`}>
-                        <CheckboxDeliveryTypesInput
-                            register={register}
-                            errors={errors}
-                        />
-                    </div>
-            </UpdateDataForm>
+        <UpdateDataForm
+            onClose={onClose}
+            error={error}
+            loading={loading}
+            formIcon={<FaGear />}
+            title="Dados da Loja"
+            textButtonSubmit="Salvar"
+            submitFunction={handleSubmit(handleFormSubmit)}
+            successMessage={successMessage}
+        >
+            <InputRestaurantName
+                register={register}
+                errors={errors}
+                clearErrors={clearErrors}
+                initialValues={initialValues}
+            />
+            <InputAddress
+                register={register}
+                errors={errors}
+                clearErrors={clearErrors}
+                initialValues={initialValues}
+            />
+            <InputPhoneNumber
+                control={control}
+                initialValues={initialValues}
+            />
+            <div className={`${errors.delivery || errors.pickup ? "border-l-2 border-red-600" : "border-gray-300"} flex flex-col gap-1 pl-2`}>
+                <CheckboxDeliveryTypesInput
+                    register={register}
+                    errors={errors}
+                />
+            </div>
+        </UpdateDataForm>
     );
 };
