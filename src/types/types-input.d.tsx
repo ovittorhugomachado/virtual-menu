@@ -1,14 +1,13 @@
 import { UseFormRegister, UseFormWatch, UseFormClearErrors, FieldErrors, Control } from "react-hook-form";
-import { AccountData } from "./types-account.d";
 import { CategoryData } from "./types-menu.d";
 import { Address, RestaurantData } from "./types-restaurante-data.d";
 import { MenuItemFormData, OrderFormData } from "./types-data-forms.d";
 
 export type InputNameProps = {
-    register: UseFormRegister<AccountData>;
-    errors: FieldErrors<AccountData>;
-    clearErrors: UseFormClearErrors<AccountData>;
-    initialValues?: Partial<AccountData>;
+    register: UseFormRegister<RestaurantData>;
+    errors: FieldErrors<RestaurantData>;
+    clearErrors: UseFormClearErrors<RestaurantData>;
+    initialValues?: Partial<RestaurantData>;
 };
 
 export type InputOwnersNameProps = {

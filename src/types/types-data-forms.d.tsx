@@ -1,30 +1,31 @@
-import { AccountData } from "./types-account.d";
+
+import { RestaurantData } from "./types-restaurante-data.d";
 
 export type StandardFormProps = {
     icon: React.ReactNode;
-    onSubmit: (data: AccountData) => void;
+    onSubmit: (data: RestaurantData) => void;
     isLoading: boolean;
     message: string;
     setError: (error: string) => void;
     error?: string;
-    initialValues?: Partial<AccountData>;
+    initialValues?: Partial<RestaurantData>;
     children?: React.ReactNode;
 };
 
 export type AccountFormProps = {
-    onSubmit: (data: AccountData) => void;
+    onSubmit: (data: RestaurantData) => void;
     isLoading: boolean;
     message: string;
     setError: (error: string) => void;
     error?: string;
-    initialValues?: Partial<AccountData>;
+    initialValues?: Partial<RestaurantData>;
 };
 
 export type UpdateStoreDataFormProps = {
     onClose: () => void;
     isLoading?: boolean;
     error?: string;
-    initialValues?: Partial<AccountData>;
+    initialValues?: Partial<RestaurantData>;
     message?: string;
 };
 
@@ -35,7 +36,7 @@ export type categoryFormProps = {
     message?: string;
     setError?: (error: string) => void;
     error?: string;
-    initialValues?: Partial<AccountData>;
+    initialValues?: Partial<RestaurantData>;
     categoryId?: number;
 };
 

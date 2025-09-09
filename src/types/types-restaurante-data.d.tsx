@@ -71,7 +71,8 @@ export type UpdateMyStorePayload = {
 };
 
 export type RestaurantDataContextType = {
+  restaurantData: RestaurantData | null;
+  updateRestaurantData: (payload: UpdateMyStorePayload) => Promise<void>;
   logoUrl: string | undefined;
   setLogoUrl: (url: string) => void;
-  restaurantData: RestaurantData | null;
 }

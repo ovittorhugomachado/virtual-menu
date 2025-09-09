@@ -5,8 +5,10 @@ export type AccountData = {
   id: number;
   email: string;
   password: string;
-  restaurantName: string;
   name: string;
+  user: {
+    restaurantName: string;
+  }
   address: {
     street: string;
     number: string;
