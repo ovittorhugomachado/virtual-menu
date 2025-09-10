@@ -1,7 +1,7 @@
 import React from "react";
 import { LoadingComponent } from "../../../component-loading";
 import { ErrorComponent } from "../../../component-error";
-import { UpdateStoreFormProps } from "../../../../types/types-form-default.d";
+import { UpdateStoreFormProps } from "../../../../types/types-forms.d";
 import { IoCloseOutline } from "react-icons/io5";
 import { FaCheckCircle } from "react-icons/fa";
 import { createPortal } from "react-dom";

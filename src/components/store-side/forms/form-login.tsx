@@ -22,8 +22,11 @@ export const LoginFormContainer = ({
         formState: { errors },
     } = useForm<RestaurantData>({
         defaultValues: {
-            email: '',
-            password: '',
+            user: {
+                email: '',
+                password: '',
+                ...(initialValues.user || {}),
+            },
             ...initialValues,
         },
     });

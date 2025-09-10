@@ -16,3 +16,4 @@ export type UpdateStoreFormProps = {
     successMessage?: string;
     children?: React.ReactNode;
 };
+
