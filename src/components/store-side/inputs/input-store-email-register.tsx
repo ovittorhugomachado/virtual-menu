@@ -8,7 +8,6 @@ export const InputEmailRegister = ({
     validate,
     onKeyDown,
 }: InputEmailProps & { validate?: (email: string) => Promise<string | true> }) => {
-    console.log(errors.email)
     return (
         <div className="relative w-full max-w-105 flex flex-col gap-1">
             <label
@@ -16,9 +15,9 @@ export const InputEmailRegister = ({
                 className="w-full font-medium ml-2 mt-2 flex flex-col relative"
             >
                 Email
-                {errors.email && (
+                {errors.user?.email && (
                     <span className="span-error">
-                        {errors.email.message}
+                        {errors.user?.email.message}
                     </span>
                 )}
             </label>
@@ -26,10 +25,10 @@ export const InputEmailRegister = ({
                 id="email"
                 type="email"
                 onKeyDown={onKeyDown}
-                className={`input ${errors.email ? " input-error" : ""}`}
+                className={`input ${errors.user?.email ? " input-error" : ""}`}
                 placeholder="Digite seu email"
-                defaultValue={initialValues.email || ""}
-                {...register("email", {
+                defaultValue={initialValues.user?.email || ""}
+                {...register("user.email", {
                     required: "Campo obrigatório",
                     pattern: {
                         value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
@@ -38,14 +37,14 @@ export const InputEmailRegister = ({
                     validate,
                     onChange: (e) => {
                         if (e.target.value.length > 2) {
-                            clearErrors("email");
+                            clearErrors("user.email");
                         }
                     }
                 })}
             />
-            {errors.email?.message?.length && errors.email?.message?.length > 25 && (
+            {errors.user?.email?.message?.length && errors.user?.email?.message?.length > 25 && (
                 <span className="absolute -bottom-6 w-full text-center mx-auto text-red-500">
-                    {errors.email.message}
+                    {errors.user?.email.message}
                 </span>
             )}
         </div>

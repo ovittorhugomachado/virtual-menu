@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { LogoBlue, LogoTextBlue, LogoTextWhite, LogoWhite } from "../../component-logo";
-import { AccountData } from "../../../types/types-account.d";
 import { AccountFormProps } from "../../../types/types-data-forms.d";
 import { RestaurantData } from "../../../types/types-restaurante-data.d";
 import { InputRestaurantName } from "../inputs/input-store-restaurant-name";
@@ -35,15 +34,25 @@ export const SignupFormContainer = ({
     } = useForm<RestaurantData>({
         mode: "onBlur",
         defaultValues: {
-            restaurantName: '',
-            cnpj: '',
-            ownersName: '',
-            cpf: '',
-            phoneNumber: '',
-            email: '',
-            password: '',
+            user: {
+                restaurantName: '',
+                ownersName: '',
+                email: '',
+                password: '',
+                phoneNumber: '',
+                cnpj: '',
+                cpf: '',
+                ...(initialValues.user || {}),
+            },
+            address: {
+                street: '',
+                number: '',
+                neighborhood: '',
+                city: '',
+                ...(initialValues.address || {}),
+            },
             ...initialValues,
-        },
+        }
     });
 
     const [step, setStep] = useState(1);
@@ -53,9 +62,9 @@ export const SignupFormContainer = ({
         if (!hasTriedToSubmit) setHasTriedToSubmit(true);
 
         if (step === 1) {
-            const emailValue = watch("email");
+            const emailValue = watch("user.email");
             if (!emailValue) {
-                setError("email", {
+                setError("user.email", {
                     type: "manual",
                     message: "Obrigatório",
                 });
@@ -64,7 +73,7 @@ export const SignupFormContainer = ({
 
             const emailExists = await checkEmailExists(emailValue);
             if (emailExists.exists) {
-                setError("email", {
+                setError("user.email", {
                     type: "manual",
                     message: "Email já cadastrado.",
                 });
@@ -72,11 +81,11 @@ export const SignupFormContainer = ({
             }
         }
 
-        let fieldsToValidate: (keyof RestaurantData)[] = [];
-        if (step === 1) fieldsToValidate = ["email"];
-        if (step === 2) fieldsToValidate = ["restaurantName", "phoneNumber"];
-        if (step === 3) fieldsToValidate = ["ownersName", "cpf"];
-        if (step === 4) fieldsToValidate = ["password"];
+        let fieldsToValidate: Parameters<typeof trigger>[0] = [];
+        if (step === 1) fieldsToValidate = ["user.email"];
+        if (step === 2) fieldsToValidate = ["user.restaurantName", "user.phoneNumber"];
+        if (step === 3) fieldsToValidate = ["user.ownersName", "user.cpf"];
+        if (step === 4) fieldsToValidate = ["user.password"];
 
         const valid = await trigger(fieldsToValidate);
 
@@ -98,7 +107,7 @@ export const SignupFormContainer = ({
         }
     };
 
-    const handleFormSubmit: SubmitHandler<AccountData> = (data) => {
+    const handleFormSubmit: SubmitHandler<RestaurantData> = (data) => {
 
         onSubmit(data);
 

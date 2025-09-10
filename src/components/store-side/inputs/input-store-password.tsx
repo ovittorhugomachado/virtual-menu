@@ -18,9 +18,9 @@ export const InputPassword = ({
                     className="w-full font-medium ml-2 mt-2 flex flex-col relative"
                 >
                     Senha
-                    {errors?.password && (
+                    {errors?.user?.password && (
                         <span className="span-error">
-                            {errors.password.message?.toString()}
+                            {errors.user?.password.message?.toString()}
                         </span>
                     )}
                 </label>
@@ -28,14 +28,14 @@ export const InputPassword = ({
                     <input
                         id="password"
                         type={showPassword ? "text" : "password"}
-                        className={`input ${errors.password ? " input-error" : ""}`}
+                        className={`input ${errors.user?.password ? " input-error" : ""}`}
                         placeholder="Digite sua senha"
-                        defaultValue={initialValues.password || ""}
-                        {...register("password", {
+                        defaultValue={initialValues.user?.password || ""}
+                        {...register("user.password", {
                             required: "Obrigatório",
                             onChange: (e) => {
                                 if (e.target.value.length > 2) {
-                                    clearErrors("password");
+                                    clearErrors("user.password");
                                 }
                             }
                         })}

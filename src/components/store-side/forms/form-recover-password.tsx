@@ -1,6 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { AccountData } from "../../../types/types-account.d";
 import { RestaurantData } from "../../../types/types-restaurante-data.d";
 import { AccountFormProps } from "../../../types/types-data-forms.d";
 import { LogoBlue, LogoTextBlue, LogoTextWhite, LogoWhite } from "../../component-logo";
@@ -24,12 +23,15 @@ export const RecoverPasswordFormContainer = ({
         formState: { errors },
     } = useForm<RestaurantData>({
         defaultValues: {
-            email: '',
+            user: {
+                email: '',
+                ...(initialValues.user || {}),
+            },
             ...initialValues,
         },
     });
 
-    const handleRecoverPasswordSubmit: SubmitHandler<AccountData> = (data) => {
+    const handleRecoverPasswordSubmit: SubmitHandler<RestaurantData> = (data) => {
         try {
             onSubmit(data);
             clearErrors();

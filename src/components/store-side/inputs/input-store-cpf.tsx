@@ -13,9 +13,9 @@ export const InputCPF = ({
     return (
         <div className="relative w-full max-w-105 flex flex-col gap-1">
             <Controller
-                name="cpf"
+                name="user.cpf"
                 control={control}
-                defaultValue={initialValues.cpf || ""}
+                defaultValue={initialValues.user?.cpf || ""}
                 rules={{
                     required: "Obrigatório",
                     validate: (value) => {
@@ -48,7 +48,7 @@ export const InputCPF = ({
                             onAccept={(value) => {
                                 field.onChange(value);
                                 if (clearErrors) {
-                                    clearErrors("cpf");
+                                    clearErrors("user.cpf");
                                 }
                             }}
                         />

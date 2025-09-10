@@ -10,7 +10,7 @@ export const InputPasswordRegister = ({
     onKeyDown
 }: InputPasswordProps) => {
     const [showPassword, setShowPassword] = useState(false);
-    const password = watch("password") || '';
+    const password = watch("user.password") || '';
 
     const requirements = [
         { id: 1, text: "8 caracteres", regex: /.{8,}/ },
@@ -27,9 +27,9 @@ export const InputPasswordRegister = ({
                 className="w-full font-medium ml-2 mt-2 flex flex-col relative"
             >
                 Senha *
-                {errors.password && (
+                {errors.user?.password && (
                     <span className="span-error">
-                        {errors.password.message?.toString()}
+                        {errors.user?.password.message?.toString()}
                     </span>
                 )}
             </label>
@@ -38,14 +38,14 @@ export const InputPasswordRegister = ({
                     type={showPassword ? "text" : "password"}
                     placeholder="crie sua senha"
                     onKeyDown={onKeyDown}
-                    className={`input ${errors.password ? " input-error" : ""}`}
-                    {...register("password", {
+                    className={`input ${errors.user?.password ? " input-error" : ""}`}
+                    {...register("user.password", {
                         required: "Obrigatório",
                         pattern: {
                             value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
                             message: "senha inválida",
                         },
-                        onChange: () => clearErrors && clearErrors("password")
+                        onChange: () => clearErrors && clearErrors("user.password")
                     })}
                 />
 

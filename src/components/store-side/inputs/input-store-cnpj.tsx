@@ -10,12 +10,13 @@ export const InputCNPJ = ({
     return (
         <div className="relative w-full max-w-105 flex flex-col gap-1">
             <Controller
-                name="cnpj"
+                name="user.cnpj"
                 control={control}
-                defaultValue={initialValues.cnpj || ""}
+                defaultValue={initialValues.user?.cnpj || ""}
                 rules={{
                     validate: (value) => {
-                        const digits = value?.replace(/\D/g, '') || '';
+                        const strValue = typeof value === "string" ? value : String(value);
+                        const digits = strValue.replace(/\D/g, '');
                         if (digits.length > 0 && digits.length < 14) {
                             return "Digite os 14 dígitos do CNPJ";
                         }

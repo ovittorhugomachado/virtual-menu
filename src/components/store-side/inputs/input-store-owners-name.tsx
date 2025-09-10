@@ -15,9 +15,9 @@ export const InputOwnersName = ({
                 className="w-full font-medium ml-2 mt-2 flex flex-col relative"
             >
                 Nome do Proprietário *
-                {errors.ownersName && (
+                {errors.user?.ownersName && (
                     <span className="span-error">
-                        {errors.ownersName.message?.toString()}
+                        {errors.user?.ownersName.message?.toString()}
                     </span>
                 )}
             </label>
@@ -25,10 +25,10 @@ export const InputOwnersName = ({
                 id="ownersName"
                 type="text"
                 onKeyDown={onKeyDown}
-                className={`input ${errors.ownersName ? " input-error" : ""}`}
+                className={`input ${errors.user?.ownersName ? " input-error" : ""}`}
                 placeholder="Proprietário"
-                defaultValue={initialValues.ownersName || ""}
-                {...register("ownersName", {
+                defaultValue={initialValues.user?.ownersName || ""}
+                {...register("user.ownersName", {
                     required: "Obrigatório",
                     minLength: {
                         value: 2,
@@ -36,7 +36,7 @@ export const InputOwnersName = ({
                     },
                     onChange: (e) => {
                         if (e.target.value.length > 4) {
-                            clearErrors("ownersName");
+                            clearErrors("user.ownersName");
                         }
                     },
                 })}

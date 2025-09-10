@@ -14,19 +14,19 @@ export const InputEmail = ({
                 className="w-full font-medium ml-2 mt-2 flex flex-col relative"
             >
                 Email
-                {errors.email && (
+                {errors.user?.email && (
                     <span className="span-error">
-                        {errors.email.message}
+                        {errors.user?.email.message}
                     </span>
                 )}
             </label>
             <input
                 id="email"
                 type="email"
-                className={`input ${errors.email ? " input-error" : ""}`}
+                className={`input ${errors.user?.email ? " input-error" : ""}`}
                 placeholder="Digite seu email"
-                defaultValue={initialValues.email || ""}
-                {...register("email", {
+                defaultValue={initialValues.user?.email || ""}
+                {...register("user.email", {
                     required: "Obrigatório",
                     pattern: {
                         value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
@@ -34,7 +34,7 @@ export const InputEmail = ({
                     },
                     onChange: (e) => {
                         if (e.target.value.length > 2) {
-                            clearErrors("email");
+                            clearErrors("user.email");
                         }
                     }
                 })}
