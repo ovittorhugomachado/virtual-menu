@@ -5,7 +5,6 @@ import { InputPhoneNumberProps } from "../../../types/types-input.d";
 export const InputPhoneNumber = ({
     control,
     initialValues = {},
-    hasTriedToSubmit = false,
     clearErrors,
     onKeyDown
 }: InputPhoneNumberProps) => {
@@ -30,7 +29,7 @@ export const InputPhoneNumber = ({
                             className="w-full font-medium ml-2 mt-2 flex flex-col relative"
                         >
                             Celular *
-                            {hasTriedToSubmit && fieldState.error && (
+                            {fieldState.error && (
                                 <span className="span-error">
                                     {fieldState.error.message}
                                 </span>
@@ -41,7 +40,7 @@ export const InputPhoneNumber = ({
                             mask="(00) 00000-0000"
                             placeholder="(99) 99999-9999"
                             onKeyDown={onKeyDown}
-                            className={`input ${hasTriedToSubmit && fieldState.error ? " input-error" : ""}`}
+                            className={`input ${fieldState.error ? "input-error" : ""}`}
                             onAccept={(value) => {
                                 field.onChange(value);
                                 if (clearErrors) {
