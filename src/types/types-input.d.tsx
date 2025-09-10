@@ -63,6 +63,7 @@ export type InputAddressProps = {
     errors: FieldErrors<{ address: RestaurantData["address"] }>;
     clearErrors: UseFormClearErrors<RestaurantData>;
     initialValues?: { address?: Address };
+    requiredAddress?: boolean;
 }
 
 export type InputCustomerAddressProps = {

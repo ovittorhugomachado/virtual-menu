@@ -20,6 +20,7 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
         control,
         handleSubmit,
         clearErrors,
+        watch,
         formState: { errors },
     } = useForm<RestaurantData>({
         defaultValues: {
@@ -47,6 +48,13 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
 
+    const deliveryValue = watch("delivery");
+    const pickupValue = watch("pickup");
+
+    console.log(deliveryValue)
+    console.log(pickupValue)
+
+    console.log(errors)
     useEffect(() => {
         const fetchStoreData = async () => {
             setLoading(true);
@@ -78,6 +86,12 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
 
         fetchStoreData();
     }, [restaurantData, setValue]);
+
+    useEffect(() => {
+        if (!pickupValue) {
+            clearErrors("address");
+        }
+    }, [pickupValue, clearErrors]);
 
     useEffect(() => {
         if (successMessage) {
@@ -139,6 +153,7 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
                 errors={errors}
                 clearErrors={clearErrors}
                 initialValues={initialValues}
+                requiredAddress={pickupValue ? true : false} // ou true
             />
             <InputPhoneNumber
                 control={control}
@@ -150,6 +165,7 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
                     errors={errors}
                 />
             </div>
+            {errors.address && <span className="text-error">Se você tiver a opção de retirada o endereço é obrigatório</span>}
         </UpdateDataForm>
     );
 };

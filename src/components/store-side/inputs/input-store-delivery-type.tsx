@@ -5,7 +5,9 @@ export const CheckboxDeliveryTypesInput = ({
     errors,
 }: InputDeliveryTypeProps) => (
     <div className="flex flex-col gap-1">
-        <span className="font-bold flex">Tipos de entrega:  {<span className="flex-1 text-end text-red-600">{errors.delivery?.message || errors.pickup?.message}</span>}</span>
+        <label className="w-full font-medium ml-2 mt-2 flex flex-col relative">Tipos de entrega:
+            <span className="span-error">{errors.delivery?.message || errors.pickup?.message}</span>
+            </label>
         <div className="flex gap-4 ml-4 dark:text-gray-300">
             <input
                 type="checkbox"
