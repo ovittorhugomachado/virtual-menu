@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { reorderCategoriesService } from "../../../services/service-manage-menu-store";
+import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
 import { CategoryData } from "../../../types/types-menu.d";
-import { FaList, FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { UpdateDataForm } from "./deafult/form-update-data";
+import { FaList, FaArrowUp, FaArrowDown } from "react-icons/fa";
 
 interface CategoryOrderManagerProps {
     onClose: () => void;
@@ -18,6 +18,8 @@ export const CategoryOrderManager: React.FC<CategoryOrderManagerProps> = ({
     setCategories,
     buttonColor
 }) => {
+    const { reorderCategories } = useManageMenu();
+
     const [isReordering, setIsReordering] = useState(false);
     const [animatedIndexes, setAnimatedIndexes] = useState<number[]>([]);
     const [animationDirection, setAnimationDirection] = useState<"up" | "down" | null>(null);
@@ -76,7 +78,7 @@ export const CategoryOrderManager: React.FC<CategoryOrderManagerProps> = ({
                 id: cat.id,
                 order: cat.order ?? 0
             }));
-            await reorderCategoriesService(orderData);
+            await reorderCategories(orderData);
             setCategories(localCategories);
             setSuccessMessage("Ordem das categorias atualizada com sucesso!");
         } catch (error) {

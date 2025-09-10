@@ -11,6 +11,7 @@ import {
     updateMenuItemService,
     deleteMenuItemService,
     toggleStatusMenuItemService,
+    reorderCategoriesService,
 
 } from "../../services/service-manage-menu-store";
 import { LoadingComponent } from "../../components/component-loading";
@@ -53,23 +54,47 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
 
     //FUNÇÕES DAS CATEGORIAS -----------------------------
     const createCategory = async (name: string, menuItemIds: number[]) => {
-        await createCategoryService(name, menuItemIds);
-        await fetchMenuData();
+        const newCategory = await createCategoryService(name, menuItemIds);
+        setCategories(prev => [...prev, newCategory]);
     };
 
     const updateCategory = async (categoryId: number, name: string, menuItemIds: number[]) => {
         await updateCategoryService(categoryId, name, menuItemIds);
-        await fetchMenuData();
+        setCategories(prev =>
+            prev.map(cat =>
+                cat.id === categoryId
+                    ? { ...cat, name, menuItemIds }
+                    : cat
+            )
+        );
     };
 
     const deleteCategory = async (categoryId: number) => {
         await deleteCategoryService(categoryId);
-        await fetchMenuData();
+        setCategories(prev => prev.filter(cat => cat.id !== categoryId));
     };
 
     const toggleStatusCategory = async (categoryId: number) => {
         await toggleStatusCategoryService(categoryId);
-        await fetchMenuData();
+        setCategories(prev =>
+            prev.map(cat =>
+                cat.id === categoryId
+                    ? { ...cat, isAvailable: !cat.isAvailable }
+                    : cat
+            )
+        );
+    };
+
+    const reorderCategories = async (orderedCategories: { id: number; order: number }[]) => {
+        await reorderCategoriesService(orderedCategories);
+        setCategories(prev =>
+            prev
+                .map(cat => {
+                    const found = orderedCategories.find(o => o.id === cat.id);
+                    return found ? { ...cat, order: found.order } : cat;
+                })
+                .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+        );
     };
 
     //FUNÇÕES DOS ITENS DO MENU -----------------------------
@@ -130,6 +155,7 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
                 updateCategory,
                 deleteCategory,
                 toggleStatusCategory,
+                reorderCategories,
                 menuItems,
                 createMenuItem,
                 updateMenuItem,

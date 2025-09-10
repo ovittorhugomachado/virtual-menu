@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { UpdateDataForm } from "./deafult/form-update-data";
-import { IoIosAddCircle, IoIosArrowDown } from "react-icons/io";
-import { BsFillTrash3Fill } from "react-icons/bs";
-import { ConfirmDeletion } from "./deafult/confirm-deletion";
+import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
 import { CategoryData, MenuItem } from "../../../types/types-menu.d";
+import { UpdateDataForm } from "./deafult/form-update-data";
+import { ConfirmDeletion } from "./deafult/confirm-deletion";
+import { BsFillTrash3Fill } from "react-icons/bs";
+import { IoIosAddCircle, IoIosArrowDown } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { FaGear } from "react-icons/fa6";
-import { useManageMenu } from "../../../context/manage-menu/manage-menu-context"
-import { getMenuItemsMyStore } from "../../../services/service-manage-menu-store";
 
 export const CreateCategoryForm = ({ onClose, error }: { onClose: () => void; error?: string }) => {
-    const { createCategory } = useManageMenu();
+
+    const { createCategory, menuItems } = useManageMenu();
 
     const {
         register,
@@ -21,7 +21,6 @@ export const CreateCategoryForm = ({ onClose, error }: { onClose: () => void; er
         watch
     } = useForm<CategoryData>();
 
-    const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
     const [openArrayItems, setOpenArrayItems] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
 
@@ -46,18 +45,7 @@ export const CreateCategoryForm = ({ onClose, error }: { onClose: () => void; er
         }
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const items = await getMenuItemsMyStore();
-                setMenuItems(items.data);
-            } catch (error) {
-                console.error("Erro ao buscar itens:", error);
-            }
-        };
-        fetchData();
-    }, []);
-
+    console.log(menuItems)
     return (
         <UpdateDataForm
             onClose={onClose}
@@ -147,7 +135,8 @@ export const UpdateCategoryForm = ({
     initialMenuItems?: number[];
     error?: string;
 }) => {
-    const { updateCategory, deleteCategory } = useManageMenu();
+    
+    const { updateCategory, deleteCategory, menuItems } = useManageMenu();
 
     const {
         register,
@@ -162,14 +151,13 @@ export const UpdateCategoryForm = ({
         }
     });
 
-    const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
     const [openArrayItems, setOpenArrayItems] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
     const [showConfirm, setShowConfirm] = useState(false);
 
     const selectedItems = watch("menuItems", []);
 
-    
+
     console.log("menuItems:", menuItems)
     console.log("selectedItems:", selectedItems)
 
@@ -201,25 +189,14 @@ export const UpdateCategoryForm = ({
     };
 
     useEffect(() => {
-    const fetchData = async () => {
-        try {
-            const items = await getMenuItemsMyStore();
-            setMenuItems(items.data);
+        const selectedIds = menuItems
+            .filter(item =>
+                item.categories?.some(category => category.id === categoryId)
+            )
+            .map(item => item.id);
 
-            const selectedIds = items.data
-                .filter((item: MenuItem) =>
-                    Array.isArray(item.categories) &&
-                    item.categories.some(category => category.id === categoryId)
-                )
-                .map((item: MenuItem) => item.id);
-
-            setValue("menuItems", selectedIds);
-        } catch (error) {
-            console.error("Erro ao buscar itens:", error);
-        }
-    };
-    fetchData();
-}, [categoryId, setValue]);
+        setValue("menuItems", selectedIds);
+    }, [categoryId, menuItems, setValue]);
 
 
     return (

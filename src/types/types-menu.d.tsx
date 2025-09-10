@@ -30,7 +30,7 @@ export type CategoryButtonsProps = {
 //TIPOS DO ITEM ----------------------------
 export type MenuItem = {
   storeId?: number;
-  id?: number;
+  id: number;
   name: string;
   description: string;
   price: number;
@@ -87,6 +87,7 @@ export type ManageMenuContextType = {
   updateCategory: (categoryId: number, name: string, menuItemIds: number[]) => Promise<void>;
   deleteCategory: (categoryId: number) => Promise<void>;
   toggleStatusCategory: (categoryId: number) => Promise<void>;
+  reorderCategories: (orderedCategories: { id: number; order: number }[]) => Promise<void>;
 
   //PROPRIEDADES DOS ITENS DO MENU ---------------------------
   menuItems: MenuItem[];
