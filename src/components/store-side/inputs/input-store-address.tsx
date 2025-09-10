@@ -1,16 +1,26 @@
 import { InputAddressProps } from "../../../types/types-input.d";
 
+type InputAddressPropsWithRequired = InputAddressProps & {
+    requiredAddress?: boolean;
+};
+
 export const InputAddress = ({
     register,
     errors,
     clearErrors,
     initialValues = {},
-}: InputAddressProps) => {
+    requiredAddress = false,
+}: InputAddressPropsWithRequired) => {
 
     return (
         <div className="relative w-full max-w-105 flex flex-col gap-1">
             <label className="w-full font-medium ml-2 mt-2 flex flex-col relative">
                 Endereço
+                {errors.address && (
+                    <span className="span-error">
+                        {errors.address.message?.toString()}
+                    </span>
+                )}
             </label>
             <div className="flex flex-col gap-2 pl-6">
                 <div className="flex gap-2 items-center">
@@ -22,8 +32,8 @@ export const InputAddress = ({
                         placeholder="Rua"
                         defaultValue={initialValues.address?.street || ""}
                         {...register("address.street", {
-                            required: "Campo obrigatório",
-                            minLength: { value: 2, message: "Mínimo 2 caracteres" },
+                            required: requiredAddress ? "Campo obrigatório" : false,
+                            minLength: requiredAddress ? { value: 2, message: "Mínimo 2 caracteres" } : undefined,
                             onChange: (e) => {
                                 if (e.target.value.length > 1) clearErrors("address.street");
                             }
@@ -39,8 +49,8 @@ export const InputAddress = ({
                         placeholder="Número"
                         defaultValue={initialValues.address?.number || ""}
                         {...register("address.number", {
-                            required: "Campo obrigatório",
-                            minLength: { value: 1, message: "Mínimo 1 caractere" },
+                            required: requiredAddress ? "Campo obrigatório" : false,
+                            minLength: requiredAddress ? { value: 1, message: "Mínimo 1 caractere" } : undefined,
                             onChange: (e) => {
                                 if (e.target.value.length > 0) clearErrors("address.number");
                             }
@@ -56,8 +66,8 @@ export const InputAddress = ({
                         placeholder="Bairro"
                         defaultValue={initialValues.address?.neighborhood || ""}
                         {...register("address.neighborhood", {
-                            required: "Campo obrigatório",
-                            minLength: { value: 2, message: "Mínimo 2 caracteres" },
+                            required: requiredAddress ? "Campo obrigatório" : false,
+                            minLength: requiredAddress ? { value: 2, message: "Mínimo 2 caracteres" } : undefined,
                             onChange: (e) => {
                                 if (e.target.value.length > 1) clearErrors("address.neighborhood");
                             }
@@ -73,8 +83,8 @@ export const InputAddress = ({
                         placeholder="Cidade"
                         defaultValue={initialValues.address?.city || ""}
                         {...register("address.city", {
-                            required: "Campo obrigatório",
-                            minLength: { value: 2, message: "Mínimo 2 caracteres" },
+                            required: requiredAddress ? "Campo obrigatório" : false,
+                            minLength: requiredAddress ? { value: 2, message: "Mínimo 2 caracteres" } : undefined,
                             onChange: (e) => {
                                 if (e.target.value.length > 1) clearErrors("address.city");
                             }
