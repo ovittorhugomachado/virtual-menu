@@ -33,7 +33,10 @@ export const RecoverPasswordFormContainer = ({
 
     const handleRecoverPasswordSubmit: SubmitHandler<RestaurantData> = (data) => {
         try {
-            onSubmit(data);
+            const payload = {
+                email: data.user.email,
+            };
+            onSubmit(payload);
             clearErrors();
         } catch (error) {
             if (error instanceof Error) {

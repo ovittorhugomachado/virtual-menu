@@ -13,12 +13,22 @@ export type StandardFormProps = {
 };
 
 export type AccountFormProps = {
-    onSubmit: (data: RestaurantData) => void;
+    onSubmit: (data: SignupPayload) => void;
     isLoading: boolean;
     message: string;
     setError: (error: string) => void;
     error?: string;
     initialValues?: Partial<RestaurantData>;
+};
+
+export type SignupPayload = {
+    restaurantName?: string;
+    cnpj?: string;
+    ownersName?: string;
+    cpf?: string;
+    phoneNumber?: string;
+    email?: string;
+    password?: string;
 };
 
 export type UpdateStoreDataFormProps = {

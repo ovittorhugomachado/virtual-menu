@@ -108,8 +108,16 @@ export const SignupFormContainer = ({
     };
 
     const handleFormSubmit: SubmitHandler<RestaurantData> = (data) => {
-
-        onSubmit(data);
+        const payload = {
+            restaurantName: data.user.restaurantName,
+            cnpj: data.user.cnpj,
+            ownersName: data.user.ownersName,
+            cpf: data.user.cpf,
+            phoneNumber: data.user.phoneNumber,
+            email: data.user.email,
+            password: data.user.password,
+        };
+        onSubmit(payload);
 
         setStep(5);
 

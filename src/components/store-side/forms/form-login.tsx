@@ -33,7 +33,11 @@ export const LoginFormContainer = ({
 
     const handleAccountData: SubmitHandler<RestaurantData> = (data) => {
         try {
-            onSubmit(data);
+            const payload = {
+                email: data.user.email,
+                password: data.user.password,
+            };
+            onSubmit(payload);
             clearErrors();
         } catch (error) {
             if (error instanceof Error) {

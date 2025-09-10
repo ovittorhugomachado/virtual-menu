@@ -1,7 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { AccountFormProps } from "../../../types/types-data-forms.d";
-import { AccountData } from "../../../types/types-account.d";
 import { RestaurantData } from "../../../types/types-restaurante-data.d";
 import { LogoBlue, LogoTextBlue, LogoTextWhite, LogoWhite } from "../../component-logo";
 import { InputPasswordRegister } from "../inputs/input-store-password-register";
@@ -23,13 +22,19 @@ export const CreateNewPasswordFormContainer = ({
         formState: { errors },
     } = useForm<RestaurantData>({
         defaultValues: {
-            password: '',
+            user: {
+                password: '',
+                ...(initialValues.user || {}),
+            },
             ...initialValues,
         },
     });
 
-    const handleFormSubmit: SubmitHandler<AccountData> = (data) => {
-        onSubmit(data);
+    const handleFormSubmit: SubmitHandler<RestaurantData> = (data) => {
+        const payload = {
+            password: data.user.password,
+        };
+        onSubmit(payload);
     };
 
     return (
