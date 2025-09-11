@@ -1,5 +1,5 @@
 import { UseFormRegister, UseFormWatch, UseFormClearErrors, FieldErrors, Control } from "react-hook-form";
-import { CategoryData } from "./types-menu.d";
+import { CategoryData, MenuItem } from "./types-menu.d";
 import { Address, RestaurantData } from "./types-restaurante-data.d";
 import { MenuItemFormData, OrderFormData } from "./types-data-forms.d";
 
@@ -52,10 +52,10 @@ export type InputMenuItemNameProps = {
 };
 
 export type InputMenuItemPriceProps = {
-    register: UseFormRegister<MenuItemFormData>;
-    errors: FieldErrors<MenuItemFormData>;
-    clearErrors: UseFormClearErrors<MenuItemFormData>;
-    initialValues: Partial<MenuItemFormData>;
+    register: UseFormRegister<MenuItem>;
+    errors: FieldErrors<MenuItem>;
+    clearErrors: UseFormClearErrors<MenuItem>;
+    initialValues: Partial<MenuItem>;
 };
 
 export type InputAddressProps = {

@@ -38,6 +38,7 @@ export type MenuItem = {
   categoryId: number[];
   categories?: CategoryData[];
   optionsGroups?: OptionGroup[];
+  
 };
 
 export type MenuItemsContainerProps = {
@@ -52,7 +53,7 @@ export type MenuItemsContainerProps = {
 export type OptionGroup = {
   id: number;
   storeId: number;
-  name: string;
+  title: string;
   required: boolean;
   options: Option[];
   maxSelectableOptions?: number;
@@ -97,4 +98,8 @@ export type ManageMenuContextType = {
   updateMenuItem: (categoryId: number, itemId: number, item: MenuItem) => Promise<void>;
   deleteMenuItem: (itemId: number) => Promise<void>;
   toggleStatusMenuItem: (categoryId: number, itemId: number) => Promise<void>;
+
+  //PROPRIEDADES DOS GRUPOS DE OPCIONAIS ---------------------------
+  optionsGroups: OptionGroup[];
+  // createOptionGroup: (group: OptionGroup) => Promise<void>;
 };

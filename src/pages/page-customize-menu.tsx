@@ -6,6 +6,7 @@ import { MenuItems } from "../components/store-side/store-page-components/store-
 import { useManageMenu } from "../context/manage-menu/manage-menu-context.ts";
 import { LoadingComponent } from "../components/component-loading.tsx";
 import { ErrorComponent } from "../components/component-error.tsx";
+import { CreateMenuItemForm } from "../components/store-side/forms/form-create-update-menu-item.tsx";
 
 export const CustomizeMenuPage = () => {
 
@@ -34,9 +35,11 @@ export const CustomizeMenuPage = () => {
 
                     <main className="w-full max-w-[1140px] flex flex-col items-center justify-center realtive">
                         <CategoryButtons />
-
-                        <MenuItems
+                        <CreateMenuItemForm
+                            onClose={() => { }} 
+                            categoryId={30}
                         />
+                        <MenuItems />
                     </main>
 
                     {/* <footer className={`${backgroundColor === 'black' ? 'bg-black text-white' : 'bg-white text-black'} ${categories.length === 0 ? 'hidden' : ''} h-40 flex items-center`}>

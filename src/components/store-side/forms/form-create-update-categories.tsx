@@ -25,6 +25,7 @@ export const CreateCategoryForm = ({ onClose, error }: { onClose: () => void; er
     const [successMessage, setSuccessMessage] = useState("");
 
     const selectedItems = watch("menuItems", []);
+    
 
     const handleFormSubmit = async (data: CategoryData) => {
         try {

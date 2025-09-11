@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
-import { CategoryData, MenuItem, StyleStorePage, /*OptionGroup, Option*/ } from "../../types/types-menu.d";
+import { CategoryData, MenuItem, OptionGroup, StyleStorePage, /*OptionGroup, Option*/ } from "../../types/types-menu.d";
 import { ManageMenuContext } from "./manage-menu-context";
 import {
     createCategoryService,
@@ -26,7 +26,7 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
     //CATEGORIAS E ITENS DO MENU
     const [categories, setCategories] = useState<CategoryData[]>([]);
     const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-    // const [optionsGroups, setOptionsGroups] = useState<OptionGroup[]>([]);
+    const [optionsGroups, setOptionsGroups] = useState<OptionGroup[]>([]);
     // const [options, setOptions] = useState<Option[]>([]);
 
     const fetchMenuData = async () => {
@@ -37,6 +37,7 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
             setStyleStore(allMenuData.data.style);
             setCategories(allMenuData.data.MenuCategory || []);
             setMenuItems(allMenuData.data.MenuItem || []);
+            setOptionsGroups(allMenuData.data.MenuItemOptionGroup || []);
         } catch (err) {
             setError('Falha ao carregar dados do menu');
             console.error('Error fetching menu data:', err);
@@ -276,6 +277,7 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
                 updateMenuItem,
                 deleteMenuItem,
                 toggleStatusMenuItem,
+                optionsGroups,
             }}
         >
             {children}
