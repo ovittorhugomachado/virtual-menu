@@ -12,9 +12,7 @@ import {
     deleteMenuItemService,
     toggleStatusMenuItemService,
     reorderCategoriesService,
-
 } from "../../services/service-manage-menu-store";
-import { LoadingComponent } from "../../components/component-loading";
 
 export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
 
@@ -54,68 +52,196 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
 
     //FUNÇÕES DAS CATEGORIAS -----------------------------
     const createCategory = async (name: string, menuItemIds: number[]) => {
-        const newCategory = await createCategoryService(name, menuItemIds);
-        setCategories(prev => [...prev, newCategory]);
+        setIsLoading(true);
+        try {
+            const newCategory = await createCategoryService(name, menuItemIds);
+            setCategories(prev => [...prev, newCategory].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
+            setMenuItems(prev =>
+                prev.map(item => {
+                    if (menuItemIds.includes(Number(item.id))) {
+                        const alreadyHas = item.categories?.some(cat => cat.id === newCategory.id);
+                        return alreadyHas
+                            ? item
+                            : {
+                                ...item,
+                                categories: [...(item.categories ?? []), newCategory]
+                            };
+                    }
+                    return {
+                        ...item,
+                        categories: (item.categories ?? []).filter(cat => cat.id !== newCategory.id)
+                    };
+                })
+            );
+        } catch (err) {
+            setError('Falha ao criar categoria');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const updateCategory = async (categoryId: number, name: string, menuItemIds: number[]) => {
-        await updateCategoryService(categoryId, name, menuItemIds);
-        setCategories(prev =>
-            prev.map(cat =>
-                cat.id === categoryId
-                    ? { ...cat, name, menuItemIds }
-                    : cat
-            )
-        );
+        setIsLoading(true);
+        try {
+            const category = await updateCategoryService(categoryId, name, menuItemIds);
+            setCategories(prev =>
+                prev.map(cat =>
+                    cat.id === categoryId
+                        ? { ...cat, ...category }
+                        : cat
+                )
+                    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+            );
+            setMenuItems(prev =>
+                prev.map(item => {
+                    if (menuItemIds.includes(Number(item.id))) {
+                        const alreadyHas = item.categories?.some(cat => cat.id === category.id);
+                        return alreadyHas
+                            ? item
+                            : {
+                                ...item,
+                                categories: [...(item.categories ?? []), category]
+                            };
+                    }
+                    return {
+                        ...item,
+                        categories: (item.categories ?? []).filter(cat => cat.id !== category.id)
+                    };
+                })
+            );
+        } catch (err) {
+            setError('Falha ao atualizar categoria');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const deleteCategory = async (categoryId: number) => {
-        await deleteCategoryService(categoryId);
-        setCategories(prev => prev.filter(cat => cat.id !== categoryId));
+        setIsLoading(true);
+        try {
+            await deleteCategoryService(categoryId);
+            setCategories(prev => prev.filter(cat => cat.id !== categoryId));
+            setMenuItems(prev =>
+                prev.map(item => ({
+                    ...item,
+                    categories: (item.categories ?? []).filter(cat => cat.id !== categoryId)
+                }))
+            );
+        } catch (err) {
+            setError('Falha ao deletar categoria');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const toggleStatusCategory = async (categoryId: number) => {
-        await toggleStatusCategoryService(categoryId);
-        setCategories(prev =>
-            prev.map(cat =>
-                cat.id === categoryId
-                    ? { ...cat, isAvailable: !cat.isAvailable }
-                    : cat
-            )
-        );
+        try {
+            await toggleStatusCategoryService(categoryId);
+            setCategories(prev =>
+                prev.map(cat =>
+                    cat.id === categoryId
+                        ? { ...cat, isAvailable: !cat.isAvailable }
+                        : cat
+                )
+            );
+        } catch (err) {
+            setError('Falha ao alterar status da categoria');
+            console.error(err);
+        }
     };
 
     const reorderCategories = async (orderedCategories: { id: number; order: number }[]) => {
-        await reorderCategoriesService(orderedCategories);
-        setCategories(prev =>
-            prev
-                .map(cat => {
-                    const found = orderedCategories.find(o => o.id === cat.id);
-                    return found ? { ...cat, order: found.order } : cat;
-                })
-                .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-        );
+        setIsLoading(true);
+        try {
+            await reorderCategoriesService(orderedCategories);
+            setCategories(prev =>
+                prev
+                    .map(cat => {
+                        const found = orderedCategories.find(o => o.id === cat.id);
+                        return found ? { ...cat, order: found.order } : cat;
+                    })
+                    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+            );
+        } catch (err) {
+            setError('Falha ao reordenar categorias');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     //FUNÇÕES DOS ITENS DO MENU -----------------------------
-    const createMenuItem = async (item: MenuItem) => {
-        await createMenuItemService(item);
-        await fetchMenuData();
+    const createMenuItem = async (itemData: MenuItem) => {
+        setIsLoading(true);
+        try {
+            const newItem = await createMenuItemService(itemData);
+
+            setMenuItems(prev => [...prev, newItem]);
+            setCategories(prev =>
+                prev.map(category => {
+                    if (itemData.categoryId.includes(category.id)) {
+                        const alreadyHas = category.menuItems?.includes(newItem.id ?? -1);
+                        return alreadyHas
+                            ? category
+                            : {
+                                ...category,
+                                menuItems: [...(category.menuItems ?? []), newItem.id ?? -1]
+                            };
+                    }
+                    return {
+                        ...category,
+                        menuItems: (category.menuItems ?? []).filter(id => id !== newItem.id)
+                    };
+                })
+            );
+        } catch (err) {
+            setError('Falha ao criar item');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const updateMenuItem = async (categoryId: number, itemId: number, item: MenuItem) => {
-        await updateMenuItemService(categoryId, itemId, item);
-        await fetchMenuData();
+        setIsLoading(true);
+        try {
+            await updateMenuItemService(categoryId, itemId, item);
+            await fetchMenuData();
+        } catch (err) {
+            setError('Falha ao atualizar item');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const deleteMenuItem = async (itemId: number) => {
-        await deleteMenuItemService(itemId);
-        await fetchMenuData();
+        setIsLoading(true);
+        try {
+            await deleteMenuItemService(itemId);
+            await fetchMenuData();
+        } catch (err) {
+            setError('Falha ao deletar item');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const toggleStatusMenuItem = async (categoryId: number, itemId: number) => {
-        await toggleStatusMenuItemService(categoryId, itemId);
-        await fetchMenuData();
+        setIsLoading(true);
+        try {
+            await toggleStatusMenuItemService(categoryId, itemId);
+            await fetchMenuData();
+        } catch (err) {
+            setError('Falha ao alterar status do item');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     //FUNÇÕES DOS GRUPOS DE OPCIONAIS -----------------------------
@@ -125,22 +251,11 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
         fetchMenuData();
     }, []);
 
-    if (isLoading) {
-        return <LoadingComponent />;
-    }
-
-    if (error) {
-        return (
-            <div className="error-container">
-                <p>{error}</p>
-                <button onClick={fetchMenuData}>Tentar novamente</button>
-            </div>
-        );
-    }
-
     return (
         <ManageMenuContext.Provider
             value={{
+                error,
+                isLoading,
                 styleStore,
                 tempBackgroundColor,
                 setTempBackgroundColor,

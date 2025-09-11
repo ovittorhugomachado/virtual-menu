@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { createMenuItemService, updateMenuItemByCategoryService } from "../../../services/service-manage-menu-store";
+//import { createMenuItemService, updateMenuItemService } from "../../../services/service-manage-menu-store";
 import { CreateMenuItemFormProps, MenuItemFormData, UpdateMenuItemFormProps } from "../../../types/types-data-forms.d";
 import { ErrorComponent } from "../../component-error";
 import { LoadingComponent } from "../../component-loading";
@@ -10,13 +10,11 @@ import { InputCategories } from "../inputs/input-store-categories";
 import { IoCloseOutline } from "react-icons/io5";
 import { IoIosAddCircle } from "react-icons/io";
 import { FaCheckCircle } from "react-icons/fa";
+import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
 
-export const MenuItemCreationForm: React.FC<CreateMenuItemFormProps> = ({
-    onClose,
-    onCreated,
-    categoryId,
-    categories
-}) => {
+export const CreateMenuItemForm = ({ onClose, error }: { onClose: () => void; error?: string }) => {
+
+    const { createMenuItem, categories } = useManageMenu();
 
     const {
         register,
@@ -88,18 +86,18 @@ export const MenuItemCreationForm: React.FC<CreateMenuItemFormProps> = ({
         }
 
         try {
-            await createMenuItemService({
+            await createMenuItem({
                 name: data.name,
                 description: data.description ?? undefined,
                 price: parsedPrice,
-                categoryId: selectedCategories.map(Number)
+                categoryId: selectedCategories.map(Number),
             });
 
             if (onCreated) onCreated();
             setSuccessMessage("Item criado com sucesso!");
             onClose();
-        } catch (error: unknown) {
-            setErrorMessage(error instanceof Error ? error.message : "Erro ao criar item");
+        } catch (error) {
+            console.error("Erro ao criar item:", error);
         } finally {
             setLoading(false);
         }
@@ -254,7 +252,7 @@ export const UpdateMenuItemForm: React.FC<UpdateMenuItemFormProps> = ({
             return;
         }
         try {
-            await updateMenuItemByCategoryService(categoryId, itemId, {
+            await updateMenuItemService(categoryId, itemId, {
                 name: data.name,
                 description: data.description,
                 price: parsedPrice,

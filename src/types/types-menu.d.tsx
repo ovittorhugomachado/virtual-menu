@@ -11,7 +11,7 @@ export type StyleStorePage = {
 //TIPOS DA CATEGORIA ----------------------------
 export type CategoryData = {
   id: number;
-  storeId: number;
+  storeId?: number;
   name: string;
   isAvailable?: boolean;
   order?: number;
@@ -30,7 +30,7 @@ export type CategoryButtonsProps = {
 //TIPOS DO ITEM ----------------------------
 export type MenuItem = {
   storeId?: number;
-  id: number;
+  id?: number;
   name: string;
   description: string;
   price: number;
@@ -70,6 +70,8 @@ export type Option = {
 
 //TIPOS DO MENU CONTEXT-----------------------------
 export type ManageMenuContextType = {
+  error: string | null;
+  isLoading: boolean;
   //PROPRIEDADES DO ESTILO DA LOJA --------------------------
   styleStore?: StyleStorePage;
   tempBackgroundColor: string;

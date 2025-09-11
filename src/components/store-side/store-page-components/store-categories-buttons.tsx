@@ -109,7 +109,6 @@ export const CategoryButtons = () => {
                                 .map((category) => (
                                     <motion.div
                                         key={category.id}
-                                        layout
                                         className="relative min-w-28 h-8 lg:h-10 px-20 rounded-3xl flex items-center justify-center flex-shrink-0 transition-transform duration-200"
                                         style={{
                                             backgroundColor: tempButtonColor ?? '',
@@ -118,8 +117,7 @@ export const CategoryButtons = () => {
                                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
                                     >
                                         {!category.isAvailable && (
-                                            <div className="absolute w-full h-full bg-gray-300/50  rounded-full">
-                                            </div>
+                                            <div className="absolute inset-0 w-full h-full bg-gray-300/50 rounded-full pointer-events-none"></div>
                                         )}
                                         <button
                                             title="Renomear categoria"

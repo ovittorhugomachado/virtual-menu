@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
 import { uploadMenuItemImage } from "../../../services/service-upload-image";
-import { deleteMenuItemService } from "../../../services/service-manage-menu-store";
 import { UpdateMenuItemForm } from "../forms/form-create-update-menu-item";
 import { MdOutlineEdit } from "react-icons/md";
 import { IoCloseOutline } from "react-icons/io5";
@@ -25,6 +25,8 @@ export const Item = ({
     id,
     onUpdated,
 }: ItemProps) => {
+
+    const { deleteMenuItem } = useManageMenu();
 
     const [error, setError] = useState<string | null>(null);
     const [imageVersion, setImageVersion] = useState(Date.now());
@@ -85,7 +87,7 @@ export const Item = ({
                 >
                     {description}
                 </p>
-                <h5>R$ {Number(price.toString().replace(',', '.')).toFixed(2).replace('.', ',')}</h5>
+                <h5>R$ {Number((price ?? 0).toString().replace(',', '.')).toFixed(2).replace('.', ',')}</h5>
             </div>
             {showFormUpdateMenuItem === id && (
                 <UpdateMenuItemForm
@@ -108,7 +110,7 @@ export const Item = ({
                     title="Excluir categoria"
                     className="w-5 h-5 ml-2 border-[1px] rounded-full bg-red-600 text-white border-amber-50 z-2 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200"
                     onClick={async () => {
-                        await deleteMenuItemService(id);
+                        await deleteMenuItem(id);
                         if (onUpdated) onUpdated();
                     }}
                 >

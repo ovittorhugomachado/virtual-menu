@@ -45,7 +45,6 @@ export const CreateCategoryForm = ({ onClose, error }: { onClose: () => void; er
         }
     };
 
-    console.log(menuItems)
     return (
         <UpdateDataForm
             onClose={onClose}
@@ -103,8 +102,8 @@ export const CreateCategoryForm = ({ onClose, error }: { onClose: () => void; er
                                         <input
                                             type="checkbox"
                                             id={`item-${item.id}`}
-                                            checked={selectedItems?.includes(item.id)}
-                                            onChange={(e) => handleCheckboxChange(item.id, e.target.checked)}
+                                            checked={selectedItems?.includes(Number(item.id))}
+                                            onChange={(e) => handleCheckboxChange(Number(item.id), e.target.checked)}
                                             className="flex items-center justify-center peer appearance-none w-5 h-5 rounded-full border border-black dark:border-white checked:bg-primary checked:border-blue-600 mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
                                         />
                                         <p className="flex items-center justify-center gap-3">{item.name}<span className="text-sm font-extralight text-zinc-600 dark:text-zinc-400">R${item.price}</span></p>
@@ -135,8 +134,8 @@ export const UpdateCategoryForm = ({
     initialMenuItems?: number[];
     error?: string;
 }) => {
-    
-    const { updateCategory, deleteCategory, menuItems } = useManageMenu();
+
+    const { categories, updateCategory, deleteCategory, menuItems } = useManageMenu();
 
     const {
         register,
@@ -156,10 +155,6 @@ export const UpdateCategoryForm = ({
     const [showConfirm, setShowConfirm] = useState(false);
 
     const selectedItems = watch("menuItems", []);
-
-
-    console.log("menuItems:", menuItems)
-    console.log("selectedItems:", selectedItems)
 
     const handleFormSubmit = async (data: CategoryData) => {
         try {
@@ -183,6 +178,7 @@ export const UpdateCategoryForm = ({
         try {
             await deleteCategory(categoryId);
             setSuccessMessage("Categoria excluída com sucesso!");
+            onClose();
         } catch (error) {
             console.error(error);
         }
@@ -193,11 +189,17 @@ export const UpdateCategoryForm = ({
             .filter(item =>
                 item.categories?.some(category => category.id === categoryId)
             )
-            .map(item => item.id);
+            .map(item => item.id)
+            .filter((id): id is number => typeof id === "number");
 
         setValue("menuItems", selectedIds);
     }, [categoryId, menuItems, setValue]);
 
+    const category = categories.find(c => c.id === categoryId);
+
+    if (!category) {
+        return <p>Categoria não encontrada ou foi excluída.</p>;
+    }
 
     return (
         <UpdateDataForm
@@ -255,8 +257,8 @@ export const UpdateCategoryForm = ({
                                         <input
                                             type="checkbox"
                                             id={`item-${item.id}`}
-                                            checked={selectedItems?.includes(item.id)}
-                                            onChange={(e) => handleCheckboxChange(item.id, e.target.checked)}
+                                            checked={selectedItems?.includes(Number(item.id))}
+                                            onChange={(e) => handleCheckboxChange(Number(item.id), e.target.checked)}
                                             className="flex items-center justify-center peer appearance-none w-5 h-5 rounded-full border border-black dark:border-white checked:bg-primary checked:border-blue-600 mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
                                         />
                                         <p className="flex items-center justify-center gap-3">{item.name}<span className="text-sm font-extralight text-zinc-600 dark:text-zinc-400">R${item.price}</span></p>
