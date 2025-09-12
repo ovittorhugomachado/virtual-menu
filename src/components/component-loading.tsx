@@ -1,23 +1,9 @@
 export const LoadingComponent = () => {
     return (
-        <div className="w-full min-h-50 m-auto flex items-center justify-center gap-4 drop-shadow-[6px_2px_4px_rgba(255,255,255,0.9)] dark:drop-shadow-[6px_2px_4px_rgba(0,0,0,0.9)]">
-            <div className="flex flex-col gap-2">
-                <div className="w-9 h-1 bg-primary rounded-full animate-wave1" />
-                <div className="w-9 h-1 bg-primary rounded-full animate-wave2" />
-                <div className="w-9 h-1 bg-primary rounded-full animate-wave3" />
-            </div>
-            <span className="dark:text-white text-black text-2xl">Carregando</span>
-        </div>
-    );
-};
-
-export const LoadingComponentLines = () => {
-    return (
-        <div className="w-full m-auto flex items-center justify-center gap-3">
-            <div className="flex flex-col gap-1.5">
-                <div className="w-7 h-1 bg-primary rounded-full animate-wave1" />
-                <div className="w-7 h-1 bg-primary rounded-full animate-wave2" />
-                <div className="w-7 h-1 bg-primary rounded-full animate-wave3" />
+        <div className="fixed inset-0 w-screen h-screen flex items-center justify-center bg-opacity-0 z-50">
+            <div className="flex flex-col items-center justify-center">
+                <div className="animate-spin rounded-full border-7 border-primary border-t-transparent w-18 h-18 mb-4"></div>
+                <span className="dark:text-white text-black text-2xl">Carregando</span>
             </div>
         </div>
     );
