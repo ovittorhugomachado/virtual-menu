@@ -248,9 +248,10 @@ export const getMenuItemsMyStoreService = async () => {
 
 export const createMenuItemService = async (item: {
     name: string;
-    description: string;
+    description?: string;
     price: number;
-    categoryId: number[];
+    categoryId?: number[];
+    optionGroupId?: number[];
 }) => {
     try {
         const response = await fetch(`${API_URL}/menu-items`, {

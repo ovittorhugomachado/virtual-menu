@@ -11,7 +11,6 @@ import { IoIosAddCircle, IoIosArrowDown } from "react-icons/io";
 import { CategoryData, MenuItem, OptionGroup } from "../../../types/types-menu.d";
 import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
 import { UpdateDataForm } from "./deafult/form-update-data";
-import { CiRead } from "react-icons/ci";
 
 export const CreateMenuItemForm = ({
     onClose,
@@ -36,8 +35,8 @@ export const CreateMenuItemForm = ({
         watch
     } = useForm<MenuItem>();
 
-    const [openArrayCategories, setOpenArrayCategories] = useState(false);
-    const [openArrayOptions, setOpenArrayOptions] = useState(false);
+    const [openArrayCategories, setOpenArrayCategories] = useState(true);
+    const [openArrayOptions, setOpenArrayOptions] = useState(true);
     const [successMessage, setSuccessMessage] = useState("");
 
     useEffect(() => {
@@ -58,11 +57,16 @@ export const CreateMenuItemForm = ({
                 ? data.categories.map(cat => cat.id)
                 : [];
 
+            const optionGroupIds = Array.isArray(data.optionsGroups)
+                ? data.optionsGroups.map(gr => gr.id)
+                : [];
+
             await createMenuItem({
                 name: data.name,
                 description: data.description,
                 price: Number(data.price.toString().replace(',', '.')),
                 categoryId: categoryIds,
+                optionGroupId: optionGroupIds
             });
 
             reset();
@@ -162,7 +166,6 @@ export const CreateMenuItemForm = ({
                         type="button"
                         className="flex items-center px-8 gap-2 my-2 bg-zinc-300 dark:bg-[#161a21] rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
                         onClick={() => setOpenArrayCategories(!openArrayCategories)}
-                        style={{ fontSize: '18px' }}
                     >
                         <IoIosArrowDown className={`${openArrayCategories ? 'rotate-180' : ''} transition-all duration-300`} />
                         Itens ({(selectedCategories ?? []).length}/{categories.length})
@@ -194,7 +197,6 @@ export const CreateMenuItemForm = ({
                         type="button"
                         className="w-full flex items-center justify-center px-8 gap-2 my-2 cursor-pointer hover:scale-103 transition-all duration-300"
                         onClick={() => setOpenArrayOptions(!openArrayOptions)}
-                        style={{ fontSize: '18px' }}
                     >
                         <IoIosArrowDown className={`${openArrayOptions ? 'rotate-180' : ''} transition-all duration-300`} />
                         Opcionais ({(selectedoptions ?? []).length}/{optionsGroups.length})

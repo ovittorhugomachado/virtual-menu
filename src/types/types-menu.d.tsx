@@ -37,6 +37,7 @@ export type MenuItem = {
   photoUrl?: string;
   categoryId: number[];
   categories?: CategoryData[];
+  optionGroupId?: number[];
   optionsGroups?: OptionGroup[];
   
 };
