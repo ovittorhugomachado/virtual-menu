@@ -96,7 +96,7 @@ export type ManageMenuContextType = {
   //PROPRIEDADES DOS ITENS DO MENU ---------------------------
   menuItems: MenuItem[];
   createMenuItem: (item: MenuItem) => Promise<void>;
-  updateMenuItem: (categoryId: number, itemId: number, item: MenuItem) => Promise<void>;
+  updateMenuItem: (itemId: number, item: MenuItem) => Promise<void>;
   deleteMenuItem: (itemId: number) => Promise<void>;
   toggleStatusMenuItem: (categoryId: number, itemId: number) => Promise<void>;
 

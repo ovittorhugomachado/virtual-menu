@@ -23,7 +23,7 @@ export const CategoryButtons = () => {
     const [maxScroll, setMaxScroll] = useState(0);
     const [positionCarousel, setPositionCarousel] = useState(0);
     const [showFormCreateCategory, setShowFormCreateCategory] = useState(false);
-    const [showFormSettings, setShowFormSettings] = useState(false);
+    const [showFormCreateCategories, setShowFormCreateCategories] = useState(false);
     const [showFormOrdered, setShowFormOrdered] = useState(false);
     const [editCategoryId, setEditCategoryId] = useState<number | null>(null);
     const [editCategoryName, setEditCategoryName] = useState<string>("")
@@ -77,6 +77,10 @@ export const CategoryButtons = () => {
     useEffect(() => {
         x.set(0);
     }, [categories, x]);
+
+    console.log(editCategoryId)
+    console.log(editCategoryName)
+
 
     return (
         <div
@@ -153,7 +157,7 @@ export const CategoryButtons = () => {
                             <button
                                 title="Criar nova categoria"
                                 className="flex items-center justify-center gap-2 px-4 py-2 rounded-3xl text-black bg-gray-400 cursor-pointer hover:scale-103 transition-transform duration-200"
-                                onClick={() => setShowFormSettings(true)}
+                                onClick={() => setShowFormCreateCategories(true)}
                             >
                                 <IoAddCircle className="text-2xl hidden sm:block" /> Criar nova categoria
                             </button>
@@ -189,16 +193,16 @@ export const CategoryButtons = () => {
                     >
                         <IoAddCircle className="text-2xl hidden sm:block" /> Criar nova categoria
                     </button>
-                    {showFormCreateCategory && (
+                    {showFormCreateCategory  && (
                         <CreateCategoryForm
                             onClose={() => setShowFormCreateCategory(false)}
                         />
                     )}
                 </div>
             )}
-            {showFormSettings && (
+            {showFormCreateCategories && (
                 <CreateCategoryForm
-                    onClose={() => setShowFormSettings(false)}
+                    onClose={() => setShowFormCreateCategories(false)}
                 />
             )}
             {showFormOrdered && (
@@ -213,6 +217,7 @@ export const CategoryButtons = () => {
                     onClose={() => {
                         setEditCategoryId(null);
                         setEditCategoryName("");
+                        setShowFormCreateCategory(false);
                     }}
                     initialName={editCategoryName}
                     categoryId={editCategoryId}

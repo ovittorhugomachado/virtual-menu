@@ -6,7 +6,8 @@ import { MenuItems } from "../components/store-side/store-page-components/store-
 import { useManageMenu } from "../context/manage-menu/manage-menu-context.ts";
 import { LoadingComponent } from "../components/component-loading.tsx";
 import { ErrorComponent } from "../components/component-error.tsx";
-import { CreateMenuItemForm } from "../components/store-side/forms/form-create-update-menu-item.tsx";
+import { CreateMenuItemForm, UpdateMenuItemForm } from "../components/store-side/forms/form-create-update-menu-item.tsx";
+import { useState } from "react";
 
 export const CustomizeMenuPage = () => {
 
@@ -16,30 +17,23 @@ export const CustomizeMenuPage = () => {
         tempBackgroundColor,
     } = useManageMenu();
 
-
     return (
         <>
-            {isLoading && (
-                <LoadingComponent />
-            )}
             {error ? (
                 <ErrorComponent message={error} />
             ) : (
                 <div
                     style={{ backgroundColor: tempBackgroundColor }}
-                    className="w-screen h-full min-h-screen px-[5%] lg:px-[15%] flex flex-col items-center text-black lg:text-base"
+                    className="w-screen h-full relative min-h-screen px-[5%] lg:px-[15%] flex flex-col items-center text-black lg:text-base"
                 >
+                    {isLoading && <LoadingComponent />}
                     <StyleToolbar />
                     <Header />
                     <StoreBanner />
-
                     <main className="w-full max-w-[1140px] flex flex-col items-center justify-center realtive">
                         <CategoryButtons />
-                        <CreateMenuItemForm
-                            onClose={() => { }} 
-                            categoryId={30}
-                        />
-                        <MenuItems />
+                        {/* 
+                        <MenuItems /> */}
                     </main>
 
                     {/* <footer className={`${backgroundColor === 'black' ? 'bg-black text-white' : 'bg-white text-black'} ${categories.length === 0 ? 'hidden' : ''} h-40 flex items-center`}>

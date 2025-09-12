@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { UploadLogo } from "../../../services/service-upload-image";
 import { FaCamera } from "react-icons/fa";
-import { LoadingComponentLines } from "../../component-loading";
+import { LoadingComponent } from "../../component-loading";
 import { useRestaurantData } from "../../../context/restaurant-data/restaurant-data-context";
 
 export const Logo = () => {
@@ -46,7 +46,7 @@ export const Logo = () => {
         <div className="w-24 h-24 sm:w-23 sm:h-23 rounded-full relative">
             {isLoading ? (
                 <div className="absolute inset-0 p-4 flex items-center justify-center bg-transparent rounded-full z-0">
-                    <LoadingComponentLines />
+                    <LoadingComponent />
                 </div>
             ) : (
                 <img

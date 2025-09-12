@@ -25,7 +25,7 @@ export const CreateCategoryForm = ({ onClose, error }: { onClose: () => void; er
     const [successMessage, setSuccessMessage] = useState("");
 
     const selectedItems = watch("menuItems", []);
-    
+
 
     const handleFormSubmit = async (data: CategoryData) => {
         try {
@@ -136,8 +136,7 @@ export const UpdateCategoryForm = ({
     error?: string;
 }) => {
 
-    const { categories, updateCategory, deleteCategory, menuItems } = useManageMenu();
-
+    const { setCategories, categories, updateCategory, deleteCategory, menuItems } = useManageMenu();
     const {
         register,
         handleSubmit,
@@ -150,14 +149,38 @@ export const UpdateCategoryForm = ({
             menuItems: initialMenuItems
         }
     });
-
     const [openArrayItems, setOpenArrayItems] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
     const [showConfirm, setShowConfirm] = useState(false);
+    const [isDeleted, setIsDeleted] = useState(false);
 
     const selectedItems = watch("menuItems", []);
+    const category = categories.find(c => c.id === categoryId);
+
+    useEffect(() => {
+        const selectedIds = menuItems
+            .filter(item =>
+                item.categories?.some(category => category.id === categoryId)
+            )
+            .map(item => item.id)
+            .filter((id): id is number => typeof id === "number");
+
+        setValue("menuItems", selectedIds);
+    }, [categoryId, menuItems, setValue]);
+
+    useEffect(() => {
+        if (isDeleted || !category) {
+            onClose();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDeleted, category]);
 
     const handleFormSubmit = async (data: CategoryData) => {
+        if (isDeleted) {
+            onClose();
+            return;
+        }
+
         try {
             await updateCategory(categoryId, data.name.trim(), data.menuItems || []);
             setSuccessMessage("Categoria atualizada com sucesso!");
@@ -177,11 +200,14 @@ export const UpdateCategoryForm = ({
 
     const handleDeleteCategory = async () => {
         try {
+            setIsDeleted(true); 
             await deleteCategory(categoryId);
-            setSuccessMessage("Categoria excluída com sucesso!");
-            onClose();
+            setCategories(prev => prev.filter(cat => cat.id !== categoryId));
+            setShowConfirm(false);
+            onClose(); 
         } catch (error) {
             console.error(error);
+            setIsDeleted(false); 
         }
     };
 
@@ -196,12 +222,16 @@ export const UpdateCategoryForm = ({
         setValue("menuItems", selectedIds);
     }, [categoryId, menuItems, setValue]);
 
-    const category = categories.find(c => c.id === categoryId);
+    useEffect(() => {
+        if (isDeleted || !category) {
+            onClose();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDeleted, category]);
 
-    if (!category) {
-        return <p>Categoria não encontrada ou foi excluída.</p>;
+    if (isDeleted || !category) {
+        return null;
     }
-
     return (
         <UpdateDataForm
             onClose={onClose}
@@ -273,7 +303,10 @@ export const UpdateCategoryForm = ({
             <button
                 type="button"
                 className="w-50 mt-4 mx-auto text-red-500 px-3 py-2 flex justify-center items-center rounded-full cursor-pointer hover:scale-105 transition-all duration-300 Z-30"
-                onClick={() => setShowConfirm(true)}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setShowConfirm(true);
+                }}
             >
                 <BsFillTrash3Fill className="mr-2" />
                 Excluir categoria
@@ -287,7 +320,8 @@ export const UpdateCategoryForm = ({
                 />
             )}
             {error && (
-                <p className="text-error">{error}</p>
+                <p className="text-error">{error}
+                </p>
             )}
         </UpdateDataForm>
     );

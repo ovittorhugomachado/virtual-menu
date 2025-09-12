@@ -4,6 +4,7 @@ import { uploadMenuItemImage } from "../../../services/service-upload-image";
 import { MdOutlineEdit } from "react-icons/md";
 import { IoCloseOutline } from "react-icons/io5";
 import { FaCamera } from "react-icons/fa";
+import { UpdateMenuItemForm } from "../forms/form-create-update-menu-item";
 
 interface ItemProps {
     image?: string;
@@ -88,15 +89,12 @@ export const Item = ({
                 </p>
                 <h5>R$ {Number((price ?? 0).toString().replace(',', '.')).toFixed(2).replace('.', ',')}</h5>
             </div>
-            {/* {showFormUpdateMenuItem === id && (
+            {showFormUpdateMenuItem === id && (
                 <UpdateMenuItemForm
                     onClose={() => setShowFormUpdateMenuItem(null)}
-                    categoryId={categoryId}
-                    onUpdated={() => onUpdated && onUpdated()}
                     itemId={id}
-                    initialData={{ name, description, price }}
                 />
-            )} */}
+            )}
             <div className="absolute top-[-11px] right-[10px] flex">
                 <button
                     title="Renomear categoria"

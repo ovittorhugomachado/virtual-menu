@@ -206,10 +206,10 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
-    const updateMenuItem = async (categoryId: number, itemId: number, item: MenuItem) => {
+    const updateMenuItem = async (itemId: number, item: MenuItem) => {
         setIsLoading(true);
         try {
-            await updateMenuItemService(categoryId, itemId, item);
+            await updateMenuItemService(itemId, item);
             await fetchMenuData();
         } catch (err) {
             setError('Falha ao atualizar item');

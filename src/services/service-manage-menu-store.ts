@@ -279,16 +279,17 @@ export const createMenuItemService = async (item: {
 };
 
 export const updateMenuItemService = async (
-    categoryId: number,
     itemId: number,
     item: {
         name?: string | null;
         description?: string | null;
         price?: number | null;
+        categoryId?: number[] | null;
+        optionGroupId?: number[] | null;
     }
 ) => {
     try {
-        const response = await fetch(`${API_URL}/menu-items/${categoryId}/${itemId}`, {
+        const response = await fetch(`${API_URL}/menu-items/${itemId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
