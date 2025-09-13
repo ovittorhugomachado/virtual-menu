@@ -26,7 +26,6 @@ export const CreateCategoryForm = ({ onClose, error }: { onClose: () => void; er
 
     const selectedItems = watch("menuItems", []);
 
-
     const handleFormSubmit = async (data: CategoryData) => {
         try {
             await createCategory(data.name.trim(), data.menuItems || []);
@@ -136,7 +135,14 @@ export const UpdateCategoryForm = ({
     error?: string;
 }) => {
 
-    const { setCategories, categories, updateCategory, deleteCategory, menuItems } = useManageMenu();
+    const {
+        setCategories,
+        categories,
+        updateCategory,
+        deleteCategory,
+        menuItems
+    } = useManageMenu();
+    
     const {
         register,
         handleSubmit,
@@ -200,14 +206,14 @@ export const UpdateCategoryForm = ({
 
     const handleDeleteCategory = async () => {
         try {
-            setIsDeleted(true); 
+            setIsDeleted(true);
             await deleteCategory(categoryId);
             setCategories(prev => prev.filter(cat => cat.id !== categoryId));
             setShowConfirm(false);
-            onClose(); 
+            onClose();
         } catch (error) {
             console.error(error);
-            setIsDeleted(false); 
+            setIsDeleted(false);
         }
     };
 

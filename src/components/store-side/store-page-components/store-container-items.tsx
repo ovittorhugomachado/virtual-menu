@@ -25,7 +25,6 @@ export const MenuItems = () => {
     return (
         <section className="w-full px-2">
             {categories.map(category => (
-
                 <div
                     key={category.id}
                     className={`w-full mt-4 ${tempBackgroundColor === 'white' ? 'text-black' : 'text-white'}`}
@@ -69,7 +68,7 @@ export const MenuItems = () => {
                                                 item.photoUrl && item.photoUrl.startsWith('https://s3.us-east-2.amazonaws.com/')
                                                     ? item.photoUrl
                                                     : item.photoUrl
-                                                        ? `${VITE_API_URL}/uploads/store${restaurantData?.id}-category${category.id}-product${item.id}${getExtension(item.photoUrl)}`
+                                                        ? `${VITE_API_URL}/uploads/store-${restaurantData?.id}-category${category.id}-product${item.id}${getExtension(item.photoUrl)}`
                                                         : '/food-default.png'
                                             }
                                             name={item.name}

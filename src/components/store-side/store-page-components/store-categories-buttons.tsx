@@ -78,10 +78,6 @@ export const CategoryButtons = () => {
         x.set(0);
     }, [categories, x]);
 
-    console.log(editCategoryId)
-    console.log(editCategoryName)
-
-
     return (
         <div
             className={`${tempBackgroundColor === 'black' ? 'bg-black' : 'bg-white'} w-full mx-2 pb-6 sticky -top-1 ms:top-42 sm:top-29 flex justify-center`}
@@ -109,7 +105,7 @@ export const CategoryButtons = () => {
                             style={{ x }}
                         >
                             {categories
-                                .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+                                .sort((a, b) => (b.order ?? 0) - (a.order ?? 0))
                                 .map((category) => (
                                     <motion.div
                                         key={category.id}

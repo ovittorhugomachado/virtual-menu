@@ -37,13 +37,14 @@ export const CategoryOrderManager: React.FC<CategoryOrderManagerProps> = ({
 
         setTimeout(() => {
             const newCategories = [...localCategories];
+            const tempOrder = newCategories[index].order;
+            newCategories[index].order = newCategories[index - 1].order;
+            newCategories[index - 1].order = tempOrder;
+
             [newCategories[index], newCategories[index - 1]] =
                 [newCategories[index - 1], newCategories[index]];
 
-            setLocalCategories(newCategories.map((cat, i) => ({
-                ...cat,
-                order: i + 1
-            })));
+            setLocalCategories(newCategories);
 
             setAnimatedIndexes([]);
             setAnimationDirection(null);
@@ -57,13 +58,15 @@ export const CategoryOrderManager: React.FC<CategoryOrderManagerProps> = ({
 
         setTimeout(() => {
             const newCategories = [...localCategories];
+
+            const tempOrder = newCategories[index].order;
+            newCategories[index].order = newCategories[index + 1].order;
+            newCategories[index + 1].order = tempOrder;
+
             [newCategories[index], newCategories[index + 1]] =
                 [newCategories[index + 1], newCategories[index]];
 
-            setLocalCategories(newCategories.map((cat, i) => ({
-                ...cat,
-                order: i + 1
-            })));
+            setLocalCategories(newCategories);
 
             setAnimatedIndexes([]);
             setAnimationDirection(null);
@@ -115,7 +118,7 @@ export const CategoryOrderManager: React.FC<CategoryOrderManagerProps> = ({
                     </div>
                 )}
                 {localCategories
-                    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+                    .sort((a, b) => (b.order ?? 0) - (a.order ?? 0))
                     .map((category, index) => (
                         <div
                             key={category.id}

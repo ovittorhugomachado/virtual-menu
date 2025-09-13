@@ -100,6 +100,7 @@ export type ManageMenuContextType = {
 
   //PROPRIEDADES DOS ITENS DO MENU ---------------------------
   menuItems: MenuItem[];
+  setMenuItems: React.Dispatch<React.SetStateAction<MenuItem[]>>;
   createMenuItem: (item: MenuItem) => Promise<void>;
   updateMenuItem: (itemId: number, item: MenuItem) => Promise<void>;
   updateImageMenuItem: (itemId: number, imageFile: File) => Promise<void>;
