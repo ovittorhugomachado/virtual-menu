@@ -82,7 +82,6 @@ export const DeleteBannerImage = async () => {
 };
 
 export const uploadMenuItemImage = async (
-    categoryId: number,
     menuItemId: number,
     imageFile: File
 ) => {
@@ -91,7 +90,7 @@ export const uploadMenuItemImage = async (
         const formData = new FormData();
         formData.append('menu-item', imageFile);
 
-        const response = await fetch(`${API_URL}/${categoryId}/${menuItemId}`, {
+        const response = await fetch(`${API_URL}/${menuItemId}`, {
             method: 'PATCH',
             headers: {
                 'Authorization': `Bearer ${token}`

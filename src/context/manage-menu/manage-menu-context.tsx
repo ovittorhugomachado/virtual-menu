@@ -13,6 +13,7 @@ import {
     toggleStatusMenuItemService,
     reorderCategoriesService,
 } from "../../services/service-manage-menu-store";
+import { uploadMenuItemImage } from "../../services/service-upload-image";
 
 export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
 
@@ -219,6 +220,17 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const updateImageMenuItem = async (itemId: number, imageFile: File) => {
+        //LOADING É FEITO LOCALMENTE NO COMPONENTE
+        try {
+            await uploadMenuItemImage(itemId, imageFile);
+
+        } catch (err) {
+            setError('Falha ao atualizar imagem do item');
+            console.error(err);
+        }
+    }
+
     const deleteMenuItem = async (itemId: number) => {
         setIsLoading(true);
         try {
@@ -257,6 +269,7 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
             value={{
                 error,
                 isLoading,
+                setIsLoading,
                 styleStore,
                 tempBackgroundColor,
                 setTempBackgroundColor,
@@ -275,6 +288,7 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
                 menuItems,
                 createMenuItem,
                 updateMenuItem,
+                updateImageMenuItem,
                 deleteMenuItem,
                 toggleStatusMenuItem,
                 optionsGroups,

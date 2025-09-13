@@ -39,8 +39,12 @@ export type MenuItem = {
   categories?: CategoryData[];
   optionGroupId?: number[];
   optionsGroups?: OptionGroup[];
-  
 };
+
+export type MenuItemImageProps = {
+  id: number;
+  photoUrl?: string;
+}
 
 export type MenuItemsContainerProps = {
   storeId: number;
@@ -74,6 +78,7 @@ export type Option = {
 export type ManageMenuContextType = {
   error: string | null;
   isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   //PROPRIEDADES DO ESTILO DA LOJA --------------------------
   styleStore?: StyleStorePage;
   tempBackgroundColor: string;
@@ -97,6 +102,7 @@ export type ManageMenuContextType = {
   menuItems: MenuItem[];
   createMenuItem: (item: MenuItem) => Promise<void>;
   updateMenuItem: (itemId: number, item: MenuItem) => Promise<void>;
+  updateImageMenuItem: (itemId: number, imageFile: File) => Promise<void>;
   deleteMenuItem: (itemId: number) => Promise<void>;
   toggleStatusMenuItem: (categoryId: number, itemId: number) => Promise<void>;
 
