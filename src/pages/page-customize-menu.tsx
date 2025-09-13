@@ -29,11 +29,10 @@ export const CustomizeMenuPage = () => {
                     {isLoading && <LoadingComponent />}
                     <StyleToolbar />
                     <Header />
-                    <StoreBanner />
                     <main className="w-full max-w-[1140px] flex flex-col items-center justify-center realtive">
+                        <StoreBanner />
                         <CategoryButtons />
-                        {/* 
-                        <MenuItems /> */}
+                        <MenuItems />
                     </main>
 
                     {/* <footer className={`${backgroundColor === 'black' ? 'bg-black text-white' : 'bg-white text-black'} ${categories.length === 0 ? 'hidden' : ''} h-40 flex items-center`}>

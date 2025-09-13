@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useRestaurantData } from "../../../context/restaurant-data/restaurant-data-context";
-import { LoadingComponent } from "../../component-loading";
+import { LoadingComponent, LoadingComponentInternal } from "../../component-loading";
 import { DeleteBannerImage, UploadBannerImage } from "../../../services/service-upload-image";
 import { FaCamera } from "react-icons/fa";
 import { BsFillTrash3Fill } from "react-icons/bs";
@@ -21,7 +21,7 @@ export const StoreBanner = () => {
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         const newExtension = file?.name.split('.').pop()?.toLowerCase() ?? 'jpg';
-        const newBannerUrl = `https://s3.us-east-2.amazonaws.com/bucket.rangos/store${restaurantData?.user.id}/banner.${newExtension}`
+        const newBannerUrl = `https://s3.us-east-2.amazonaws.com/bucket.rangos/store-${restaurantData?.user.id}/banner.${newExtension}`
         
         if (file && restaurantData) {
             setIsLoading(true);
@@ -62,8 +62,8 @@ export const StoreBanner = () => {
     return (
         <div className="w-full relative hidden xs:block">
             {isLoading ? (
-                <div className="w-full min-h-30 max-h-80 object-center object-contain">
-                    <LoadingComponent />
+                <div className="w-full min-h-70 flex items-center justify-center max-h-80 object-center object-contain">
+                    <LoadingComponentInternal />
                 </div>
             ) : (
                 <img

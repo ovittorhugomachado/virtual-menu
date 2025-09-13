@@ -286,6 +286,7 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
                 toggleStatusCategory,
                 reorderCategories,
                 menuItems,
+                setMenuItems,
                 createMenuItem,
                 updateMenuItem,
                 updateImageMenuItem,
