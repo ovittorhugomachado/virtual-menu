@@ -41,6 +41,16 @@ export type MenuItem = {
   optionsGroups?: OptionGroup[];
 };
 
+export type MenuItemProps = {
+  image?: string;
+  name: string;
+  description: string;
+  price: number | string;
+  categoryId: number;
+  id: number;
+  onUpdated?: () => void;
+}
+
 export type MenuItemImageProps = {
   id: number;
   photoUrl?: string;

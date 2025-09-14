@@ -1,28 +1,16 @@
 import { useEffect, useState } from "react";
-import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
-import { MdOutlineEdit } from "react-icons/md";
+import { MenuItemProps } from "../../../types/types-menu.d";
 import { UpdateMenuItemForm } from "../forms/form-create-update-menu-item";
 import { MenuItemImage } from "./store-item-image";
-
-interface ItemProps {
-    image?: string;
-    name: string;
-    description: string;
-    price: number | string;
-    categoryId: number;
-    id: number;
-    onUpdated?: () => void;
-}
+import { FaGear } from "react-icons/fa6";
 
 export const Item = ({
     name,
     description,
     price,
     id,
-    onUpdated,
-}: ItemProps) => {
+}: MenuItemProps) => {
 
-    const { deleteMenuItem } = useManageMenu();
     const [error, setError] = useState<string | null>(null);
     const [showFormUpdateMenuItem, setShowFormUpdateMenuItem] = useState<number | null>(null);
 
@@ -50,7 +38,7 @@ export const Item = ({
                 >
                     {description}
                 </p>
-                <h5>R$ {Number((price ?? 0).toString().replace(',', '.')).toFixed(2).replace('.', ',')}</h5>
+                <h5 className="mr-5">R$ {Number((price ?? 0).toString().replace(',', '.')).toFixed(2).replace('.', ',')}</h5>
             </div>
             {showFormUpdateMenuItem === id && (
                 <UpdateMenuItemForm
@@ -60,12 +48,12 @@ export const Item = ({
             )}
             <div className="absolute bottom-3 right-2 flex">
                 <button
-                    title="Renomear categoria"
-                    className="px-2 rounded-xl bg-gray-400 text-black z-2 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200"
+                    title="Editar item"
+                    className="p-1.5 rounded-full ms:px-2+1.5 ms:py-0.5 lg:py-1.5 xl:py-0.5 lg:rounded-full border-1 bg-gray-400 text-black z-2 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200"
                     onClick={() => setShowFormUpdateMenuItem(id)}
                 >
-                    Editar item
-                    <MdOutlineEdit className="text-xl" />
+                    <FaGear className="text-xl ms:mr-2 lg:mr-0 xl:mr-2" />
+                    <span className="hidden ms:block lg:hidden xl:block">Editar item</span>
                 </button>
             </div>
             {error && (
