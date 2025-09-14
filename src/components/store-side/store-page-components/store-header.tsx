@@ -16,7 +16,7 @@ export const Header = () => {
 
     const [openFormUpdateDataStore, setOpenFormUpdateDataStore] = useState(false);
     const [openFormUpdateSchedules, setOpenFormUpdateSchedules] = useState(false);
-
+console.log(restaurantData?.user.restaurantName.length)
     return (
         <>
             <header
@@ -26,10 +26,8 @@ export const Header = () => {
                 <div className="flex flex-col ms:flex-row items-center gap-3.5">
                     <Logo />
                     <div className="mx-1.5 text-center sm:text-start">
-                        <h5 className="text-md font-bold mb-1">
-                            {restaurantData?.user.restaurantName && restaurantData.user.restaurantName.length > 25
-                                ? restaurantData?.user.restaurantName.slice(0, 25) + '...'
-                                : restaurantData?.user.restaurantName}
+                        <h5 className="text-md font-bold mb-1 line-clamp-2">
+                            {restaurantData?.user.restaurantName}
                         </h5>
                         <div className="flex flex-col items-center sm:items-start justify-center gap-1 ms:justify-start flex-shrink-0">
                             <button
