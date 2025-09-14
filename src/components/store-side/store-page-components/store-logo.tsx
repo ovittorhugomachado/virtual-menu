@@ -43,7 +43,7 @@ export const Logo = () => {
     };
 
     return (
-        <div className="w-24 h-24 sm:w-23 sm:h-23 rounded-full relative">
+        <div className="w-24 h-24 rounded-full relative min-w-[96px] min-h-[96px] max-w-[96px] max-h-[96px]">
             {isLoading ? (
                 <div className="absolute inset-0 p-4 flex items-center justify-center bg-transparent rounded-full z-0">
                     <LoadingComponentInternal />
