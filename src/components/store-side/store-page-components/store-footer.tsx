@@ -1,6 +1,6 @@
 import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
 
-export const Footer = () => {
+export const StoreFooter = () => {
 
     const { tempBackgroundColor } = useManageMenu();
 

@@ -12,7 +12,7 @@ export const CheckboxDeliveryTypesInput = ({
             <input
                 type="checkbox"
                 id="delivery"
-                className="accent-primary"
+                className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none  mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
                 {...register("delivery", {
                     validate: (value, formValues) =>
                         value || formValues.pickup || "obrigatório"
@@ -24,7 +24,7 @@ export const CheckboxDeliveryTypesInput = ({
             <input
                 type="checkbox"
                 id="pickup"
-                className="accent-primary"
+                className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
                 {...register("pickup", {
                     validate: (value, formValues) =>
                         value || formValues.delivery || "obrigatório"

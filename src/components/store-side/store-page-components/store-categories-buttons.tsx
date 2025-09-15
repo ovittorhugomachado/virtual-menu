@@ -120,7 +120,7 @@ export const CategoryButtons = () => {
                                             <div className="absolute inset-0 w-full h-full bg-gray-300/50 rounded-full pointer-events-none"></div>
                                         )}
                                         <button
-                                            title="Renomear categoria"
+                                            title="Configurar categoria"
                                             className="w-7 h-7 lg:w-8 lg:h-8 opacity-100 absolute left-0.5 lg:left-1 rounded-full bg-gray-400 text-black border-1 flex items-center justify-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200"
                                             onClick={() => {
                                                 setEditCategoryId(category.id);

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useRestaurantData } from "../../../context/restaurant-data/restaurant-data-context";
-import { LoadingComponent, LoadingComponentInternal } from "../../component-loading";
+import { LoadingComponentInternal } from "../../component-loading";
 import { DeleteBannerImage, UploadBannerImage } from "../../../services/service-upload-image";
 import { FaCamera } from "react-icons/fa";
 import { BsFillTrash3Fill } from "react-icons/bs";

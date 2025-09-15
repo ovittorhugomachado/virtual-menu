@@ -48,13 +48,8 @@ export const UpdateStoreDataForm: React.FC<UpdateStoreDataFormProps> = ({
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
 
-    const deliveryValue = watch("delivery");
     const pickupValue = watch("pickup");
 
-    console.log(deliveryValue)
-    console.log(pickupValue)
-
-    console.log(errors)
     useEffect(() => {
         const fetchStoreData = async () => {
             setLoading(true);

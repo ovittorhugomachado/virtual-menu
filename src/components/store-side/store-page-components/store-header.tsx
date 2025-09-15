@@ -9,7 +9,7 @@ import { GoHomeFill } from "react-icons/go";
 import { FaGear } from "react-icons/fa6";
 import { TbClockHour2Filled } from "react-icons/tb";
 
-export const Header = () => {
+export const StoreHeader = () => {
 
     const { restaurantData } = useRestaurantData();
     const { tempBackgroundColor } = useManageMenu();

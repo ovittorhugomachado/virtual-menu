@@ -104,7 +104,7 @@ export const CreateCategoryForm = ({ onClose, error }: { onClose: () => void; er
                                             id={`item-${item.id}`}
                                             checked={selectedItems?.includes(Number(item.id))}
                                             onChange={(e) => handleCheckboxChange(Number(item.id), e.target.checked)}
-                                            className="flex items-center justify-center peer appearance-none w-5 h-5 rounded-full border border-black dark:border-white checked:bg-primary checked:border-blue-600 mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
+                                            className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
                                         />
                                         <p className="flex items-center justify-center gap-3">{item.name}<span className="text-sm font-extralight text-zinc-600 dark:text-zinc-400">R${item.price}</span></p>
                                     </label>
@@ -296,7 +296,7 @@ export const UpdateCategoryForm = ({
                                             id={`item-${item.id}`}
                                             checked={selectedItems?.includes(Number(item.id))}
                                             onChange={(e) => handleCheckboxChange(Number(item.id), e.target.checked)}
-                                            className="flex items-center justify-center peer appearance-none w-5 h-5 rounded-full border border-black dark:border-white checked:bg-primary checked:border-blue-600 mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
+                                            className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
                                         />
                                         <p className="flex items-center justify-center gap-3">{item.name}<span className="text-sm font-extralight text-zinc-600 dark:text-zinc-400">R${item.price}</span></p>
                                     </label>

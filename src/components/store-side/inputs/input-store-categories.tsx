@@ -28,7 +28,7 @@ export const InputCategories = ({
                         type="checkbox"
                         value={cat.id}
                         checked={selectedCategories.includes(cat.id)}
-                        className={`${errors.categories ? "input-error" : ""} checkbox-primary`}
+                        className={`${errors.categories ? "input-error" : ""} flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100`}
                         {...register('categories', {
                             required: "Selecione pelo menos uma categoria",
                         })}

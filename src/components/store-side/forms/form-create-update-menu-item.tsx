@@ -21,7 +21,6 @@ export const CreateMenuItemForm = ({
 
     const { 
         createMenuItem, 
-        setMenuItems,
         categories, 
         optionsGroups 
     } = useManageMenu();
@@ -71,7 +70,6 @@ export const CreateMenuItemForm = ({
             });
 
             reset();
-            setMenuItems(prevItems => [...prevItems, data])
             setSuccessMessage("Item criado com sucesso!");
         } catch (error) {
             console.error("Erro ao criar item:", error);
@@ -183,7 +181,7 @@ export const CreateMenuItemForm = ({
                                             onChange={(e) =>
                                                 handleCheckboxCategoryChange(Number(category.id), e.target.checked)
                                             }
-                                            className="flex items-center justify-center peer appearance-none w-5 h-5 rounded-full border border-black dark:border-white checked:bg-primary checked:border-blue-600 mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
+                                            className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
                                         />
                                         <p className="flex items-center justify-center gap-3">
                                             {category.name}
@@ -216,7 +214,7 @@ export const CreateMenuItemForm = ({
                                             type="checkbox"
                                             checked={getSelectedoptions().some(gr => gr.id === group.id)}
                                             onChange={(e) => handleCheckboxOptionsChange(Number(group.id), e.target.checked)}
-                                            className="flex items-center justify-center peer appearance-none w-5 h-5 rounded-full border border-black dark:border-white checked:bg-primary checked:border-blue-600 mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
+                                            className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
                                         />
                                         <p className="flex items-center justify-center gap-3">{group.title}</p>
                                     </label>
@@ -436,7 +434,7 @@ export const UpdateMenuItemForm = ({
                                             onChange={(e) =>
                                                 handleCheckboxCategoryChange(Number(category.id), e.target.checked)
                                             }
-                                            className="flex items-center justify-center peer appearance-none w-5 h-5 rounded-full border border-black dark:border-white checked:bg-primary checked:border-blue-600 mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
+                                            className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
                                         />
                                         <p className="flex items-center justify-center gap-3">
                                             {category.name}
@@ -469,7 +467,7 @@ export const UpdateMenuItemForm = ({
                                             type="checkbox"
                                             checked={getSelectedoptions().some(gr => gr.id === group.id)}
                                             onChange={(e) => handleCheckboxOptionsChange(Number(group.id), e.target.checked)}
-                                            className="flex items-center justify-center peer appearance-none w-5 h-5 rounded-full border border-black dark:border-white checked:bg-primary checked:border-blue-600 mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
+                                            className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
                                         />
                                         <p className="flex items-center justify-center gap-3">{group.title}</p>
                                     </label>
