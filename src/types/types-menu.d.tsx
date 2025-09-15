@@ -44,9 +44,9 @@ export type MenuItem = {
 export type MenuItemProps = {
   image?: string;
   name: string;
-  description: string;
+  description?: string;
   price: number | string;
-  categoryId: number;
+  categoryId?: number;
   id: number;
   onUpdated?: () => void;
 }
