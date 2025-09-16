@@ -1,0 +1,165 @@
+import React, { useState, useEffect } from "react";
+import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
+import { CategoryData, CategoryItems } from "../../../types/types-menu.d";
+import { UpdateDataForm } from "./deafult/form-update-data";
+import { FaList, FaArrowUp, FaArrowDown } from "react-icons/fa";
+
+interface MenuItemOrderManagerProps {
+    onClose: () => void;
+    category: CategoryData;
+    buttonColor?: string;
+}
+
+export const MenuItemOrderManager: React.FC<MenuItemOrderManagerProps> = ({
+    onClose,
+    category,
+    buttonColor
+}) => {
+    
+    const [localItems, setLocalItems] = useState<CategoryItems[]>(() =>
+        [...(category.categoryItems ?? [])].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    );
+    const [isReordering, setIsReordering] = useState(false);
+    const [animatedIndexes, setAnimatedIndexes] = useState<number[]>([]);
+    const [animationDirection, setAnimationDirection] = useState<"up" | "down" | null>(null);
+    const [successMessage, setSuccessMessage] = useState("");
+
+    const { reorderMenuItems } = useManageMenu();
+
+    useEffect(() => {
+        setLocalItems([...(category.categoryItems ?? [])].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
+    }, [category.categoryItems]);
+
+    if (!category) {
+        return <div>Categoria não encontrada</div>;
+    }
+
+    console.log(localItems)
+
+    const moveItemUp = (index: number) => {
+        if (index <= 0) return;
+        setAnimatedIndexes([index, index - 1]);
+        setAnimationDirection("up");
+
+        setTimeout(() => {
+            const newItems = [...localItems];
+        
+            [newItems[index], newItems[index - 1]] = [newItems[index - 1], newItems[index]];
+         
+            const tempOrder = newItems[index].order;
+            newItems[index].order = newItems[index - 1].order;
+            newItems[index - 1].order = tempOrder;
+
+            setLocalItems(newItems);
+            setAnimatedIndexes([]);
+            setAnimationDirection(null);
+        }, 400);
+    };
+
+    const moveItemDown = (index: number) => {
+        if (index >= localItems.length - 1) return;
+        setAnimatedIndexes([index, index + 1]);
+        setAnimationDirection("down");
+
+        setTimeout(() => {
+            const newItems = [...localItems];
+            [newItems[index], newItems[index + 1]] = [newItems[index + 1], newItems[index]];
+            const tempOrder = newItems[index].order;
+            newItems[index].order = newItems[index + 1].order;
+            newItems[index + 1].order = tempOrder;
+
+            setLocalItems(newItems);
+            setAnimatedIndexes([]);
+            setAnimationDirection(null);
+        }, 400);
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsReordering(true);
+        try {
+            const orderData = localItems
+                .filter(item => typeof item.id === "number" && typeof item.order === "number")
+                .map(item => ({
+                    menuItemId: item.menuItemId as number,
+                    order: item.order as number
+                }));
+
+            await reorderMenuItems(category.id, orderData);
+            setSuccessMessage("Ordem dos itens atualizada com sucesso!");
+        } catch (error) {
+            console.error("Erro ao reordenar itens:", error);
+        } finally {
+            setIsReordering(false);
+        }
+    };
+
+    const getAnimationClass = (index: number) => {
+        if (!animatedIndexes.includes(index)) return "";
+        if (animationDirection === "up") {
+            return index === animatedIndexes[0] ? "animate-move-up" : "animate-move-down";
+        } else if (animationDirection === "down") {
+            return index === animatedIndexes[0] ? "animate-move-down" : "animate-move-up";
+        }
+        return "";
+    };
+
+    return (
+        <UpdateDataForm
+            title="Ordenar itens da categoria"
+            formIcon={<FaList />}
+            onClose={onClose}
+            textButtonSubmit="Salvar ordem"
+            submitFunction={handleSubmit}
+            successMessage={successMessage}
+        >
+            <div className="space-y-3 pt-8 relative">
+                {isReordering && (
+                    <div className="w-full text-center absolute -top-2 text-gray-500 mt-2">
+                        Atualizando ordem...
+                    </div>
+                )}
+                {localItems
+                    .sort((a, b) => (b.order ?? 0) - (a.order ?? 0))
+                    .map((item, index) => (
+                        <div
+                            key={item.id}
+                            className={`w-full flex items-center px-6 py-3 bg-primary dark:bg-[#161a21] rounded-full transition-all duration-200 ${getAnimationClass(index)}`}
+                            style={{
+                                backgroundColor: buttonColor ?? ''
+                            }}
+                        >
+                            <span className="flex flex-1 truncate text-white dark:text-white">
+                                {item.menuItem.name}
+                            </span>
+                            <div className="flex gap-2">
+                                <button
+                                    title="Mover para cima"
+                                    type="button"
+                                    className={`w-8 h-8 rounded-full bg-white dark:bg-gray-700 text-gray-700 dark:text-white flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 ${index === 0 ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer hover:scale-110'
+                                        }`}
+                                    onClick={() => moveItemUp(index)}
+                                    disabled={index === 0 || isReordering}
+                                >
+                                    <FaArrowUp size={14} />
+                                </button>
+                                <button
+                                    title="Mover para baixo"
+                                    type="button"
+                                    className={`w-8 h-8 rounded-full bg-white dark:bg-gray-700 text-gray-700 dark:text-white flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 ${index === localItems.length - 1 ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer hover:scale-110'
+                                        }`}
+                                    onClick={() => moveItemDown(index)}
+                                    disabled={index === localItems.length - 1 || isReordering}
+                                >
+                                    <FaArrowDown size={14} />
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                <div className="text-sm mt-4 text-center text-gray-600 dark:text-gray-400">
+                    <p>Use as setas para reordenar os itens</p>
+                </div>
+            </div>
+        </UpdateDataForm>
+    );
+};

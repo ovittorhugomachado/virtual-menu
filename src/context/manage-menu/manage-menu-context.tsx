@@ -12,6 +12,7 @@ import {
     deleteMenuItemService,
     toggleStatusMenuItemService,
     reorderCategoriesService,
+    reorderMenuItemsService,
 } from "../../services/service-manage-menu-store";
 import { uploadMenuItemImage } from "../../services/service-upload-image";
 
@@ -46,6 +47,8 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
             setIsLoading(false);
         }
     };
+
+    console.log(categories)
 
     //FUNÇÕES DO ESTILO DA LOJA -----------------------------
     const updateStyleStore = async (style: StyleStorePage): Promise<void> => {
@@ -112,27 +115,10 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
                     };
                 })
             );
+
+            await fetchMenuData();
         } catch (err) {
             setError('Falha ao atualizar categoria');
-            console.error(err);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const deleteCategory = async (categoryId: number) => {
-        setIsLoading(true);
-        try {
-            await deleteCategoryService(categoryId);
-            setCategories(prev => prev.filter(cat => cat.id !== categoryId));
-            setMenuItems(prev =>
-                prev.map(item => ({
-                    ...item,
-                    categories: (item.categories ?? []).filter(cat => cat.id !== categoryId)
-                }))
-            );
-        } catch (err) {
-            setError('Falha ao deletar categoria');
             console.error(err);
         } finally {
             setIsLoading(false);
@@ -175,6 +161,25 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const deleteCategory = async (categoryId: number) => {
+        setIsLoading(true);
+        try {
+            await deleteCategoryService(categoryId);
+            setCategories(prev => prev.filter(cat => cat.id !== categoryId));
+            setMenuItems(prev =>
+                prev.map(item => ({
+                    ...item,
+                    categories: (item.categories ?? []).filter(cat => cat.id !== categoryId)
+                }))
+            );
+        } catch (err) {
+            setError('Falha ao deletar categoria');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
+    };  
+
     //FUNÇÕES DOS ITENS DO MENU -----------------------------
     const createMenuItem = async (itemData: MenuItem) => {
         setIsLoading(true);
@@ -199,6 +204,8 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
                     };
                 })
             );
+
+            await fetchMenuData();
         } catch (err) {
             setError('Falha ao criar item');
             console.error(err);
@@ -229,19 +236,6 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
             setError('Falha ao atualizar imagem do item');
             console.error(err);
         }
-    }
-
-    const deleteMenuItem = async (itemId: number) => {
-        setIsLoading(true);
-        try {
-            await deleteMenuItemService(itemId);
-            await fetchMenuData();
-        } catch (err) {
-            setError('Falha ao deletar item');
-            console.error(err);
-        } finally {
-            setIsLoading(false);
-        }
     };
 
     const toggleStatusMenuItem = async (categoryId: number, itemId: number) => {
@@ -251,6 +245,32 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
             await fetchMenuData();
         } catch (err) {
             setError('Falha ao alterar status do item');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const reorderMenuItems = async (categoryId: number, orderedItems: { menuItemId: number; order: number }[]) => {
+        setIsLoading(true);
+        try {
+            await reorderMenuItemsService(categoryId, orderedItems);
+            await fetchMenuData();
+        } catch (err) {
+            setError('Falha ao reordenar itens');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    const deleteMenuItem = async (itemId: number) => {
+        setIsLoading(true);
+        try {
+            await deleteMenuItemService(itemId);
+            await fetchMenuData();
+        } catch (err) {
+            setError('Falha ao deletar item');
             console.error(err);
         } finally {
             setIsLoading(false);
@@ -290,6 +310,7 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
                 createMenuItem,
                 updateMenuItem,
                 updateImageMenuItem,
+                reorderMenuItems,
                 deleteMenuItem,
                 toggleStatusMenuItem,
                 optionsGroups,

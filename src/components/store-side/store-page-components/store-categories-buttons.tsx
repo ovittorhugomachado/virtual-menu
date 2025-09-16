@@ -3,9 +3,10 @@ import { animate, motion, useMotionValue } from "motion/react";
 import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
 import { CreateCategoryForm, UpdateCategoryForm } from "../forms/form-create-update-categories";
 import { CategoryOrderManager } from "../forms/form-order-of-categories";
-import { FaGear, FaListUl, FaPause, FaPlay } from "react-icons/fa6";
-import { IoAddCircle } from "react-icons/io5";
+import { FaGear, FaPause, FaPlay } from "react-icons/fa6";
+import { LuArrowDownWideNarrow } from "react-icons/lu";
 import { IoIosArrowBack } from "react-icons/io";
+import { IoAddCircle } from "react-icons/io5";
 
 export const CategoryButtons = () => {
 
@@ -162,7 +163,7 @@ export const CategoryButtons = () => {
                                 className="flex items-center justify-center gap-2 px-4 py-2 rounded-3xl text-black bg-gray-400 cursor-pointer hover:scale-103 transition-transform duration-200"
                                 onClick={() => setShowFormOrdered(true)}
                             >
-                                <FaListUl className="hidden sm:block" /> Ajustar ordem das categorias
+                                <LuArrowDownWideNarrow className="hidden sm:block" /> Ajustar ordem das categorias
                             </button>
                         </div>
                     </motion.div>

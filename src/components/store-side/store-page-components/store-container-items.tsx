@@ -8,6 +8,7 @@ import { FaPause, FaPlay } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
 import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
 import { useRestaurantData } from "../../../context/restaurant-data/restaurant-data-context";
+import { MenuItemOrderManager } from "../forms/form-order-of-menu-items";
 
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 
@@ -25,7 +26,7 @@ export const MenuItems = () => {
     const [showCreateMenuItemForm, setShowCreateMenuItemForm] = useState<number | null>(null);
     const [editCategoryId, setEditCategoryId] = useState<number | null>(null);
     const [editCategoryName, setEditCategoryName] = useState<string>("");
-
+console.log('categories', categories);
     return (
         <section className={`w-full px-2 ${tempBackgroundColor === 'white' ? 'text-black' : 'text-white'}`}>
             {categories.map(category => (
@@ -66,30 +67,27 @@ export const MenuItems = () => {
                         <span className="text-md text-gray-500">Todos os itens dessa categoria não aparecem para o cliente, para voltar a oferecer esses itens ative a categoria no botão acima</span>
                     )}
                     <ul className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 py-1">
-                        {menuItems.length > 0 ? (
-                            menuItems
-                                .filter(item =>
-                                    item.categories &&
-                                    item.categories.some(cat => cat.id === category.id)
-                                )
+                        {(category.categoryItems ?? []).length > 0 ? (
+                            (category.categoryItems ?? [])
                                 .map(item => (
                                     <li
                                         key={item.id}
                                         className={`relative flex border-[1px] ${tempBackgroundColor === 'white' ? 'border-zinc-400' : 'border-zinc-900'}`}
                                     >
+                                        <p>{item.order}</p>
                                         <Item
                                             image={
-                                                item.photoUrl && item.photoUrl.startsWith('https://s3.us-east-2.amazonaws.com/')
-                                                    ? item.photoUrl
-                                                    : item.photoUrl
-                                                        ? `${VITE_API_URL}/uploads/store-${restaurantData?.id}-category${category.id}-product${item.id}${getExtension(item.photoUrl)}`
+                                                item.menuItem.photoUrl && item.menuItem.photoUrl.startsWith('https://s3.us-east-2.amazonaws.com/')
+                                                    ? item.menuItem.photoUrl
+                                                    : item.menuItem.photoUrl
+                                                        ? `${VITE_API_URL}/uploads/store-${restaurantData?.id}-category${category.id}-product${item.id}${getExtension(item.menuItem.photoUrl)}`
                                                         : '/food-default.png'
                                             }
-                                            name={item.name}
-                                            description={item.description}
-                                            price={item.price}
+                                            name={item.menuItem.name}
+                                            description={item.menuItem.description}
+                                            price={item.menuItem.price}
                                             categoryId={category.id}
-                                            id={Number(item.id)}
+                                            id={Number(item.menuItem.id)}
                                         />
                                     </li>
                                 ))
@@ -110,6 +108,12 @@ export const MenuItems = () => {
                             </button>
                         </li>
                     </ul>
+                    {
+                        <MenuItemOrderManager onClose={function (): void {
+                            throw new Error("Function not implemented.");
+                        } } category={category}                        
+                        />
+                        }
                     {editCategoryId === category.id && (
                         <UpdateCategoryForm
                             onClose={() => {

@@ -15,8 +15,18 @@ export type CategoryData = {
   name: string;
   isAvailable?: boolean;
   order?: number;
-  menuItems?: number[]
+  categoryItems?: CategoryItems[];
+  menuItemsObjects?: MenuItem[];
+  menuItems?: number[];
 };
+
+export type CategoryItems = {
+  categoryId: number;
+  id: number;
+  menuItem: MenuItem;
+  menuItemId: number;
+  order: number;
+}
 
 export type CategoryButtonsProps = {
   categories: CategoryData[];
@@ -39,6 +49,7 @@ export type MenuItem = {
   categories?: CategoryData[];
   optionGroupId?: number[];
   optionsGroups?: OptionGroup[];
+  order?: number;
 };
 
 export type MenuItemProps = {
@@ -114,8 +125,9 @@ export type ManageMenuContextType = {
   createMenuItem: (item: MenuItem) => Promise<void>;
   updateMenuItem: (itemId: number, item: MenuItem) => Promise<void>;
   updateImageMenuItem: (itemId: number, imageFile: File) => Promise<void>;
-  deleteMenuItem: (itemId: number) => Promise<void>;
   toggleStatusMenuItem: (categoryId: number, itemId: number) => Promise<void>;
+  reorderMenuItems: (categoryId: number, orderedItems: { menuItemId: number; order: number }[]) => Promise<void>;
+  deleteMenuItem: (itemId: number) => Promise<void>;
 
   //PROPRIEDADES DOS GRUPOS DE OPCIONAIS ---------------------------
   optionsGroups: OptionGroup[];

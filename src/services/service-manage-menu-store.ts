@@ -334,7 +334,33 @@ export const toggleStatusMenuItemService = async (categoryId: number, itemId: nu
         }
         throw error instanceof Error ? error : new Error('Erro desconhecido');
     }
-}
+};
+
+export const reorderMenuItemsService = async (
+    categoryId: number,
+    items: { menuItemId: number; order: number }[]
+) => {
+    try {
+        const response = await fetch(`${API_URL}/menu-items/reorder`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({ categoryId, items }),
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Erro ao reordenar itens da categoria');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Erro no serviço de reordenação de itens:', error);
+        throw error;
+    }
+};
 
 export const deleteMenuItemService = async (itemId: number) => {
     try {
@@ -583,4 +609,5 @@ export const deleteMenuItemOptionService = async (optionId: number) => {
         throw error instanceof Error ? error : new Error('Erro desconhecido');
     }
 };
+
 
