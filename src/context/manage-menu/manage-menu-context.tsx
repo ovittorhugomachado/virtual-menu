@@ -48,8 +48,6 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
-    console.log(categories)
-
     //FUNÇÕES DO ESTILO DA LOJA -----------------------------
     const updateStyleStore = async (style: StyleStorePage): Promise<void> => {
         setStyleStore(style);

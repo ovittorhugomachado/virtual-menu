@@ -5,17 +5,17 @@ import { getPageStyle } from "../services/service-page-style";
 import { getCategoriesService } from "../services/service-manage-menu-store";
 import { RestaurantData } from "../types/types-restaurante-data.d";
 import { StyleStorePage } from "../types/types-menu.d";
-import { CategoryData } from "../types/types-menu.d";
+//import { CategoryData } from "../types/types-menu.d";
 import { LoadingComponent } from "../components/component-loading";
 import { ErrorComponent } from "../components/component-error";
-import { StoreBanner } from "../components/customer-side/store-page-components/store-banner-customer";
-import { Header } from "../components/customer-side/store-page-components/store-header-by-customer";
-import { CategoryButtons } from "../components/customer-side/store-page-components/store-categories-buttons-by-customer";
-import { MenuItems } from "../components/customer-side/store-page-components/store-container-items-by-customer";
+//import { StoreBanner } from "../components/customer-side/store-page-components/store-banner-customer.tsx";
+import { StoreHeader } from "../components/customer-side/store-page-components/store-header-customer.tsx";
+//import { CategoryButtons } from "../components/customer-side/store-page-components/store-categories-buttons-customer.tsx";
+//import { MenuItems } from "../components/customer-side/store-page-components/store-container-items.tsx";
 import { CartProvider } from "../context/cart/cart-provider";
-import { getExtension } from "../utils/function-get-extension";
+// import { getExtension } from "../utils/function-get-extension";
 
-const VITE_API_URL = import.meta.env.VITE_API_URL;
+//const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 export const StorePage = () => {
 
@@ -23,9 +23,10 @@ export const StorePage = () => {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [storeData, setStoreData] = useState<RestaurantData | null>(null);
+    const [storeData, setStoreData] = useState<RestaurantData>();
     const [storeStyle, setStoreStyle] = useState<StyleStorePage | null>(null);
-    const [categories, setCategories] = useState<CategoryData[]>([]);
+    //const { isOpen, message } = getRestaurantStatus(openingHours);
+    //const [showOrderForm, setShowOrderForm] = useState(false);
 
     const fetchStoreData = useCallback(async () => {
         setLoading(true);
@@ -47,7 +48,7 @@ export const StorePage = () => {
 
             setStoreData(storeData);
             setStoreStyle(styleData);
-            setCategories(categoriesStore);
+            //setCategories(categoriesStore);
 
         } catch (error) {
             setError(error instanceof Error ? error.message : 'Error loading store data');
@@ -60,6 +61,12 @@ export const StorePage = () => {
         fetchStoreData();
     }, [fetchStoreData]);
 
+    // const handleCartClick = () => {
+    //     setShowOrderForm(true);
+    // };
+
+    console.log(storeData)
+
     return (
         <>
             {error ? (
@@ -70,31 +77,18 @@ export const StorePage = () => {
                 <LoadingComponent />
             ) : (
                 <CartProvider>
-                    <div style={{ backgroundColor: storeStyle?.backgroundColor ?? undefined }} className="w-screen min-h-[100vh] px-[5%] lg:px-[15%] flex flex-col items-center">
-                        <Header
-                            backgroundColor={storeStyle?.backgroundColor ?? ''}
-                            restaurantImage={
-                                storeData?.logoUrl && storeData.logoUrl.startsWith('https://s3.us-east-2.amazonaws.com/bucket.rangos/')
-                                    ? storeData.logoUrl
-                                    : storeData?.logoUrl
-                                        ? `${VITE_API_URL}/uploads/store${storeData.id}-logo${getExtension(storeData?.logoUrl)}`
-                                        : "/store-logo-default.png"
-                            }
-                            restaurantName={storeData?.restaurantName}
-                            openingHours={
-                                Array.isArray(storeData?.openingHours)
-                                    ? storeData.openingHours.map((oh) => ({
-                                        day: oh.day,
-                                        isOpen: oh.isOpen ?? true,
-                                        status: oh.status ?? "",
-                                        timeRanges: Array.isArray(oh.timeRanges) && oh.timeRanges.length > 0
-                                            ? oh.timeRanges
-                                            : [{ start: "", end: "" }],
-                                    }))
-                                    : []
-                            }
+                    <div style={{
+                        backgroundColor: storeStyle?.backgroundColor ?? undefined,
+                        color: storeStyle?.backgroundColor === 'white' ? "black" : "white"
+                    }} className="w-screen min-h-[100vh] px-[5%] lg:px-[15%] flex flex-col items-center">
+                        <StoreHeader
+                            restaurantName={storeData?.user.restaurantName || ''}
+                            restaurantImage={storeData?.logoUrl}
+                            backgroundColor="white"
+                            openingHours={storeData?.openingHours || []}
                         />
-                        <main className="w-full max-w-[1140px] pb-24 mt-[110px] xs:mt-[87px] sm:mt-[115px] xl:mt-[132px] flex flex-col items-center justify-center">
+                        <h1 className="text-black">{storeData?.id}</h1>
+                        {/* <main className="w-full max-w-[1140px] pb-24 mt-[110px] xs:mt-[87px] sm:mt-[115px] xl:mt-[132px] flex flex-col items-center justify-center">
                             {storeData?.bannerUrl && (
                                 <StoreBanner banner={storeData.bannerUrl && storeData.bannerUrl.startsWith('https://s3.us-east-2.amazonaws.com/')
                                     ? storeData.bannerUrl
@@ -111,7 +105,7 @@ export const StorePage = () => {
                                 backgroundColor={storeStyle?.backgroundColor ?? ''}
                                 buttonColor={storeStyle?.primaryColor ?? ''}
                             />
-                        </main>
+                        </main> */}
                     </div>
                 </CartProvider>
             )}

@@ -39,7 +39,6 @@ export type RestaurantData = {
   MenuItem: MenuItem[];
   MenuItemOption: Option[];
   MenuItemOptionGroup: OptionGroup[];
-  // ...outros campos se necessário
 };
 
 export type RestaurantContainerProps = {

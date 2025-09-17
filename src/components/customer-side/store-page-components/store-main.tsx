@@ -1,5 +1,5 @@
-import { StoreBanner } from "./store-banner"
-import { CategoryButtons } from "./store-categories-buttons"
+import { StoreBanner } from "./store-banner-customer"
+import { CategoryButtons } from "./store-categories-buttons-customer"
 import { MenuItems } from "./store-container-items"
 
 export const StoreMain = () => {
