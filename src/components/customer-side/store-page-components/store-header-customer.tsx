@@ -8,14 +8,14 @@ import { useGetMenu } from "../../../context/get-menu/get-menu-context";
 
 export const StoreHeader = () => {
     const { cart } = useCart();
-    const { restaurantData, menu } = useGetMenu();
+    const { restaurantData } = useGetMenu();
     const { isOpen, message } = getRestaurantStatus(restaurantData?.openingHours || []);
     const [showOrderForm, setShowOrderForm] = useState(false);
 
     const handleCartClick = () => {
         setShowOrderForm(true);
     };
-console.log(menu)
+
     return (
         <header className="w-screen max-h-[387px] px-[5%] lg:px-[15%] py-4 xl:py-4 sm:px-6 bg-white text-black shadow-md flex flex-col ms:flex-row items-center justify-between ms:sticky top-0" style={{ zIndex: 5 }}>
             <div className="w-full flex items-center justify-center ms:justify-start gap-3.5">

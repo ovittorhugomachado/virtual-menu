@@ -146,10 +146,11 @@ export type GetMenuContextType = {
       logoUrl: string;
       style: StyleStorePage;
       user: {
+        id: number;
         restaurantName: string;
         phoneNumber: string;
       },
       openingHours: OpeningHour[]
   };
-  menu: CategoryData[] | undefined;
+  menuCategories: CategoryData[] | undefined;
 };

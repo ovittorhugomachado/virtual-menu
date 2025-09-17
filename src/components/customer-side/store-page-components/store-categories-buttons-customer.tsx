@@ -71,7 +71,7 @@ export const CategoryButtons = ({ onCategoryClick }: CategoryButtonsProps) => {
 
     return (
         <div
-            className={`${backgroundColor === 'black' ? 'bg-black' : 'bg-white'} w-full mx-2 pb-6 sticky -top-1 ms:top-42 sm:top-29 flex justify-center`}
+            className={`${backgroundColor === 'black' ? 'bg-black' : 'bg-white'} w-full mx-2 sticky top-0 ms:top-27 sm:top-28 flex justify-center`}
             style={{ zIndex: 4 }}
         >
             <button
@@ -86,7 +86,7 @@ export const CategoryButtons = ({ onCategoryClick }: CategoryButtonsProps) => {
             </button>
             <motion.div className="w-full overflow-x-hidden relative" ref={carousel} whileTap={{ cursor: "grabbing" }}>
                 <motion.div
-                    className="w-full flex gap-4 p-2.5 my-3.5 flex-shrink-0"
+                    className="w-full flex gap-4 p-2.5 mt-4 flex-shrink-0"
                     drag="x"
                     dragConstraints={{ right: 0, left: -maxScroll }}
                     style={{ x }}

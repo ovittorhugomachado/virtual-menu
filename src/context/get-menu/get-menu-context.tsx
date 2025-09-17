@@ -9,7 +9,7 @@ export const GetMenuProvider = ({ children }: { children: ReactNode }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [restaurantData, setRestaurantData] = useState()
-    const [menu, setMenu] = useState()
+    const [menuCategories, setMenuCategories] = useState()
 
     const storeId = Number(id);
     const fetchMenuData = useCallback(async () => {
@@ -19,7 +19,7 @@ export const GetMenuProvider = ({ children }: { children: ReactNode }) => {
             if (!id) throw new Error("ID da loja não encontrado na URL");
             const allMenuData = await getFullMenuByCustomerService(storeId);
             setRestaurantData(allMenuData.data.restaurantData);
-            setMenu(allMenuData.data.menuCategories);
+            setMenuCategories(allMenuData.data.menuCategories);
         } catch (err) {
             setError('Falha ao carregar dados do menu');
             console.error('Error fetching menu data:', err);
@@ -32,7 +32,7 @@ export const GetMenuProvider = ({ children }: { children: ReactNode }) => {
     }, [fetchMenuData]);
     
     console.log(restaurantData)
-    console.log(menu)
+    console.log(menuCategories)
     return (
         <GetMenuContext.Provider
             value={{
@@ -40,7 +40,7 @@ export const GetMenuProvider = ({ children }: { children: ReactNode }) => {
                 isLoading,
                 setIsLoading,
                 restaurantData,
-                menu
+                menuCategories
             }}
         >
             {children}
