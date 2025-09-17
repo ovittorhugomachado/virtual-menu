@@ -1,0 +1,50 @@
+import { ReactNode, useCallback, useEffect, useState } from "react";
+import { GetMenuContext } from "./get-menu-context"
+import { getFullMenuByCustomerService } from "../../services/service-manage-menu-store"
+import { useParams } from "react-router-dom";
+
+export const GetMenuProvider = ({ children }: { children: ReactNode }) => {
+
+    const { id } = useParams<{ id: string }>();
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [restaurantData, setRestaurantData] = useState()
+    const [menu, setMenu] = useState()
+
+    const storeId = Number(id);
+    const fetchMenuData = useCallback(async () => {
+        try {
+            setIsLoading(true);
+            setError(null);
+            if (!id) throw new Error("ID da loja não encontrado na URL");
+            const allMenuData = await getFullMenuByCustomerService(storeId);
+            setRestaurantData(allMenuData.data.restaurantData);
+            setMenu(allMenuData.data.menuCategories);
+        } catch (err) {
+            setError('Falha ao carregar dados do menu');
+            console.error('Error fetching menu data:', err);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [storeId, id]);
+    useEffect(() => {
+        fetchMenuData();
+    }, [fetchMenuData]);
+    
+    console.log(restaurantData)
+    console.log(menu)
+    return (
+        <GetMenuContext.Provider
+            value={{
+                error,
+                isLoading,
+                setIsLoading,
+                restaurantData,
+                menu
+            }}
+        >
+            {children}
+        </GetMenuContext.Provider>
+    );
+};
+

@@ -13,6 +13,7 @@ import { StoreHeader } from "../components/customer-side/store-page-components/s
 //import { CategoryButtons } from "../components/customer-side/store-page-components/store-categories-buttons-customer.tsx";
 //import { MenuItems } from "../components/customer-side/store-page-components/store-container-items.tsx";
 import { CartProvider } from "../context/cart/cart-provider";
+import { CategoryButtons } from "../components/customer-side/store-page-components/store-categories-buttons-customer.tsx";
 // import { getExtension } from "../utils/function-get-extension";
 
 //const VITE_API_URL = import.meta.env.VITE_API_URL;
@@ -65,8 +66,6 @@ export const StorePage = () => {
     //     setShowOrderForm(true);
     // };
 
-    console.log(storeData)
-
     return (
         <>
             {error ? (
@@ -76,18 +75,13 @@ export const StorePage = () => {
             ) : loading ? (
                 <LoadingComponent />
             ) : (
-                <CartProvider>
+                
                     <div style={{
                         backgroundColor: storeStyle?.backgroundColor ?? undefined,
                         color: storeStyle?.backgroundColor === 'white' ? "black" : "white"
                     }} className="w-screen min-h-[100vh] px-[5%] lg:px-[15%] flex flex-col items-center">
-                        <StoreHeader
-                            restaurantName={storeData?.user.restaurantName || ''}
-                            restaurantImage={storeData?.logoUrl}
-                            backgroundColor="white"
-                            openingHours={storeData?.openingHours || []}
-                        />
-                        <h1 className="text-black">{storeData?.id}</h1>
+                        <StoreHeader/>
+                        <CategoryButtons />
                         {/* <main className="w-full max-w-[1140px] pb-24 mt-[110px] xs:mt-[87px] sm:mt-[115px] xl:mt-[132px] flex flex-col items-center justify-center">
                             {storeData?.bannerUrl && (
                                 <StoreBanner banner={storeData.bannerUrl && storeData.bannerUrl.startsWith('https://s3.us-east-2.amazonaws.com/')
@@ -107,7 +101,6 @@ export const StorePage = () => {
                             />
                         </main> */}
                     </div>
-                </CartProvider>
             )}
         </>
     );

@@ -1,8 +1,10 @@
+import { OpeningHour } from "./types-schedules.d";
+
 //TIPOS DE ESTILO
 export type StyleStorePage = {
-  theme: 'dark' | 'light';
-  id: number;
-  storeId: number;
+  theme?: 'dark' | 'light';
+  id?: number;
+  storeId?: number;
   backgroundColor: string;
   primaryColor: string;
   textButtonColor: string;
@@ -132,4 +134,22 @@ export type ManageMenuContextType = {
   //PROPRIEDADES DOS GRUPOS DE OPCIONAIS ---------------------------
   optionsGroups: OptionGroup[];
   // createOptionGroup: (group: OptionGroup) => Promise<void>;
+};
+
+//TIPOS DO GET MENU CONTEXTO-----------------------------
+export type GetMenuContextType = {
+  error: string | null;
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  restaurantData?: {
+      bannerUrl: string;
+      logoUrl: string;
+      style: StyleStorePage;
+      user: {
+        restaurantName: string;
+        phoneNumber: string;
+      },
+      openingHours: OpeningHour[]
+  };
+  menu: CategoryData[] | undefined;
 };

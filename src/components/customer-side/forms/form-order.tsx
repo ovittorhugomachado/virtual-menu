@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { useGetMenu } from "../../../context/get-menu/get-menu-context";
 import { useCart } from "../../../context/cart/cart-context";
 import { createOrder } from "../../../services/service-manage-orders";
 import { toMoney } from "../../../utils/function-transform-to-money";
@@ -13,15 +14,16 @@ import { RadioOrderPaymentMethodInput } from "../inputs/input-customer-payment-m
 import { IoCloseOutline } from "react-icons/io5";
 
 export const OrderForm: React.FC<OrderDataFormProps> = ({
-    backgroundColor,
     order,
     onClose,
     initialValues = {},
 }) => {
 
     const { id } = useParams<{ id: string }>();
+    const { restaurantData } = useGetMenu();
 
     const numericId = Number(id);
+    const backgroundColor = restaurantData?.data.style.backgroundColor
 
     const {
         register,

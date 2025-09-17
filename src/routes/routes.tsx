@@ -9,6 +9,8 @@ import { PageListOfStores } from "../pages/page-list-of-stores";
 import { StorePage } from "../pages/page-store";
 import { ManageMenuProvider } from "../context/manage-menu/manage-menu-context.tsx";
 import { RestaurantDataProvider } from "../context/restaurant-data/restaurant-data-context.tsx"
+import { GetMenuProvider } from "../context/get-menu/get-menu-context.tsx";
+import { CartProvider } from "../context/cart/cart-provider.tsx";
 // import { Testpage } from "../pages/page-tests";
 
 export const AppRoutes = () => {
@@ -31,7 +33,16 @@ export const AppRoutes = () => {
                 <Route path="/recuperar-senha" element={<RecoverPasswordPage />} />
                 <Route path="/create-new-password/:token" element={<CreateNewPasswordPage />} />
                 <Route path="/restaurantes" element={<PageListOfStores />} />
-                <Route path="/restaurante/:id" element={<StorePage />} />
+                <Route
+                    path="/restaurante/:id"
+                    element={
+                        <GetMenuProvider>
+                            <CartProvider>
+                                <StorePage />
+                            </CartProvider>
+                        </GetMenuProvider>
+                    }
+                />
                 {/* <Route path="/testes" element={<Testpage />} /> */}
             </Routes>
         </BrowserRouter>

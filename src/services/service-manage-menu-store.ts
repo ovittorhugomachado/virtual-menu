@@ -1,6 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-//MENU COMPLETO ------------------------
+//MENU COMPLETO (LADO DA LOJA)------------------------
 export const getFullMenuService = async () => {
     try {
         const response = await fetch(`${API_URL}/my-menu`, {
@@ -10,6 +10,30 @@ export const getFullMenuService = async () => {
             },
             credentials: 'include'
         });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Erro ao buscar categorias do menu');
+        };
+
+        return await response.json();
+    } catch (error) {
+        if (error instanceof TypeError) {
+            throw new Error('Ocorreu um erro. Tente novamente mais tarde');
+        }
+        throw error instanceof Error ? error : new Error('Erro desconhecido');
+    }
+};
+
+//MENU COMPLETO (LADO DO CLIENTE)
+export const getFullMenuByCustomerService = async (storeId: number) => {
+    try {
+        const response = await fetch(`${API_URL}/menu/${storeId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
 
         if (!response.ok) {
             const error = await response.json();
