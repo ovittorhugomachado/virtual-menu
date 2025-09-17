@@ -1,11 +1,15 @@
 import { useState, useRef, useEffect } from "react";
 import { animate, motion, useMotionValue } from "motion/react";
-import { IoIosArrowBack } from "react-icons/io";
 import { useGetMenu } from "../../../context/get-menu/get-menu-context";
+import { IoIosArrowBack } from "react-icons/io";
 
-export const CategoryButtons = () => {
+interface CategoryButtonsProps {
+    onCategoryClick: (categoryId: number) => void;
+}
 
-    const { restaurantData, menu } = useGetMenu();
+export const CategoryButtons = ({ onCategoryClick }: CategoryButtonsProps) => {
+
+    const { restaurantData, menuCategories } = useGetMenu();
     const x = useMotionValue(0);
     const carousel = useRef<HTMLDivElement>(null);
     const [maxScroll, setMaxScroll] = useState(0);
@@ -71,7 +75,7 @@ export const CategoryButtons = () => {
             style={{ zIndex: 4 }}
         >
             <button
-                className={`${positionCarousel === 0 ? '' : 'cursor-pointer'} absolute -left-6 top-6 lg:top-7 z-30`}
+                className={`${positionCarousel === 0 ? '' : 'cursor-pointer'} absolute -left-6 top-7 z-30`}
                 onClick={scrollLeft}
                 disabled={positionCarousel === 0}
             >
@@ -87,32 +91,27 @@ export const CategoryButtons = () => {
                     dragConstraints={{ right: 0, left: -maxScroll }}
                     style={{ x }}
                 >
-                    {menu && menu.length > 0 &&
-                        menu
+                    {menuCategories && menuCategories.length > 0 &&
+                        menuCategories
                             .sort((a, b) => (b.order ?? 0) - (a.order ?? 0))
                             .map((category) => (
                                 <motion.div
                                     key={category.id}
-                                    className="relative min-w-28 h-9 lg:h-10 rounded-3xl flex items-center justify-end flex-shrink-0 transition-transform duration-200"
+                                    className="relative min-w-28 h-9 lg:h-10 px-10 rounded-3xl flex items-center justify-center flex-shrink-0 cursor-pointer hover:scale-103 transition-transform duration-200"
                                     style={{
                                         backgroundColor: buttonColor ?? '',
                                         color: textButtonColor,
                                     }}
                                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                    onClick={() => onCategoryClick(category.id)}
                                 >
-
-                                    <button
-                                        type="button"
-                                        className="px-9 whitespace-nowrap truncate text-start"
-                                    >
-                                        {category.name}
-                                    </button>
+                                    {category.name}
                                 </motion.div>
                             ))}
                 </motion.div>
             </motion.div>
             <button
-                className={`${Math.abs(positionCarousel) === maxScroll ? '' : 'cursor-pointer'} absolute -right-6 top-6 lg:top-7 z-90 rotate-180`}
+                className={`${Math.abs(positionCarousel) === maxScroll ? '' : 'cursor-pointer'} absolute -right-6 top-7 z-90 rotate-180`}
                 onClick={scrollRight}
                 disabled={positionCarousel === maxScroll}
             >
