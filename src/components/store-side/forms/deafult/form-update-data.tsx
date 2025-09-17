@@ -32,7 +32,7 @@ export const UpdateDataForm = ({
                         onClick={e => e.stopPropagation()}
                     >
                         <div className="h-30 bg-primary dark:bg-[#161a21] flex justify-center items-center rounded-t-xl relative overflow-hidden">
-                            <div className="flex">
+                            <div className="flex mx-13">
                                 <div className="text-white dark:text-primary mx-2 hidden md:block">
                                     {formIcon && React.isValidElement(formIcon)
                                         ? React.cloneElement(formIcon, { size: 40 })

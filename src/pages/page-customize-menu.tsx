@@ -5,7 +5,6 @@ import { StyleToolbar } from "../components/store-side/store-page-components/sto
 import { StoreHeader } from "../components/store-side/store-page-components/store-header";
 import { StoreMain } from "../components/store-side/store-page-components/store-main.tsx";
 import { StoreFooter } from "../components/store-side/store-page-components/store-footer.tsx";
-import { MenuItemOrderManager } from "../components/store-side/forms/form-order-of-menu-items.tsx";
 
 export const CustomizeMenuPage = () => {
 

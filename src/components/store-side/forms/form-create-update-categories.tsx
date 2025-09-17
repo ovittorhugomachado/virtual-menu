@@ -80,10 +80,10 @@ export const CreateCategoryForm = ({ onClose, error }: { onClose: () => void; er
             </div>
             <input type="hidden" {...register("menuItems")} />
             {menuItems.length > 0 &&
-                <div className="w-full flex flex-col items-center mt-4">
+                <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center justify-center mt-4 pt-2">
                     <button
                         type="button"
-                        className="flex items-center px-8 gap-2 bg-zinc-300 dark:bg-[#161a21] rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
+                        className="flex items-center px-8 gap-2 rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
                         onClick={() => setOpenArrayItems(!openArrayItems)}
                         style={{ fontSize: '18px' }}
                     >
@@ -142,7 +142,7 @@ export const UpdateCategoryForm = ({
         deleteCategory,
         menuItems
     } = useManageMenu();
-console.log(categories.filter(cat => cat.id === categoryId));
+    console.log(categories.filter(cat => cat.id === categoryId));
     const {
         register,
         handleSubmit,
@@ -162,8 +162,6 @@ console.log(categories.filter(cat => cat.id === categoryId));
 
     const selectedItems = watch("menuItems", []);
     const category = categories.find(cat => cat.id === categoryId);
-
-    console.log(category);
 
     useEffect(() => {
         const selectedIds = menuItems
@@ -274,45 +272,11 @@ console.log(categories.filter(cat => cat.id === categoryId));
                 />
             </div>
             <input type="hidden" {...register("menuItems")} />
-            {/* {category?.categoryItems && category.categoryItems.length > 0 &&
-                <div className="w-full flex flex-col items-center mt-4">
-                    <button
-                        type="button"
-                        className="flex items-center px-8 gap-2 bg-zinc-300 dark:bg-[#161a21] rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
-                        onClick={() => setOpenArrayItems(!openArrayItems)}
-                        style={{ fontSize: '18px' }}
-                    >
-                        <IoIosArrowDown className={`${openArrayItems ? 'rotate-180' : ''} transition-all duration-300`} />
-                        Itens ({(selectedItems ?? []).length}/{menuItems.length})
-                    </button>
-                    <div className={`${openArrayItems ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
-                        <p className="text-zinc-600 dark:text-zinc-400 font-extralight text-sm mb-2">
-                            Você pode usar os items abaixo na nova categoria
-                        </p>
-                        <ul className="flex flex-col gap-2">
-                            {menuItems.map((item: MenuItem) => (
-                                <li key={item.id} className="">
-                                    <label htmlFor={`item-${item.id}`} className="w-full flex items-center px-6 py-3 bg-zinc-200 dark:bg-[#161a21] rounded-full hover:scale-103 transition-all duration-200 cursor-pointer">
-                                        <input
-                                            type="checkbox"
-                                            id={`item-${item.id}`}
-                                            checked={selectedItems?.includes(Number(item.id))}
-                                            onChange={(e) => handleCheckboxChange(Number(item.id), e.target.checked)}
-                                            className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
-                                        />
-                                        <p className="flex items-center justify-center gap-3">{item.name}<span className="text-sm font-extralight text-zinc-600 dark:text-zinc-400">R${item.price}</span></p>
-                                    </label>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-            } */}
             {menuItems.length > 0 &&
-                <div className="w-full flex flex-col items-center mt-4">
+                <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center justify-center mt-4 pt-2">
                     <button
                         type="button"
-                        className="flex items-center px-8 gap-2 bg-zinc-300 dark:bg-[#161a21] rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
+                        className="flex items-center px-8 gap-2 rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
                         onClick={() => setOpenArrayItems(!openArrayItems)}
                         style={{ fontSize: '18px' }}
                     >
@@ -321,7 +285,7 @@ console.log(categories.filter(cat => cat.id === categoryId));
                     </button>
                     <div className={`${openArrayItems ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
                         <p className="text-zinc-600 dark:text-zinc-400 font-extralight text-sm mb-2">
-                            Você pode usar os items abaixo na nova categoria
+                            Você pode usar os items abaixo na categoria
                         </p>
                         <ul className="flex flex-col gap-2">
                             {menuItems.map((item: MenuItem) => (

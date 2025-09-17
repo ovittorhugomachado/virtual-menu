@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
 import { CategoryData, CategoryItems } from "../../../types/types-menu.d";
 import { UpdateDataForm } from "./deafult/form-update-data";
-import { FaList, FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { LuArrowDownWideNarrow } from "react-icons/lu";
 
 interface MenuItemOrderManagerProps {
     onClose: () => void;
@@ -15,10 +16,8 @@ export const MenuItemOrderManager: React.FC<MenuItemOrderManagerProps> = ({
     category,
     buttonColor
 }) => {
-    
-    const [localItems, setLocalItems] = useState<CategoryItems[]>(() =>
-        [...(category.categoryItems ?? [])].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-    );
+
+    const [localItems, setLocalItems] = useState<CategoryItems[]>([]);
     const [isReordering, setIsReordering] = useState(false);
     const [animatedIndexes, setAnimatedIndexes] = useState<number[]>([]);
     const [animationDirection, setAnimationDirection] = useState<"up" | "down" | null>(null);
@@ -27,14 +26,12 @@ export const MenuItemOrderManager: React.FC<MenuItemOrderManagerProps> = ({
     const { reorderMenuItems } = useManageMenu();
 
     useEffect(() => {
-        setLocalItems([...(category.categoryItems ?? [])].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
+        setLocalItems([...(category.categoryItems ?? [])].sort((a, b) => (b.order ?? 0) - (a.order ?? 0)));
     }, [category.categoryItems]);
 
     if (!category) {
         return <div>Categoria não encontrada</div>;
     }
-
-    console.log(localItems)
 
     const moveItemUp = (index: number) => {
         if (index <= 0) return;
@@ -43,17 +40,16 @@ export const MenuItemOrderManager: React.FC<MenuItemOrderManagerProps> = ({
 
         setTimeout(() => {
             const newItems = [...localItems];
-        
             [newItems[index], newItems[index - 1]] = [newItems[index - 1], newItems[index]];
-         
-            const tempOrder = newItems[index].order;
-            newItems[index].order = newItems[index - 1].order;
-            newItems[index - 1].order = tempOrder;
+
+            newItems.forEach((item, idx) => {
+                item.order = newItems.length - 1 - idx;
+            });
 
             setLocalItems(newItems);
             setAnimatedIndexes([]);
             setAnimationDirection(null);
-        }, 400);
+        }, 600);
     };
 
     const moveItemDown = (index: number) => {
@@ -64,14 +60,15 @@ export const MenuItemOrderManager: React.FC<MenuItemOrderManagerProps> = ({
         setTimeout(() => {
             const newItems = [...localItems];
             [newItems[index], newItems[index + 1]] = [newItems[index + 1], newItems[index]];
-            const tempOrder = newItems[index].order;
-            newItems[index].order = newItems[index + 1].order;
-            newItems[index + 1].order = tempOrder;
+
+            newItems.forEach((item, idx) => {
+                item.order = newItems.length - 1 - idx;
+            });
 
             setLocalItems(newItems);
             setAnimatedIndexes([]);
             setAnimationDirection(null);
-        }, 400);
+        }, 600);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -106,10 +103,10 @@ export const MenuItemOrderManager: React.FC<MenuItemOrderManagerProps> = ({
 
     return (
         <UpdateDataForm
-            title="Ordenar itens da categoria"
-            formIcon={<FaList />}
+            title={`Ordenar itens de ${category.name}`}
+            formIcon={<LuArrowDownWideNarrow />}
             onClose={onClose}
-            textButtonSubmit="Salvar ordem"
+            textButtonSubmit={localItems.length > 0 ? "Salvar ordem" : undefined}
             submitFunction={handleSubmit}
             successMessage={successMessage}
         >
@@ -119,9 +116,8 @@ export const MenuItemOrderManager: React.FC<MenuItemOrderManagerProps> = ({
                         Atualizando ordem...
                     </div>
                 )}
-                {localItems
-                    .sort((a, b) => (b.order ?? 0) - (a.order ?? 0))
-                    .map((item, index) => (
+                {localItems.length > 0 ? (
+                    localItems.map((item, index) => (
                         <div
                             key={item.id}
                             className={`w-full flex items-center px-6 py-3 bg-primary dark:bg-[#161a21] rounded-full transition-all duration-200 ${getAnimationClass(index)}`}
@@ -136,8 +132,7 @@ export const MenuItemOrderManager: React.FC<MenuItemOrderManagerProps> = ({
                                 <button
                                     title="Mover para cima"
                                     type="button"
-                                    className={`w-8 h-8 rounded-full bg-white dark:bg-gray-700 text-gray-700 dark:text-white flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 ${index === 0 ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer hover:scale-110'
-                                        }`}
+                                    className={`w-8 h-8 rounded-full bg-white dark:bg-gray-700 text-gray-700 dark:text-white flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 ${index === 0 ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer hover:scale-110'}`}
                                     onClick={() => moveItemUp(index)}
                                     disabled={index === 0 || isReordering}
                                 >
@@ -155,10 +150,16 @@ export const MenuItemOrderManager: React.FC<MenuItemOrderManagerProps> = ({
                                 </button>
                             </div>
                         </div>
-                    ))}
-                <div className="text-sm mt-4 text-center text-gray-600 dark:text-gray-400">
-                    <p>Use as setas para reordenar os itens</p>
-                </div>
+                    ))
+
+                ) : (
+                    <h4 className="w-full text-center -translate-y-6">Essa categoria não contém nenhum item, adicione itens nas configurações da categoria</h4>
+                )}
+                {localItems.length > 0 && (
+                    <div className="text-sm mt-4 text-center text-gray-600 dark:text-gray-400">
+                        <p>Use as setas para reordenar os itens</p>
+                    </div>
+                )}
             </div>
         </UpdateDataForm>
     );

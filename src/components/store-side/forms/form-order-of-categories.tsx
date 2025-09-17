@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
 import { CategoryData } from "../../../types/types-menu.d";
 import { UpdateDataForm } from "./deafult/form-update-data";
-import { FaList, FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { LuArrowDownWideNarrow } from "react-icons/lu";
 
 interface CategoryOrderManagerProps {
     onClose: () => void;
@@ -105,7 +106,7 @@ export const CategoryOrderManager: React.FC<CategoryOrderManagerProps> = ({
     return (
         <UpdateDataForm
             title="Ordenar categorias"
-            formIcon={<FaList />}
+            formIcon={<LuArrowDownWideNarrow />}
             onClose={onClose}
             textButtonSubmit="Salvar ordem"
             submitFunction={handleSubmit}
