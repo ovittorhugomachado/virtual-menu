@@ -49,8 +49,8 @@ export type MenuItem = {
   photoUrl?: string;
   categoryId: number[];
   categories?: CategoryData[];
-  optionGroupId?: number[];
-  optionsGroups?: OptionGroup[];
+  optionGroupId?: number[] | undefined;
+  optionGroups?: OptionGroup[];
   order?: number;
 };
 
@@ -79,13 +79,15 @@ export type MenuItemsContainerProps = {
 
 //TIPOS DO GRUPO DE OPCIONAIS -----------------------------------
 export type OptionGroup = {
-  id: number;
-  storeId: number;
+  id?: number;
+  storeId?: number;
   title: string;
-  required: boolean;
-  options: Option[];
-  maxSelectableOptions?: number;
-  menuItem: number[]
+  optionIds?: number[] | undefined;
+  options?: Option[] | undefined;
+  menuItemIds?: number[] | undefined;
+  menuItem?: MenuItem[] | undefined;
+  isRequired: boolean;
+  maxSelectableOptions: number;
 };
 
 //TIPOS DO OPCIONAL-----------------------------------------
@@ -132,8 +134,16 @@ export type ManageMenuContextType = {
   deleteMenuItem: (itemId: number) => Promise<void>;
 
   //PROPRIEDADES DOS GRUPOS DE OPCIONAIS ---------------------------
-  optionsGroups: OptionGroup[];
-  // createOptionGroup: (group: OptionGroup) => Promise<void>;
+  optionGroups: OptionGroup[];
+  setOptionGroups: React.Dispatch<React.SetStateAction<OptionGroup[]>>;
+  createOptionGroup: (group: OptionGroup) => Promise<void>;
+  // updateOptionGroup: (groupId: number, group: OptionGroup) => Promise<void>;
+  // deleteOptionGroup: (groupId: number) => Promise<void>;
+  // reorderOptionGroups: (orderedGroups: { id: number; order: number }[]) => Promise<void>;
+
+  //PROPRIEDADES DOS OPCIONAIS ---------------------------
+  options: Option[];
+  // createOption: (option: Option) => Promise<void>;
 };
 
 //TIPOS DO GET MENU CONTEXTO-----------------------------

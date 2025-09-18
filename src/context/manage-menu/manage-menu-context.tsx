@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
-import { CategoryData, MenuItem, OptionGroup, StyleStorePage, /*OptionGroup, Option*/ } from "../../types/types-menu.d";
+import { CategoryData, StyleStorePage, MenuItem, OptionGroup, Option } from "../../types/types-menu.d";
 import { ManageMenuContext } from "./manage-menu-context";
 import {
     createCategoryService,
@@ -13,6 +13,7 @@ import {
     toggleStatusMenuItemService,
     reorderCategoriesService,
     reorderMenuItemsService,
+    createMenuItemOptionGroupService,
 } from "../../services/service-manage-menu-store";
 import { uploadMenuItemImage } from "../../services/service-upload-image";
 
@@ -28,18 +29,20 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
     //CATEGORIAS E ITENS DO MENU
     const [categories, setCategories] = useState<CategoryData[]>([]);
     const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-    const [optionsGroups, setOptionsGroups] = useState<OptionGroup[]>([]);
-    // const [options, setOptions] = useState<Option[]>([]);
+    const [optionGroups, setOptionGroups] = useState<OptionGroup[]>([]);
+    const [options, setOptions] = useState<Option[]>([]);
 
     const fetchMenuData = async () => {
         try {
             setIsLoading(true);
             setError(null);
             const allMenuData = await getFullMenuService();
+            console.log(allMenuData)
             setStyleStore(allMenuData.data.style);
             setCategories(allMenuData.data.MenuCategory || []);
             setMenuItems(allMenuData.data.MenuItem || []);
-            setOptionsGroups(allMenuData.data.MenuItemOptionGroup || []);
+            setOptionGroups(allMenuData.data.MenuItemOptionGroup || []);
+            setOptions(allMenuData.data.MenuItemOption || []);
         } catch (err) {
             setError('Falha ao carregar dados do menu');
             console.error('Error fetching menu data:', err);
@@ -176,7 +179,7 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
         } finally {
             setIsLoading(false);
         }
-    };  
+    };
 
     //FUNÇÕES DOS ITENS DO MENU -----------------------------
     const createMenuItem = async (itemData: MenuItem) => {
@@ -276,6 +279,45 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
     };
 
     //FUNÇÕES DOS GRUPOS DE OPCIONAIS -----------------------------
+    const createOptionGroup = async (group: OptionGroup) => {
+        setIsLoading(true);
+        setError(null);
+
+        const payload = {
+            title: group.title,
+            optionIds: group.optionIds ?? [],
+            menuItemIds: group.menuItemIds ?? [],
+            maxSelectableOptions: group.maxSelectableOptions,
+            isRequired: group.isRequired,
+        };
+
+        try {
+            const newOptionGroup = await createMenuItemOptionGroupService(payload);
+
+            setOptionGroups(prev => [...prev, newOptionGroup]);
+
+            setMenuItems(prevMenuItems =>
+                prevMenuItems.map(menuItem => {
+
+                    if (menuItem.id != null && payload.menuItemIds.includes(menuItem.id)) {
+                        return {
+                            ...menuItem,
+                            optionGroups: [
+                                ...(menuItem.optionGroups ?? []),
+                                newOptionGroup,
+                            ],
+                        };
+                    }
+                    return menuItem;
+                })
+            );
+        } catch (err) {
+            setError('Falha ao criar grupo de opções');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
     //FUNÇÕES DOS  OPCIONAIS -----------------------------
 
     useEffect(() => {
@@ -311,7 +353,10 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
                 reorderMenuItems,
                 deleteMenuItem,
                 toggleStatusMenuItem,
-                optionsGroups,
+                optionGroups,
+                setOptionGroups,
+                createOptionGroup,
+                options
             }}
         >
             {children}

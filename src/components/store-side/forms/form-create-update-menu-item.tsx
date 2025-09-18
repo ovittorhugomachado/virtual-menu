@@ -19,10 +19,10 @@ export const CreateMenuItemForm = ({
     categoryId?: number;
 }) => {
 
-    const { 
-        createMenuItem, 
-        categories, 
-        optionsGroups 
+    const {
+        createMenuItem,
+        categories,
+        optionGroups
     } = useManageMenu();
 
     const {
@@ -49,7 +49,7 @@ export const CreateMenuItemForm = ({
     }, [categoryId, categories, setValue]);
 
     const selectedCategories = watch("categories") as CategoryData[] || [];
-    const selectedoptions = watch("optionsGroups") as OptionGroup[] || [];
+    const selectedoptions = watch("optionGroups") as OptionGroup[] || [];
 
     const handleFormSubmit = async (data: MenuItem) => {
         try {
@@ -57,8 +57,10 @@ export const CreateMenuItemForm = ({
                 ? data.categories.map(cat => cat.id)
                 : [];
 
-            const optionGroupIds = Array.isArray(data.optionsGroups)
-                ? data.optionsGroups.map(gr => gr.id)
+            const optionGroupIds = Array.isArray(data.optionGroups)
+                ? data.optionGroups
+                    .map(gr => gr.id)
+                    .filter((id): id is number => typeof id === "number")
                 : [];
 
             await createMenuItem({
@@ -93,12 +95,12 @@ export const CreateMenuItemForm = ({
         const currentOptions = selectedoptions ?? [];
 
         if (isChecked) {
-            const optionsObj = optionsGroups.find(gr => gr.id === optionId);
+            const optionsObj = optionGroups.find(gr => gr.id === optionId);
             if (optionsObj) {
-                setValue("optionsGroups", [...currentOptions, optionsObj]);
+                setValue("optionGroups", [...currentOptions, optionsObj]);
             }
         } else {
-            setValue("optionsGroups", currentOptions.filter(gr => gr.id !== optionId));
+            setValue("optionGroups", currentOptions.filter(gr => gr.id !== optionId));
         }
     };
 
@@ -108,7 +110,7 @@ export const CreateMenuItemForm = ({
     };
 
     const getSelectedoptions = (): OptionGroup[] => {
-        const value = watch("optionsGroups");
+        const value = watch("optionGroups");
         return Array.isArray(value) ? value : [];
     };
 
@@ -123,7 +125,7 @@ export const CreateMenuItemForm = ({
             isLoadingSubmit={isSubmitting}
         >
             <div className="flex flex-col items-start justify-center relative">
-                <label htmlFor="category-name" className="text-md ml-2">
+                <label htmlFor="name" className="text-md ml-2">
                     Nome
                     {errors.name && (
                         <span className="span-error">
@@ -194,8 +196,8 @@ export const CreateMenuItemForm = ({
                     </div>
                 </div>
             }
-            <input type="hidden" {...register("optionsGroups")} />
-            {optionsGroups.length > 0 &&
+            <input type="hidden" {...register("optionGroups")} />
+            {optionGroups.length > 0 &&
                 <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center mt-4">
                     <button
                         type="button"
@@ -203,11 +205,11 @@ export const CreateMenuItemForm = ({
                         onClick={() => setOpenArrayOptions(!openArrayOptions)}
                     >
                         <IoIosArrowDown className={`${openArrayOptions ? 'rotate-180' : ''} transition-all duration-300`} />
-                        Opcionais ({(selectedoptions ?? []).length}/{optionsGroups.length})
+                        Opcionais ({(selectedoptions ?? []).length}/{optionGroups.length})
                     </button>
                     <div className={`${openArrayOptions ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
                         <ul className="flex flex-col gap-2">
-                            {optionsGroups.map((group: OptionGroup) => (
+                            {optionGroups.map((group: OptionGroup) => (
                                 <li key={group.id}>
                                     <label className="w-full flex items-start px-6 py-3 cursor-pointer">
                                         <input
@@ -247,7 +249,7 @@ export const UpdateMenuItemForm = ({
         updateMenuItem,
         deleteMenuItem,
         categories,
-        optionsGroups
+        optionGroups
     } = useManageMenu();
 
     const item = menuItems.find(i => i.id === itemId);
@@ -269,7 +271,7 @@ export const UpdateMenuItemForm = ({
     const [isDeleted, setIsDeleted] = useState(false);
 
     const selectedCategories = watch("categories") as CategoryData[] || [];
-    const selectedoptions = watch("optionsGroups") as OptionGroup[] || [];
+    const selectedoptions = watch("optionGroups") as OptionGroup[] || [];
 
     useEffect(() => {
         if (item) {
@@ -278,7 +280,7 @@ export const UpdateMenuItemForm = ({
                 description: item.description,
                 price: item.price,
                 categories: item.categories ?? [],
-                optionsGroups: item.optionsGroups ?? []
+                optionGroups: item.optionGroups ?? []
             });
         }
     }, [item, reset]);
@@ -300,8 +302,10 @@ export const UpdateMenuItemForm = ({
                 ? data.categories.map(cat => cat.id)
                 : [];
 
-            const optionGroupIds = Array.isArray(data.optionsGroups)
-                ? data.optionsGroups.map(gr => gr.id)
+            const optionGroupIds = Array.isArray(data.optionGroups)
+                ? data.optionGroups
+                    .map(gr => gr.id)
+                    .filter((id): id is number => typeof id === "number")
                 : [];
 
             await updateMenuItem(
@@ -334,11 +338,11 @@ export const UpdateMenuItemForm = ({
 
     const handleCheckboxOptionsChange = (optionId: number, isChecked: boolean) => {
         const currentOptions = selectedoptions ?? [];
-        const optionsObj = optionsGroups.find(gr => gr.id === optionId);
+        const optionsObj = optionGroups.find(gr => gr.id === optionId);
         if (isChecked && optionsObj) {
-            setValue("optionsGroups", [...currentOptions, optionsObj]);
+            setValue("optionGroups", [...currentOptions, optionsObj]);
         } else {
-            setValue("optionsGroups", currentOptions.filter(gr => gr.id !== optionId));
+            setValue("optionGroups", currentOptions.filter(gr => gr.id !== optionId));
         }
     };
 
@@ -348,7 +352,7 @@ export const UpdateMenuItemForm = ({
     };
 
     const getSelectedoptions = (): OptionGroup[] => {
-        const value = watch("optionsGroups");
+        const value = watch("optionGroups");
         return Array.isArray(value) ? value : [];
     };
 
@@ -447,8 +451,8 @@ export const UpdateMenuItemForm = ({
                     </div>
                 </div>
             }
-            <input type="hidden" {...register("optionsGroups")} />
-            {optionsGroups.length > 0 &&
+            <input type="hidden" {...register("optionGroups")} />
+            {optionGroups.length > 0 &&
                 <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center mt-4">
                     <button
                         type="button"
@@ -456,11 +460,11 @@ export const UpdateMenuItemForm = ({
                         onClick={() => setOpenArrayOptions(!openArrayOptions)}
                     >
                         <IoIosArrowDown className={`${openArrayOptions ? 'rotate-180' : ''} transition-all duration-300`} />
-                        Opcionais ({(selectedoptions ?? []).length}/{optionsGroups.length})
+                        Opcionais ({(selectedoptions ?? []).length}/{optionGroups.length})
                     </button>
                     <div className={`${openArrayOptions ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
                         <ul className="flex flex-col gap-2">
-                            {optionsGroups.map((group: OptionGroup) => (
+                            {optionGroups.map((group: OptionGroup) => (
                                 <li key={group.id}>
                                     <label className="w-full flex items-start px-6 py-3 cursor-pointer">
                                         <input

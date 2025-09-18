@@ -436,7 +436,8 @@ export const getMenuItemsOptioGroupsMyStoreService = async () => {
 };
 
 export const createMenuItemOptionGroupService = async (optionGroup: {
-    name: string;
+    title: string;
+    optionIds: number[];
     menuItemIds: number[];
     maxSelectableOptions?: number;
     isRequired: boolean;

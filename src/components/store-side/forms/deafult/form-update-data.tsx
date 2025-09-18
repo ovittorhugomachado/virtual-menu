@@ -79,7 +79,7 @@ export const UpdateDataForm = ({
                                         <div className="w-full flex justify-center z-50">
                                             <button
                                                 type="submit"
-                                                className="w-[220px] primary-button"
+                                                className="w-[240px] primary-button"
                                                 disabled={isLoadingSubmit}
                                             >
                                                 {isLoadingSubmit ? "Carregando..." : `${textButtonSubmit}`}

@@ -11,7 +11,7 @@ import { ManageMenuProvider } from "../context/manage-menu/manage-menu-context.t
 import { RestaurantDataProvider } from "../context/restaurant-data/restaurant-data-context.tsx"
 import { GetMenuProvider } from "../context/get-menu/get-menu-context.tsx";
 import { CartProvider } from "../context/cart/cart-provider.tsx";
-// import { Testpage } from "../pages/page-tests";
+import { TestPage } from "../pages/page-tests";
 
 export const AppRoutes = () => {
     return (
@@ -50,7 +50,14 @@ export const AppRoutes = () => {
                         </GetMenuProvider>
                     }
                 />
-                {/* <Route path="/testes" element={<Testpage />} /> */}
+                <Route
+                    path="/testes"
+                    element={
+                        <ManageMenuProvider>
+                            <TestPage />
+                        </ManageMenuProvider>
+                    }
+                />
             </Routes>
         </BrowserRouter>
     )
