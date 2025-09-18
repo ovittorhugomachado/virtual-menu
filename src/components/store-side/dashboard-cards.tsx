@@ -5,6 +5,7 @@ import { CountdownTimer } from "./countdown-timer"
 import { IoIosArrowDown } from "react-icons/io"
 import { MdBorderColor } from "react-icons/md";
 import { useAuth } from "../../hooks/use-auth";
+import { useRestaurantData } from "../../context/restaurant-data/restaurant-data-context";
 
 export const DashboardCards = ({
     orders,
@@ -17,6 +18,8 @@ export const DashboardCards = ({
 }: DashboardCardOrdersProps) => {
 
     const { user } = useAuth();
+    const { restaurantData } = useRestaurantData();
+    const restaurantNameSlug = restaurantData?.user.restaurantName?.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 
     const cards = useMemo(() => [
         {
@@ -97,7 +100,7 @@ export const DashboardCards = ({
                 <li className={`w-full col-span-full mb-5 text-black dark:text-white rounded-xl relative border-1 dark:bg-[#0D1117] border-black dark:border-white transition-all hover:scale-103 cursor-pointer`}>
                     <a
                         className="flex w-full h-full max-h-[36px] items-center justify-between gap-2 p-2"
-                        href={`restaurante/${user?.id}`}
+                        href={`${restaurantNameSlug}/73980911/${user?.id}`}
                         target="_blank"
                     >
                         <h4 className="w-full flex flex-2 items-center justify-center gap-3 text-xl text-center">

@@ -86,7 +86,7 @@ export const CategoryButtons = ({ onCategoryClick }: CategoryButtonsProps) => {
             </button>
             <motion.div className="w-full overflow-x-hidden relative" ref={carousel} whileTap={{ cursor: "grabbing" }}>
                 <motion.div
-                    className="w-full flex gap-4 p-2.5 mt-4 flex-shrink-0"
+                    className="w-full flex mx-auto gap-4 py-2.5 mt-4 flex-shrink-0"
                     drag="x"
                     dragConstraints={{ right: 0, left: -maxScroll }}
                     style={{ x }}
@@ -97,7 +97,7 @@ export const CategoryButtons = ({ onCategoryClick }: CategoryButtonsProps) => {
                             .map((category) => (
                                 <motion.div
                                     key={category.id}
-                                    className="relative min-w-28 h-9 lg:h-10 px-10 rounded-3xl flex items-center justify-center flex-shrink-0 cursor-pointer hover:scale-103 transition-transform duration-200"
+                                    className="text-lg relative min-w-28 h-9 lg:h-10 px-10 rounded-3xl flex items-center justify-center flex-shrink-0 cursor-pointer hover:scale-103 transition-transform duration-200"
                                     style={{
                                         backgroundColor: buttonColor ?? '',
                                         color: textButtonColor,

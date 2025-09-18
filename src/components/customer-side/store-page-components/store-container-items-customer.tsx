@@ -15,7 +15,7 @@ export const MenuItems: React.FC<MenuItemsProps> = ({ categoryRefs }) => {
     const buttonColor = restaurantData?.style.primaryColor;
 
     return (
-        <section className={`w-full px-2 ${backgroundColor === 'white' ? 'text-black' : 'text-white'}`}>
+        <section className={`w-full ${backgroundColor === 'white' ? 'text-black' : 'text-white'}`}>
             {menuCategories && menuCategories.length > 0 &&
                 menuCategories.map(category => (
                     <div

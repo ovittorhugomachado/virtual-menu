@@ -12,12 +12,14 @@ export const StoreHeader = () => {
     const { isOpen, message } = getRestaurantStatus(restaurantData?.openingHours || []);
     const [showOrderForm, setShowOrderForm] = useState(false);
 
+    const backgroundColor = restaurantData?.style.backgroundColor;
+
     const handleCartClick = () => {
         setShowOrderForm(true);
     };
 
     return (
-        <header className="w-screen max-h-[387px] px-[5%] lg:px-[15%] py-4 xl:py-4 sm:px-6 bg-white text-black shadow-md flex flex-col ms:flex-row items-center justify-between ms:sticky top-0" style={{ zIndex: 5 }}>
+        <header className={`${backgroundColor === 'white' ? 'text-black bg-white' : 'text-white bg-black border-b-[1px] border-zinc-800'} w-screen max-h-[387px] px-[5%] lg:px-[15%] py-4 xl:py-4 sm:px-6 shadow-md flex flex-col ms:flex-row items-center justify-between ms:sticky top-0`} style={{ zIndex: 5 }}>
             <div className="w-full flex items-center justify-center ms:justify-start gap-3.5">
                 <img
                     src={restaurantData?.logoUrl || '/store-logo-default.png'}
@@ -28,7 +30,7 @@ export const StoreHeader = () => {
                     alt="Logo da loja"
                 />
                 <div className="mx-1.5 text-center">
-                    <div className="flex items-center gap-1 m-1">
+                    <div className="flex justify-center gap-1 m-1">
                         <h5 className="text-md xl:text-base font-bold mb-1">{restaurantData?.user.restaurantName || "Nome não disponível"}</h5>
                     </div>
                     {isOpen ? (

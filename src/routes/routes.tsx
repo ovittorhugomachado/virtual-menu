@@ -17,7 +17,14 @@ export const AppRoutes = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<AdminDashboard />} />
+                <Route
+                    path="/"
+                    element={
+                        <RestaurantDataProvider>
+                            <AdminDashboard />
+                        </RestaurantDataProvider>
+                    }
+                />
                 <Route path="/entrar" element={<LoginPage />} />
                 <Route path="/criar-conta" element={<RegisterPage />} />
                 <Route
@@ -34,7 +41,7 @@ export const AppRoutes = () => {
                 <Route path="/create-new-password/:token" element={<CreateNewPasswordPage />} />
                 <Route path="/restaurantes" element={<PageListOfStores />} />
                 <Route
-                    path="/restaurante/:id"
+                    path="/:restaurantName/73980911/:id"
                     element={
                         <GetMenuProvider>
                             <CartProvider>
