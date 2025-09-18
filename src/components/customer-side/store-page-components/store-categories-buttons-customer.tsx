@@ -81,12 +81,12 @@ export const CategoryButtons = ({ onCategoryClick }: CategoryButtonsProps) => {
             >
                 <IoIosArrowBack
                     className={`${backgroundColor === 'black' ? 'text-white' : 'text-black'} text-3xl font-extrabold`}
-                    style={{ opacity: positionCarousel === 0 ? 0.1 : 1 }}
+                    style={{ opacity: positionCarousel === 0 ? 0 : 1 }}
                 />
             </button>
-            <motion.div className="w-full overflow-x-hidden relative" ref={carousel} whileTap={{ cursor: "grabbing" }}>
+            <motion.div className="overflow-x-hidden relative" ref={carousel} whileTap={{ cursor: "grabbing" }}>
                 <motion.div
-                    className="w-full flex mx-auto gap-4 py-2.5 mt-4 flex-shrink-0"
+                    className="flex mx-auto gap-4 p-2.5 mt-4 flex-shrink-0"
                     drag="x"
                     dragConstraints={{ right: 0, left: -maxScroll }}
                     style={{ x }}
@@ -117,7 +117,7 @@ export const CategoryButtons = ({ onCategoryClick }: CategoryButtonsProps) => {
             >
                 <IoIosArrowBack
                     className={`${backgroundColor === 'black' ? 'text-white' : 'text-black'} text-3xl font-extrabold `}
-                    style={{ opacity: Math.abs(positionCarousel) === maxScroll ? 0.1 : 1 }}
+                    style={{ opacity: Math.abs(positionCarousel) === maxScroll ? 0 : 1 }}
                 />
             </button>
         </div >
