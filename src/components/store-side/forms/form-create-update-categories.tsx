@@ -83,7 +83,7 @@ export const CreateCategoryForm = ({ onClose, error }: { onClose: () => void; er
                 <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center justify-center mt-4 pt-2">
                     <button
                         type="button"
-                        className="flex items-center px-8 gap-2 rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
+                        className="w-full flex items-center justify-center px-8 gap-2 rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
                         onClick={() => setOpenArrayItems(!openArrayItems)}
                         style={{ fontSize: '18px' }}
                     >
@@ -98,7 +98,7 @@ export const CreateCategoryForm = ({ onClose, error }: { onClose: () => void; er
                         <ul className="flex flex-col gap-2">
                             {menuItems.map((item: MenuItem) => (
                                 <li key={item.id} className="">
-                                    <label htmlFor={`item-${item.id}`} className="w-full flex items-center px-6 py-3 bg-zinc-200 dark:bg-[#161a21] rounded-full hover:scale-103 transition-all duration-200 cursor-pointer">
+                                    <label htmlFor={`item-${item.id}`} className="w-full flex items-center px-6 py-3 rounded-full cursor-pointer">
                                         <input
                                             type="checkbox"
                                             id={`item-${item.id}`}
@@ -276,7 +276,7 @@ export const UpdateCategoryForm = ({
                 <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center justify-center mt-4 pt-2">
                     <button
                         type="button"
-                        className="flex items-center px-8 gap-2 rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
+                        className="w-full flex items-center justify-center px-8 gap-2 rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
                         onClick={() => setOpenArrayItems(!openArrayItems)}
                         style={{ fontSize: '18px' }}
                     >
@@ -290,7 +290,7 @@ export const UpdateCategoryForm = ({
                         <ul className="flex flex-col gap-2">
                             {menuItems.map((item: MenuItem) => (
                                 <li key={item.id} className="">
-                                    <label htmlFor={`item-${item.id}`} className="w-full flex items-center px-6 py-3 bg-zinc-200 dark:bg-[#161a21] rounded-full hover:scale-103 transition-all duration-200 cursor-pointer">
+                                    <label htmlFor={`item-${item.id}`} className="w-full flex items-center px-6 py-3 rounded-full cursor-pointer">
                                         <input
                                             type="checkbox"
                                             id={`item-${item.id}`}
