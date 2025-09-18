@@ -92,7 +92,7 @@ export const MenuItems = () => {
                                 .map(item => (
                                     <li
                                         key={item.id}
-                                        className={`relative flex border-[1px] ${tempBackgroundColor === 'white' ? 'border-zinc-300' : 'border-zinc-900'}`}
+                                        className={`relative min-h-40 flex border-[1px] ${tempBackgroundColor === 'white' ? 'border-zinc-300' : 'border-zinc-900'}`}
                                     >
                                         <Item
                                             image={

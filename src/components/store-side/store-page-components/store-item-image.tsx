@@ -54,7 +54,7 @@ export const MenuItemImage = ({ id }: MenuItemImageProps) => {
     return (
         <>
             {isLoading ? (
-                <div className="absolute inset-0 p-4 flex items-center justify-center bg-transparent rounded-full z-0">
+                <div className="w-[130px] h-full inset-0 p-4 flex items-center justify-center bg-transparent rounded-full z-0">
                     <LoadingComponentInternal />
                 </div>
             ) : (
@@ -62,7 +62,7 @@ export const MenuItemImage = ({ id }: MenuItemImageProps) => {
                     <img
                         src={`${imageUrl}?v=${imageVersion}`}
                         alt="item-image"
-                        className="w-[130px] h-[115px] ms:w-[150px] ms:h-[140px] object-cover"
+                        className="w-[130px] h-full ms:w-[150px] object-cover"
                         onError={e => (e.currentTarget.src = "/food-default.png")}
                     />
                     <button

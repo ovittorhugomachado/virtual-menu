@@ -23,7 +23,7 @@ export const Item = ({
 
     return (
         <>
-            <div className="relative shrink-0">
+            <div className="h-full relative shrink-0">
                 <MenuItemImage
                     id={id}
                 />
