@@ -82,6 +82,23 @@ export type UpdateMenuItemFormProps = {
     };
 };
 
+export type OptionGroupFormData = {
+    id: number;
+    name: string;
+    description?: string;
+    isRequired: boolean;
+    maxOptions: number;
+    minOptions: number;
+    options: OptionFormData[];
+};
+
+export type OptionFormData = {
+    id?: number;
+    name: string;
+    description?: string;
+    price: number;
+};
+
 export type OrderFormData = {
     customerName: string;
     customerPhone: string;

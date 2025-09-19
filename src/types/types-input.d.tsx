@@ -1,7 +1,7 @@
 import { UseFormRegister, UseFormWatch, UseFormClearErrors, FieldErrors, Control } from "react-hook-form";
 import { CategoryData, MenuItem } from "./types-menu.d";
 import { Address, RestaurantData } from "./types-restaurante-data.d";
-import { MenuItemFormData, OrderFormData } from "./types-data-forms.d";
+import { MenuItemFormData, OptionFormData, OptionGroupFormData, OrderFormData } from "./types-data-forms.d";
 
 export type InputNameProps = {
     register: UseFormRegister<RestaurantData>;
@@ -57,6 +57,48 @@ export type InputMenuItemPriceProps = {
     clearErrors: UseFormClearErrors<MenuItem>;
     initialValues: Partial<MenuItem>;
 };
+
+export type InputOptionGroupNameProps = {
+    register: UseFormRegister<OptionGroupFormData>;
+    errors: FieldErrors<OptionGroupFormData>;
+    clearErrors: UseFormClearErrors<OptionGroupFormData>;
+    initialValues?: Partial<OptionGroupFormData>;
+};
+
+export type InptuMaxMinOptionsProps = {
+    isRequired: boolean;
+    quantityOptions: OptionFormData[];
+    register: UseFormRegister<OptionGroupFormData>;
+    errors: FieldErrors<OptionGroupFormData>;
+    clearErrors?: UseFormClearErrors<OptionGroupFormData>;
+    initialValues?: Partial<OptionGroupFormData>;
+}
+
+export type InputOptionProps = {
+    options: OptionFormData[];
+    onRemoveOption: (index: number) => void;
+    register: UseFormRegister<OptionGroupFormData>;
+    errors: FieldErrors<OptionGroupFormData>;
+    clearErrors: UseFormClearErrors<OptionGroupFormData>;
+    initialValues?: Partial<OptionGroupFormData>;
+}
+
+export type InputOptionPriceProps = {
+    index: number;
+    register: UseFormRegister<OptionGroupFormData>;
+    errors: FieldErrors<OptionGroupFormData>;
+    clearErrors: UseFormClearErrors<OptionGroupFormData>;
+    initialValues: Partial<OptionGroupFormData>;
+};
+
+export type InputRadioRequiredProps = {
+    isRequired: boolean;
+    onChangeIsRequired: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    register: UseFormRegister<OptionGroupFormData>;
+    errors: FieldErrors<OptionGroupFormData>;
+    // clearErrors: UseFormClearErrors<OptionGroupFormData>;
+    // initialValues?: Partial<OptionGroupFormData>;
+}
 
 export type InputAddressProps = {
     register: UseFormRegister<RestaurantData>;

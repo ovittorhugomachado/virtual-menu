@@ -8,11 +8,11 @@ import { useManageMenu } from "../../../context/manage-menu/manage-menu-context"
 export const CreateOptionGroupForm = ({
     onClose,
     error,
-    categoryId
+    menuItemId
 }: {
     onClose: () => void;
     error?: string;
-    categoryId?: number;
+    menuItemId?: number;
 }) => {
 
     const {
@@ -29,7 +29,6 @@ export const CreateOptionGroupForm = ({
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
-        clearErrors,
         reset,
         setValue,
         watch
@@ -250,6 +249,9 @@ export const CreateOptionGroupForm = ({
                     </div>
                 }
             </div>
+            {error && (
+                <p className="text-error">{error}</p>
+            )}
         </UpdateDataForm>
     )
 }
