@@ -10,7 +10,7 @@ import { InputRadioRequired } from "../inputs/input-store-radio-required";
 import { InputOptions } from "../inputs/input-store-options";
 import { MaxMinSelectableOptions } from "../inputs/input-store-max-min-selectable-options";
 
-export const CreateOptionGroupForm = ({ menuItemId }: { menuItemId: number }) => {
+export const CreateOptionGroupForm = ({ menuItemId, onClose }: { menuItemId?: number, onClose: () => void; }) => {
 
     const {
         register,
@@ -30,6 +30,7 @@ export const CreateOptionGroupForm = ({ menuItemId }: { menuItemId: number }) =>
     const { createOptionGroup, menuItems } = useManageMenu()
     const [isRequired, setIsRequired] = useState(false);
     const [openArrayItems, setOpenArrayItems] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
 
     const selectedItems = watch("menuItemIds", []);
 
@@ -38,12 +39,11 @@ export const CreateOptionGroupForm = ({ menuItemId }: { menuItemId: number }) =>
         name: "options",
     });
 
-    const successMessage = "";
     const handleFormSubmit = async (data: OptionGroupFormData) => {
 
         const min = data.minOptions === undefined || data.minOptions === null ? null : Number(data.minOptions);
         const max = data.maxOptions === undefined || data.maxOptions === null ? null : Number(data.maxOptions);
-
+        console.log(min, max)
         const optionGroup: OptionGroup = {
             title: data.name,
             menuItemIds: data.menuItemIds ?? [],
@@ -57,8 +57,12 @@ export const CreateOptionGroupForm = ({ menuItemId }: { menuItemId: number }) =>
                 description: opt.description ?? "",
             })),
         };
-
-        await createOptionGroup(optionGroup);
+        try {
+            await createOptionGroup(optionGroup);
+            setSuccessMessage("Adicionais criado com sucesso!");
+        } catch (error) {
+            console.error("Erro ao criar categoria:", error);
+        }
     }
 
     const changeIsRequired = () => {
@@ -96,7 +100,7 @@ export const CreateOptionGroupForm = ({ menuItemId }: { menuItemId: number }) =>
     return (
         <>
             <UpdateDataForm
-                onClose={() => { }}
+                onClose={onClose}
                 formIcon={<IoIosAddCircle />}
                 title="Criar Grupo de adicionais"
                 successMessage={successMessage}

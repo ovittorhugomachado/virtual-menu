@@ -8,7 +8,15 @@ import { IoIosAddCircle, IoIosArrowDown } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { FaGear } from "react-icons/fa6";
 
-export const CreateCategoryForm = ({ onClose, error }: { onClose: () => void; error?: string }) => {
+export const CreateCategoryForm = ({ 
+    onClose, 
+    error,
+    menuItem
+}: { 
+    onClose: () => void; 
+    error?: string ;
+    menuItem?: number;
+}) => {
 
     const { createCategory, menuItems } = useManageMenu();
 
@@ -19,7 +27,12 @@ export const CreateCategoryForm = ({ onClose, error }: { onClose: () => void; er
         reset,
         setValue,
         watch
-    } = useForm<CategoryData>();
+    } = useForm<CategoryData>({
+        defaultValues: {
+            name: "",
+            menuItems: menuItem ? [menuItem] : [], // <-- já marcado!
+        }
+    });
 
     const [openArrayItems, setOpenArrayItems] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
@@ -142,7 +155,7 @@ export const UpdateCategoryForm = ({
         deleteCategory,
         menuItems
     } = useManageMenu();
-    console.log(categories.filter(cat => cat.id === categoryId));
+
     const {
         register,
         handleSubmit,

@@ -37,6 +37,7 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
             setIsLoading(true);
             setError(null);
             const allMenuData = await getFullMenuService();
+            console.log(allMenuData)
             setStyleStore(allMenuData.data.style);
             setCategories(allMenuData.data.MenuCategory || []);
             setMenuItems(allMenuData.data.MenuItem || []);
@@ -313,6 +314,9 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
                     return menuItem;
                 })
             );
+
+            await fetchMenuData();
+
         } catch (err) {
             setError('Falha ao criar grupo de opções');
             console.error(err);

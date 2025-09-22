@@ -8,6 +8,8 @@ import { UpdateDataForm } from "./deafult/form-update-data";
 import { IoIosAddCircle, IoIosArrowDown } from "react-icons/io";
 import { BsFillTrash3Fill } from "react-icons/bs";
 import { FaGear } from "react-icons/fa6";
+import { CreateCategoryForm } from "./form-create-update-categories";
+import { CreateOptionGroupForm } from "./form-create-update-option-group";
 
 export const CreateMenuItemForm = ({
     onClose,
@@ -35,8 +37,10 @@ export const CreateMenuItemForm = ({
         watch
     } = useForm<MenuItem>();
 
-    const [openArrayCategories, setOpenArrayCategories] = useState(true);
-    const [openArrayOptions, setOpenArrayOptions] = useState(true);
+    const [openArrayCategories, setOpenArrayCategories] = useState(false);
+    const [openCreateCategoryForm, setOpenCreateCategoryForm] = useState(false);
+    const [openArrayOptions, setOpenArrayOptions] = useState(false);
+    const [openCreateOptionsForm, setOpenCreateOptionsForm] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
 
     useEffect(() => {
@@ -121,7 +125,14 @@ export const CreateMenuItemForm = ({
             title="Criar item"
             successMessage={successMessage}
             textButtonSubmit="Criar categoria"
-            submitFunction={handleSubmit(handleFormSubmit)}
+            submitFunction={e => {
+                if (openCreateCategoryForm || openCreateOptionsForm) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
+                handleSubmit(handleFormSubmit)(e);
+            }}
             isLoadingSubmit={isSubmitting}
         >
             <div className="flex flex-col items-start justify-center relative">
@@ -162,70 +173,91 @@ export const CreateMenuItemForm = ({
                 initialValues={{}}
             />
             <input type="hidden" {...register("categories")} />
-            {categories.length > 0 &&
-                <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center mt-4">
-                    <button
-                        type="button"
-                        className="flex items-center px-8 gap-2 my-2 bg-zinc-300 dark:bg-[#161a21] rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
-                        onClick={() => setOpenArrayCategories(!openArrayCategories)}
-                    >
-                        <IoIosArrowDown className={`${openArrayCategories ? 'rotate-180' : ''} transition-all duration-300`} />
-                        Categorias ({(selectedCategories ?? []).length}/{categories.length})
-                    </button>
-                    <div className={`${openArrayCategories ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
-                        <ul className="flex flex-col gap-2">
-                            {categories.map((category: CategoryData) => (
-                                <li key={category.id}>
-                                    <label className="w-full flex items-start px-6 py-3 cursor-pointer">
-                                        <input
-                                            type="checkbox"
-                                            checked={getSelectedCategories().some(cat => cat.id === category.id)}
-                                            onChange={(e) =>
-                                                handleCheckboxCategoryChange(Number(category.id), e.target.checked)
-                                            }
-                                            className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
-                                        />
-                                        <p className="flex items-center justify-center gap-3">
-                                            {category.name}
-                                        </p>
-                                    </label>
-                                </li>
-                            ))}
-                        </ul>
-
+            <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center mt-4">
+                <button
+                    type="button"
+                    className="flex items-center px-8 gap-2 my-2 bg-zinc-300 dark:bg-[#161a21] rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
+                    onClick={() => setOpenArrayCategories(!openArrayCategories)}
+                >
+                    <IoIosArrowDown className={`${openArrayCategories ? 'rotate-180' : ''} transition-all duration-300`} />
+                    Categorias ({(selectedCategories ?? []).length}/{categories.length})
+                </button>
+                <button
+                    type="button"
+                    className={`${openArrayCategories ? 'mt-3 pointer-events-auto' : 'hidden max-h-0 pointer-events-none'} flex items-center justify-center gap-1 rounded-full py-1 px-2 cursor-pointer bg-primary text-[#161a21]`}
+                    onClick={() => setOpenCreateCategoryForm(!openCreateCategoryForm)}
+                >
+                    <IoIosAddCircle className="w-6 h-6" />
+                    Criar nova categoria
+                </button>
+                {openCreateCategoryForm &&
+                    <div className="my-4 w-full">
+                        <CreateCategoryForm onClose={() => setOpenCreateCategoryForm(false)} />
                     </div>
+                }
+                <div className={`${openArrayCategories ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'}`}>
+                    <ul className="flex flex-col gap-2">
+                        {categories.map((category: CategoryData, index: number) => (
+                            <li key={index}>
+                                <label className="w-full flex items-start px-6 py-3 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={getSelectedCategories().some(cat => cat.id === category.id)}
+                                        onChange={(e) =>
+                                            handleCheckboxCategoryChange(Number(category.id), e.target.checked)
+                                        }
+                                        className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
+                                    />
+                                    <p className="flex items-center justify-center gap-3">
+                                        {category.name}
+                                    </p>
+                                </label>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
-            }
+            </div>
             <input type="hidden" {...register("optionGroups")} />
-            {optionGroups.length > 0 &&
-                <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center mt-4">
-                    <button
-                        type="button"
-                        className="w-full flex items-center justify-center px-8 gap-2 my-2 cursor-pointer hover:scale-103 transition-all duration-300"
-                        onClick={() => setOpenArrayOptions(!openArrayOptions)}
-                    >
-                        <IoIosArrowDown className={`${openArrayOptions ? 'rotate-180' : ''} transition-all duration-300`} />
-                        Opcionais ({(selectedoptions ?? []).length}/{optionGroups.length})
-                    </button>
-                    <div className={`${openArrayOptions ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
-                        <ul className="flex flex-col gap-2">
-                            {optionGroups.map((group: OptionGroup) => (
-                                <li key={group.id}>
-                                    <label className="w-full flex items-start px-6 py-3 cursor-pointer">
-                                        <input
-                                            type="checkbox"
-                                            checked={getSelectedoptions().some(gr => gr.id === group.id)}
-                                            onChange={(e) => handleCheckboxOptionsChange(Number(group.id), e.target.checked)}
-                                            className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
-                                        />
-                                        <p className="flex items-center justify-center gap-3">{group.title}</p>
-                                    </label>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+            <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center mt-4">
+                <button
+                    type="button"
+                    className="w-full flex items-center justify-center px-8 gap-2 my-2 cursor-pointer hover:scale-103 transition-all duration-300"
+                    onClick={() => setOpenArrayOptions(!openArrayOptions)}
+                >
+                    <IoIosArrowDown className={`${openArrayOptions ? 'rotate-180' : ''} transition-all duration-300`} />
+                    Opcionais ({(selectedoptions ?? []).length}/{optionGroups.length})
+                </button>
+                <button
+                    type="button"
+                    className={`${openArrayOptions ? 'mt-3 pointer-events-auto' : 'hidden max-h-0 pointer-events-none'} flex items-center justify-center gap-1 rounded-full py-1 px-2 cursor-pointer bg-primary text-[#161a21]`}
+                    onClick={() => setOpenCreateOptionsForm(!openCreateOptionsForm)}
+                >
+                    <IoIosAddCircle className="w-6 h-6" />
+                    Criar novo adicional
+                </button>
+                {openCreateOptionsForm &&
+                    <CreateOptionGroupForm
+                        onClose={() => setOpenCreateOptionsForm(false)}
+                    />
+                }
+                <div className={`${openArrayOptions ? 'mt-3 pointer-events-auto' : 'hidden max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
+                    <ul className="flex flex-col gap-2">
+                        {optionGroups.map((group: OptionGroup, index: number) => (
+                            <li key={index}>
+                                <label className="w-full flex items-start px-6 py-3 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={getSelectedoptions().some(gr => gr.id === group.id)}
+                                        onChange={(e) => handleCheckboxOptionsChange(Number(group.id), e.target.checked)}
+                                        className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
+                                    />
+                                    <p className="flex items-center justify-center gap-3">{group.title}</p>
+                                </label>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
-            }
+            </div>
             {error && (
                 <p className="text-error">{error}</p>
             )}
@@ -264,8 +296,10 @@ export const UpdateMenuItemForm = ({
         watch
     } = useForm<MenuItem>();
 
-    const [openArrayCategories, setOpenArrayCategories] = useState(true);
-    const [openArrayOptions, setOpenArrayOptions] = useState(true);
+    const [openArrayCategories, setOpenArrayCategories] = useState(false);
+    const [openCreateCategoryForm, setOpenCreateCategoryForm] = useState(false);
+    const [openArrayOptions, setOpenArrayOptions] = useState(false);
+    const [openCreateOptionsForm, setOpenCreateOptionsForm] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
     const [isDeleted, setIsDeleted] = useState(false);
@@ -376,7 +410,14 @@ export const UpdateMenuItemForm = ({
             title="Editar item"
             successMessage={successMessage}
             textButtonSubmit="Atualizar item"
-            submitFunction={handleSubmit(handleFormSubmit)}
+            submitFunction={e => {
+                if (openCreateCategoryForm || openCreateOptionsForm) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
+                handleSubmit(handleFormSubmit)(e);
+            }}
             isLoadingSubmit={isSubmitting}
         >
             <div className="flex flex-col items-start justify-center relative">
@@ -417,70 +458,92 @@ export const UpdateMenuItemForm = ({
                 initialValues={{}}
             />
             <input type="hidden" {...register("categories")} />
-            {categories.length > 0 &&
-                <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center mt-4">
-                    <button
-                        type="button"
-                        className="flex items-center px-8 gap-2 my-2 bg-zinc-300 dark:bg-[#161a21] rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
-                        onClick={() => setOpenArrayCategories(!openArrayCategories)}
-                    >
-                        <IoIosArrowDown className={`${openArrayCategories ? 'rotate-180' : ''} transition-all duration-300`} />
-                        Categorias ({(selectedCategories ?? []).length}/{categories.length})
-                    </button>
-                    <div className={`${openArrayCategories ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
-                        <ul className="flex flex-col gap-2">
-                            {categories.map((category: CategoryData) => (
-                                <li key={category.id}>
-                                    <label className="w-full flex items-start px-6 py-3 cursor-pointer">
-                                        <input
-                                            type="checkbox"
-                                            checked={getSelectedCategories().some(cat => cat.id === category.id)}
-                                            onChange={(e) =>
-                                                handleCheckboxCategoryChange(Number(category.id), e.target.checked)
-                                            }
-                                            className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
-                                        />
-                                        <p className="flex items-center justify-center gap-3">
-                                            {category.name}
-                                        </p>
-                                    </label>
-                                </li>
-                            ))}
-                        </ul>
-
-                    </div>
+            <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center mt-4">
+                <button
+                    type="button"
+                    className="flex items-center px-8 gap-2 my-2 bg-zinc-300 dark:bg-[#161a21] rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
+                    onClick={() => setOpenArrayCategories(!openArrayCategories)}
+                >
+                    <IoIosArrowDown className={`${openArrayCategories ? 'rotate-180' : ''} transition-all duration-300`} />
+                    Categorias ({(selectedCategories ?? []).length}/{categories.length})
+                </button>
+                <button
+                    className={`${openArrayCategories ? 'mt-3 pointer-events-auto' : 'hidden max-h-0 pointer-events-none'} flex items-center justify-center gap-1 rounded-full py-1 px-2 cursor-pointer bg-primary text-[#161a21]`}
+                    onClick={() => setOpenCreateCategoryForm(!openCreateCategoryForm)}
+                >
+                    <IoIosAddCircle className="w-6 h-6" />
+                    Criar nova categoria
+                </button>
+                {openCreateCategoryForm &&
+                    <CreateCategoryForm 
+                    menuItem={itemId}
+                    onClose={() => setOpenCreateCategoryForm(false)}
+                     />
+                }
+                <div className={`${openArrayCategories ? 'mt-3 pointer-events-auto' : 'hidden max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
+                    <ul className="flex flex-col gap-2">
+                        {categories.map((category: CategoryData) => (
+                            <li key={category.id}>
+                                <label className="w-full flex items-start px-6 py-3 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={getSelectedCategories().some(cat => cat.id === category.id)}
+                                        onChange={(e) =>
+                                            handleCheckboxCategoryChange(Number(category.id), e.target.checked)
+                                        }
+                                        className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
+                                    />
+                                    <p className="flex items-center justify-center gap-3">
+                                        {category.name}
+                                    </p>
+                                </label>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
-            }
+            </div>
             <input type="hidden" {...register("optionGroups")} />
-            {optionGroups.length > 0 &&
-                <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center mt-4">
-                    <button
-                        type="button"
-                        className="w-full flex items-center justify-center px-8 gap-2 my-2 cursor-pointer hover:scale-103 transition-all duration-300"
-                        onClick={() => setOpenArrayOptions(!openArrayOptions)}
-                    >
-                        <IoIosArrowDown className={`${openArrayOptions ? 'rotate-180' : ''} transition-all duration-300`} />
-                        Opcionais ({(selectedoptions ?? []).length}/{optionGroups.length})
-                    </button>
-                    <div className={`${openArrayOptions ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
-                        <ul className="flex flex-col gap-2">
-                            {optionGroups.map((group: OptionGroup) => (
-                                <li key={group.id}>
-                                    <label className="w-full flex items-start px-6 py-3 cursor-pointer">
-                                        <input
-                                            type="checkbox"
-                                            checked={getSelectedoptions().some(gr => gr.id === group.id)}
-                                            onChange={(e) => handleCheckboxOptionsChange(Number(group.id), e.target.checked)}
-                                            className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
-                                        />
-                                        <p className="flex items-center justify-center gap-3">{group.title}</p>
-                                    </label>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+            <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center mt-4">
+                <button
+                    type="button"
+                    className="w-full flex items-center justify-center px-8 gap-2 my-2 cursor-pointer hover:scale-103 transition-all duration-300"
+                    onClick={() => setOpenArrayOptions(!openArrayOptions)}
+                >
+                    <IoIosArrowDown className={`${openArrayOptions ? 'rotate-180' : ''} transition-all duration-300`} />
+                    Opcionais ({(selectedoptions ?? []).length}/{optionGroups.length})
+                </button>
+                <button
+                    type="button"
+                    className={`${openArrayOptions ? 'mt-3 pointer-events-auto' : 'hidden max-h-0 pointer-events-none'} flex items-center justify-center gap-1 rounded-full py-1 px-2 cursor-pointer bg-primary text-[#161a21]`}
+                    onClick={() => setOpenCreateOptionsForm(!openCreateOptionsForm)}
+                >
+                    <IoIosAddCircle className="w-6 h-6" />
+                    Criar novo adicional
+                </button>
+                {openCreateOptionsForm &&
+                    <CreateOptionGroupForm
+                        menuItemId={itemId}
+                        onClose={() => setOpenCreateOptionsForm(false)}
+                    />
+                }
+                <div className={`${openArrayOptions ? 'mt-3 pointer-events-auto' : 'hidden max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
+                    <ul className="flex flex-col gap-2">
+                        {optionGroups.map((group: OptionGroup) => (
+                            <li key={group.id}>
+                                <label className="w-full flex items-start px-6 py-3 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={getSelectedoptions().some(gr => gr.id === group.id)}
+                                        onChange={(e) => handleCheckboxOptionsChange(Number(group.id), e.target.checked)}
+                                        className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
+                                    />
+                                    <p className="flex items-center justify-center gap-3">{group.title}</p>
+                                </label>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
-            }
+            </div>
             <button
                 type="button"
                 className="w-50 mt-4 mx-auto text-red-500 px-3 py-2 flex justify-center items-center rounded-full cursor-pointer hover:scale-105 transition-all duration-300 Z-30"
