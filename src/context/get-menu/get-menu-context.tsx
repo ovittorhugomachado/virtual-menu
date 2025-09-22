@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 
 export const GetMenuProvider = ({ children }: { children: ReactNode }) => {
 
-    const { id, restaurantSlug } = useParams<{ id: string; restaurantSlug: string }>();
+    const { id } = useParams<{ id: string; restaurantSlug: string }>();
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [restaurantData, setRestaurantData] = useState()
@@ -30,9 +30,6 @@ export const GetMenuProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         fetchMenuData();
     }, [fetchMenuData]);
-
-    
-    console.log(restaurantSlug)
  
     return (
         <GetMenuContext.Provider

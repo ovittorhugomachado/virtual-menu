@@ -87,16 +87,17 @@ export type OptionGroupFormData = {
     name: string;
     description?: string;
     isRequired: boolean;
-    maxOptions: number;
-    minOptions: number;
+    maxOptions: number | null | undefined;
+    minOptions: number | null | undefined;
     options: OptionFormData[];
+    menuItemIds?: number[]
 };
 
 export type OptionFormData = {
     id?: number;
     name: string;
     description?: string;
-    price: number;
+    additionalPrice?: number;
 };
 
 export type OrderFormData = {

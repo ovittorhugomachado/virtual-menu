@@ -19,7 +19,7 @@ export const validateToken = async (token: string): Promise<boolean> => {
     }
 };
 
-export const createNewPassword = async (newPassword: string, token: string) => {
+export const createNewPassword = async (newPassword: string | undefined, token: string) => {
     try {
         const response = await fetch(`${API_URL}/create-new-password/${token}`, {
             method: 'PATCH',

@@ -1,3 +1,5 @@
+import { OptionGroup } from "../types/types-menu.d";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 //MENU COMPLETO (LADO DA LOJA)------------------------
@@ -435,13 +437,7 @@ export const getMenuItemsOptioGroupsMyStoreService = async () => {
     }
 };
 
-export const createMenuItemOptionGroupService = async (optionGroup: {
-    title: string;
-    optionIds: number[];
-    menuItemIds: number[];
-    maxSelectableOptions?: number;
-    isRequired: boolean;
-}) => {
+export const createMenuItemOptionGroupService = async (data: OptionGroup) => {
     try {
         const response = await fetch(`${API_URL}/menu-item-option-group`, {
             method: 'POST',
@@ -449,7 +445,7 @@ export const createMenuItemOptionGroupService = async (optionGroup: {
                 'Content-Type': 'application/json',
             },
             credentials: 'include',
-            body: JSON.stringify(optionGroup)
+            body: JSON.stringify(data)
         })
 
         if (!response.ok) {

@@ -7,7 +7,6 @@ export const MaxMinSelectableOptions = ({
     errors,
 }: InptuMaxMinOptionsProps) => {
 
-    console.log(quantityOptions.length)
     return (
         <>
             <p className="text-md ml-2">Quantas opções podem ser selecionadas?</p>
@@ -19,22 +18,29 @@ export const MaxMinSelectableOptions = ({
                     <input
                         type="number"
                         id="minSelectable"
-                        {...register("minOptions", isRequired ? {
-                            required: "Defina a quantidade mínima",
-                            valueAsNumber: true,
-                            min: {
-                                value: 0,
-                                message: "O mínimo é 0",
-                            },
-                            max: {
-                                value: quantityOptions.length,
-                                message: `Máximo permitido: ${quantityOptions.length}`,
-                            },
-                            validate: (value) => Number.isInteger(value) || "Deve ser um número inteiro",
-                        } : {})}
+                        {...register("minOptions", {
+                            setValueAs: v => (v === '' || v === undefined || v === null) ? null : Number(v),
+                            validate: (value) => {
+                                if (isRequired && quantityOptions.length > 1) {
+                                    if (value === undefined || value === null) {
+                                        return "Defina a quantidade mínima";
+                                    }
+                                    if (typeof value !== "number" || isNaN(value)) {
+                                        return "A quantidade mínima deve ser um número";
+                                    }
+                                    if (value < 1) {
+                                        return "O valor mínimo permitido é 1";
+                                    }
+                                    if (value > quantityOptions.length) {
+                                        return `O valor máximo permitido é ${quantityOptions.length}`;
+                                    }
+                                }
+                                return true;
+                            }
+                        })}
                         style={{ width: '100px' }}
                         className={`${quantityOptions.length <= 1 ? 'input-disable' : 'input'}  ${errors.minOptions ? 'input-error' : ''} w-36`}
-                        min={1}
+                        min={0}
                         placeholder="Ex: 1"
                         disabled={quantityOptions.length <= 1}
                     />
@@ -49,30 +55,30 @@ export const MaxMinSelectableOptions = ({
                     <input
                         type="number"
                         id="maxSelectable"
-                        {...register("maxOptions", isRequired ? {
-                            required: "Defina a quantidade máxima",
-                            valueAsNumber: true,
-                            min: {
-                                value: 1,
-                                message: "O mínimo é 1",
-                            },
-                            max: {
-                                value: quantityOptions.length,
-                                message: `Máximo permitido: ${quantityOptions.length}`,
-                            },
-                            validate: {
-                                isInteger: (value) => Number.isInteger(value) || "Deve ser um número inteiro",
-                                minMaiorQueMax: (value, formValues) => {
-                                    const min = formValues?.minOptions;
-                                    if (min !== undefined && value < min) {
-                                        return "O máximo não pode ser menor que o mínimo";
-                                    }
+                        {...register("maxOptions", {
+                            setValueAs: v => (v === '' || v === undefined || v === null) ? null : Number(v),
+                            validate: (value) => {
+                                const optionRequired = isRequired;
+                                const shouldBeRequired = quantityOptions.length > 1;
+                                if (!shouldBeRequired || optionRequired == false) {
                                     return true;
                                 }
+                                if (!value && value !== 0) {
+                                    return "Defina a quantidade máxima";
+                                }
+                                if (isNaN(value)) {
+                                    return "A quantidade máxima deve ser um número";
+                                }
+                                if (value < 1) {
+                                    return "O valor mínimo permitido é 2";
+                                }
+                                if (value > quantityOptions.length) {
+                                    return `O valor máximo permitido é ${quantityOptions.length}`;
+                                } return true;
                             }
-                        } : {})}
+                        })}
                         style={{ width: '100px' }}
-                        className={`${quantityOptions.length <= 1 ? 'input-disable' : 'input'}  ${errors.maxOptions ? 'input-error' : ''} w-36`}
+                        className={`${quantityOptions.length <= 1 ? 'input-disable' : 'input'} ${errors.maxOptions ? 'input-error' : ''} w-36`}
                         min={1}
                         placeholder="Ex: 2"
                         disabled={quantityOptions.length <= 1}
@@ -84,4 +90,4 @@ export const MaxMinSelectableOptions = ({
             </div>
         </>
     )
-}
+};

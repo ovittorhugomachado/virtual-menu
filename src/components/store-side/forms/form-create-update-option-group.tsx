@@ -1,73 +1,71 @@
 import { IoIosAddCircle, IoIosArrowDown } from "react-icons/io";
 import { UpdateDataForm } from "./deafult/form-update-data"
-import { useForm } from "react-hook-form";
-import { OptionGroup, Option, MenuItem } from "../../../types/types-menu.d";
+import { useFieldArray, useForm } from "react-hook-form";
+import { OptionGroup, MenuItem } from "../../../types/types-menu.d";
 import { useEffect, useState } from "react";
 import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
+import { OptionGroupFormData } from "../../../types/types-data-forms.d";
+import { InputOptioGroupName } from "../inputs/input-store-option-group-name";
+import { InputRadioRequired } from "../inputs/input-store-radio-required";
+import { InputOptions } from "../inputs/input-store-options";
+import { MaxMinSelectableOptions } from "../inputs/input-store-max-min-selectable-options";
 
-export const CreateOptionGroupForm = ({
-    onClose,
-    error,
-    menuItemId
-}: {
-    onClose: () => void;
-    error?: string;
-    menuItemId?: number;
-}) => {
-
-    const {
-        menuItems,
-        options,
-        createOptionGroup
-    } = useManageMenu();
-
-    const [openArrayOptions, setOpenArrayOptions] = useState(false);
-    const [openArrayItems, setOpenArrayItems] = useState(false);
-    const [successMessage, setSuccessMessage] = useState("");
+export const CreateOptionGroupForm = ({ menuItemId }: { menuItemId: number }) => {
 
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
-        reset,
+        control,
+        watch,
+        clearErrors,
         setValue,
-        watch
-    } = useForm<OptionGroup>({
+        formState: { errors, isSubmitting },
+    } = useForm<OptionGroupFormData>({
         defaultValues: {
-            maxSelectableOptions: 0,
-            isRequired: false,
-            optionIds: [],
-            menuItemIds: [],
+            options: [{ name: "", description: "", additionalPrice: 0 }],
+            menuItemIds: [menuItemId]
         }
     });
 
-    const isRequired = watch("isRequired");
-    const selectedOptionIds = watch("optionIds", []);
+    const { createOptionGroup, menuItems } = useManageMenu()
+    const [isRequired, setIsRequired] = useState(false);
+    const [openArrayItems, setOpenArrayItems] = useState(false);
+
     const selectedItems = watch("menuItemIds", []);
 
-    console.log(selectedOptionIds)
-    console.log(isRequired)
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: "options",
+    });
 
-    useEffect(() => {
-        if ((selectedOptionIds?.length || 0) < 1) {
-            setValue("maxSelectableOptions", 0);
-        }
-    }, [selectedOptionIds, setValue]);
+    const successMessage = "";
+    const handleFormSubmit = async (data: OptionGroupFormData) => {
 
-    const handleCheckboxOptionsChange = (optionId: number, isChecked: boolean) => {
-        const currentOptions = selectedOptionIds ?? [];
+        const min = data.minOptions === undefined || data.minOptions === null ? null : Number(data.minOptions);
+        const max = data.maxOptions === undefined || data.maxOptions === null ? null : Number(data.maxOptions);
 
-        // if (currentOptions.length === 0) {
-        //     setValue("maxSelectableOptions", 0);
-        // }
+        const optionGroup: OptionGroup = {
+            title: data.name,
+            menuItemIds: data.menuItemIds ?? [],
+            minSelectableOptions: min,
+            maxSelectableOptions: max,
+            required: isRequired,
+            storeId: 1,
+            options: (data.options ?? []).map(opt => ({
+                name: opt.name,
+                additionalPrice: Number(opt.additionalPrice) || 0,
+                description: opt.description ?? "",
+            })),
+        };
 
-        if (isChecked) {
-            setValue("optionIds", [...currentOptions, optionId]);
-        } else {
-            setValue("optionIds", currentOptions.filter(id => id !== optionId) || []);
-        }
-    };
-    const handleCheckboxItemsChange = (itemId: number, isChecked: boolean) => {
+        await createOptionGroup(optionGroup);
+    }
+
+    const changeIsRequired = () => {
+        setIsRequired(!isRequired)
+    }
+
+    const handleCheckboxChange = (itemId: number, isChecked: boolean) => {
         const currentItems = selectedItems || [];
         if (isChecked) {
             setValue("menuItemIds", [...currentItems, itemId]);
@@ -76,144 +74,71 @@ export const CreateOptionGroupForm = ({
         }
     };
 
-    const handleFormSubmit = async (data: OptionGroup) => {
-        console.log(data)
-        try {
-            createOptionGroup(data);
-            reset();
-            setSuccessMessage("Item criado com sucesso!");
-        } catch (error) {
-            console.error("Erro ao criar item:", error);
-        }
-    };
+    const handleAddOptions = () => {
+        append({ name: "", description: "", additionalPrice: 0 });
+        setValue("minOptions", null);
+        setValue("maxOptions", null);
+        clearErrors(["minOptions", "maxOptions"]);
+    }
+
+    const handleRemoveOption = (index: number) => {
+        remove(index);
+        setValue("minOptions", null);
+        setValue("maxOptions", null);
+    }
+
+    useEffect(() => {
+        clearErrors(["minOptions", "maxOptions"]);
+    }, [isRequired, clearErrors]);
+
+    const quantityOptions = watch("options");
 
     return (
-        <UpdateDataForm
-            onClose={onClose}
-            formIcon={<IoIosAddCircle />}
-            title="Criar Grupo de adicionais"
-            successMessage={successMessage}
-            textButtonSubmit="Criar"
-            submitFunction={handleSubmit(handleFormSubmit)}
-            isLoadingSubmit={isSubmitting}
-        >
-            <div className="flex flex-col items-start justify-center relative">
-                <label htmlFor="title" className="text-md ml-2">
-                    Nome
-                    {errors.title && (
-                        <span className="span-error">
-                            {errors.title.message?.toString()}
-                        </span>
-                    )}
-                </label>
-                <input
-                    type="text"
-                    id="name"
-                    placeholder="Nome da categoria"
-                    className={`input ${errors.title ? " input-error" : ""}`}
-                    {...register("title", {
-                        required: "Obrigatório",
-                        minLength: {
-                            value: 1,
-                            message: "Digite uma quantidade válida",
-                        },
-                    })}
+        <>
+            <UpdateDataForm
+                onClose={() => { }}
+                formIcon={<IoIosAddCircle />}
+                title="Criar Grupo de adicionais"
+                successMessage={successMessage}
+                textButtonSubmit="Criar"
+                submitFunction={handleSubmit(handleFormSubmit)}
+                isLoadingSubmit={isSubmitting}
+            >
+                <InputOptioGroupName
+                    register={register}
+                    errors={errors}
+                    clearErrors={clearErrors}
+                    initialValues={{}}
                 />
-                <div className="mt-6 flex">
-                    <p className="text-md ml-2 ">É obrigatório?</p>
-                    <div className="flex gap-6 ml-6">
-                        <label className="flex items-center gap-2 cursor-pointer">
-                            <input
-                                type="radio"
-                                value="true"
-                                checked={isRequired === true}
-                                onChange={() => setValue("isRequired", true)}
-                                className="accent-primary"
-                            />
-                            <span>Sim</span>
-                        </label>
-                        <label className="flex items-center gap-2 cursor-pointer">
-                            <input
-                                type="radio"
-                                value="false"
-                                checked={isRequired === false}
-                                onChange={() => setValue("isRequired", false)}
-                                className="accent-primary"
-                            />
-                            <span>Não</span>
-                        </label>
-                    </div>
-                    {errors.isRequired && (
-                        <span className="text-red-500 text-sm">Obrigatório escolher uma opção</span>
-                    )}
-                </div>
-                <label htmlFor="maxSelectable" className="text-md ml-2 mt-6">
-                    Quantidade máxima selecionável
-                </label>
-                <input
-                    type="number"
-                    id="maxSelectable"
-                    {...register('maxSelectableOptions', {
-                        required: 'Defina a quantidade máxima',
-                        valueAsNumber: true,
-                        min: {
-                            value: 1,
-                            message: 'O mínimo é 1',
-                        },
-                        validate: {
-                            isInteger: (value) =>
-                                Number.isInteger(value) || 'Deve ser um número inteiro',
-                            maxSelected: (value) => {
-                                const maxAllowed = selectedOptionIds?.length || 0;
+                <InputRadioRequired
+                    isRequired={isRequired}
+                    onChangeIsRequired={changeIsRequired}
+                    register={register}
+                    errors={errors}
+                />
 
-                                if (value > maxAllowed) {
-                                    return `Máximo permitido: ${maxAllowed}`;
-                                }
-                                return true;
-                            },
-                        },
-                    })}
-                    style={{ width: '100px' }}
-                    className={`${(selectedOptionIds?.length ?? 0) < 1 ? 'input-disable' : 'input'}  ${errors.maxSelectableOptions ? 'input-error' : ''} w-36`}
-                    min={1}
-                    placeholder="Ex: 2"
-                    disabled={(selectedOptionIds?.length ?? 0) < 1}
+                <InputOptions
+                    options={fields}
+                    onRemoveOption={handleRemoveOption}
+                    register={register}
+                    errors={errors}
+                    clearErrors={clearErrors}
+                    initialValues={{}}
                 />
-                {errors.maxSelectableOptions && (
-                    <span className="text-red-500">{errors.maxSelectableOptions.message}</span>
-                )}
-                {options && options.length > 0 && (
-                    <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center mt-4">
-                        <button
-                            type="button"
-                            className="w-full flex items-center justify-center px-8 gap-2 my-2 cursor-pointer hover:scale-103 transition-all duration-300"
-                            onClick={() => setOpenArrayOptions(!openArrayOptions)}
-                        >
-                            <IoIosArrowDown className={`${openArrayOptions ? 'rotate-180' : ''} transition-all duration-300`} />
-                            <h4>Adicionais ({(selectedOptionIds ?? []).length}/{options.length})</h4>
-                        </button>
-                        <div className={`${openArrayOptions ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
-                            <p className="text-center text-zinc-600 dark:text-zinc-400 font-extralight text-sm mb-2 mx-3">
-                                Você já pode colocar os opcionais no novo grupo de opções:
-                            </p>
-                            <ul className="flex flex-col gap-2 mb-4">
-                                {options.map((option: Option) => (
-                                    <li key={option.id}>
-                                        <label className="w-full flex items-start px-6 py-3 cursor-pointer">
-                                            <input
-                                                type="checkbox"
-                                                checked={selectedOptionIds?.includes(option.id)}
-                                                onChange={(e) => handleCheckboxOptionsChange(Number(option.id), e.target.checked)}
-                                                className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
-                                            />
-                                            <p className="flex items-center justify-center gap-3">{option.name}<span className="text-sm font-extralight text-zinc-600 dark:text-zinc-400">R${option.additionalPrice}</span></p>
-                                        </label>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
-                )}
+                <button
+                    type="button"
+                    onClick={handleAddOptions}
+                    className="flex justify-center items-center py-2 mb-8 rounded-full cursor-pointer hover:scale-103 transition-all bg-[#161a21] text-white dark:bg-white dark:text-black"
+                >
+                    <IoIosAddCircle className="text-[#161a21] inline w-6 h-6" />
+                    Adicionar opção
+                </button>
+                <MaxMinSelectableOptions
+                    isRequired={isRequired}
+                    quantityOptions={quantityOptions}
+                    register={register}
+                    errors={errors}
+                />
                 {menuItems.length > 0 &&
                     <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center justify-center mt-4 pt-2">
                         <button
@@ -223,13 +148,13 @@ export const CreateOptionGroupForm = ({
                             style={{ fontSize: '18px' }}
                         >
                             <IoIosArrowDown className={`${openArrayItems ? 'rotate-180' : ''} transition-all duration-300`} />
-                            <h4>Itens ({(selectedItems ?? []).length}/{menuItems.length})</h4>
+                            Itens ({(selectedItems ?? []).length}/{menuItems.length})
                         </button>
                         <div className={`${openArrayItems ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
-                            <p className="text-center text-zinc-600 dark:text-zinc-400 font-extralight text-sm mb-2 mx-3">
-                                Você pode inserir os novos opcionais nos itens abaixo:
+                            <p className="text-center text-zinc-600 dark:text-zinc-400 font-extralight text-sm mb-2">
+                                Você pode usar os items abaixo na nova categoria
                             </p>
-                            <ul className="flex flex-col gap-2 mb-4">
+                            <ul className="flex flex-col gap-2">
                                 {menuItems.map((item: MenuItem) => (
                                     <li key={item.id} className="">
                                         <label htmlFor={`item-${item.id}`} className="w-full flex items-center px-6 py-3 rounded-full cursor-pointer">
@@ -237,7 +162,7 @@ export const CreateOptionGroupForm = ({
                                                 type="checkbox"
                                                 id={`item-${item.id}`}
                                                 checked={selectedItems?.includes(Number(item.id))}
-                                                onChange={(e) => handleCheckboxItemsChange(Number(item.id), e.target.checked)}
+                                                onChange={(e) => handleCheckboxChange(Number(item.id), e.target.checked)}
                                                 className="flex items-center justify-center peer appearance-none w-5 h-5 min-w-[20px] min-h-[20px] rounded-full border border-black dark:border-white checked:bg-primary  checked:border-none mr-2 relative cursor-pointer before:content-['✔'] before:absolute before:text-[#161a21] before:text-[12px] before:opacity-0 checked:before:opacity-100"
                                             />
                                             <p className="flex items-center justify-center gap-3">{item.name}<span className="text-sm font-extralight text-zinc-600 dark:text-zinc-400">R${item.price}</span></p>
@@ -248,10 +173,7 @@ export const CreateOptionGroupForm = ({
                         </div>
                     </div>
                 }
-            </div>
-            {error && (
-                <p className="text-error">{error}</p>
-            )}
-        </UpdateDataForm>
+            </UpdateDataForm>
+        </>
     )
 }

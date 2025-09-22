@@ -16,7 +16,7 @@ export const StoreHeader = () => {
 
     const [openFormUpdateDataStore, setOpenFormUpdateDataStore] = useState(false);
     const [openFormUpdateSchedules, setOpenFormUpdateSchedules] = useState(false);
-console.log(restaurantData?.user.restaurantName.length)
+    
     return (
         <>
             <header

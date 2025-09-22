@@ -13,7 +13,7 @@ export const InputOptions = ({
 
     return (
         <>
-            {(options ?? []).map((option, index) => (
+            {(options ?? []).map((_, index) => (
                 <div key={index} className="mb-4 pb-4">
                     <div className="relative inline">
                         <button

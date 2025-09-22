@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
 import { createNewPassword, validateToken } from "../services/service-create-new-password";
-import { AccountData } from "../types/types-account.d";
 import { CreateNewPasswordFormContainer } from "../components/store-side/forms/form-create-new-password";
 import { LogoBlue, LogoTextBlue, LogoTextWhite, LogoWhite } from "../components/component-logo";
 import { LoadingComponent } from "../components/component-loading";
 import { CiCircleAlert } from "react-icons/ci";
 import { GoCheck } from "react-icons/go";
+import { SignupPayload } from "../types/types-data-forms.d";
 
 export const CreateNewPasswordPage = () => {
 
@@ -45,7 +45,7 @@ export const CreateNewPasswordPage = () => {
         validateTokenOnLoad();
     }, [token, navigate]);
 
-    const handleNewPassword = async (formData: AccountData) => {
+    const handleNewPassword = async (data: SignupPayload) => {
         if (!token || !isValidToken) {
             setError('Token inválido ou expirado.');
             return;
@@ -53,7 +53,7 @@ export const CreateNewPasswordPage = () => {
         setLoading(true);
         setError('');
         try {
-            await createNewPassword(formData.password, token);
+            await createNewPassword(data.password, token);
             setMessage("nova senha cadastrada com sucesso")
         } catch (error) {
             const err = error as Error;

@@ -79,24 +79,23 @@ export type MenuItemsContainerProps = {
 
 //TIPOS DO GRUPO DE OPCIONAIS -----------------------------------
 export type OptionGroup = {
-  id?: number;
-  storeId?: number;
-  title: string;
-  optionIds?: number[] | undefined;
-  options?: Option[] | undefined;
-  menuItemIds?: number[] | undefined;
-  menuItem?: MenuItem[] | undefined;
-  isRequired: boolean;
-  maxSelectableOptions: number;
+    storeId: number;
+    id?: number;
+    title: string;
+    required: boolean;
+    maxSelectableOptions?: number | null | undefined;
+    minSelectableOptions?: number | null | undefined;
+    menuItemIds: number[];
+    options?: Option[];
 };
 
 //TIPOS DO OPCIONAL-----------------------------------------
 export type Option = {
-  id: number;
-  storeId: number;
+  id?: number;
+  storeId?: number;
   name: string;
+  description?: string;
   additionalPrice: number;
-  menuItemOptionGroup: number[];
 };
 
 //TIPOS DO MENU CONTEXT-----------------------------

@@ -37,7 +37,6 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
             setIsLoading(true);
             setError(null);
             const allMenuData = await getFullMenuService();
-            console.log(allMenuData)
             setStyleStore(allMenuData.data.style);
             setCategories(allMenuData.data.MenuCategory || []);
             setMenuItems(allMenuData.data.MenuItem || []);
@@ -281,14 +280,18 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
     //FUNÇÕES DOS GRUPOS DE OPCIONAIS -----------------------------
     const createOptionGroup = async (group: OptionGroup) => {
         setIsLoading(true);
-        setError(null);
-
         const payload = {
             title: group.title,
-            optionIds: group.optionIds ?? [],
             menuItemIds: group.menuItemIds ?? [],
+            minSelectableOptions: group.minSelectableOptions,
             maxSelectableOptions: group.maxSelectableOptions,
-            isRequired: group.isRequired,
+            required: group.required,
+            storeId: group.storeId,
+            options: (group.options ?? []).map(opt => ({
+                name: opt.name,
+                additionalPrice: Number(opt.additionalPrice) || 0,
+                description: opt.description ?? "",
+            })),
         };
 
         try {
@@ -298,7 +301,6 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
 
             setMenuItems(prevMenuItems =>
                 prevMenuItems.map(menuItem => {
-
                     if (menuItem.id != null && payload.menuItemIds.includes(menuItem.id)) {
                         return {
                             ...menuItem,
