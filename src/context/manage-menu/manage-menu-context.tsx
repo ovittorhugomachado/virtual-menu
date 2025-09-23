@@ -38,7 +38,6 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
             setIsLoading(true);
             setError(null);
             const allMenuData = await getFullMenuService();
-            console.log(allMenuData)
             setStyleStore(allMenuData.data.style);
             setCategories(allMenuData.data.MenuCategory || []);
             setMenuItems(allMenuData.data.MenuItem || []);
@@ -341,6 +340,7 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
                 description: opt.description ?? "",
             })),
         };
+                console.log(payload)
 
         try {
             const newOptionGroup = await updateMenuItemOptionGroupService(groupId, payload);

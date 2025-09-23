@@ -242,7 +242,7 @@ export const UpdateOptionGroupForm = ({
             maxOptions: optionGroup.maxSelectableOptions ?? null,
         }
     });
-console.log(optionGroup)
+
     const { updateOptionGroup, menuItems } = useManageMenu();
     const [isRequired, setIsRequired] = useState(optionGroup.required ?? false);
     const [openArrayItems, setOpenArrayItems] = useState(false);
@@ -250,7 +250,8 @@ console.log(optionGroup)
     const [successMessage, setSuccessMessage] = useState("");
 
     const selectedItems = watch("menuItemIds", []);
-
+    const options = watch("options", []);
+    console.log(options)
     const { fields, append, remove } = useFieldArray({
         control,
         name: "options",

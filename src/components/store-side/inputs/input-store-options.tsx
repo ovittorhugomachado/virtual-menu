@@ -77,6 +77,11 @@ export const InputOptions = ({
                             initialValues={{
                                 additionalPrice: options[index]?.additionalPrice ?? initialValues.options?.[index]?.additionalPrice ?? 0
                             }}
+                            onChange={(value) => {
+                                register(`options.${index}.additionalPrice`, {
+                                    valueAsNumber: true
+                                })
+                            }}
                         />
                     </div>
                 </div>

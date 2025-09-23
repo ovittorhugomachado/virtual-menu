@@ -89,6 +89,8 @@ export type InputOptionPriceProps = {
     errors: FieldErrors<OptionFormData>;
     clearErrors: UseFormClearErrors<OptionFormData>;
     initialValues: Partial<OptionFormData>;
+    value?: number;
+    onChange: (value: number) => void;
 };
 
 export type InputRadioRequiredProps = {
