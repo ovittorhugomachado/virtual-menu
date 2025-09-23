@@ -14,6 +14,7 @@ import {
     reorderCategoriesService,
     reorderMenuItemsService,
     createMenuItemOptionGroupService,
+    updateMenuItemOptionGroupService,
 } from "../../services/service-manage-menu-store";
 import { uploadMenuItemImage } from "../../services/service-upload-image";
 
@@ -324,6 +325,51 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
             setIsLoading(false);
         }
     };
+
+    const updateOptionGroup = async (groupId: number, group: OptionGroup) => {
+        setIsLoading(true);
+        const payload = {
+            title: group.title,
+            menuItemIds: group.menuItemIds ?? [],
+            minSelectableOptions: group.minSelectableOptions,
+            maxSelectableOptions: group.maxSelectableOptions,
+            required: group.required,
+            storeId: group.storeId,
+            options: (group.options ?? []).map(opt => ({
+                name: opt.name,
+                additionalPrice: Number(opt.additionalPrice) || 0,
+                description: opt.description ?? "",
+            })),
+        };
+
+        try {
+            const newOptionGroup = await updateMenuItemOptionGroupService(groupId, payload);
+
+            setOptionGroups(prev => [...prev, newOptionGroup]);
+
+            setMenuItems(prevMenuItems =>
+                prevMenuItems.map(menuItem => {
+                    if (menuItem.id != null && payload.menuItemIds.includes(menuItem.id)) {
+                        return {
+                            ...menuItem,
+                            optionGroups: [
+                                ...(menuItem.optionGroups ?? []),
+                                newOptionGroup,
+                            ],
+                        };
+                    }
+                    return menuItem;
+                })
+            )
+
+        } catch (err) {
+            setError('Falha ao criar grupo de opções');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     //FUNÇÕES DOS  OPCIONAIS -----------------------------
 
     useEffect(() => {
@@ -362,6 +408,7 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
                 optionGroups,
                 setOptionGroups,
                 createOptionGroup,
+                updateOptionGroup,
                 options
             }}
         >

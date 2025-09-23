@@ -7,15 +7,18 @@ import { BsFillTrash3Fill } from "react-icons/bs";
 import { IoIosAddCircle, IoIosArrowDown } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { FaGear } from "react-icons/fa6";
+import { CreateMenuItemForm } from "./form-create-update-menu-item";
 
-export const CreateCategoryForm = ({ 
-    onClose, 
+export const CreateCategoryForm = ({
+    onClose,
     error,
-    menuItem
-}: { 
-    onClose: () => void; 
-    error?: string ;
+    menuItem,
+    childrenForm = false
+}: {
+    onClose: () => void;
+    error?: string;
     menuItem?: number;
+    childrenForm?: boolean;
 }) => {
 
     const { createCategory, menuItems } = useManageMenu();
@@ -30,11 +33,12 @@ export const CreateCategoryForm = ({
     } = useForm<CategoryData>({
         defaultValues: {
             name: "",
-            menuItems: menuItem ? [menuItem] : [], // <-- já marcado!
+            menuItems: menuItem ? [menuItem] : [],
         }
     });
 
     const [openArrayItems, setOpenArrayItems] = useState(false);
+    const [openCreateItemForm, setOpenCreateItemForm] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
 
     const selectedItems = watch("menuItems", []);
@@ -103,7 +107,6 @@ export const CreateCategoryForm = ({
                         <IoIosArrowDown className={`${openArrayItems ? 'rotate-180' : ''} transition-all duration-300`} />
                         Itens ({(selectedItems ?? []).length}/{menuItems.length})
                     </button>
-
                     <div className={`${openArrayItems ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
                         <p className="text-center text-zinc-600 dark:text-zinc-400 font-extralight text-sm mb-2">
                             Você pode usar os items abaixo na nova categoria
@@ -124,6 +127,24 @@ export const CreateCategoryForm = ({
                                 </li>
                             ))}
                         </ul>
+                        {!childrenForm && (
+                            <>
+                                <button
+                                    type="button"
+                                    className={`my-3 mx-auto pointer-events-auto flex items-center justify-center gap-1 rounded-full py-1 px-2 cursor-pointer bg-primary text-[#161a21]`}
+                                    onClick={() => setOpenCreateItemForm(true)}
+                                >
+                                    <IoIosAddCircle className="w-6 h-6" />
+                                    Criar novo item
+                                </button>
+                                {openCreateItemForm && (
+                                    <CreateMenuItemForm
+                                        onClose={() => setOpenCreateItemForm(false)}
+                                        childrenForm={true}
+                                    />
+                                )}
+                            </>
+                        )}
                     </div>
                 </div>
             }
@@ -139,11 +160,13 @@ export const UpdateCategoryForm = ({
     initialName = "",
     categoryId,
     initialMenuItems = [],
+    childrenForm = false,
     error
 }: {
     onClose: () => void;
     initialName?: string;
     categoryId: number;
+    childrenForm?: boolean;
     initialMenuItems?: number[];
     error?: string;
 }) => {
@@ -169,6 +192,7 @@ export const UpdateCategoryForm = ({
         }
     });
     const [openArrayItems, setOpenArrayItems] = useState(false);
+    const [openCreateItemForm, setOpenCreateItemForm] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
     const [showConfirm, setShowConfirm] = useState(false);
     const [isDeleted, setIsDeleted] = useState(false);
@@ -316,6 +340,23 @@ export const UpdateCategoryForm = ({
                                 </li>
                             ))}
                         </ul>
+                        {!childrenForm && (
+                            <>
+                                <button
+                                    type="button"
+                                    className={`my-3 mx-auto pointer-events-auto flex items-center justify-center gap-1 rounded-full py-1 px-2 cursor-pointer bg-primary text-[#161a21]`}
+                                    onClick={() => setOpenCreateItemForm(true)}
+                                >
+                                    <IoIosAddCircle className="w-6 h-6" />
+                                    Criar novo item
+                                </button>
+                                {openCreateItemForm && (
+                                    <CreateMenuItemForm
+                                        onClose={() => setOpenCreateItemForm(false)}
+                                    />
+                                )}
+                            </>
+                        )}
                     </div>
                 </div>
             }

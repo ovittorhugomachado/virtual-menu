@@ -14,11 +14,13 @@ import { CreateOptionGroupForm } from "./form-create-update-option-group";
 export const CreateMenuItemForm = ({
     onClose,
     error,
-    categoryId
+    categoryId,
+    childrenForm = false
 }: {
     onClose: () => void;
     error?: string;
     categoryId?: number;
+    childrenForm?: boolean;
 }) => {
 
     const {
@@ -125,14 +127,7 @@ export const CreateMenuItemForm = ({
             title="Criar item"
             successMessage={successMessage}
             textButtonSubmit="Criar categoria"
-            submitFunction={e => {
-                if (openCreateCategoryForm || openCreateOptionsForm) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    return;
-                }
-                handleSubmit(handleFormSubmit)(e);
-            }}
+            submitFunction={handleSubmit(handleFormSubmit)}
             isLoadingSubmit={isSubmitting}
         >
             <div className="flex flex-col items-start justify-center relative">
@@ -182,19 +177,6 @@ export const CreateMenuItemForm = ({
                     <IoIosArrowDown className={`${openArrayCategories ? 'rotate-180' : ''} transition-all duration-300`} />
                     Categorias ({(selectedCategories ?? []).length}/{categories.length})
                 </button>
-                <button
-                    type="button"
-                    className={`${openArrayCategories ? 'mt-3 pointer-events-auto' : 'hidden max-h-0 pointer-events-none'} flex items-center justify-center gap-1 rounded-full py-1 px-2 cursor-pointer bg-primary text-[#161a21]`}
-                    onClick={() => setOpenCreateCategoryForm(!openCreateCategoryForm)}
-                >
-                    <IoIosAddCircle className="w-6 h-6" />
-                    Criar nova categoria
-                </button>
-                {openCreateCategoryForm &&
-                    <div className="my-4 w-full">
-                        <CreateCategoryForm onClose={() => setOpenCreateCategoryForm(false)} />
-                    </div>
-                }
                 <div className={`${openArrayCategories ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'}`}>
                     <ul className="flex flex-col gap-2">
                         {categories.map((category: CategoryData, index: number) => (
@@ -215,6 +197,26 @@ export const CreateMenuItemForm = ({
                             </li>
                         ))}
                     </ul>
+                    {!childrenForm && (
+                        <>
+                            <button
+                                type="button"
+                                className={`my-3 mx-auto pointer-events-auto flex items-center justify-center gap-1 rounded-full py-1 px-2 cursor-pointer bg-primary text-[#161a21]`}
+                                onClick={() => setOpenCreateCategoryForm(!openCreateCategoryForm)}
+                            >
+                                <IoIosAddCircle className="w-6 h-6" />
+                                Criar nova categoria
+                            </button>
+                            {openCreateCategoryForm &&
+                                <div className="my-4 w-full">
+                                    <CreateCategoryForm
+                                        onClose={() => setOpenCreateCategoryForm(false)}
+                                        childrenForm={true}
+                                    />
+                                </div>
+                            }
+                        </>
+                    )}
                 </div>
             </div>
             <input type="hidden" {...register("optionGroups")} />
@@ -227,19 +229,6 @@ export const CreateMenuItemForm = ({
                     <IoIosArrowDown className={`${openArrayOptions ? 'rotate-180' : ''} transition-all duration-300`} />
                     Opcionais ({(selectedoptions ?? []).length}/{optionGroups.length})
                 </button>
-                <button
-                    type="button"
-                    className={`${openArrayOptions ? 'mt-3 pointer-events-auto' : 'hidden max-h-0 pointer-events-none'} flex items-center justify-center gap-1 rounded-full py-1 px-2 cursor-pointer bg-primary text-[#161a21]`}
-                    onClick={() => setOpenCreateOptionsForm(!openCreateOptionsForm)}
-                >
-                    <IoIosAddCircle className="w-6 h-6" />
-                    Criar novo adicional
-                </button>
-                {openCreateOptionsForm &&
-                    <CreateOptionGroupForm
-                        onClose={() => setOpenCreateOptionsForm(false)}
-                    />
-                }
                 <div className={`${openArrayOptions ? 'mt-3 pointer-events-auto' : 'hidden max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
                     <ul className="flex flex-col gap-2">
                         {optionGroups.map((group: OptionGroup, index: number) => (
@@ -256,6 +245,26 @@ export const CreateMenuItemForm = ({
                             </li>
                         ))}
                     </ul>
+                    {!childrenForm && (
+                        <>
+                            <button
+                                type="button"
+                                className={`my-3 mx-auto pointer-events-auto flex items-center justify-center gap-1 rounded-full py-1 px-2 cursor-pointer bg-primary text-[#161a21]`}
+                                onClick={() => setOpenCreateOptionsForm(!openCreateOptionsForm)}
+                            >
+                                <IoIosAddCircle className="w-6 h-6" />
+                                Criar novo adicional
+                            </button>
+                            {openCreateOptionsForm &&
+                                <div className="my-4 w-full">
+                                    <CreateOptionGroupForm
+                                        onClose={() => setOpenCreateOptionsForm(false)}
+                                        childrenForm={true}
+                                    />
+                                </div>
+                            }
+                        </>
+                    )}
                 </div>
             </div>
             {error && (
@@ -268,10 +277,12 @@ export const CreateMenuItemForm = ({
 export const UpdateMenuItemForm = ({
     onClose,
     itemId,
+    childrenForm = false,
     error
 }: {
     onClose: () => void;
     itemId: number;
+    childrenForm?: boolean;
     error?: string;
 }) => {
 
@@ -410,14 +421,7 @@ export const UpdateMenuItemForm = ({
             title="Editar item"
             successMessage={successMessage}
             textButtonSubmit="Atualizar item"
-            submitFunction={e => {
-                if (openCreateCategoryForm || openCreateOptionsForm) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    return;
-                }
-                handleSubmit(handleFormSubmit)(e);
-            }}
+            submitFunction={handleSubmit(handleFormSubmit)}
             isLoadingSubmit={isSubmitting}
         >
             <div className="flex flex-col items-start justify-center relative">
@@ -467,19 +471,6 @@ export const UpdateMenuItemForm = ({
                     <IoIosArrowDown className={`${openArrayCategories ? 'rotate-180' : ''} transition-all duration-300`} />
                     Categorias ({(selectedCategories ?? []).length}/{categories.length})
                 </button>
-                <button
-                    className={`${openArrayCategories ? 'mt-3 pointer-events-auto' : 'hidden max-h-0 pointer-events-none'} flex items-center justify-center gap-1 rounded-full py-1 px-2 cursor-pointer bg-primary text-[#161a21]`}
-                    onClick={() => setOpenCreateCategoryForm(!openCreateCategoryForm)}
-                >
-                    <IoIosAddCircle className="w-6 h-6" />
-                    Criar nova categoria
-                </button>
-                {openCreateCategoryForm &&
-                    <CreateCategoryForm 
-                    menuItem={itemId}
-                    onClose={() => setOpenCreateCategoryForm(false)}
-                     />
-                }
                 <div className={`${openArrayCategories ? 'mt-3 pointer-events-auto' : 'hidden max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
                     <ul className="flex flex-col gap-2">
                         {categories.map((category: CategoryData) => (
@@ -500,6 +491,26 @@ export const UpdateMenuItemForm = ({
                             </li>
                         ))}
                     </ul>
+                    {!childrenForm && (
+                        <>
+                            <button
+                                type="button"
+                                className={`my-3 mx-auto pointer-events-auto flex items-center justify-center gap-1 rounded-full py-1 px-2 cursor-pointer bg-primary text-[#161a21]`}
+                                onClick={() => setOpenCreateCategoryForm(!openCreateCategoryForm)}
+                            >
+                                <IoIosAddCircle className="w-6 h-6" />
+                                Criar nova categoria
+                            </button>
+                            {openCreateCategoryForm &&
+                                <div className="my-4 w-full">
+                                    <CreateCategoryForm
+                                        onClose={() => setOpenCreateCategoryForm(false)}
+                                        childrenForm={true}
+                                    />
+                                </div>
+                            }
+                        </>
+                    )}
                 </div>
             </div>
             <input type="hidden" {...register("optionGroups")} />
@@ -512,24 +523,10 @@ export const UpdateMenuItemForm = ({
                     <IoIosArrowDown className={`${openArrayOptions ? 'rotate-180' : ''} transition-all duration-300`} />
                     Opcionais ({(selectedoptions ?? []).length}/{optionGroups.length})
                 </button>
-                <button
-                    type="button"
-                    className={`${openArrayOptions ? 'mt-3 pointer-events-auto' : 'hidden max-h-0 pointer-events-none'} flex items-center justify-center gap-1 rounded-full py-1 px-2 cursor-pointer bg-primary text-[#161a21]`}
-                    onClick={() => setOpenCreateOptionsForm(!openCreateOptionsForm)}
-                >
-                    <IoIosAddCircle className="w-6 h-6" />
-                    Criar novo adicional
-                </button>
-                {openCreateOptionsForm &&
-                    <CreateOptionGroupForm
-                        menuItemId={itemId}
-                        onClose={() => setOpenCreateOptionsForm(false)}
-                    />
-                }
                 <div className={`${openArrayOptions ? 'mt-3 pointer-events-auto' : 'hidden max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
                     <ul className="flex flex-col gap-2">
-                        {optionGroups.map((group: OptionGroup) => (
-                            <li key={group.id}>
+                        {optionGroups.map((group: OptionGroup, index: number) => (
+                            <li key={index}>
                                 <label className="w-full flex items-start px-6 py-3 cursor-pointer">
                                     <input
                                         type="checkbox"
@@ -542,6 +539,26 @@ export const UpdateMenuItemForm = ({
                             </li>
                         ))}
                     </ul>
+                    {!childrenForm && (
+                        <>
+                            <button
+                                type="button"
+                                className={`my-3 mx-auto pointer-events-auto flex items-center justify-center gap-1 rounded-full py-1 px-2 cursor-pointer bg-primary text-[#161a21]`}
+                                onClick={() => setOpenCreateOptionsForm(!openCreateOptionsForm)}
+                            >
+                                <IoIosAddCircle className="w-6 h-6" />
+                                Criar novo adicional
+                            </button>
+                            {openCreateOptionsForm &&
+                                <div className="my-4 w-full">
+                                    <CreateOptionGroupForm
+                                        onClose={() => setOpenCreateOptionsForm(false)}
+                                        childrenForm={true}
+                                    />
+                                </div>
+                            }
+                        </>
+                    )}
                 </div>
             </div>
             <button

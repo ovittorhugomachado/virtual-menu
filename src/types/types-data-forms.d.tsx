@@ -1,4 +1,5 @@
 
+import { MenuItem } from "./types-menu.d";
 import { RestaurantData } from "./types-restaurante-data.d";
 
 export type StandardFormProps = {
@@ -91,6 +92,7 @@ export type OptionGroupFormData = {
     minOptions: number | null | undefined;
     options: OptionFormData[];
     menuItemIds?: number[]
+    menuItem?: MenuItem[]
 };
 
 export type OptionFormData = {

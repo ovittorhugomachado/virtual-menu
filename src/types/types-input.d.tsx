@@ -86,9 +86,9 @@ export type InputOptionProps = {
 export type InputOptionPriceProps = {
     index: number;
     register: UseFormRegister<OptionGroupFormData>;
-    errors: FieldErrors<OptionGroupFormData>;
-    clearErrors: UseFormClearErrors<OptionGroupFormData>;
-    initialValues: Partial<OptionGroupFormData>;
+    errors: FieldErrors<OptionFormData>;
+    clearErrors: UseFormClearErrors<OptionFormData>;
+    initialValues: Partial<OptionFormData>;
 };
 
 export type InputRadioRequiredProps = {

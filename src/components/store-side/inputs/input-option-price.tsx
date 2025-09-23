@@ -4,6 +4,7 @@ export const InputPrice = ({
     register,
     errors,
     clearErrors,
+    initialValues,
     index,
 }: InputOptionPriceProps) => {
 
@@ -14,9 +15,9 @@ export const InputPrice = ({
                 className="w-full font-medium ml-2 mt-2 flex flex-col relative"
             >
                 Preço *
-                {errors.options?.[index]?.price && (
+                {errors.additionalPrice && (
                     <span className="span-error">
-                        {errors.options[index]?.price?.message?.toString()}
+                        {errors.additionalPrice?.message?.toString()}
                     </span>
                 )}
             </label>
@@ -30,9 +31,10 @@ export const InputPrice = ({
                     inputMode="decimal"
                     pattern="[0-9,]*"
                     style={{ paddingLeft: "2.5rem" }}
-                    className={`input ${(errors?.options ?? [])[index]?.price ? " input-error" : ""}`}
+                    className={`input ${(errors?.additionalPrice) ? " input-error" : ""}`}
                     placeholder="Preço"
-                    {...register(`options.${index}.price`, {
+                    defaultValue={initialValues.additionalPrice}
+                    {...register(`options.${index}.additionalPrice`, {
                         minLength: {
                             value: 1,
                             message: "Obrigatório",
@@ -40,7 +42,7 @@ export const InputPrice = ({
                         onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                             e.target.value = e.target.value.replace(/[^0-9,]/g, "");
                             if (e.target.value.length > 0) {
-                                clearErrors(`options.${index}.price`);
+                                clearErrors();
                             }
                         },
                     })}

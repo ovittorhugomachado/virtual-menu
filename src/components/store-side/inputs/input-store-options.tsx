@@ -72,9 +72,11 @@ export const InputOptions = ({
                         <InputPrice
                             index={index}
                             register={register}
-                            errors={errors}
-                            clearErrors={clearErrors}
-                            initialValues={initialValues}
+                            errors={errors.options?.[index] ?? {}}
+                            clearErrors={() => clearErrors(`options.${index}.additionalPrice`)}
+                            initialValues={{
+                                additionalPrice: options[index]?.additionalPrice ?? initialValues.options?.[index]?.additionalPrice ?? 0
+                            }}
                         />
                     </div>
                 </div>

@@ -65,7 +65,12 @@ export const UpdateDataForm = ({
                                     </div>
                                 )}
                                 <form
-                                    onSubmit={submitFunction}
+                                    onSubmit={e => {
+                                        e.preventDefault(); 
+                                        if (submitFunction) {
+                                            submitFunction(e);
+                                        }
+                                    }}
                                     noValidate
                                     className="w-full min-h-75 relative rounded-xl rounded-t-none pb-8 px-4 flex flex-col justify-start md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white"
                                 >
@@ -76,15 +81,14 @@ export const UpdateDataForm = ({
                                         <p className="text-red-600 text-sm text-center mt-2">{error}</p>
                                     )}
                                     {textButtonSubmit && (
-                                        <div className="w-full flex justify-center z-50">
-                                            <button
-                                                type="submit"
-                                                className="w-[240px] primary-button"
-                                                disabled={isLoadingSubmit}
-                                            >
-                                                {isLoadingSubmit ? "Carregando..." : `${textButtonSubmit}`}
-                                            </button>
-                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={submitFunction}
+                                            className="w-[240px] primary-button"
+                                            disabled={isLoadingSubmit}
+                                        >
+                                            {isLoadingSubmit ? "Carregando..." : `${textButtonSubmit}`}
+                                        </button>
                                     )}
                                 </form>
                             </>

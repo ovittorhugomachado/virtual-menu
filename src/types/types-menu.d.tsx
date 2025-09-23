@@ -86,6 +86,7 @@ export type OptionGroup = {
     maxSelectableOptions?: number | null | undefined;
     minSelectableOptions?: number | null | undefined;
     menuItemIds: number[];
+    menuItem?: MenuItem[];
     options?: Option[];
 };
 
@@ -136,7 +137,7 @@ export type ManageMenuContextType = {
   optionGroups: OptionGroup[];
   setOptionGroups: React.Dispatch<React.SetStateAction<OptionGroup[]>>;
   createOptionGroup: (group: OptionGroup) => Promise<void>;
-  // updateOptionGroup: (groupId: number, group: OptionGroup) => Promise<void>;
+  updateOptionGroup: (groupId: number, group: OptionGroup) => Promise<void>;
   // deleteOptionGroup: (groupId: number) => Promise<void>;
   // reorderOptionGroups: (orderedGroups: { id: number; order: number }[]) => Promise<void>;
 

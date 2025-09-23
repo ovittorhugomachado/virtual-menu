@@ -465,12 +465,7 @@ export const createMenuItemOptionGroupService = async (data: OptionGroup) => {
 
 export const updateMenuItemOptionGroupService = async (
     optionGroupId: number,
-    optionGroup: {
-        name: string;
-        menuItemIds: number[];
-        maxSelectableOptions?: number;
-        isRequired: boolean;
-    }
+    data: OptionGroup
 ) => {
     try {
         const response = await fetch(`${API_URL}/menu-item-option-group/${optionGroupId}`, {
@@ -479,7 +474,7 @@ export const updateMenuItemOptionGroupService = async (
                 'Content-Type': 'application/json',
             },
             credentials: 'include',
-            body: JSON.stringify(optionGroup),
+            body: JSON.stringify(data),
         });
 
         if (!response.ok) {
