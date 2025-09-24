@@ -4,10 +4,8 @@ import { useEffect, useState } from "react";
 export const InputPrice = ({
     register,
     errors,
-    clearErrors,
     initialValues,
     value,
-    onChange,
     index,
 }: InputOptionPriceProps) => {
 
@@ -31,21 +29,17 @@ export const InputPrice = ({
     }, [value]);
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let raw = event.target.value.replace(/[^\d]/g, ''); // remove tudo exceto dígitos
+        let raw = event.target.value.replace(/[^\d]/g, '');
         if (raw === "") raw = "000";
 
-        while (raw.length < 3) raw = "0" + raw; // garante pelo menos 3 dígitos
+        while (raw.length < 3) raw = "0" + raw;
 
         const reais = raw.slice(0, raw.length - DECIMAL_SIZE);
         const centavos = raw.slice(-DECIMAL_SIZE);
         const formatted = `${parseInt(reais, 10)},${centavos}`;
 
         setDisplayValue(formatted);
-
-        const numericValue = parseFloat(`${reais}.${centavos}`);
-        onChange?.(numericValue); 
     };
-
 
     return (
         <div className="relative w-full max-w-105 flex flex-col gap-1">
@@ -64,18 +58,6 @@ export const InputPrice = ({
                 <span className="absolute left-3 top-0 translate-y-2/6 text-zinc-500 pointer-events-none z-10">
                     R$
                 </span>
-
-                {/* Input visível formatado */}
-                <input
-                    value={displayValue}
-                    onChange={handleOnChange}
-                    style={{ paddingLeft: "2.5rem" }}
-                    className={`input ${errors?.additionalPrice ? " input-error" : ""}`}
-                    placeholder="0,00"
-                    inputMode="numeric"
-                />
-
-                {/* Hidden input para integração com react-hook-form */}
                 <input
                     type="text"
                     {...register(`options.${index}.additionalPrice`, {
@@ -84,8 +66,13 @@ export const InputPrice = ({
                             value: 0,
                             message: "Valor mínimo é 0",
                         },
-                        valueAsNumber: true,
                     })}
+                    value={displayValue}
+                    onChange={handleOnChange}
+                    style={{ paddingLeft: "2.5rem" }}
+                    className={`input ${errors?.additionalPrice ? " input-error" : ""}`}
+                    placeholder="0,00"
+                    inputMode="numeric"
                 />
             </div>
         </div>

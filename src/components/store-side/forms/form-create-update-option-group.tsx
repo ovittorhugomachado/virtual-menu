@@ -54,6 +54,18 @@ export const CreateOptionGroupForm = ({
         const min = data.minOptions === undefined || data.minOptions === null ? null : Number(data.minOptions);
         const max = data.maxOptions === undefined || data.maxOptions === null ? null : Number(data.maxOptions);
 
+        const priceFormated = (price: string | number | undefined): number => {
+
+            if (price === undefined) {
+                return 0
+            } else if (typeof price === 'number') {
+                return price;
+            }
+            const numeric = parseFloat(price.replace(',', '.'));
+
+            return numeric || 0;
+        };
+
         const optionGroup: OptionGroup = {
             title: data.name,
             menuItemIds: data.menuItemIds ?? [],
@@ -63,7 +75,7 @@ export const CreateOptionGroupForm = ({
             storeId: 1,
             options: (data.options ?? []).map(opt => ({
                 name: opt.name,
-                additionalPrice: Number(opt.additionalPrice) || 0,
+                additionalPrice: priceFormated(opt.additionalPrice),
                 description: opt.description ?? "",
             })),
         };
@@ -250,8 +262,7 @@ export const UpdateOptionGroupForm = ({
     const [successMessage, setSuccessMessage] = useState("");
 
     const selectedItems = watch("menuItemIds", []);
-    const options = watch("options", []);
-    console.log(options)
+
     const { fields, append, remove } = useFieldArray({
         control,
         name: "options",
@@ -265,6 +276,18 @@ export const UpdateOptionGroupForm = ({
         const min = data.minOptions === undefined || data.minOptions === null ? null : Number(data.minOptions);
         const max = data.maxOptions === undefined || data.maxOptions === null ? null : Number(data.maxOptions);
 
+        const priceFormated = (price: string | number | undefined): number => {
+
+            if (price === undefined) {
+                return 0
+            } else if (typeof price === 'number') {
+                return price;
+            }
+            const numeric = parseFloat(price.replace(',', '.'));
+
+            return numeric || 0;
+        };
+
         const updatedGroup: OptionGroup = {
             ...optionGroup,
             title: data.name,
@@ -275,10 +298,11 @@ export const UpdateOptionGroupForm = ({
             storeId: optionGroup.storeId,
             options: (data.options ?? []).map(opt => ({
                 name: opt.name,
-                additionalPrice: Number(opt.additionalPrice) || 0,
+                additionalPrice: priceFormated(opt.additionalPrice),
                 description: opt.description ?? "",
             })),
         };
+
         try {
             await updateOptionGroup(optionGroupId, updatedGroup);
             setSuccessMessage("Grupo de opcionais atualizado com sucesso!");

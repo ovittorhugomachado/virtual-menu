@@ -47,7 +47,7 @@ export const InputOptions = ({
                             type="text"
                             className={`input ${errors.options?.[index]?.name ? " input-error" : ""}`}
                             placeholder={`Nome da opção ${index + 1}`}
-                            defaultValue={initialValues.options?.[index]?.name || ""}
+                            //defaultValue={initialValues.options?.[index]?.name || ""}
                             {...register(`options.${index}.name`, {
                                 required: "Obrigatório",
                                 minLength: {
@@ -76,11 +76,6 @@ export const InputOptions = ({
                             clearErrors={() => clearErrors(`options.${index}.additionalPrice`)}
                             initialValues={{
                                 additionalPrice: options[index]?.additionalPrice ?? initialValues.options?.[index]?.additionalPrice ?? 0
-                            }}
-                            onChange={(value) => {
-                                register(`options.${index}.additionalPrice`, {
-                                    valueAsNumber: true
-                                })
                             }}
                         />
                     </div>
