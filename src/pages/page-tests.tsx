@@ -1,22 +1,10 @@
-import { UpdateOptionGroupForm } from "../components/store-side/forms/form-create-update-option-group";
-import { useManageMenu } from "../context/manage-menu/manage-menu-context";
+import { OptionsButtons } from "../components/store-side/store-page-components/store-options-buttons";
 
 export const TestPage = () => {
-    const { optionGroups } = useManageMenu();
-
-    const optionGroupId = 82;
-    const optionGroup = optionGroups.find(group => group.id === optionGroupId);
 
     return (
         <>
-            <h1>Teste</h1>
-            {optionGroup && (
-                <UpdateOptionGroupForm
-                    optionGroup={optionGroup}
-                    optionGroupId={optionGroupId}
-                    onClose={() => { }}
-                />
-            )}
+            <OptionsButtons />
         </>
     );
 };

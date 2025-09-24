@@ -20,6 +20,7 @@ export const GetMenuProvider = ({ children }: { children: ReactNode }) => {
             const allMenuData = await getFullMenuByCustomerService(storeId);
             setRestaurantData(allMenuData.data.restaurantData);
             setMenuCategories(allMenuData.data.menuCategories);
+            setMenuCategories(allMenuData.data.menuCategories);
         } catch (err) {
             setError('Falha ao carregar dados do menu');
             console.error('Error fetching menu data:', err);
@@ -38,7 +39,8 @@ export const GetMenuProvider = ({ children }: { children: ReactNode }) => {
                 isLoading,
                 setIsLoading,
                 restaurantData,
-                menuCategories
+                menuCategories,
+
             }}
         >
             {children}

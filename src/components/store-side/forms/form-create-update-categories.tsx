@@ -107,7 +107,7 @@ export const CreateCategoryForm = ({
                         <IoIosArrowDown className={`${openArrayItems ? 'rotate-180' : ''} transition-all duration-300`} />
                         Itens ({(selectedItems ?? []).length}/{menuItems.length})
                     </button>
-                    <div className={`${openArrayItems ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
+                    <div className={`${openArrayItems ? '' : 'hidden'}`}>
                         <p className="text-center text-zinc-600 dark:text-zinc-400 font-extralight text-sm mb-2">
                             Você pode usar os items abaixo na nova categoria
                         </p>
@@ -320,7 +320,7 @@ export const UpdateCategoryForm = ({
                         <IoIosArrowDown className={`${openArrayItems ? 'rotate-180' : ''} transition-all duration-300`} />
                         Itens ({(selectedItems ?? []).length}/{menuItems.length})
                     </button>
-                    <div className={`${openArrayItems ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
+                    <div className={`${openArrayItems ? '' : 'hidden'}`}>
                         <p className="text-zinc-600 dark:text-zinc-400 font-extralight text-sm mb-2">
                             Você pode usar os items abaixo na categoria
                         </p>

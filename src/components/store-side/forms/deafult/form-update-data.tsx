@@ -19,7 +19,7 @@ export const UpdateDataForm = ({
     successMessage,
     children
 }: UpdateStoreFormProps) => {
-
+    
     return createPortal(
         <div
             className="fixed inset-0 z-[9999] bg-white/10 backdrop-blur-sm overflow-hidden"
@@ -28,7 +28,7 @@ export const UpdateDataForm = ({
             <div className="h-full w-full overflow-y-auto">
                 <div className="min-h-full min-w-full flex justify-center items-center">
                     <div
-                        className="w-[90%] max-w-[950px] flex flex-col my-4 md:shadow-2xl transition-all duration-300 ease-in-out"
+                        className="w-[90%] max-w-[950px] flex flex-col my-4 md:shadow-2xl dark:shadow-none transition-all duration-300 ease-in-out"
                         onClick={e => e.stopPropagation()}
                     >
                         <div className="h-30 bg-primary dark:bg-[#161a21] flex justify-center items-center rounded-t-xl relative overflow-hidden">
@@ -52,7 +52,7 @@ export const UpdateDataForm = ({
                             <div className="w-full relative rounded-xl rounded-t-none pb-8 px-4 flex flex-col justify-start md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white">
                                 <LoadingComponent />
                             </div>
-                        ) : (successMessage ?? "").length > 0 ? (
+                        ) : (successMessage && successMessage.trim().length > 0) ? (
                             <div className="w-full relative rounded-xl rounded-t-none py-8 px-4 flex flex-col justify-start md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white">
                                 <FaCheckCircle className="text-[100px] text-green-800" />
                                 <h4 className="text-black dark:text-white text-center">{successMessage}</h4>
@@ -60,7 +60,7 @@ export const UpdateDataForm = ({
                         ) : (
                             <>
                                 {error && !fieldErrors && (
-                                    <div className="w-full relative rounded-xl rounded-t-none pb-8 px-4 flex flex-col justify-start md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white">
+                                    <div className="w-full relative rounded-xl rounded-t-none pb-8 px-4 flex flex-col justify-start md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:shadow-none dark:text-white">
                                         <ErrorComponent message={error} />
                                     </div>
                                 )}
@@ -72,7 +72,7 @@ export const UpdateDataForm = ({
                                         }
                                     }}
                                     noValidate
-                                    className="w-full min-h-75 relative rounded-xl rounded-t-none pb-8 px-4 flex flex-col justify-start md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:text-white"
+                                    className="w-full min-h-75 relative rounded-xl rounded-t-none pb-8 px-4 flex flex-col justify-start md:justify-between items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none dark:shadown-none dark:text-white"
                                 >
                                     <div className="w-full max-w-105 mt-4 flex flex-1 flex-col justify-center gap-2">
                                         {children}

@@ -98,7 +98,6 @@ export const CategoryButtons = () => {
                             style={{ opacity: positionCarousel === 0 ? 0.1 : 1 }}
                         />
                     </button>
-
                     <motion.div className="w-full overflow-x-hidden relative" ref={carousel} whileTap={{ cursor: "grabbing" }}>
                         <motion.div
                             className="w-full flex gap-4 p-2.5 my-3.5 flex-shrink-0"

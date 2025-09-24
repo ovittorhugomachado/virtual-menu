@@ -16,7 +16,7 @@ export const CreateMenuItemForm = ({
     error,
     categoryId,
     childrenForm = false
-}: {
+} : {
     onClose: () => void;
     error?: string;
     categoryId?: number;
@@ -177,7 +177,7 @@ export const CreateMenuItemForm = ({
                     <IoIosArrowDown className={`${openArrayCategories ? 'rotate-180' : ''} transition-all duration-300`} />
                     Categorias ({(selectedCategories ?? []).length}/{categories.length})
                 </button>
-                <div className={`${openArrayCategories ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'}`}>
+                <div className={`${openArrayCategories ? '' : 'hidden'}`}>
                     <ul className="flex flex-col gap-2">
                         {categories.map((category: CategoryData, index: number) => (
                             <li key={index}>

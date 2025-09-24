@@ -15,6 +15,7 @@ import {
     reorderMenuItemsService,
     createMenuItemOptionGroupService,
     updateMenuItemOptionGroupService,
+    deleteMenuItemOptionGroupService,
 } from "../../services/service-manage-menu-store";
 import { uploadMenuItemImage } from "../../services/service-upload-image";
 
@@ -340,7 +341,6 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
                 description: opt.description ?? "",
             })),
         };
-                console.log(payload)
 
         try {
             const newOptionGroup = await updateMenuItemOptionGroupService(groupId, payload);
@@ -361,6 +361,7 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
                     return menuItem;
                 })
             )
+            await fetchMenuData();
 
         } catch (err) {
             setError('Falha ao criar grupo de opções');
@@ -370,6 +371,17 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const deleteOptionGroup = async (groupId: number) => {
+        try {
+            await deleteMenuItemOptionGroupService(groupId);
+            await fetchMenuData();
+        } catch (err) {
+            setError('Falha ao deletar item');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
+    }
     //FUNÇÕES DOS  OPCIONAIS -----------------------------
 
     useEffect(() => {
@@ -409,6 +421,7 @@ export const ManageMenuProvider = ({ children }: { children: ReactNode }) => {
                 setOptionGroups,
                 createOptionGroup,
                 updateOptionGroup,
+                deleteOptionGroup,
                 options
             }}
         >

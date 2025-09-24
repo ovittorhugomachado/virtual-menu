@@ -176,9 +176,9 @@ export const CreateOptionGroupForm = ({
                             <IoIosArrowDown className={`${openArrayItems ? 'rotate-180' : ''} transition-all duration-300`} />
                             Itens ({(selectedItems ?? []).length}/{menuItems.length})
                         </button>
-                        <div className={`${openArrayItems ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
+                        <div className={`${openArrayItems ? '' : 'hidden'}`}>
                             <p className="text-center text-zinc-600 dark:text-zinc-400 font-extralight text-sm mb-2">
-                                Você pode usar os items abaixo na nova categoria
+                                Você pode incluir o novo adicional nos itens abaixo
                             </p>
                             <ul className="flex flex-col gap-2">
                                 {menuItems.map((item: MenuItem) => (
@@ -273,6 +273,7 @@ export const UpdateOptionGroupForm = ({
     }, [isRequired, clearErrors]);
 
     const handleFormSubmit = async (data: OptionGroupFormData) => {
+        
         const min = data.minOptions === undefined || data.minOptions === null ? null : Number(data.minOptions);
         const max = data.maxOptions === undefined || data.maxOptions === null ? null : Number(data.maxOptions);
 
@@ -292,8 +293,8 @@ export const UpdateOptionGroupForm = ({
             ...optionGroup,
             title: data.name,
             menuItemIds: data.menuItemIds ?? [],
-            minSelectableOptions: min,
-            maxSelectableOptions: max,
+            minSelectableOptions: min || 0,
+            maxSelectableOptions: max || 0,
             required: isRequired,
             storeId: optionGroup.storeId,
             options: (data.options ?? []).map(opt => ({
@@ -307,6 +308,7 @@ export const UpdateOptionGroupForm = ({
             await updateOptionGroup(optionGroupId, updatedGroup);
             setSuccessMessage("Grupo de opcionais atualizado com sucesso!");
         } catch (error) {
+            setSuccessMessage("");
             console.error("Erro ao atualizar grupo de opcionais:", error);
         }
     };
@@ -338,6 +340,12 @@ export const UpdateOptionGroupForm = ({
     };
 
     const quantityOptions = watch("options");
+
+    useEffect(() => {
+        return () => {
+            setSuccessMessage("");
+        };
+    }, []);
 
     return (
         <UpdateDataForm
@@ -400,7 +408,7 @@ export const UpdateOptionGroupForm = ({
                         <IoIosArrowDown className={`${openArrayItems ? 'rotate-180' : ''} transition-all duration-300`} />
                         Itens ({(selectedItems ?? []).length}/{menuItems.length})
                     </button>
-                    <div className={`${openArrayItems ? 'opacity-100 mt-3 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'} transition-all duration-300 ease-in-out`}>
+                    <div className={`${openArrayItems ? '' : 'hidden'}`}>
                         <p className="text-center text-zinc-600 dark:text-zinc-400 font-extralight text-sm mb-2">
                             Você pode usar os items abaixo no grupo de opcionais
                         </p>

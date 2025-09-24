@@ -138,7 +138,7 @@ export type ManageMenuContextType = {
   setOptionGroups: React.Dispatch<React.SetStateAction<OptionGroup[]>>;
   createOptionGroup: (group: OptionGroup) => Promise<void>;
   updateOptionGroup: (groupId: number, group: OptionGroup) => Promise<void>;
-  // deleteOptionGroup: (groupId: number) => Promise<void>;
+  deleteOptionGroup: (groupId: number) => Promise<void>;
   // reorderOptionGroups: (orderedGroups: { id: number; order: number }[]) => Promise<void>;
 
   //PROPRIEDADES DOS OPCIONAIS ---------------------------
