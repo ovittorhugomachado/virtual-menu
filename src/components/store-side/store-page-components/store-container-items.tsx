@@ -80,10 +80,10 @@ export const MenuItems = () => {
                         </h1>
                     </div>
                     {!category.isAvailable && (
-                        <span className="text-md text-gray-500">Todos os itens dessa categoria não são visíveis para o cliente, para voltar a oferecer esses itens ative a categoria no botão acima</span>
+                        <span className="text-md text-gray-500 hidden md:inline">Todos os itens dessa categoria não são visíveis para o cliente, para voltar a oferecer esses itens ative a categoria no botão acima</span>
                     )}
                     {(category.categoryItems?.length ?? 0) == 0 && (
-                        <span className="text-md text-gray-500">Categorias sem itens não são visíveis para o cliente, adicione itens para a categoria {category.name} ficar disponível.</span>
+                        <span className="text-md text-gray-500 hidden md:inline">Categorias sem itens não são visíveis para o cliente, adicione itens para a categoria {category.name} ficar disponível.</span>
                     )}
                     <ul className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 py-1">
                         {(category.categoryItems ?? []).length > 0 ? (

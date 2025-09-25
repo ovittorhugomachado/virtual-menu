@@ -1,15 +1,16 @@
-import { IoIosAddCircle, IoIosArrowDown } from "react-icons/io";
-import { UpdateDataForm } from "./deafult/form-update-data"
-import { useFieldArray, useForm } from "react-hook-form";
-import { OptionGroup, MenuItem } from "../../../types/types-menu.d";
 import { useEffect, useState } from "react";
-import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
+import { useFieldArray, useForm } from "react-hook-form";
+import { UpdateDataForm } from "./deafult/form-update-data"
 import { OptionGroupFormData } from "../../../types/types-data-forms.d";
+import { OptionGroup, MenuItem } from "../../../types/types-menu.d";
+import { useManageMenu } from "../../../context/manage-menu/manage-menu-context";
 import { InputOptioGroupName } from "../inputs/input-store-option-group-name";
 import { InputRadioRequired } from "../inputs/input-store-radio-required";
 import { InputOptions } from "../inputs/input-store-options";
 import { MaxMinSelectableOptions } from "../inputs/input-store-max-min-selectable-options";
 import { CreateMenuItemForm } from "./form-create-update-menu-item";
+import { IoIosAddCircle, IoIosArrowDown } from "react-icons/io";
+import { FaGear } from "react-icons/fa6";
 
 export const CreateOptionGroupForm = ({
     menuItemId,
@@ -32,7 +33,6 @@ export const CreateOptionGroupForm = ({
     } = useForm<OptionGroupFormData>({
         defaultValues: {
             options: [{ name: "", description: "", additionalPrice: 0 }],
-            menuItemIds: [menuItemId]
         }
     });
 
@@ -72,13 +72,13 @@ export const CreateOptionGroupForm = ({
             minSelectableOptions: min,
             maxSelectableOptions: max,
             required: isRequired,
-            storeId: 1,
             options: (data.options ?? []).map(opt => ({
                 name: opt.name,
                 additionalPrice: priceFormated(opt.additionalPrice),
                 description: opt.description ?? "",
             })),
         };
+
         try {
             await createOptionGroup(optionGroup);
             setSuccessMessage("Adicionais criado com sucesso!");
@@ -118,7 +118,8 @@ export const CreateOptionGroupForm = ({
     }, [isRequired, clearErrors]);
 
     const quantityOptions = watch("options");
-
+    console.log(selectedItems)
+    console.log(menuItemId)
     return (
         <>
             <UpdateDataForm
@@ -273,7 +274,7 @@ export const UpdateOptionGroupForm = ({
     }, [isRequired, clearErrors]);
 
     const handleFormSubmit = async (data: OptionGroupFormData) => {
-        
+
         const min = data.minOptions === undefined || data.minOptions === null ? null : Number(data.minOptions);
         const max = data.maxOptions === undefined || data.maxOptions === null ? null : Number(data.maxOptions);
 
@@ -350,8 +351,8 @@ export const UpdateOptionGroupForm = ({
     return (
         <UpdateDataForm
             onClose={onClose}
-            formIcon={<IoIosAddCircle />}
-            title="Editar Grupo de adicionais"
+            formIcon={<FaGear />}
+            title="Editar adicional"
             successMessage={successMessage}
             textButtonSubmit="Atualizar"
             submitFunction={handleSubmit(handleFormSubmit)}
@@ -406,7 +407,7 @@ export const UpdateOptionGroupForm = ({
                         style={{ fontSize: '18px' }}
                     >
                         <IoIosArrowDown className={`${openArrayItems ? 'rotate-180' : ''} transition-all duration-300`} />
-                        Itens ({(selectedItems ?? []).length}/{menuItems.length})
+                        Itens ({(selectedItems ?? []).length | 0}/{menuItems.length})
                     </button>
                     <div className={`${openArrayItems ? '' : 'hidden'}`}>
                         <p className="text-center text-zinc-600 dark:text-zinc-400 font-extralight text-sm mb-2">

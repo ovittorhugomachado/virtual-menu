@@ -56,6 +56,7 @@ export type InputMenuItemPriceProps = {
     errors: FieldErrors<MenuItem>;
     clearErrors: UseFormClearErrors<MenuItem>;
     initialValues: Partial<MenuItem>;
+    value?: number;
 };
 
 export type InputOptionGroupNameProps = {

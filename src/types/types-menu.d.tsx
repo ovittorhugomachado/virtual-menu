@@ -79,7 +79,7 @@ export type MenuItemsContainerProps = {
 
 //TIPOS DO GRUPO DE OPCIONAIS -----------------------------------
 export type OptionGroup = {
-    storeId: number;
+    storeId?: number;
     id?: number;
     title: string;
     required: boolean;

@@ -41,7 +41,7 @@ export const MaxMinSelectableOptions = ({
                         style={{ width: '100px' }}
                         className={`${quantityOptions.length <= 1 ? 'input-disable' : 'input'}  ${errors.minOptions ? 'input-error' : ''} w-36`}
                         min={0}
-                        placeholder="Ex: 1"
+                        placeholder="0"
                         disabled={quantityOptions.length <= 1}
                     />
                     {errors.minOptions && (
@@ -80,7 +80,7 @@ export const MaxMinSelectableOptions = ({
                         style={{ width: '100px' }}
                         className={`${quantityOptions.length <= 1 ? 'input-disable' : 'input'} ${errors.maxOptions ? 'input-error' : ''} w-36`}
                         min={1}
-                        placeholder="Ex: 2"
+                        placeholder="0"
                         disabled={quantityOptions.length <= 1}
                     />
                     {errors.maxOptions && (

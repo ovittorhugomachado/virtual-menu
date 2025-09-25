@@ -38,8 +38,18 @@ export const InputPrice = ({
                             message: "Obrigatório",
                         },
                         onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                            e.target.value = e.target.value.replace(/[^0-9,]/g, "");
-                            if (e.target.value.length > 0) {
+                            let raw = e.target.value.replace(/[^\d]/g, '');
+                            if (raw === "") raw = "000";
+
+                            while (raw.length < 3) raw = "0" + raw;
+
+                            const reais = raw.slice(0, raw.length - 2);
+                            const centavos = raw.slice(-2);
+                            const formatted = `${parseInt(reais, 10)},${centavos}`;
+
+                            e.target.value = formatted; 
+                            
+                            if (formatted.length > 0) {
                                 clearErrors("price");
                             }
                         },

@@ -47,7 +47,7 @@ export const InputPrice = ({
                 htmlFor={`price-${index}`}
                 className="w-full font-medium ml-2 mt-2 flex flex-col relative"
             >
-                Preço *
+                Preço adicional*
                 {errors?.additionalPrice && (
                     <span className="span-error">
                         {errors.additionalPrice.message?.toString()}
