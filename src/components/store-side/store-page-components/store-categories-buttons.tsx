@@ -122,7 +122,7 @@ export const CategoryButtons = () => {
                                         )}
                                         <button
                                             title="Configurar categoria"
-                                            className="w-7 h-7 lg:w-8 lg:h-8 opacity-100 absolute left-1 lg:left-1 rounded-full bg-gray-400 text-black border-1 flex items-center justify-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200"
+                                            className="w-7 h-7 lg:w-8 lg:h-8 opacity-100 absolute left-1 lg:left-1 rounded-full bg-gray-400 text-black border-1 flex items-center justify-center gap-2 cursor-pointer"
                                             onClick={() => {
                                                 setEditCategoryId(category.id);
                                                 setEditCategoryName(category.name);
@@ -132,7 +132,7 @@ export const CategoryButtons = () => {
                                         </button>
                                         <button
                                             title="Ativar ou desativar categoria"
-                                            className={`${category.categoryItems?.length === 0 ? "text-gray-500" : "text-black cursor-pointer hover:scale-105"} w-7 h-7 lg:w-8 lg:h-8 absolute left-8.5 lg:left-9.5 rounded-full bg-gray-400 border-1 flex items-center justify-center gap-2 transition-all duration-200`}
+                                            className={`${category.categoryItems?.length === 0 ? "text-gray-500" : "text-black cursor-pointer"} w-7 h-7 lg:w-8 lg:h-8 absolute left-8.5 lg:left-9.5 rounded-full bg-gray-400 border-1 flex items-center justify-center gap-2 transition-all duration-200`}
                                             onClick={() => toggleStatusCategory(category.id)}
                                             disabled={category.categoryItems?.length === 0}
                                         >
@@ -144,7 +144,7 @@ export const CategoryButtons = () => {
                                         </button>
                                         <button
                                             title="Ajustar ordem dos itens"
-                                            className={`${(category.categoryItems?.length ?? 0) <= 1 ? "text-gray-500" : "text-black cursor-pointer hover:scale-105"} w-7 h-7 lg:w-8 lg:h-8 absolute left-16 lg:left-18 rounded-full bg-gray-400 border-1 flex items-center justify-center gap-2 transition-all duration-200`}
+                                            className={`${(category.categoryItems?.length ?? 0) <= 1 ? "text-gray-500" : "text-black cursor-pointer"} w-7 h-7 lg:w-8 lg:h-8 absolute left-16 lg:left-18 rounded-full bg-gray-400 border-1 flex items-center justify-center gap-2 transition-all duration-200`}
                                             onClick={() => setShowFormOrderedItems(category)}
                                             disabled={(category.categoryItems?.length ?? 0) <= 1}
                                         >
@@ -162,14 +162,14 @@ export const CategoryButtons = () => {
                         <div className="flex gap-4 justify-center overflow-hidden">
                             <button
                                 title="Criar nova categoria"
-                                className="flex items-center justify-center gap-2 px-4 py-2 rounded-3xl text-black bg-gray-400 cursor-pointer hover:scale-103 transition-transform duration-200"
+                                className="flex items-center justify-center gap-2 px-4 py-2 rounded-3xl text-black bg-gray-400 cursor-pointer"
                                 onClick={() => setShowFormCreateCategory(true)}
                             >
                                 <IoAddCircle className="text-2xl hidden sm:block" /> Criar nova categoria
                             </button>
                             <button
                                 title="Ajustar ordem das categorias"
-                                className="flex items-center justify-center gap-2 px-4 py-2 rounded-3xl text-black bg-gray-400 cursor-pointer hover:scale-103 transition-transform duration-200"
+                                className="flex items-center justify-center gap-2 px-4 py-2 rounded-3xl text-black bg-gray-400 cursor-pointer"
                                 onClick={() => setShowFormOrderedCategories(true)}
                             >
                                 <LuArrowDownWideNarrow className="hidden sm:block" /> Ajustar ordem das categorias
@@ -193,7 +193,7 @@ export const CategoryButtons = () => {
                     <h4 className={`${tempBackgroundColor === 'black' ? 'text-white' : 'text-black'} w-full mt-16 text-center`}>Você não tem nenhuma categoria, bora criar uma?</h4>
                     <button
                         title="Criar nova categoria"
-                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-3xl text-black bg-primary cursor-pointer hover:scale-103 transition-transform duration-200"
+                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-3xl text-black bg-primary cursor-pointer"
                         onClick={() => setShowFormCreateCategory(true)}
                     >
                         <IoAddCircle className="text-2xl hidden sm:block" /> Criar nova categoria

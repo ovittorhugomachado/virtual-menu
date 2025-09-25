@@ -216,7 +216,7 @@ export const UpdateSchedulesForm: React.FC<UpdateSchedulesStoreFormProps> = ({
                                     updated[idx].timeRanges.push({ start: "", end: "" });
                                     setOpeningHours(updated);
                                 }}
-                                className="bg-primary text-sm px-2 py-1 rounded-full text-black hover:scale-103 transition-all duration-200 cursor-pointer"
+                                className="bg-primary text-sm px-2 py-1 rounded-full text-black duration-200 cursor-pointer"
                             >
                                 + Adicionar horário
                             </button>

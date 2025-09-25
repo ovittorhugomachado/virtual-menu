@@ -34,7 +34,7 @@ export const StoreHeader = () => {
                                 style={{ fontSize: '14px' }}
                                 onClick={() => setOpenFormUpdateDataStore(true)}
                                 title="Configurar dados da loja"
-                                className="rounded-full bg-gray-400 text-black border-1 flex items-center justify-center px-3 gap-2 cursor-pointer hover:scale-105 transition-all duration-200"
+                                className="rounded-full bg-gray-400 text-black border-1 flex items-center justify-center px-3 gap-2 cursor-pointer"
                             >
                                 <FaGear />
                                 <span>Configurar Loja</span>
@@ -43,7 +43,7 @@ export const StoreHeader = () => {
                                 style={{ fontSize: '14px' }}
                                 onClick={() => setOpenFormUpdateSchedules(true)}
                                 title="Configurar dados da loja"
-                                className="rounded-full bg-gray-400 text-black border-1 flex items-center justify-center px-3 gap-2 cursor-pointer hover:scale-105 transition-all duration-200"
+                                className="rounded-full bg-gray-400 text-black border-1 flex items-center justify-center px-3 gap-2 cursor-pointer"
                             >
                                 <TbClockHour2Filled />
                                 <span>Editar Horários</span>
@@ -53,7 +53,7 @@ export const StoreHeader = () => {
                 </div>
                 <Link
                     to="/"
-                    className="p-2 mt-3 sm:mt-0 rounded-full bg-primary text-black flex items-center gap-2 z-50 hover:scale-105 transition-all duration-200"
+                    className="p-2 mt-3 sm:mt-0 rounded-full bg-primary text-black flex items-center gap-2 z-50"
                 >
                     <GoHomeFill />
                     voltar

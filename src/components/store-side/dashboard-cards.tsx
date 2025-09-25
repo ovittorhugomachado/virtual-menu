@@ -97,7 +97,7 @@ export const DashboardCards = ({
         <div className="w-full h-full flex flex-col items-center">
             <audio ref={alertAudioRef} src="./alert.mp3" preload="auto" />
             <ul className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-6 pb-20 mx-auto items-start">
-                <li className={`w-full col-span-full mb-5 text-black dark:text-white rounded-xl relative border-1 dark:bg-[#0D1117] border-black dark:border-white transition-all hover:scale-103 cursor-pointer`}>
+                <li className={`w-full col-span-full mb-5 text-black dark:text-white rounded-xl relative border-1 dark:bg-[#0D1117] border-black dark:border-white cursor-pointer`}>
                     <a
                         className="flex w-full h-full max-h-[36px] items-center justify-between gap-2 p-2"
                         href={`${restaurantNameSlug}/73980911/${user?.id}`}
@@ -179,20 +179,20 @@ export const DashboardCards = ({
                                             </p>
                                             {card.status === "aguardando_aprovacao" && (
                                                 <div className="w-full flex justify-center gap-3 mt-2 mb-1">
-                                                    <button className="bg-green-600 border-2 border-green-900 text-white px-2 py-1 rounded-full cursor-pointer hover:scale-105 transition-all duration-300" onClick={() => onAcceptOrder(order.id)}>Aceitar</button>
-                                                    <button className="bg-red-600 text-white px-2 rounded-full cursor-pointer hover:scale-105 transition-all duration-300" onClick={() => onCancelOrder(order.id)}>Recusar</button>
+                                                    <button className="bg-green-600 border-2 border-green-900 text-white px-2 py-1 rounded-full cursor-pointer " onClick={() => onAcceptOrder(order.id)}>Aceitar</button>
+                                                    <button className="bg-red-600 text-white px-2 rounded-full cursor-pointer " onClick={() => onCancelOrder(order.id)}>Recusar</button>
                                                 </div>
                                             )}
                                             {card.status === "em_preparo" && (
                                                 <div className="w-full flex justify-center gap-3 mt-2 mb-1">
-                                                    <button className="bg-green-600 border-2 border-green-900 text-white px-2 py-1 rounded-full cursor-pointer hover:scale-105 transition-all duration-300" onClick={() => onOrderReady(order.id)}>Pedido pronto</button>
-                                                    <button className="bg-red-600 text-white px-2 rounded-full cursor-pointer hover:scale-105 transition-all duration-300" onClick={() => onCancelOrder(order.id)}>Cancelar pedido</button>
+                                                    <button className="bg-green-600 border-2 border-green-900 text-white px-2 py-1 rounded-full cursor-pointer " onClick={() => onOrderReady(order.id)}>Pedido pronto</button>
+                                                    <button className="bg-red-600 text-white px-2 rounded-full cursor-pointer " onClick={() => onCancelOrder(order.id)}>Cancelar pedido</button>
                                                 </div>
                                             )}
                                             {Array.isArray(card.status) && card.status.includes(order.status) && card.name !== "Cancelados" && (
                                                 <div className="w-full flex justify-center gap-3 mt-2 mb-1">
-                                                    <button className="bg-green-600 border-2 border-green-900 text-white px-2 py-1 rounded-full cursor-pointer hover:scale-105 transition-all duration-300" onClick={() => onOrderDelivered(order.id)}>Pedido entregue</button>
-                                                    <button className="bg-red-600 text-white px-2 rounded-full cursor-pointer hover:scale-105 transition-all duration-300" onClick={() => onCancelOrder(order.id)}>Cancelar pedido</button>
+                                                    <button className="bg-green-600 border-2 border-green-900 text-white px-2 py-1 rounded-full cursor-pointer " onClick={() => onOrderDelivered(order.id)}>Pedido entregue</button>
+                                                    <button className="bg-red-600 text-white px-2 rounded-full cursor-pointer " onClick={() => onCancelOrder(order.id)}>Cancelar pedido</button>
                                                 </div>
                                             )}
                                         </div>

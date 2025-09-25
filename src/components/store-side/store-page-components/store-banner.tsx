@@ -81,7 +81,7 @@ export const StoreBanner = () => {
                     <button
                         type="button"
                         title="Excluir banner"
-                        className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-400 text-black left-0 flex items-center justify-center border-1 cursor-pointer hover:scale-105 transition-all duration-200"
+                        className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-400 text-black left-0 flex items-center justify-center border-1 cursor-pointer"
                         onClick={deleteBanner}
                     >
                         <BsFillTrash3Fill className="text-black scale-120" />
@@ -90,7 +90,7 @@ export const StoreBanner = () => {
                 <button
                     type="button"
                     title="Configurar Banner da loja"
-                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-400 text-black left-0 flex items-center justify-center border-1 cursor-pointer hover:scale-105 transition-all duration-200"
+                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-400 text-black left-0 flex items-center justify-center border-1 cursor-pointer"
                     onClick={handleButtonClick}
                 >
                     <FaCamera className="text-black scale-120" />

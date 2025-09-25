@@ -28,7 +28,7 @@ export const UserMenu = ({ open }: { open: boolean }) => {
             />
             <IoIosArrowDown
                 onClick={() => setMenuOpen((prev) => !prev)}
-                className={`text-xl ${menuOpen ? "rotate-180" : ""} text-black absolute right-[-21px] top-1/2 -translate-y-1/2 cursor-pointer hover:scale-110 transition-all duration-300`}
+                className={`text-xl ${menuOpen ? "rotate-180" : ""} text-black absolute right-[-21px] top-1/2 -translate-y-1/2 cursor-pointer`}
             />
 
             <div
@@ -42,7 +42,7 @@ export const UserMenu = ({ open }: { open: boolean }) => {
                         localStorage.setItem('isLogged', JSON.stringify(false));
                         localStorage.removeItem('token');
                     }}
-                    className="text-center text-white hover:scale-110 transition-all duration-200"
+                    className="text-center text-white "
                 >
                     Sair
                 </Link>

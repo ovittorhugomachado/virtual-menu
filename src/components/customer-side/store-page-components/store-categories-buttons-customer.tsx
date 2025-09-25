@@ -97,7 +97,7 @@ export const CategoryButtons = ({ onCategoryClick }: CategoryButtonsProps) => {
                             .map((category) => (
                                 <motion.div
                                     key={category.id}
-                                    className="text-lg relative min-w-28 h-9 lg:h-10 px-10 rounded-3xl flex items-center justify-center flex-shrink-0 cursor-pointer hover:scale-103 transition-transform duration-200"
+                                    className="text-lg relative min-w-28 h-9 lg:h-10 px-10 rounded-3xl flex items-center justify-center flex-shrink-0 cursor-pointer"
                                     style={{
                                         backgroundColor: buttonColor ?? '',
                                         color: textButtonColor,

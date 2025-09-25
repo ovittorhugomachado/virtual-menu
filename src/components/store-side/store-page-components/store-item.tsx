@@ -49,7 +49,7 @@ export const Item = ({
             <div className="absolute bottom-3 right-2 flex">
                 <button
                     title="Editar item"
-                    className="p-1.5 rounded-full ms:px-2+1.5 ms:py-0.5 lg:py-1.5 xl:py-0.5 lg:rounded-full border-1 bg-gray-400 text-black z-2 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200"
+                    className="p-1.5 rounded-full ms:px-2+1.5 ms:py-0.5 lg:py-1.5 xl:py-0.5 lg:rounded-full border-1 bg-gray-400 text-black z-2 flex items-center justify-center cursor-pointer"
                     onClick={() => setShowFormUpdateMenuItem(id)}
                 >
                     <FaGear className="text-xl ms:mr-2 lg:mr-0 xl:mr-2" />
@@ -96,7 +96,7 @@ export const ItemList = ({
             <div className="flex items-center mr-4">
                 <button
                     title="Editar item"
-                    className="px-1.5 py-0.5 rounded-full  lg:rounded-full border-1 bg-gray-400 text-black z-2 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200"
+                    className="px-1.5 py-0.5 rounded-full  lg:rounded-full border-1 bg-gray-400 text-black z-2 flex items-center justify-center cursor-pointer"
                     onClick={() => setShowFormUpdateMenuItem(id)}
                 >
                     <FaGear className="text-xl ms:mr-2 lg:mr-0 xl:mr-2" />

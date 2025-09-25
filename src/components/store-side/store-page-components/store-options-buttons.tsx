@@ -19,7 +19,7 @@ export const OptionsButtons = () => {
             <div className="flex px-4 gap-4 justify-center overflow-hidden">
                 <button
                     title="Criar novo adicional"
-                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-3xl text-black bg-gray-400 cursor-pointer hover:scale-103 transition-transform duration-200"
+                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-3xl text-black bg-gray-400 cursor-pointer"
                     onClick={() => setShowFormCreateOptionsGroup(true)}
                 >
                     <IoAddCircle className="text-2xl hidden sm:block" /> Criar novo adicional
@@ -27,7 +27,7 @@ export const OptionsButtons = () => {
                 {optionGroups.length > 0 &&
                     <button
                         title="Editar adicionais"
-                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-3xl text-black bg-gray-400 cursor-pointer hover:scale-103 transition-transform duration-200"
+                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-3xl text-black bg-gray-400 cursor-pointer"
                         onClick={() => setShowFormUpdateOptionsGroup(true)}
                     >
                         <FaGear className="hidden sm:block" /> Editar adicionais

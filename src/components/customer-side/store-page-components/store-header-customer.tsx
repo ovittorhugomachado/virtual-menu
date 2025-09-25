@@ -52,7 +52,7 @@ export const StoreHeader = () => {
             </div>
             <button
                 aria-label={`Carrinho de compras - Total: ${toMoney(Number(cart.total), 'BRL')}`}
-                className="flex ms:flex-col mt-4 ms:mt-0 items-center text-center cursor-pointer transition-all duration-200 hover:scale-105"
+                className="flex ms:flex-col mt-4 ms:mt-0 items-center text-center cursor-pointer"
                 onClick={handleCartClick}
             >
                 <CiShoppingCart className="text-3xl" />

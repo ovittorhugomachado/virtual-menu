@@ -171,7 +171,7 @@ export const CreateMenuItemForm = ({
             <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center mt-4">
                 <button
                     type="button"
-                    className="flex items-center px-8 gap-2 my-2 bg-zinc-300 dark:bg-[#161a21] rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
+                    className="flex items-center px-8 gap-2 my-2 bg-zinc-300 dark:bg-[#161a21] rounded-2xl cursor-pointer mb-2"
                     onClick={() => setOpenArrayCategories(!openArrayCategories)}
                 >
                     <IoIosArrowDown className={`${openArrayCategories ? 'rotate-180' : ''} transition-all duration-300`} />
@@ -223,7 +223,7 @@ export const CreateMenuItemForm = ({
             <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center mt-4">
                 <button
                     type="button"
-                    className="w-full flex items-center justify-center px-8 gap-2 my-2 cursor-pointer hover:scale-103 transition-all duration-300"
+                    className="w-full flex items-center justify-center px-8 gap-2 my-2 cursor-pointer"
                     onClick={() => setOpenArrayOptions(!openArrayOptions)}
                 >
                     <IoIosArrowDown className={`${openArrayOptions ? 'rotate-180' : ''} transition-all duration-300`} />
@@ -465,7 +465,7 @@ export const UpdateMenuItemForm = ({
             <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center mt-4">
                 <button
                     type="button"
-                    className="flex items-center px-8 gap-2 my-2 bg-zinc-300 dark:bg-[#161a21] rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
+                    className="flex items-center px-8 gap-2 my-2 bg-zinc-300 dark:bg-[#161a21] rounded-2xl cursor-pointer mb-2"
                     onClick={() => setOpenArrayCategories(!openArrayCategories)}
                 >
                     <IoIosArrowDown className={`${openArrayCategories ? 'rotate-180' : ''} transition-all duration-300`} />
@@ -517,7 +517,7 @@ export const UpdateMenuItemForm = ({
             <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center mt-4">
                 <button
                     type="button"
-                    className="w-full flex items-center justify-center px-8 gap-2 my-2 cursor-pointer hover:scale-103 transition-all duration-300"
+                    className="w-full flex items-center justify-center px-8 gap-2 my-2 cursor-pointer"
                     onClick={() => setOpenArrayOptions(!openArrayOptions)}
                 >
                     <IoIosArrowDown className={`${openArrayOptions ? 'rotate-180' : ''} transition-all duration-300`} />
@@ -563,7 +563,7 @@ export const UpdateMenuItemForm = ({
             </div>
             <button
                 type="button"
-                className="w-50 mt-4 mx-auto text-red-500 px-3 py-2 flex justify-center items-center rounded-full cursor-pointer hover:scale-105 transition-all duration-300 Z-30"
+                className="w-50 mt-4 mx-auto text-red-500 px-3 py-2 flex justify-center items-center rounded-full cursor-pointer  Z-30"
                 onClick={() => setShowConfirm(true)}
             >
                 <BsFillTrash3Fill className="mr-2" />

@@ -69,7 +69,7 @@ export const MenuItemImage = ({ id }: MenuItemImageProps) => {
                         style={{ fontSize: '18px', padding: '5px' }}
                         type="button"
                         title="Alterar Logoda loja"
-                        className="w-8 h-8 sm:w-8 sm:h-8 rounded-full bg-gray-400 text-black border-1 absolute bottom-2 left-2 flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-200"
+                        className="w-8 h-8 sm:w-8 sm:h-8 rounded-full bg-gray-400 text-black border-1 absolute bottom-2 left-2 flex items-center justify-center cursor-pointer"
                         onClick={handleButtonClick}
                     >
                         <FaCamera className="text-black" />

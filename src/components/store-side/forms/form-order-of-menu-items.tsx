@@ -132,7 +132,7 @@ export const MenuItemOrderManager: React.FC<MenuItemOrderManagerProps> = ({
                                 <button
                                     title="Mover para cima"
                                     type="button"
-                                    className={`w-8 h-8 rounded-full bg-white dark:bg-gray-700 text-gray-700 dark:text-white flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 ${index === 0 ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer hover:scale-110'}`}
+                                    className={`w-8 h-8 rounded-full bg-white dark:bg-gray-700 text-gray-700 dark:text-white flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 ${index === 0 ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'}`}
                                     onClick={() => moveItemUp(index)}
                                     disabled={index === 0 || isReordering}
                                 >
@@ -141,7 +141,7 @@ export const MenuItemOrderManager: React.FC<MenuItemOrderManagerProps> = ({
                                 <button
                                     title="Mover para baixo"
                                     type="button"
-                                    className={`w-8 h-8 rounded-full bg-white dark:bg-gray-700 text-gray-700 dark:text-white flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 ${index === localItems.length - 1 ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer hover:scale-110'
+                                    className={`w-8 h-8 rounded-full bg-white dark:bg-gray-700 text-gray-700 dark:text-white flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 ${index === localItems.length - 1 ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'
                                         }`}
                                     onClick={() => moveItemDown(index)}
                                     disabled={index === localItems.length - 1 || isReordering}

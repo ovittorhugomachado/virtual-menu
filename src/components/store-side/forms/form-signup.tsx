@@ -188,7 +188,7 @@ export const SignupFormContainer = ({
                     className="w-full md:w-[60%] min-h-120 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-center pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none"
                 >
                     <div className="w-full max-w-105 mt- mb-5 flex flex-col justify-center items-center gap-3">
-                        <Link to="/entrar" className="hidden md:block w-[200px] absolute top-10 transition-all hover:scale-105 duration-200">
+                        <Link to="/entrar" className="hidden md:block w-[200px] absolute top-10 transition-all">
                             <LogoTextBlue className="w-[200px] dark:hidden" />
                             <LogoTextWhite className="w-[200px] hidden dark:block" />
                         </Link>
@@ -211,7 +211,7 @@ export const SignupFormContainer = ({
                                 />
                                 <div className={`${step === 1 ? "justify-center" : ""} w-full flex flex-col-reverse sm:flex-row justify-between items-center px-12 py-8`}>
                                     <button
-                                        className={`${step === 1 ? "text-white cursor-not-allowed opacity-50 hidden" : ""} mx-16 mt-8 md:mt-0 cursor-pointer hover:scale-103 transition-all duration-105`}
+                                        className={`${step === 1 ? "text-white cursor-not-allowed opacity-50 hidden" : ""} mx-16 mt-8 md:mt-0 cursor-pointer`}
                                         disabled={step === 1}
                                         type="button"
                                     >
@@ -276,7 +276,7 @@ export const SignupFormContainer = ({
                     {step < 4 && step > 1 && (
                         <div className="w-full max-w-[420px] flex flex-col-reverse sm:flex-row justify-between items-center mx-auto pb-8">
                             <button
-                                className={`${step === 1 ? "text-white cursor-not-allowed opacity-50" : ""} mx-16 mt-4 mb-2 sm:mt-0 sm:mb-0 md:mt-0 cursor-pointer hover:scale-103 transition-all duration-105`}
+                                className={`${step === 1 ? "text-white cursor-not-allowed opacity-50" : ""} mx-16 mt-4 mb-2 sm:mt-0 sm:mb-0 md:mt-0 cursor-pointer`}
                                 onClick={() => setStep(step - 1)}
                                 disabled={step === 1}
                                 type="button"
@@ -295,7 +295,7 @@ export const SignupFormContainer = ({
                     {step === 4 && (
                         <div className="w-full max-w-[420px] flex flex-col-reverse sm:flex-row justify-between items-center mx-auto pb-8">
                             <button
-                                className="mx-10 mt-4 mb-2 md:mt-0 cursor-pointer hover:scale-103 transition-all duration-105"
+                                className="mx-10 mt-4 mb-2 md:mt-0 cursor-pointer"
                                 onClick={() => setStep(step - 1)}
                                 type="button"
                             >

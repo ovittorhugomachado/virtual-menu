@@ -40,7 +40,7 @@ export const MenuItems = () => {
                     <div className="relative">
                         <button
                             title="Configurar categoria"
-                            className="w-7 h-7 lg:w-8 lg:h-8 top-1 opacity-100 absolute rounded-full bg-gray-400 text-black border-1 flex items-center justify-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200 z-1"
+                            className="w-7 h-7 lg:w-8 lg:h-8 top-1 opacity-100 absolute rounded-full bg-gray-400 text-black border-1 flex items-center justify-center gap-2 cursor-pointer z-1"
                             onClick={() => {
                                 setEditCategoryId(category.id);
                                 setEditCategoryName(category.name);
@@ -50,7 +50,7 @@ export const MenuItems = () => {
                         </button>
                         <button
                             title="Ativar ou desativar categoria"
-                            className={`${category.categoryItems?.length === 0 ? "text-gray-500" : "text-black cursor-pointer hover:scale-105"} w-7 h-7 lg:w-8 lg:h-8 absolute left-9 top-1 rounded-full bg-gray-400 text-black border-1 flex items-center justify-center transition-all duration-200 z-1`}
+                            className={`${category.categoryItems?.length === 0 ? "text-gray-500" : "text-black cursor-pointer"} w-7 h-7 lg:w-8 lg:h-8 absolute left-9 top-1 rounded-full bg-gray-400 text-black border-1 flex items-center justify-center transition-all duration-200 z-1`}
                             onClick={() => toggleStatusCategory(category.id)}
                             disabled={category.categoryItems?.length === 0}
                         >
@@ -62,7 +62,7 @@ export const MenuItems = () => {
                         </button>
                         <button
                             title="Ajustar ordem dos itens"
-                            className={`${(category.categoryItems?.length ?? 0) <= 1 ? "text-gray-500" : "text-black cursor-pointer hover:scale-105"} w-7 h-7 lg:w-8 lg:h-8 absolute left-18 top-1 rounded-full bg-gray-400 text-black border-1 flex items-center justify-center transition-all duration-200 z-1`}
+                            className={`${(category.categoryItems?.length ?? 0) <= 1 ? "text-gray-500" : "text-black cursor-pointer"} w-7 h-7 lg:w-8 lg:h-8 absolute left-18 top-1 rounded-full bg-gray-400 text-black border-1 flex items-center justify-center transition-all duration-200 z-1`}
                             onClick={() => setShowFormOrderedItems(category)}
                             disabled={(category.categoryItems?.length ?? 0) <= 1}
                         >
@@ -115,7 +115,7 @@ export const MenuItems = () => {
                         )}
                         <li key={`add-item-${category.id}`}>
                             <button
-                                className="h-[150px] w-full flex flex-col-reverse items-center justify-center border-[4px] border-primary cursor-pointer hover:scale-103 transition-transform duration-200"
+                                className="h-[150px] w-full flex flex-col-reverse items-center justify-center border-[4px] border-primary cursor-pointer"
                                 onClick={() => setShowCreateMenuItemForm(category.id)}
                             >
                                 <span className="w-full text-center px-2 break-words overflow-hidden">

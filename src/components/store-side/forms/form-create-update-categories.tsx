@@ -100,7 +100,7 @@ export const CreateCategoryForm = ({
                 <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center justify-center mt-4 pt-2">
                     <button
                         type="button"
-                        className="w-full flex items-center justify-center px-8 gap-2 rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
+                        className="w-full flex items-center justify-center px-8 gap-2 rounded-2xl cursor-pointer mb-2"
                         onClick={() => setOpenArrayItems(!openArrayItems)}
                         style={{ fontSize: '18px' }}
                     >
@@ -313,7 +313,7 @@ export const UpdateCategoryForm = ({
                 <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center justify-center mt-4 pt-2">
                     <button
                         type="button"
-                        className="w-full flex items-center justify-center px-8 gap-2 rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
+                        className="w-full flex items-center justify-center px-8 gap-2 rounded-2xl cursor-pointer mb-2"
                         onClick={() => setOpenArrayItems(!openArrayItems)}
                         style={{ fontSize: '18px' }}
                     >
@@ -362,7 +362,7 @@ export const UpdateCategoryForm = ({
             }
             <button
                 type="button"
-                className="w-50 mt-4 mx-auto text-red-500 px-3 py-2 flex justify-center items-center rounded-full cursor-pointer hover:scale-105 transition-all duration-300 Z-30"
+                className="w-50 mt-4 mx-auto text-red-500 px-3 py-2 flex justify-center items-center rounded-full cursor-pointer  Z-30"
                 onClick={(e) => {
                     e.stopPropagation();
                     setShowConfirm(true);

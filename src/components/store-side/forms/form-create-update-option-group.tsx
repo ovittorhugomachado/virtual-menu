@@ -154,7 +154,7 @@ export const CreateOptionGroupForm = ({
                 <button
                     type="button"
                     onClick={handleAddOptions}
-                    className="flex justify-center items-center py-2 mb-8 rounded-full cursor-pointer hover:scale-103 transition-all bg-[#161a21] text-white dark:bg-white dark:text-black"
+                    className="flex justify-center items-center py-2 mb-8 rounded-full cursor-pointer bg-[#161a21] text-white dark:bg-white dark:text-black"
                 >
                     <IoIosAddCircle className="text-[#161a21] inline w-6 h-6" />
                     Adicionar opção
@@ -169,7 +169,7 @@ export const CreateOptionGroupForm = ({
                     <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center justify-center mt-4 pt-2">
                         <button
                             type="button"
-                            className="w-full flex items-center justify-center px-8 gap-2 rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
+                            className="w-full flex items-center justify-center px-8 gap-2 rounded-2xl cursor-pointer mb-2"
                             onClick={() => setOpenArrayItems(!openArrayItems)}
                             style={{ fontSize: '18px' }}
                         >
@@ -386,7 +386,7 @@ export const UpdateOptionGroupForm = ({
             <button
                 type="button"
                 onClick={handleAddOptions}
-                className="flex justify-center items-center py-2 mb-8 rounded-full cursor-pointer hover:scale-103 transition-all bg-[#161a21] text-white dark:bg-white dark:text-black"
+                className="flex justify-center items-center py-2 mb-8 rounded-full cursor-pointer bg-[#161a21] text-white dark:bg-white dark:text-black"
             >
                 <IoIosAddCircle className="text-[#161a21] inline w-6 h-6" />
                 Adicionar opção
@@ -401,7 +401,7 @@ export const UpdateOptionGroupForm = ({
                 <div className="w-full bg-zinc-300 dark:bg-[#161a21] border rounded-2xl border-zinc-400 flex flex-col items-center justify-center mt-4 pt-2">
                     <button
                         type="button"
-                        className="w-full flex items-center justify-center px-8 gap-2 rounded-2xl cursor-pointer mb-2 hover:scale-103 transition-all duration-300"
+                        className="w-full flex items-center justify-center px-8 gap-2 rounded-2xl cursor-pointer mb-2"
                         onClick={() => setOpenArrayItems(!openArrayItems)}
                         style={{ fontSize: '18px' }}
                     >

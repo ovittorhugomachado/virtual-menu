@@ -74,7 +74,7 @@ export const RecoverPasswordFormContainer = ({
                             noValidate
                             className="w-full md:w-[60%] min-h-90 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none"
                         >
-                            <Link to="/entrar" className="hidden md:block w-[200px] absolute top-10 transition-all hover:scale-105 duration-200">
+                            <Link to="/entrar" className="hidden md:block w-[200px] absolute top-10 transition-all">
                                 <LogoTextBlue className="w-[200px] dark:hidden" />
                                 <LogoTextWhite className="w-[200px] hidden dark:block" />
                             </Link>
@@ -121,7 +121,7 @@ export const RecoverPasswordFormContainer = ({
                             <img src="./form-recover-password-success.gif" alt="sucesso" width={230} style={{ margin: '0 45px' }} />
                         </div>
                         <div className="w-full md:w-[60%] min-h-60 relative rounded-xl md:rounded-l-none pb-8 px-4 md:px-3 mx-auto flex flex-col justify-start pt-8 md:pt-0 md:justify-center items-center gap-4 bg-white dark:bg-[#202326] shadow-2xl md:shadow-none">
-                            <Link to="/entrar" className="hidden md:block w-[200px] absolute top-10 transition-all hover:scale-105 duration-200">
+                            <Link to="/entrar" className="hidden md:block w-[200px] absolute top-10 transition-all">
                                 <LogoTextBlue className="w-[200px] dark:hidden" />
                                 <LogoTextWhite className="w-[200px] hidden dark:block" />
                             </Link>
