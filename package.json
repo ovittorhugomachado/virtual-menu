@@ -16,6 +16,7 @@
     "money-math": "^2.6.2",
     "motion": "^12.23.12",
     "react": "^19.0.0",
+    "react-datepicker": "^8.7.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.56.2",
     "react-icons": "^5.5.0",

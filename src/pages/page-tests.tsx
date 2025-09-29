@@ -1,10 +1,10 @@
-import { OptionsButtons } from "../components/store-side/store-page-components/store-options-buttons";
+import { ReportStatistics } from "../components/store-side/reports-statistics";
 
 export const TestPage = () => {
 
     return (
         <>
-            <OptionsButtons />
+            <ReportStatistics />
         </>
     );
 };
