@@ -1,10 +1,9 @@
-import { useState } from "react";
 import { CustomDatePicker } from "./date-picker";
 import "react-datepicker/dist/react-datepicker.css";
 
 type ReportStatisticsProps = {
-    dateOf: Date;
-    dateUntil: Date;
+    dateOf?: Date;
+    dateUntil?: Date;
     blocks: {
         title: string;
         color: string;
@@ -16,12 +15,8 @@ type ReportStatisticsProps = {
 };
 
 export const ReportStatistics = () => {
-    const [startDate, setStartDate] = useState(new Date(2025, 8, 1)); // Data inicial
-    const [endDate, setEndDate] = useState(new Date(2025, 8, 30)); // Data final
 
     const mockData: ReportStatisticsProps = {
-        dateOf: startDate,
-        dateUntil: endDate,
         blocks: [
             {
                 title: "Faturamento",
@@ -46,54 +41,62 @@ export const ReportStatistics = () => {
                     { value: "A la Minuta", label: "30 vendidos" }
                 ],
             },
-            // {
-            //     statistics: [
-            //         { value: 15, label: "Pedidos cancelados" },
-            //         { value: "R$ 1.234,56", label: "Reembolsos" },
-            //     ],
-            // },
         ],
     };
 
     const handleDateChange = (startDate: Date, endDate: Date) => {
+        //COLOCAR AQUI A FUNÇÃO DE FILTRAR PELA DATA 
         console.log("Data inicial:", startDate);
         console.log("Data final:", endDate);
     };
 
     return (
         <>
-            <CustomDatePicker onDateChange={handleDateChange} />
-            <div className="flex flex-col">
+            <div className="flex flex-col bg-zinc-200 dark:bg-[#161A21]">
                 <h1 className="w-full flex justify-center mb-16">Relatório de Estatísticas</h1>
+                <CustomDatePicker onDateChange={handleDateChange} />
                 <div className="w-full flex flex-wrap justify-center">
                     {mockData.blocks.map((block, index) => (
                         <div
-                            className="min-w-80 max-w-120 h-40 ms:h-30 mt-16 mx-3 flex flex-col ms:flex-row relative bg-black border-2 border-gray-300 rounded-xl"
+                            key={index}
+                            className="max-w-120 mt-16 mx-3 flex flex-1 flex-col ms:flex-row relative border-1 border-gray-600 dark:border-gray-300 rounded-xl"
                         >
                             <div
-                                style={{ backgroundColor: block.color }}
-                                className="w-3 h-48 ms:h-38 z-[-1] absolute -top-7 left-4"
+                                style={{
+                                    backgroundColor: block.color,
+                                    height: "calc(100% + 27px)", 
+                                }}
+                                className="w-3 absolute -top-6.5 left-4"
                             >
-                                <h4 className="ml-4 -translate-y-1 font-semibold">{block.title}</h4>
+                                <h5 className="ml-4 font-semibold whitespace-nowrap">{block.title}</h5>
                             </div>
-                            {block.statistics.map((stat, statIndex) => (
-                                <div
-                                    key={statIndex}
-                                    className={`w-full flex flex-col items-center justify-center h-full border-b ms:border-r border-gray-300 last:border-none px-4 ${block.statistics.length > 1 ? 'w-1/2' : 'w-full'}`}
-                                >
-                                    <h3 className="text-center text-2xl mx-6 font-bold text-white whitespace-nowrap">{stat.value}</h3>
-                                    <span className="text-sm text-gray-300 whitespace-nowrap">{stat.label}</span>
-                                </div>
-                            ))}
+                            {block.statistics.map((stat, statIndex) => {
+                                const isTwoItems = block.statistics.length === 2;
+
+                                const shouldRemoveRightRadius = isTwoItems && statIndex === 0;
+                                const shouldRemoveLeftRadius = isTwoItems && statIndex === 1;
+
+                                return (
+                                    <div
+                                        key={statIndex}
+                                        className={`w-full min-w-56 h-18 ms:h-26 flex flex-col items-center justify-center px-4 py-4 z-1 bg-zinc-200 dark:bg-[#0D1117] border-b-1 ms:border-b-none ms:border-r dark:border-gray-300 border-gray-800 ms:last:border-none
+                                            ${isTwoItems ? 'w-1/2' : 'w-full'}
+                                            ${shouldRemoveRightRadius ? 'rounded-t-xl ms:rounded-l-xl ms:border-b-none ms:rounded-t-none' : ''}
+                                            ${shouldRemoveLeftRadius ? 'rounded-b-xl ms:rounded-r-xl ms:rounded-l-none' : ''}
+                                            ${!isTwoItems ? 'rounded-xl' : ''}
+                                        `}
+                                    >
+                                        <h4 className="text-center text-xl mx-6 font-bold dark:text-white whitespace-nowrap">
+                                            {stat.value}
+                                        </h4>
+                                        <span className="text-sm dark:text-gray-300 whitespace-nowrap">
+                                            {stat.label}
+                                        </span>
+                                    </div>
+                                );
+                            })}
                         </div>
                     ))}
-
-                    {/* <div
-                        className="max-w-120 h-36 mx-3 relative bg-black border-2 border-gray-300 rounded-xl"
-                    >
-                        <div className="w-3 h-44 bg-red-600 z-[-1] absolute -top-7 left-4"></div>
-
-                    </div> */}
                 </div>
             </div>
         </>

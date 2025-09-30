@@ -78,7 +78,7 @@ export const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
     );
 
     return (
-        <div className="w-fit h-fit ml-4 px-2.5 py-1.5 rounded-lg flex flex-col sm:flex-row items-center gap-2 border-1 z-50">
+        <div className="w-fit mx-auto lg:ml-4 h-fit px-2.5 py-1.5 rounded-lg flex flex-col sm:flex-row items-center gap-2 border-1 z-50">
             {renderDatePicker("De:", startDate, "start", true)}
             {renderDatePicker("Até:", endDate, "end", false)}
         </div>
