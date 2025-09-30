@@ -17,65 +17,70 @@ export const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
 
     const getToday = () => {
         const today = new Date();
-        today.setHours(23, 59, 59, 999); 
+        today.setHours(23, 59, 59, 999);
         return today;
     };
 
     const [startDate, setStartDate] = useState(getStartOfMonth());
     const [endDate, setEndDate] = useState(getToday());
 
-    const handleStartDateChange = (date: Date | null) => {
+    const handleDateChange = (
+        date: Date | null,
+        type: "start" | "end"
+    ) => {
         if (date) {
             const newDate = new Date(date);
-            newDate.setHours(0, 0, 0, 0); 
-            setStartDate(newDate);
-            if (onDateChange) onDateChange(newDate, endDate);
+
+            if (type === "start") {
+                newDate.setHours(0, 0, 0, 0);
+                if (newDate > endDate) {
+                    setEndDate(new Date(newDate.getTime()));
+                }
+                setStartDate(newDate);
+                if (onDateChange) onDateChange(newDate, endDate);
+            } else {
+                newDate.setHours(23, 59, 59, 999);
+                if (newDate >= startDate) {
+                    setEndDate(newDate);
+                    if (onDateChange) onDateChange(startDate, newDate);
+                }
+            }
         }
     };
 
-    const handleEndDateChange = (date: Date | null) => {
-        if (date) {
-            const newDate = new Date(date);
-            newDate.setHours(23, 59, 59, 999);
-            setEndDate(newDate);
-            if (onDateChange) onDateChange(startDate, newDate);
-        }
-    };
+    const renderDatePicker = (
+        label: string,
+        selectedDate: Date,
+        type: "start" | "end",
+        hasBorder: boolean
+    ) => (
+        <div
+            className={`w-full flex items-end gap-2 sm:pr-2 ${
+                hasBorder ? "sm:border-r-1" : ""
+            }`}
+        >
+            <span className="text-lg">{label}</span>
+            <DatePicker
+                selected={selectedDate}
+                onChange={(date) => handleDateChange(date, type)}
+                dateFormat="dd/MM/yyyy"
+                portalId="root-portal"
+                minDate={type === "end" ? startDate : undefined}
+                className="cursor-pointer"
+                customInput={
+                    <button className="flex items-center gap-2">
+                        {selectedDate.toLocaleDateString()}
+                        <IoCalendarOutline className="text-2xl -translate-y-1" />
+                    </button>
+                }
+            />
+        </div>
+    );
 
     return (
-        <div className="px-2.5 py-1.5 rounded-lg flex flex-col sm:flex-row items-center gap-2 border-1">
-            <div className="w-full flex items-end justify-between gap-2 sm:pr-3 sm:border-r-1">
-                <span className="text-lg">De:</span>
-                <DatePicker
-                    selected={startDate}
-                    onChange={handleStartDateChange}
-                    dateFormat="dd/MM/yyyy"
-                    portalId="root-portal"
-                    className="cursor-pointer"
-                    customInput={
-                        <button className="flex items-center gap-2">
-                            {startDate.toLocaleDateString()}
-                            <IoCalendarOutline className="text-2xl -translate-y-1" />
-                        </button>
-                    }
-                />
-            </div>
-            <div className="w-full flex items-end gap-2">
-                <span className="text-lg">Até:</span>
-                <DatePicker
-                    selected={endDate}
-                    onChange={handleEndDateChange}
-                    dateFormat="dd/MM/yyyy"
-                    portalId="root-portal"
-                    className="cursor-pointer"
-                    customInput={
-                        <button className="flex items-center gap-2">
-                            {endDate.toLocaleDateString()}
-                            <IoCalendarOutline className="text-2xl -translate-y-1" />
-                        </button>
-                    }
-                />
-            </div>
+        <div className="w-fit h-fit ml-4 px-2.5 py-1.5 rounded-lg flex flex-col sm:flex-row items-center gap-2 border-1 z-50">
+            {renderDatePicker("De:", startDate, "start", true)}
+            {renderDatePicker("Até:", endDate, "end", false)}
         </div>
     );
 };
