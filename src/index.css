@@ -210,6 +210,10 @@ input:-webkit-autofill:focus {
     animation: piscarTexto 1s infinite;
 }
 
+.recharts-pie {
+    position: relative;
+}
+
 @keyframes piscar {
     0% {
         border-color: #ff0000;

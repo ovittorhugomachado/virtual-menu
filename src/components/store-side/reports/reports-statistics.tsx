@@ -1,4 +1,4 @@
-import { CustomDatePicker } from "./date-picker";
+import { CustomDatePicker } from "./reports-date-picker";
 import "react-datepicker/dist/react-datepicker.css";
 
 type ReportStatisticsProps = {
