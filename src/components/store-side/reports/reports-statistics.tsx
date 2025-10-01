@@ -52,14 +52,14 @@ export const ReportStatistics = () => {
 
     return (
         <>
-            <div className="flex flex-col bg-zinc-200 dark:bg-[#161A21]">
+            <div className="w-full flex flex-col items-center bg-zinc-200 dark:bg-[#161A21]">
                 <h1 className="w-full flex justify-center mb-16">Relatório de Estatísticas</h1>
                 <CustomDatePicker onDateChange={handleDateChange} />
-                <div className="w-full flex flex-wrap justify-center">
+                <div className="w-full max-w-[1400px] px-4 flex flex-wrap justify-center">
                     {mockData.blocks.map((block, index) => (
                         <div
                             key={index}
-                            className="max-w-120 mt-16 mx-3 flex flex-1 flex-col ms:flex-row relative border-1 border-gray-600 dark:border-gray-300 rounded-xl"
+                            className="mt-16 mx-3 flex flex-1 flex-col ms:flex-row relative border-1 border-gray-600 dark:border-gray-300 rounded-xl"
                         >
                             <div
                                 style={{

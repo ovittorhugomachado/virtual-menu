@@ -210,8 +210,49 @@ input:-webkit-autofill:focus {
     animation: piscarTexto 1s infinite;
 }
 
+@media (max-width: 290px) {
+    .recharts-responsive-container {
+        transform: scale(0.85);
+    }
+}
+
 .recharts-pie {
     position: relative;
+}
+
+.inner-border-circle {
+    height: 110px;
+    width: 110px;
+    position: absolute;
+    border-radius: 50%;
+    top: 50.4%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+@media (min-width: 290px) {
+    .inner-border-circle {
+        height: 135px;
+        width: 135px;
+    }
+}
+
+.centered-circle {
+    height: 90px;
+    width: 90px;
+    position: absolute;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media (min-width: 290px) {
+    .centered-circle {
+        height: 116px;
+        width: 116px;
+    }
 }
 
 @keyframes piscar {

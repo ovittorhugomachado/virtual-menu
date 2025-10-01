@@ -7,22 +7,50 @@ interface PieChartData {
     color: string;
 }
 
-interface CustomPieChartProps {
+interface PieChartProps {
     data: PieChartData[];
+    onlyEgde: boolean;
     title?: string;
     height?: number;
 }
 
-export const CustomPieBorderChart: React.FC<CustomPieChartProps> = ({
+export const PieBorderChart: React.FC<PieChartProps> = ({
     data,
-    height = 300
+    onlyEgde
 }) => {
     const totalValue = data.reduce((acc, curr) => acc + curr.value, 0);
+
+    const renderCustomizedLabel = ({ cx, cy, midAngle, outerRadius, value }: any) => {
+        const RADIAN = Math.PI / 180;
+
+        const radius = outerRadius + 20
+
+        const x = cx + radius * Math.cos(-midAngle * RADIAN);
+        const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+        const percentage = ((value / totalValue) * 100).toFixed(1);
+
+        const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+        return (
+            <text
+                x={x}
+                y={y}
+                fill={isDarkMode ? "white" : "black"}
+                textAnchor={(x > cx ? "start" : "end")}
+                dominantBaseline="central"
+                fontSize={13}
+                fontWeight="bold"
+            >
+                {`${percentage}%`}
+            </text>
+        );
+    };
 
     return (
         <>
             <div className="w-full mx-auto focus:outline-none outline-none pointer-events-none relative">
-                <ResponsiveContainer width="100%" height={height}>
+                <ResponsiveContainer width="100%" height={300}>
                     <PieChart>
                         <Pie
                             data={data.map(item => ({
@@ -32,8 +60,9 @@ export const CustomPieBorderChart: React.FC<CustomPieChartProps> = ({
                             cx="50%"
                             cy="50%"
                             stroke="none"
-                            labelLine={false}
-                            outerRadius={height * 0.35}
+                            labelLine={true}
+                            label={renderCustomizedLabel}
+                            outerRadius={300 * 0.30}
                         >
                             {data.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={entry.color} />
@@ -41,39 +70,22 @@ export const CustomPieBorderChart: React.FC<CustomPieChartProps> = ({
                         </Pie>
                     </PieChart>
                 </ResponsiveContainer>
-                <div
-                    className="absolute bg-white/30 dark:bg-[#0D1117]/30 rounded-full"
-                    style={{
-                        width: `${height * 0.55}px`,
-                        height: `${height * 0.55}px`,
-                        top: "50.4%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                    }}
-                >
-                    <div
-                        className="absolute bg-gray-200 dark:bg-[#0D1117] rounded-full"
-                        style={{
-                            width: `${height * 0.48}px`,
-                            height: `${height * 0.48}px`,
-                            top: "50%",
-                            left: "50%",
-                            transform: "translate(-50%, -50%)",
-                        }}
-                    />
-                </div>
+                {onlyEgde &&
+                    <div className="inner-border-circle bg-gray-200/35 dark:bg-[#0D1117]/35">
+                        <div className="centered-circle bg-gray-200 dark:bg-[#0D1117]" />
+                    </div>
+                }
             </div>
             <div className="flex justify-center flex-wrap gap-5 mx-6 pb-4 -translate-y-4">
                 {data.map((data, index: number) => {
-                    const percentage = ((data.value / totalValue) * 100).toFixed(1);
                     return (
-                        <div key={index} className="flex items-center gap-1 mb-1">
+                        <div key={index} className="flex flex-1 items-center gap-1 mb-1">
                             <div
                                 className="w-2 h-6"
                                 style={{ backgroundColor: data.color }}
                             />
                             <span className="font-extralight whitespace-nowrap">
-                                <span className="font-semibold text-lg">{data.name}:</span> R${data.value} ({percentage}%)
+                                <span className="font-semibold text-lg">{data.name}:</span> R$ {data.value}
                             </span>
                         </div>
                     );
