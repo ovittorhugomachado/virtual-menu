@@ -55,9 +55,8 @@ export const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
         hasBorder: boolean
     ) => (
         <div
-            className={`w-full flex items-end gap-2 sm:pr-2 ${
-                hasBorder ? "sm:border-r-1" : ""
-            }`}
+            className={`w-full flex items-end gap-2 sm:pr-2 ${hasBorder ? "sm:border-r-1" : ""
+                }`}
         >
             <span className="text-lg">{label}</span>
             <DatePicker
@@ -78,9 +77,11 @@ export const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
     );
 
     return (
-        <div className="w-fit mx-auto lg:ml-4 h-fit px-2.5 py-1.5 rounded-lg flex flex-col sm:flex-row items-center gap-2 border-1 z-50">
-            {renderDatePicker("De:", startDate, "start", true)}
-            {renderDatePicker("Até:", endDate, "end", false)}
+        <div className="w-full max-w-[1400px] ml-8 flex justify-start mt-4 mb-8">
+            <div className="w-fit mx-3 h-fit px-2.5 py-1.5 rounded-lg flex flex-col sm:flex-row items-center gap-2 border-1 z-50">
+                {renderDatePicker("De:", startDate, "start", true)}
+                {renderDatePicker("Até:", endDate, "end", false)}
+            </div>
         </div>
     );
 };

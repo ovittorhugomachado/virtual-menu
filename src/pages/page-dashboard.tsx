@@ -13,10 +13,6 @@ import { Header } from "../components/component-header";
 import { LoadingComponent } from "../components/component-loading";
 import { DashboardCards } from "../components/store-side/dashboard-cards";
 import { CgMenuGridR } from "react-icons/cg";
-import { IoMdSettings } from "react-icons/io";
-import { BsFillBarChartFill } from "react-icons/bs";
-import { IoExit } from "react-icons/io5";
-import { logout } from "../services/service-auth";
 
 export const AdminDashboard = () => {
 
@@ -89,35 +85,35 @@ export const AdminDashboard = () => {
         fetchOrders();
     };
 
-    const logoutFunction = async () => {
-        await logout()
-        localStorage.setItem('isLogged', JSON.stringify(false));
-        localStorage.removeItem('token');
-    }
+    // const logoutFunction = async () => {
+    //     await logout()
+    //     localStorage.setItem('isLogged', JSON.stringify(false));
+    //     localStorage.removeItem('token');
+    // }
 
-    const buttons = [
-        {
-            to: "/",
-            title: "Painel de pedidos",
-            icon: <CgMenuGridR />,
-        },
-        {
-            to: "/personalizar-cardapio",
-            title: "Editar cardápio",
-            icon: <IoMdSettings />,
-        },
-        {
-            to: "/Relatórios",
-            title: "Relatórios",
-            icon: <BsFillBarChartFill />,
-        },
-        {
-            to: "/entrar",
-            title: "Sair",
-            icon: <IoExit />,
-            function: logoutFunction
-        },
-    ]
+    // const buttons = [
+    //     {
+    //         to: "/",
+    //         title: "Painel de pedidos",
+    //         icon: <CgMenuGridR />,
+    //     },
+    //     {
+    //         to: "/personalizar-cardapio",
+    //         title: "Editar cardápio",
+    //         icon: <IoMdSettings />,
+    //     },
+    //     {
+    //         to: "/Relatórios",
+    //         title: "Relatórios",
+    //         icon: <BsFillBarChartFill />,
+    //     },
+    //     {
+    //         to: "/entrar",
+    //         title: "Sair",
+    //         icon: <IoExit />,
+    //         function: logoutFunction
+    //     },
+    // ]
 
     return (
         <>
@@ -133,10 +129,8 @@ export const AdminDashboard = () => {
                 <LoadingComponent />
             ) : (
                 <div className="flex flex-col min-h-screen h-full">
-                    <Header
-                        buttons={buttons}
-                    />
-                    <main className="flex-1 bg-zinc-200 dark:bg-[#161a21] pt-12">
+                    <Header />
+                    <main className="flex-1 bg-[#F9F9F9] dark:bg-[#161a21] pt-12 shadow-2xl shadow-black">
                         <div className="flex items-center justify-center pb-8">
                             <CgMenuGridR className="text-4xl hidden sm:block" />
                             <h1 className="text-4xl border-b-2 border-primary dark:border-white text-center mx-3">Painel de pedidos</h1>

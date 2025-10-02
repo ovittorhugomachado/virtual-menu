@@ -3,21 +3,13 @@ import { useLocation, Link } from "react-router-dom";
 import { LogoTextBlue, LogoTextWhite } from "./component-logo";
 import { useAuth } from "../hooks/use-auth";
 import { getExtension } from "../utils/function-get-extension";
+import { CgMenuGridR } from "react-icons/cg";
+import { IoMdSettings } from "react-icons/io";
+import { BsFillBarChartFill } from "react-icons/bs";
+import { IoExit } from "react-icons/io5";
+import { logout } from "../services/service-auth";
 
-type HeaderButton = {
-    to: string;
-    title?: string;
-    icon?: React.ReactNode;
-    className?: string;
-    target?: string;
-    function?: () => void;
-};
-
-export const Header = ({
-    buttons
-}: {
-    buttons: HeaderButton[];
-}) => {
+export const Header = () => {
 
     const VITE_API_URL = import.meta.env.VITE_API_URL;
 
@@ -26,6 +18,37 @@ export const Header = ({
     const { user, style } = useAuth();
 
     const location = useLocation();
+
+    const logoutFunction = async () => {
+        await logout()
+        localStorage.setItem('isLogged', JSON.stringify(false));
+        localStorage.removeItem('token');
+    }
+
+    const buttons = [
+        {
+            to: "/",
+            title: "Painel de pedidos",
+            icon: <CgMenuGridR />,
+        },
+        {
+            to: "/personalizar-cardapio",
+            title: "Editar cardápio",
+            target: "_blank",
+            icon: <IoMdSettings />,
+        },
+        {
+            to: "/relatorios",
+            title: "Relatórios",
+            icon: <BsFillBarChartFill />,
+        },
+        {
+            to: "/entrar",
+            title: "Sair",
+            icon: <IoExit />,
+            function: logoutFunction
+        },
+    ]
 
     return (
         <nav
@@ -65,7 +88,7 @@ export const Header = ({
                         <Link
                             to={btn.to}
                             title={btn.title}
-                            target={btn.target}
+                            target={btn.target === '_blank' ? '_blank' : '_self'}
                             onClick={btn.function}
                             style={{ fontSize: '19px' }}
                             className={`px-4 py-1 gap-1 text-4xl rounded-full flex justify-center items-center ${location.pathname === btn.to ? "bg-primary  dark:text-black cursor-auto" : "text-black dark:text-white cursor-pointer transition-all duration-200 hover:bg-primary hover:dark:bg-white hover:dark:text-black hover:text-white"}`}

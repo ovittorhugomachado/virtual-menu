@@ -52,8 +52,7 @@ export const ReportStatistics = () => {
 
     return (
         <>
-            <div className="w-full flex flex-col items-center bg-zinc-200 dark:bg-[#161A21]">
-                <h1 className="w-full flex justify-center mb-16">Relatório de Estatísticas</h1>
+            <div className="w-full flex flex-col items-center">
                 <CustomDatePicker onDateChange={handleDateChange} />
                 <div className="w-full max-w-[1400px] px-4 flex flex-wrap justify-center">
                     {mockData.blocks.map((block, index) => (
@@ -79,7 +78,7 @@ export const ReportStatistics = () => {
                                 return (
                                     <div
                                         key={statIndex}
-                                        className={`w-full min-w-56 h-18 ms:h-26 flex flex-col items-center justify-center px-4 py-4 z-1 bg-zinc-200 dark:bg-[#0D1117] border-b-1 ms:border-b-none ms:border-r dark:border-gray-300 border-gray-800 ms:last:border-none
+                                        className={`w-full min-w-56 h-18 ms:h-26 flex flex-col items-center justify-center px-4 py-4 z-1 bg-[#F9F9F9] dark:bg-[#0D1117] border-b-1 ms:border-b-none ms:border-r dark:border-gray-300 border-gray-800 ms:last:border-none
                                             ${isTwoItems ? 'w-1/2' : 'w-full'}
                                             ${shouldRemoveRightRadius ? 'rounded-t-xl ms:rounded-l-xl ms:border-b-none ms:rounded-t-none' : ''}
                                             ${shouldRemoveLeftRadius ? 'rounded-b-xl ms:rounded-r-xl ms:rounded-l-none' : ''}
