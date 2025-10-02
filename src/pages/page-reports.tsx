@@ -2,6 +2,7 @@ import { BsFillBarChartFill } from "react-icons/bs";
 import { Header } from "../components/component-header";
 import { PieChartsPanel } from "../components/store-side/reports/reports-pie-charts-panel";
 import { ReportStatistics } from "../components/store-side/reports/reports-statistics";
+import { BarChartsPanel } from "../components/store-side/reports/reports-bar-chart-panel";
 
 export const ReportsPage = () => {
     return (
@@ -14,6 +15,7 @@ export const ReportsPage = () => {
                 </div>
                 <ReportStatistics />
                 <PieChartsPanel />
+                <BarChartsPanel />
             </main>
         </div>
     );

@@ -73,7 +73,7 @@ export const PieChartContainer: React.FC<SinglePieChartProps> = ({
                                 cx="50%"
                                 cy="50%"
                                 stroke="none"
-                                labelLine={onlyEdge}
+                                labelLine={true}
                                 label={(props) => renderCustomizedLabel(props)}
                                 outerRadius={300 * 0.30}
                             >

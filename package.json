@@ -13,6 +13,7 @@
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/vite": "^4.1.4",
     "chart.js": "^4.5.0",
+    "color": "^5.0.2",
     "imask": "^7.6.1",
     "money-math": "^2.6.2",
     "motion": "^12.23.12",
