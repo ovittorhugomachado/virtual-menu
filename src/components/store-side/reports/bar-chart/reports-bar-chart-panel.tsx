@@ -17,7 +17,7 @@ export const BarChartsPanel = () => {
             mediaQuery.removeEventListener("change", handleResize);
         };
     }, []);
-    console.log("BAR CHARTS PANEL")
+    
     const mockData = {
         blocks: [
             {

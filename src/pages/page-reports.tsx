@@ -1,11 +1,11 @@
 import { BsFillBarChartFill } from "react-icons/bs";
 import { Header } from "../components/component-header";
-import { PieChartsPanel } from "../components/store-side/reports/reports-pie-charts-panel";
+import { PieChartsPanel } from "../components/store-side/reports/pie-chart/reports-pie-charts-panel";
 import { ReportStatistics } from "../components/store-side/reports/reports-statistics";
-import { BarChartsPanel } from "../components/store-side/reports/reports-bar-chart-panel";
+import { BarChartsPanel } from "../components/store-side/reports/bar-chart/reports-bar-chart-panel";
 
 export const ReportsPage = () => {
-    console.log("PAGE")
+
     return (
         <div className="w-full flex flex-col items-center">
             <Header />
@@ -15,7 +15,6 @@ export const ReportsPage = () => {
                     <h1 className="text-4xl border-b-2 border-primary dark:border-white text-center mx-3">Relatórios</h1>
                 </div>
                 <div className="relative w-[95%]  max-w-[1400px] mt-4">
-                    {/* Posiciona o h3 acima da linha */}
                     <h4 className="absolute whitespace-nowrap top-[-12px] left-1/2 transform -translate-x-1/2 bg-[#F9F9F9] dark:bg-[#161A21] px-4 z-50">
                         Resumo de vendas
                     </h4>

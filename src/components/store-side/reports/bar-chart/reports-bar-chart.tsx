@@ -37,7 +37,7 @@ export const BarChartContainer: React.FC<SingleBarChartProps> = ({
     flexValue = 1,
     statistics,
 }) => {
-    console.log("BAR CHARTS CONTAINER")
+    
     const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
     const [horizontal, setHorizontal] = useState(isHorizontal);
@@ -71,14 +71,6 @@ export const BarChartContainer: React.FC<SingleBarChartProps> = ({
         name: !horizontal && item.name.length > 5 ? item.name.slice(0, 5) + "…" : item.name,
     }));
 
-    // //CALCULA A ALTURA DO CONTAINER DO GRÁFICO
-    // const getContainerChartHeight = (dataLength: number) => {
-    //     if (dataLength > 16 && horizontal) return 700;
-    //     if (dataLength > 11 && horizontal) return 360;
-    //     if (dataLength > 7 && horizontal) return 400;
-    //     return 300;
-    // };
-
     //CALCULA A ALTURA DO GRÁFICO
     const getChartHeight = (dataLength: number) => {
         if (dataLength > 16 && horizontal) return 700;
@@ -105,7 +97,6 @@ export const BarChartContainer: React.FC<SingleBarChartProps> = ({
             <div
                 id="bar-chart"
                 className="w-full rounded-xl z-1 bg-[#F9F9F9] dark:bg-[#0D1117] flex flex-col justify-center items-center"
-            // style={{ height: getContainerChartHeight(statistics.length) }}
             >
                 <div className="w-full pr-4 mx-auto focus:outline-none outline-none pointer-events-none relative">
                     <ResponsiveContainer

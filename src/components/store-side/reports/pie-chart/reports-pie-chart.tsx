@@ -22,7 +22,7 @@ export const PieChartContainer: React.FC<SinglePieChartProps> = ({
     statistics,
 }) => {
     const totalValue = statistics.reduce((acc, curr) => acc + curr.value, 0);
-console.log("PIE CHARTS CONTAINER")
+
     const renderCustomizedLabel = ({ cx, cy, midAngle, outerRadius, value }: any) => {
         const RADIAN = Math.PI / 180;
 

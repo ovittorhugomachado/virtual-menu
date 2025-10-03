@@ -1,7 +1,7 @@
 import { PieChartContainer } from "./reports-pie-chart"
 
 export const PieChartsPanel = () => {
-console.log("PIE CHARTS PANEL")
+
     const mockData = {
         blocks: [
             {

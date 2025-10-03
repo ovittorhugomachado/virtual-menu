@@ -1,4 +1,4 @@
-import { BarChartsPanel } from "../components/store-side/reports/reports-bar-chart-panel";
+import { BarChartsPanel } from "../components/store-side/reports/bar-chart/reports-bar-chart-panel";
 
 export const TestPage = () => {
 
