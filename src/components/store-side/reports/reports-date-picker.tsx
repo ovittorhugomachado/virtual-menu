@@ -77,11 +77,11 @@ export const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
     );
 
     return (
-        <div className="w-full max-w-[1400px] ml-8 flex justify-start mt-4 mb-8">
-            <div className="w-fit mx-3 h-fit px-2.5 py-1.5 rounded-lg flex flex-col sm:flex-row items-center gap-2 border-1 z-50">
-                {renderDatePicker("De:", startDate, "start", true)}
-                {renderDatePicker("Até:", endDate, "end", false)}
+            <div className="w-full max-w-[1400px] flex flex-wrap items-center justify-center md:justify-start mt-6 px-8">
+                <div className="w-fit h-fit px-2.5 py-1.5 rounded-lg flex flex-col ms:flex-row items-center gap-2 border-1 z-50">
+                    {renderDatePicker("De:", startDate, "start", true)}
+                    {renderDatePicker("Até:", endDate, "end", false)}
+                </div>
             </div>
-        </div>
     );
 };

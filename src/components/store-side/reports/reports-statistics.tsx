@@ -15,7 +15,7 @@ type ReportStatisticsProps = {
 };
 
 export const ReportStatistics = () => {
-
+console.log("REPORT STATISTICS")
     const mockData: ReportStatisticsProps = {
         blocks: [
             {

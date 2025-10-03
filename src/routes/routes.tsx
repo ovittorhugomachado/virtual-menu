@@ -61,9 +61,7 @@ export const AppRoutes = () => {
                 <Route
                     path="/testes"
                     element={
-                        <ManageMenuProvider>
-                            <TestPage />
-                        </ManageMenuProvider>
+                            <ReportsPage />
                     }
                 />
             </Routes>

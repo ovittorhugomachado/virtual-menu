@@ -210,7 +210,7 @@ input:-webkit-autofill:focus {
     animation: piscarTexto 1s infinite;
 }
 
-@media (max-width: 290px) {
+@media (max-width: 360px) {
     .recharts-responsive-container {
         transform: scale(0.85);
     }
@@ -231,7 +231,7 @@ input:-webkit-autofill:focus {
 
 }
 
-@media (min-width: 290px) {
+@media (min-width: 360px) {
     .inner-border-circle {
         height: 135px;
         width: 135px;
@@ -248,11 +248,37 @@ input:-webkit-autofill:focus {
     transform: translate(-50%, -50%);
 }
 
-@media (min-width: 290px) {
+@media (min-width: 360px) {
     .centered-circle {
         height: 116px;
         width: 116px;
     }
+}
+
+.bar-chart.recharts-responsive-container {
+    min-width: 350px !important;
+}
+
+@media (max-width: 390px) {
+    .bar-chart.recharts-responsive-container {
+        transform: scale(0.85) translateX(-30px);
+        padding-right: 20px;
+    }
+
+    #container-bar-chart {
+        max-height: 620px
+    }
+
+    #bar-chart {
+        max-height: 610px
+    }
+}
+
+@media (max-width: 360px) {
+    .bar-chart.recharts-responsive-container {
+        transform: scale(0.85) translateX(-50px);
+    }
+
 }
 
 @keyframes piscar {

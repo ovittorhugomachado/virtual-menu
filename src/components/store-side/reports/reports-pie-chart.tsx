@@ -22,7 +22,7 @@ export const PieChartContainer: React.FC<SinglePieChartProps> = ({
     statistics,
 }) => {
     const totalValue = statistics.reduce((acc, curr) => acc + curr.value, 0);
-
+console.log("PIE CHARTS CONTAINER")
     const renderCustomizedLabel = ({ cx, cy, midAngle, outerRadius, value }: any) => {
         const RADIAN = Math.PI / 180;
 
@@ -51,7 +51,7 @@ export const PieChartContainer: React.FC<SinglePieChartProps> = ({
     };
 
     return (
-        <div className="min-w-90 max-w-220 mt-16 mx-3 flex flex-1 flex-col ms:flex-row relative border-1 border-gray-600 dark:border-gray-300 rounded-xl">
+        <div className="min-w-85 max-w-220 mt-16 mx-3 flex flex-1 flex-col ms:flex-row relative border-1 border-gray-600 dark:border-gray-300 rounded-xl">
             <div
                 style={{
                     backgroundColor: color,
