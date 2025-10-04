@@ -4,13 +4,14 @@ import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 interface PieChartData {
     name: string;
-    value: number;
-    color: string;
+    value?: number;
+    color?: string;
+    quantity?: number;
 }
 
 interface SinglePieChartProps {
     title: string;
-    onlyEdge: boolean;
+    onlyEdge: boolean | undefined;
     color: string;
     statistics: PieChartData[];
 }

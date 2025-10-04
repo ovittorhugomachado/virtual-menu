@@ -1,0 +1,102 @@
+{
+    "blocks": [
+        {
+            "title": "Produtos mais vendidos",
+            "color": "#004AAD",
+            "barColor": "#B03591",
+            "chartType": "bar",
+            "statistics": [
+                { "name": "A la minuta", "quantity": 32 },
+                { "name": "Pizza", "quantity": 13 },
+                { "name": "Coca Cola", "quantity": 5 },
+                { "name": "Hambúrguer", "quantity": 20 },
+                { "name": "Batata Frita", "quantity": 15 },
+                { "name": "Refrigerante", "quantity": 10 }
+            ]
+        },
+        {
+            "title": "Pedidos por mês",
+            "color": "#004AAD",
+            "barColor": "#00909B",
+            "isHorizontal": false,
+            "rotateIn": "1050px",
+            "flexValue": 3,
+            "dateFilter": "year",
+            "chartType": "bar",
+            "statistics": [
+                { "name": "Janeiro", "quantity": 32 },
+                { "name": "Fevereiro", "quantity": 13 },
+                { "name": "Março", "quantity": 5 },
+                { "name": "Abril", "quantity": 20 },
+                { "name": "Maio", "quantity": 15 },
+                { "name": "Junho", "quantity": 10 },
+                { "name": "Julho", "quantity": 10 },
+                { "name": "Agosto", "quantity": 10 },
+                { "name": "Setembro", "quantity": 10 },
+                { "name": "Outubro", "quantity": 10 },
+                { "name": "Novembro", "quantity": 10 },
+                { "name": "Dezembro", "quantity": 10 }
+            ]
+        },
+        {
+            "title": "Pedidos por hora",
+            "color": "#004AAD",
+            "barColor": "#00909B",
+            "isHorizontal": false,
+            "rotateIn": "1329px",
+            "flexValue": 4,
+            "dateFilter": "single-date",
+            "chartType": "bar",
+            "statistics": [
+                { "name": "00:00", "quantity": 0 },
+                { "name": "01:00", "quantity": 2 },
+                { "name": "02:00", "quantity": 1 },
+                { "name": "03:00", "quantity": 0 },
+                { "name": "04:00", "quantity": 0 },
+                { "name": "05:00", "quantity": 3 },
+                { "name": "06:00", "quantity": 8 },
+                { "name": "07:00", "quantity": 15 },
+                { "name": "08:00", "quantity": 22 },
+                { "name": "09:00", "quantity": 18 },
+                { "name": "10:00", "quantity": 25 },
+                { "name": "11:00", "quantity": 32 },
+                { "name": "12:00", "quantity": 45 },
+                { "name": "13:00", "quantity": 38 },
+                { "name": "14:00", "quantity": 28 },
+                { "name": "15:00", "quantity": 20 },
+                { "name": "16:00", "quantity": 25 },
+                { "name": "17:00", "quantity": 30 },
+                { "name": "18:00", "quantity": 42 },
+                { "name": "19:00", "quantity": 35 },
+                { "name": "20:00", "quantity": 28 },
+                { "name": "21:00", "quantity": 20 },
+                { "name": "22:00", "quantity": 12 },
+                { "name": "23:00", "quantity": 5 }
+            ]
+        },
+        {
+            "title": "Método de pagamento",
+            "onlyEdge": true,
+            "color": "#01A71B",
+            "chartType": "pie",
+            "statistics": [
+                { "name": "Cartão", "value": 3800, "color": "#0FD529" },
+                { "name": "Boleto", "value": 8813, "color": "#004AAD" },
+                { "name": "Pix", "value": 2518, "color": "#FF18C5" }
+            ]
+        },
+        {
+            "title": "Categorias mais vendidas",
+            "onlyEdge": false,
+            "color": "#004AAD",
+            "chartType": "pie",
+            "statistics": [
+                { "name": "Pratos", "value": 38, "color": "#0FD529" },
+                { "name": "Promoções", "value": 23, "color": "#5303bc" },
+                { "name": "bebidas", "value": 18, "color": "#e6ea02" },
+                { "name": "Sobremesas", "value": 13, "color": "#004AAD" },
+                { "name": "Pizzas", "value": 2, "color": "#FF18C5" }
+            ]
+        }
+    ]
+}

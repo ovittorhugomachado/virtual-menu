@@ -1,4 +1,5 @@
 import { BarChartsPanel } from "../components/store-side/reports/bar-chart/reports-bar-chart-panel";
+import { ChartPanel } from "../components/store-side/reports/reports-panel";
 
 export const TestPage = () => {
 
@@ -6,7 +7,7 @@ export const TestPage = () => {
     return (
         <div className="w-full flex flex-col items-center">
             <main className="w-full px-6 flex flex-col items-center bg-[#F9F9F9] dark:bg-[#161A21] shadow-2xl dark:shadow-none shadow-black">
-                <BarChartsPanel />
+                <ChartPanel />
             </main>
         </div>
     );

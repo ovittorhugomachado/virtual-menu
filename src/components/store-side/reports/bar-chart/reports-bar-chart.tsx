@@ -9,10 +9,13 @@ import {
     ResponsiveContainer,
     LabelList,
 } from "recharts";
+import { CustomDatePicker } from "../reports-date-picker";
 
 interface BarChartData {
     name: string;
-    quantity: number;
+    value?: number;
+    quantity?: number;
+    color?: string;
 }
 
 interface SingleBarChartProps {
@@ -21,9 +24,10 @@ interface SingleBarChartProps {
     isHorizontal?: boolean;
     rotateIn?: string; //PRA TRANSFORMAR EM HORIZONTAL OU VERTICAL DEPENDENDO DA LARGURA
     minWidth?: string;
-    barColor: string;
+    barColor?: string;
     barWidth?: number;
     flexValue?: number;
+    dateFilter?: "year" | "single-date" | "date-range" | undefined;
     statistics: BarChartData[];
 }
 
@@ -35,9 +39,10 @@ export const BarChartContainer: React.FC<SingleBarChartProps> = ({
     rotateIn,
     minWidth,
     flexValue = 1,
+    dateFilter,
     statistics,
 }) => {
-    
+
     const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
     const [horizontal, setHorizontal] = useState(isHorizontal);
@@ -71,7 +76,6 @@ export const BarChartContainer: React.FC<SingleBarChartProps> = ({
         name: !horizontal && item.name.length > 5 ? item.name.slice(0, 5) + "…" : item.name,
     }));
 
-    //CALCULA A ALTURA DO GRÁFICO
     const getChartHeight = (dataLength: number) => {
         if (dataLength > 16 && horizontal) return 700;
         if (dataLength > 12 && horizontal) return 500;
@@ -83,7 +87,7 @@ export const BarChartContainer: React.FC<SingleBarChartProps> = ({
         <div
             style={{ minWidth: minWidth }}
             id="container-bar-chart"
-            className={`flex-${flexValue} w-full mt-4 mb-12 mx-3 flex flex-col ms:flex-row relative border-1 border-gray-600 dark:border-gray-300 rounded-xl`}
+            className={`flex-${flexValue} w-full min-w-85 mt-4 mb-12 mx-3 flex flex-col ms:flex-row relative border-1 border-gray-600 dark:border-gray-300 rounded-xl`}
         >
             <div
                 style={{
@@ -92,12 +96,18 @@ export const BarChartContainer: React.FC<SingleBarChartProps> = ({
                 }}
                 className="w-3 absolute -top-6.5 left-4"
             >
-                <h5 className="ml-4 font-semibold whitespace-nowrap">{title}</h5>
+                    <h5 className="ml-4 font-semibold whitespace-nowrap">{title}</h5>
             </div>
             <div
                 id="bar-chart"
                 className="w-full rounded-xl z-1 bg-[#F9F9F9] dark:bg-[#0D1117] flex flex-col justify-center items-center"
             >
+                {dateFilter !== undefined &&
+                    <CustomDatePicker
+                        filterType={dateFilter}
+                        onDateChange={(value) => console.log(value)}
+                    />
+                }
                 <div className="w-full pr-4 mx-auto focus:outline-none outline-none pointer-events-none relative">
                     <ResponsiveContainer
                         className={"bar-chart"}

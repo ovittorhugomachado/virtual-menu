@@ -8,6 +8,7 @@
     --color-color-text: #000000;
     --font-display: "geologica", "sans-serif";
     --breakpoint-xs: 310px;
+    --breakpoint-ss: 390px;
     --breakpoint-ms: 468px;
 }
 
@@ -266,11 +267,11 @@ input:-webkit-autofill:focus {
     }
 
     #container-bar-chart {
-        max-height: 620px
+        max-height: 720px
     }
 
     #bar-chart {
-        max-height: 610px
+        max-height: 710px
     }
 }
 

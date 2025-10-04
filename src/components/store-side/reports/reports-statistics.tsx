@@ -27,7 +27,7 @@ export const ReportStatistics = () => {
                 ],
             },
             {
-                title: "Faturamento",
+                title: "Pedidos",
                 color: "#004AAD",
                 statistics: [
                     { value: "19", label: "Pedidos" },
@@ -44,16 +44,13 @@ export const ReportStatistics = () => {
         ],
     };
 
-    const handleDateChange = (startDate: Date, endDate: Date) => {
-        //COLOCAR AQUI A FUNÇÃO DE FILTRAR PELA DATA 
-        console.log("Data inicial:", startDate);
-        console.log("Data final:", endDate);
-    };
-
     return (
         <>
             <div className="w-full flex flex-col items-center">
-                <CustomDatePicker onDateChange={handleDateChange} />
+                <CustomDatePicker
+                    filterType="date-range"
+                    onDateChange={(value) => console.log(value)} // { type: "range", start: Date, end: Date }
+                />
                 <div className="w-full max-w-[1400px] px-4 flex flex-wrap justify-center">
                     {mockData.blocks.map((block, index) => (
                         <div
@@ -63,7 +60,7 @@ export const ReportStatistics = () => {
                             <div
                                 style={{
                                     backgroundColor: block.color,
-                                    height: "calc(100% + 27px)", 
+                                    height: "calc(100% + 27px)",
                                 }}
                                 className="w-3 absolute -top-6.5 left-4"
                             >

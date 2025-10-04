@@ -17,11 +17,11 @@ export const BarChartsPanel = () => {
             mediaQuery.removeEventListener("change", handleResize);
         };
     }, []);
-    
+
     const mockData = {
         blocks: [
             {
-                title: "Pratos mais vendidos",
+                title: "Produtos mais vendidos",
                 color: "#004AAD",
                 barColor: "#B03591",
                 statistics: [
@@ -34,27 +34,13 @@ export const BarChartsPanel = () => {
                 ],
             },
             {
-                title: "Pedidos por semana",
-                color: "#004AAD",
-                barColor: "#03D219",
-                isHorizontal: false,
-                statistics: [
-                    { name: "Seg", quantity: 32 },
-                    { name: "Ter", quantity: 13 },
-                    { name: "Qua", quantity: 5 },
-                    { name: "Qui", quantity: 20 },
-                    { name: "Sex", quantity: 15 },
-                    { name: "Sab", quantity: 10 },
-                    { name: "Dom", quantity: 10 },
-                ],
-            },
-            {
                 title: "Pedidos por mês",
                 color: "#004AAD",
                 barColor: "#00909B",
                 isHorizontal: false,
                 rotateIn: "1050px",
                 flexValue: 3,
+                dateFilter: "year",
                 statistics: [
                     { name: isSmallScreen ? "Janeiro" : "Jan", quantity: 32 },
                     { name: isSmallScreen ? "Fevereiro" : "Fev", quantity: 13 },
@@ -77,6 +63,7 @@ export const BarChartsPanel = () => {
                 isHorizontal: false,
                 rotateIn: "1329px",
                 flexValue: 4,
+                dateFilter: "single-date",
                 statistics: [
                     { name: "00:00", quantity: 0 },
                     { name: "01:00", quantity: 2 },
@@ -118,6 +105,12 @@ export const BarChartsPanel = () => {
                     isHorizontal={block.isHorizontal}
                     rotateIn={block.rotateIn}
                     flexValue={block.flexValue}
+                    dateFilter={
+                        block.dateFilter &&
+                            ["year", "single-date", "date-range"].includes(block.dateFilter)
+                            ? (block.dateFilter as "year" | "single-date" | "date-range")
+                            : undefined
+                    }
                     statistics={block.statistics}
                 />
             ))}

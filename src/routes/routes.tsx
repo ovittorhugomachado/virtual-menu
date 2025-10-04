@@ -61,7 +61,7 @@ export const AppRoutes = () => {
                 <Route
                     path="/testes"
                     element={
-                            <ReportsPage />
+                            <TestPage />
                     }
                 />
             </Routes>
