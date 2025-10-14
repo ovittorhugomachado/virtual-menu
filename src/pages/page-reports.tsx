@@ -1,8 +1,7 @@
 import { BsFillBarChartFill } from "react-icons/bs";
 import { Header } from "../components/component-header";
-import { PieChartsPanel } from "../components/store-side/reports/pie-chart/reports-pie-charts-panel";
 import { ReportStatistics } from "../components/store-side/reports/reports-statistics";
-import { BarChartsPanel } from "../components/store-side/reports/bar-chart/reports-bar-chart-panel";
+import { ChartPanel } from "../components/store-side/reports/reports-panel";
 
 export const ReportsPage = () => {
 
@@ -20,14 +19,13 @@ export const ReportsPage = () => {
                     </h4>
                     <div className="w-full h-[1px] bg-primary translate-y-1 z-1" />
                     <ReportStatistics />
-                    <PieChartsPanel />
                 </div>
                 <div className="relative w-[95%] max-w-[1400px] flex flex-col mt-8 pt-12">
                     <h4 className="absolute whitespace-nowrap top-[-12px] left-1/2 transform -translate-x-1/2 bg-[#F9F9F9] dark:bg-[#161A21] px-4 z-50">
                         Relatório detalhado
                     </h4>
+                    <ChartPanel />
                     <div className="w-full h-[1px] absolute top-0 bg-primary z-1" />
-                    <BarChartsPanel />
                 </div>
             </main>
         </div>

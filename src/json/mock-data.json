@@ -6,12 +6,12 @@
             "barColor": "#B03591",
             "chartType": "bar",
             "statistics": [
-                { "name": "A la minuta", "quantity": 32 },
-                { "name": "Pizza", "quantity": 13 },
+                { "name": "Pizza de calabresa", "quantity": 32 },
+                { "name": "Pizza 4 queijos", "quantity": 13 },
                 { "name": "Coca Cola", "quantity": 5 },
-                { "name": "Hambúrguer", "quantity": 20 },
+                { "name": "Hambúrguer de picanha", "quantity": 20 },
                 { "name": "Batata Frita", "quantity": 15 },
-                { "name": "Refrigerante", "quantity": 10 }
+                { "name": "Guaraná", "quantity": 10 }
             ]
         },
         {
@@ -91,11 +91,11 @@
             "color": "#004AAD",
             "chartType": "pie",
             "statistics": [
-                { "name": "Pratos", "value": 38, "color": "#0FD529" },
-                { "name": "Promoções", "value": 23, "color": "#5303bc" },
-                { "name": "bebidas", "value": 18, "color": "#e6ea02" },
-                { "name": "Sobremesas", "value": 13, "color": "#004AAD" },
-                { "name": "Pizzas", "value": 2, "color": "#FF18C5" }
+                { "name": "Pratos", "value": 1021, "color": "#0FD529" },
+                { "name": "Promoções", "value": 789, "color": "#5303bc" },
+                { "name": "bebidas", "value": 587, "color": "#e6ea02" },
+                { "name": "Sobremesas", "value": 354, "color": "#004AAD" },
+                { "name": "Pizzas", "value": 255, "color": "#FF18C5" }
             ]
         }
     ]

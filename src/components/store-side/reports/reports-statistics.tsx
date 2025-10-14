@@ -38,7 +38,7 @@ export const ReportStatistics = () => {
                 title: "Campeão de vendas",
                 color: "#FBFF36",
                 statistics: [
-                    { value: "A la Minuta", label: "30 vendidos" }
+                    { value: "Pizza de Calabresa", label: "30 vendidos" }
                 ],
             },
         ],
